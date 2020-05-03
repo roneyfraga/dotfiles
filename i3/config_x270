@@ -1,0 +1,332 @@
+
+# BINDINGS {{{
+# Variables
+        set $super    Mod4
+        set $alt      Mod1
+        set $swap     Mod4+Control
+        set $exec     exec --no-startup-id
+        set $always   exec_always --no-startup-id
+# Default applications
+        set $filer    ranger
+        set $browser  qutebrowser
+        set $terminal terminator
+        set $player   mpv
+# General bindings
+        bindsym $super+Tab              workspace back_and_forth
+# free keys
+# bindsym a, y, i, p, z, x, c, v, ', /, \
+# }}}
+
+# UTILS {{{
+# kill focused window
+bindsym $super+q kill
+
+# reload the configuration file
+bindsym $super+Shift+c reload
+
+# restart i3 inplace
+bindsym $super+Shift+r restart;
+
+# exit i3
+bindsym $super+Shift+q exec i3-msg exit
+
+# start a terminal
+bindsym $super+Return exec 'terminator'
+
+# ranger
+bindsym $alt+r exec $terminal -e ranger 
+
+# terminal with nvim
+bindsym $alt+n exec $terminal -e nvim
+
+# inverted colors
+bindsym $super+i exec xrandr-invert-colors
+bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
+bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
+bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
+
+# Set shut down, restart and locking features
+bindsym $super+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# }}}
+
+# AUDIO {{{
+# sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
+
+exec --no-startup-id volumeicon
+# bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+bindsym $mod+Ctrl+m exec terminal -e 'amixer'
+# exec --no-startup-id pulseaudio
+# exec --no-startup-id pa-applet
+# bindsym $mod+Ctrl+m exec pavucontrol
+
+bindsym XF86AudioMute exec amixer sset 'Master' toggle
+bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
+bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
+
+# como o fn do teclado apple sem fio não funciona, 
+# tive que adicionar Super + (F10, F11 e F12) para os controles de audio
+bindcode $super+76 exec amixer sset 'Master' toggle
+bindcode $super+95 exec amixer sset 'Master' 5%-
+bindcode $super+96 exec amixer sset 'Master' 5%+
+
+
+# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+#
+# bindsym XF86AudioPlay exec playerctl play-pause
+# bindsym XF86AudioNext exec playerctl next
+# bindsym XF86AudioPrev exec playerctl previous
+# }}}
+
+# APPEARANCE {{{
+font xft:URWGothic-Book 11
+
+# COLORS                border  backgrd text    indicator
+# set window colors
+client.focused          #4E9C00 #4E9C00 #FFFFFF #FFFFFF
+client.focused_inactive #1B3600 #1B3600 #FFFFFF #FFFFFF
+client.unfocused        #333333 #333333 #888888 #FFFFFF
+client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
+# }}} 
+
+# GAPS {{{
+# Set inner/outer gaps
+gaps inner 1
+gaps outer 1
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+smart_gaps on
+smart_borders on
+
+for_window [class="^.*"] border pixel 3
+
+# }}}
+
+# BARS {{{
+# Start i3bar to display a workspace bar (plus the system information i3status if available)
+    bar {
+        i3bar_command i3bar
+            status_command i3status
+            position bottom
+
+## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+            tray_output primary
+            tray_output HDMI-0
+
+            bindsym button4 nop
+            bindsym button5 nop
+#   font xft:URWGothic-Book 11
+            strip_workspace_numbers yes
+
+            colors {
+                background #222D31
+                    statusline #F9FAF9
+                    separator  #454947
+
+#                      border  backgr. text
+                    focused_workspace  #F9FAF9 #16a085 #292F34
+                    active_workspace   #595B5B #353836 #FDF6E3
+                    inactive_workspace #595B5B #222D31 #EEE8D5
+                    binding_mode       #16a085 #2C2C2C #F9FAF9
+                    urgent_workspace   #16a085 #FDF6E3 #E5201D
+            }
+    }
+# }}}
+
+# BEHAVIOR {{{
+    focus_follows_mouse no
+    # Mouse+$super to drag floating windows
+    floating_modifier $alt
+    # If popup when fullscreen
+    popup_during_fullscreen smart
+    # $super+self go to prev workspace
+    workspace_auto_back_and_forth yes
+    # delay windows hint focus uppon wkspc change
+    force_display_urgency_hint 500 ms
+    # Focus if the windows is in the cur wkspc
+    focus_on_window_activation smart
+# }}}
+
+# APP SHORTCUTS {{{
+# Rofi
+    bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 13' -show combi"
+
+# rofi-calc
+    bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
+
+# flameshot
+    bindsym $super+p exec "flameshot gui"
+
+# }}}
+
+# TREE {{{
+        bindsym $super+u        focus parent
+        bindsym $super+d        focus child
+        bindsym $super+f        fullscreen  toggle
+        bindsym $super+Shift+f  fullscreen  toggle global
+# Change container layout (stacked, tabbed, default)
+        bindsym $super+w layout tabbed
+        bindsym $super+e layout stacking
+        bindsym $super+r layout toggle split
+# SetNext container as: split[h|v], stab, stack
+        bindsym $super+bar      split h
+        bindsym $super+minus    split v
+        bindsym $super+Shift+t  split t; layout tabbed
+        bindsym $super+Shift+s  split t; layout stacking
+# Float | scratchpad
+        bindsym $super+m        floating toggle
+        bindsym $super+n        focus mode_toggle
+        bindsym $super+bracketright     scratchpad show
+        bindsym $super+bracketleft      move scratchpad
+# }}}
+
+# WORKSPACES {{{
+# switch to workspace
+        bindsym $super+1 workspace 1
+        bindsym $super+2 workspace 2
+        bindsym $super+3 workspace 3
+        bindsym $super+4 workspace 4
+        bindsym $super+5 workspace 5
+        bindsym $super+6 workspace 6
+        bindsym $super+7 workspace 7
+        bindsym $super+8 workspace 8
+        bindsym $super+9 workspace 9
+# move focused container to workspace
+        bindsym Shift+$alt+1 move container to workspace 1; workspace 1
+        bindsym Shift+$alt+2 move container to workspace 2; workspace 2
+        bindsym Shift+$alt+3 move container to workspace 3; workspace 3
+        bindsym Shift+$alt+4 move container to workspace 3; workspace 4
+        bindsym Shift+$alt+5 move container to workspace 5; workspace 5
+        bindsym Shift+$alt+6 move container to workspace 6; workspace 6
+        bindsym Shift+$alt+7 move container to workspace 7; workspace 7
+        bindsym Shift+$alt+8 move container to workspace 8; workspace 8
+        bindsym Shift+$alt+9 move container to workspace 9; workspace 9
+# move the whole workspace to the next output
+        bindsym $super+Control+l move workspace to output right
+        bindsym $super+Control+h move workspace to output left
+# }}}
+
+# MOVEMENT {{{
+# change focus
+    bindsym $super+h focus left
+        bindsym $super+j focus down
+        bindsym $super+k focus up
+        bindsym $super+l focus right
+# move focused window
+        bindsym $alt+h   move  left
+        bindsym $alt+j   move  down
+        bindsym $alt+k   move  up
+        bindsym $alt+l   move  right
+# }}}
+
+# MODES {{{
+    bindsym $super+semicolon mode "Normal"
+        mode "Normal" {
+# Get back from inception
+            bindsym $super+semicolon mode "default"
+                bindsym BackSpace mode "default"
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Control+c mode "default"
+# Actions
+                bindsym r mode "Normal:Resize: [hjkl|HJKL]"
+                bindsym m mode "Normal:Move: [hjkl|HJKL]"
+        }
+# RESIZE {{{
+    mode "Normal:Resize: [hjkl|HJKL]" {
+# Get back from inception
+        bindsym $super+semicolon mode "default"
+            bindsym BackSpace mode "default"
+            bindsym Return mode "default"
+            bindsym Escape mode "default"
+            bindsym Control+c mode "default"
+            bindsym q mode "default"
+# Actions
+            bindsym l       resize shrink width  5  px or 5  ppt
+            bindsym k       resize grow   height 5  px or 5  ppt
+            bindsym j       resize shrink height 5  px or 5  ppt
+            bindsym h       resize grow   width  5  px or 5  ppt
+            bindsym Shift+l resize shrink width  10 px or 10 ppt
+            bindsym Shift+k resize grow   height 10 px or 10 ppt
+            bindsym Shift+j resize shrink height 10 px or 10 ppt
+            bindsym Shift+h resize grow   width  10 px or 10 ppt
+    }
+# }}}
+# MOVE {{{
+    mode "Normal:Move: [hjkl|HJKL]" {
+# Get back from inception
+        bindsym $super+semicolon mode "default"
+            bindsym BackSpace mode "default"
+            bindsym Return mode "default"
+            bindsym Escape mode "default"
+            bindsym Control+c mode "default"
+            bindsym q mode "default"
+# Actions
+            bindsym h   move  left  15
+            bindsym j   move  down  15
+            bindsym k   move  up    15
+            bindsym l   move  right 15
+            bindsym Shift+h   move  left  50
+            bindsym Shift+j   move  down  50
+            bindsym Shift+k   move  up    50
+            bindsym Shift+l   move  right 50
+    }
+# }}}
+# }}}
+
+# WINDOWS RULES {{{
+#    
+# }}}
+
+# AUTOSTART APPS {{{
+# Autostart applications
+        exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+        exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+        exec --no-startup-id nm-applet
+        exec --no-startup-id xfce4-power-manager
+        exec --no-startup-id pamac-tray
+        exec --no-startup-id clipit
+        # exec --no-startup-id blueman-applet
+        exec --no-startup-id dropbox
+        exec --no-startup-id syncthing -no-browser
+        exec --no-startup-id telegram-desktop
+        # exec --no-startup-id skypeforlinux
+        # exec --no-startup-id flameshot
+        exec --no-startup-id xpad
+        # exec --no-startup-id minetime
+        exec --no-startup-id goldendict
+        # exec --no-startup-id start_conky_maia
+        exec --no-startup-id xautolock -time 20 -locker blurlock
+        exec_always --no-startup-id ff-theme-util
+        exec_always --no-startup-id fix_xcursor
+        exec_always --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off
+        exec xrandr --dpi 90
+        exec_always unclutter
+
+# Caps->Control LR_Shift->Caps
+        exec_always setxkbmap -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_lalt_lwin
+
+# delete como tecla de ejetar cd
+        #exec_always /home/roney/bin/apple_keyboard.sh
+        #exec /home/roney/bin/nextcloud.sh
+
+# Natural scroll mouse
+        #exec synclient NaturalScrolling=1 VertScrollDelta=-113
+
+# }}}
+# vim: fdm=marker nowrap

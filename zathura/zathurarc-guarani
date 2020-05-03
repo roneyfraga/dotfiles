@@ -1,0 +1,78 @@
+
+set window-title-basename "true"
+set selection-clipboard "primary"
+
+# RECOLOR
+set recolor true
+# solarized
+set recolor-lightcolor "#002b36"
+map [normal] [1 feedkeys ":set recolor-lightcolor \#002b36"
+map [normal] [2 feedkeys ":set recolor-lightgray \#839496"
+map [normal] [3 feedkeys ":set recolor-dark \#000000"
+# desabilitar as cores alteradas do pdf
+# set recolor false
+
+
+# GENERAL
+# 
+# j, pgDn                       
+# K, PgUp                       
+# h, k, j, l                    
+# Left, Down, Up, Right         
+# ^t, ^d, ^u, ^y                ;Scroll half page left, down, up or right
+# t, ^f, ^b, space, <S-space>, y;Scroll full page left, down, up or right
+# gg, G, nG                     ;Goto first, last or nth page
+# H, L                          ;Goto top or bottom of the current page
+# ^o, ^i                        ;Move backward|forward jump list
+# ^j, ^k                        ;Bisect forward and backward between the last two jump points
+# ^c, Escape                    
+# a, s                          ;Adjust window in best-fit or width mode
+# /, ?                          
+# n, N                          
+# o, O                          ;Open document
+# f                             ;Follow links
+# F                             ;Display link target
+# \:                            
+# r                             ;Rotate by 90 degrees
+# ^r                            ;Recolor (grayscale and invert colors)
+# R                             ;Reload document
+# Tab                           ;Show index and switch to **Index mode**
+# d                             ;Toggle dual page view
+# F5                            ;Switch to presentation mode
+# F11                           ;Switch to fullscreen mode
+# ^m                            ;Toggle inputbar
+# ^n                            ;Toggle statusbar
+# +, -, =                       ;Zoom in|out|original size
+# zI, zO, z0                    ;Zoom in|out|original size
+# n=                            ;Zoom nth size
+# mX                            ;Set quickmark letter|number X
+# 'X                            ;Goto quickmark letter|number X
+# q                             
+ 
+# Fullscreen mode
+# 
+# J, K                          
+# space, <S-space>, <BackSpace> ;Scroll full page down|up
+# gg, G, nG                     
+# ^c, Escape                    
+# F11                           ;Switch to normal mode
+# +, -, =                       ;Zoom in|out|original size
+# zI, zO, z0                    ;Zoom in|out|original size
+# n=                            ;Zoom nth size
+# q                             
+# 
+# Presentation mode
+# 
+# space, <S-space>, <BackSpace> ;Scroll full page down|up
+# ^c, Escape                    ;Abort
+# F5                            ;Switch to normal mode
+# q                             ;Quit
+# 
+# Index mode
+# 
+# k, j                          
+# l                             ;Expand entry
+# L                             ;Expand all entries
+# h                             ;Collapse entry
+# H                             ;Collapse all entries
+# space, Return                 ;Select and open entry
