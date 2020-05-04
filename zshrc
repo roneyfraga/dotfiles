@@ -117,8 +117,24 @@ export RES=$HOME/OneDrive/CLI/RES.md
 # fzf
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS=" --preview 'head -100 {}' --preview-window=right:50%:wrap"
- 
+export FZF_DEFAULT_OPTS="\
+    --preview 'head -100 {}'\
+    --preview-window=right:50%:wrap\
+    --multi --no-height\
+    --bind=ctrl-b:backward-kill-word\
+    --bind=ctrl-d:kill-word\
+    --bind=ctrl-g:top\
+    --bind=ctrl-u:page-up\
+    --bind=ctrl-d:page-down\
+    --bind=ctrl-f:toggle-all\
+    --bind=ctrl-q:clear-query\
+    --bind=ctrl-s:clear-selection\
+    --bind=ctrl-o:jump\
+    --bind=ctrl-c:cancel\
+    --bind=ctrl-y:yank\
+    --bind=ctrl-p:toggle-preview\
+    "
+
 # CREDENTIALS
 source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
 
@@ -279,23 +295,28 @@ addref(){
 
 # find and open in nvim, from current directory
 fv.() {
-    nvim $(fzf)
+    # nvim $(fzf)
+    nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
 }
 
 # find and open in nvim, from ~/
 fvh() {
-    cd $HOME && nvim $(fzf)
+    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
 }
 
-# fzf chance directory (with fd)
-# space to show to tree files
-fcd() {
-    cd $HOME && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+# fzf chance directory, from current directory
+fc.() {
+    cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+}
+
+# fzf chance directory, from ~/
+fch() {
+    cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 # fzf open file (with fd)
 fop() {
-    fd -t f -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
+    fd -t f -I --hidden --follow --exclude ".git" | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
 
 # space to show package's details
