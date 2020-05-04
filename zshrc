@@ -277,9 +277,14 @@ addref(){
     $* >> ~/OneDrive/CLI/bibliography.bib
 }
 
-# find and open in nvim
-fvi() {
+# find and open in nvim, from current directory
+fv.() {
     nvim $(fzf)
+}
+
+# find and open in nvim, from ~/
+fvh() {
+    cd $HOME && nvim $(fzf)
 }
 
 # fzf chance directory (with fd)
@@ -290,7 +295,7 @@ fcd() {
 
 # fzf open file (with fd)
 fop() {
-    fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
+    fd -t f -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
 
 # space to show package's details
