@@ -29,6 +29,7 @@ Dependences
 - [fzf](https://github.com/junegunn/fzf)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
+- [languagetool](https://www.languagetool.org/)
 - [pip](https://pypi.org/project/pip/)
 -  `python3 -m pip install pynvim`
 

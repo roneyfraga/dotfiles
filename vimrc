@@ -222,6 +222,9 @@ Plug 'lervag/vimtex'
 " bracket mappings
 Plug 'tpope/vim-unimpaired'
 
+" grammar checker
+Plug 'rhysd/vim-grammarous'
+
 " Initialize plugin system
 call plug#end()
 
