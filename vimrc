@@ -581,3 +581,36 @@ set ruler rulerformat=%70(%=%<%F%m\ \
                       \›\ %{StatuslineGit()}\ \
                       \›\ %l/%L:%v%)
 
+
+"------------------------------
+" zoom in buffer
+fu s:window_zoom_toggle() abort
+    if winnr('$') == 1 | return | endif
+    if exists('t:zoom_restore') && win_getid() == t:zoom_restore.winid
+        exe get(t:zoom_restore, 'cmd', '')
+        unlet t:zoom_restore
+    else
+        let t:zoom_restore = {'cmd': winrestcmd(), 'winid': win_getid()}
+        wincmd |
+        wincmd _
+    endif
+endfu
+
+nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
+
+"------------------------------
+" smooth scrolling 
+fun! s:smoothScroll(up)
+    execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+    redraw
+    for l:count in range(3, &scroll, 2)
+        sleep 5m
+        execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+        redraw
+    endfor
+endf
+
+nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
+nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
+
+

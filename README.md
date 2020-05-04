@@ -30,6 +30,7 @@ Dependences
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
 - [languagetool](https://www.languagetool.org/)
+- [GNU sed](https://security.archlinux.org/package/sed)
 - [pip](https://pypi.org/project/pip/)
 -  `python3 -m pip install pynvim`
 
