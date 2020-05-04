@@ -70,7 +70,7 @@ ZSH_THEME="bira"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z fzf)
+plugins=(git z fzf zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,7 +78,6 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
-
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -137,6 +136,10 @@ export FZF_DEFAULT_OPTS="\
 
 # CREDENTIALS
 source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
+
+# zsh-autosuggestions
+bindkey '^]' autosuggest-accept
+bindkey '^p' autosuggest-toggle
 
 # softwares
 alias t='env TERM=screen-256color tmux'
@@ -290,7 +293,12 @@ getref2(){
 }
 
 addref(){
-    $* >> ~/OneDrive/CLI/bibliography.bib
+    $* >> $HOME/OneDrive/CLI/bibliography.bib
+}
+
+# find and open in nvim, from ~/
+fv() {
+    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
 }
 
 # find and open in nvim, from current directory
@@ -299,19 +307,14 @@ fv.() {
     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
 }
 
-# find and open in nvim, from ~/
-fvh() {
-    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
-}
-
-# fzf chance directory, from current directory
-fc.() {
-    cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
-}
-
-# fzf chance directory, from ~/
-fch() {
+# fzf folder (directory), from ~/
+ff() {
     cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+}
+
+# fzf folder (directory), from current directory
+ff.() {
+    cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 # fzf open file (with fd)

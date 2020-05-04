@@ -599,18 +599,18 @@ endfu
 nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
 
 "------------------------------
-" smooth scrolling 
-fun! s:smoothScroll(up)
-    execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-    redraw
-    for l:count in range(3, &scroll, 2)
-        sleep 5m
-        execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-        redraw
-    endfor
-endf
-
-nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
-nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
+" smooth scrolling too slow
+" fun! s:smoothScroll(up)
+"     execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+"     redraw
+"     for l:count in range(3, &scroll, 2)
+"         sleep 5m
+"         execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+"         redraw
+"     endfor
+" endf
+"
+" nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
+" nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
 
 

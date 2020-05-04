@@ -33,6 +33,7 @@ Dependences
 - [GNU sed](https://security.archlinux.org/package/sed)
 - [pip](https://pypi.org/project/pip/)
 -  `python3 -m pip install pynvim`
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 
 Plugin Managers
 - [vimplug](https://github.com/junegunn/vim-plug) (nvim)
