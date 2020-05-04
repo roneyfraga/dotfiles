@@ -333,9 +333,6 @@ exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-
         # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
         # delete como tecla de ejetar cd
         # exec_always /home/roney/bin/apple_keyboard.sh
-        
-# Telegram
-        exec /home/roney/bin/telegram-desktop.sh
 
 # Natural scroll mouse
         exec synclient NaturalScrolling=1 VertScrollDelta=-113
