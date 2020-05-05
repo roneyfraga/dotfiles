@@ -7,7 +7,6 @@ if(interactive()){
     suppressMessages(require(tidyverse))
     suppressMessages(require(pipeR))
     suppressMessages(require(rio))
-    suppressMessages(require(languageserver))
 
     # cores do terminal
     setOutputColors256( normal=39, number=51, negnum=183, date=43, string=79, const=75, verbose=FALSE)
