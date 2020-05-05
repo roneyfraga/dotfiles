@@ -106,7 +106,7 @@ inoremap <Esc>D <left>
 " ------------------------------
 " adicionando o dicionário português do Brasil e inglês
 hi clear SpellBad
-set spelllang=pt,en 
+set spelllang=pt,en
 
 " não corrigir palavras no início da linha em minúsculo
 set spellfile=~/.vim/spell/lowercase.utf-8.add
@@ -128,8 +128,12 @@ set nospell
 
 " F5 nospell
 " F6 spell
+" F7 pt_br
+" F8 en_us
 map <F5> <Esc>:setlocal nospell<CR>
-map <F6> <Esc>:setlocal spell spelllang=pt,en<CR>
+map <F6> <Esc>:setlocal spell spelllang=pt_br,en_us<CR>
+map <F7> <Esc>:setlocal spell spelllang=pt_br<CR>
+map <F8> <Esc>:setlocal spell spelllang=en_us<CR>
 
 "------------------------------------
 " Specify a directory for plugins
@@ -146,9 +150,6 @@ Plug 'christoomey/vim-tmux-navigator'
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
-" Enhanced multi-file search for Vim, need install ripgrep
-Plug 'wincent/ferret'
 
 " move like a pro
 Plug 'wikitopian/hardmode'
@@ -205,11 +206,13 @@ Plug 'jalvesaq/vimcmdline'
 
 " Auto complete
 Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'gaalcaras/ncm-R'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
+Plug 'roxma/nvim-yarp'              "nvim support: pip3 install pynvim
+Plug 'gaalcaras/ncm-R'              "r
+Plug 'ncm2/ncm2-jedi'               "python
+Plug 'ncm2/ncm2-bufword'            "buffers
+Plug 'ncm2/ncm2-path'               "paths
+Plug 'ncm2/ncm2-pyclang'            "c++
+Plug 'ncm2/ncm2-match-highlight'    "matches highlight 
 
 " Optional: for snippet support
 " Further configuration might be required, read below
@@ -223,7 +226,7 @@ Plug 'lervag/vimtex'
 Plug 'tpope/vim-unimpaired'
 
 " grammar checker
-Plug 'rhysd/vim-grammarous'
+Plug 'dpelle/vim-LanguageTool'
 
 " Initialize plugin system
 call plug#end()
@@ -270,11 +273,11 @@ highlight TabLine gui=NONE guibg=NONE guifg=NONE cterm=NONE term=NONE ctermfg=NO
 highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE
 
 " buffers escondidos
-set hidden 
+" set hidden 
 
 " mudar entre buffers de forma rápida
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+"nnoremap <Tab> :bnext<CR>
+"nnoremap <S-Tab> :bprevious<CR>
 
 " ------------------------------
 " better Teminal Mode exit
@@ -283,13 +286,42 @@ if has('nvim')
 endif
 
 " ------------------------------
-"  auto completation
+"  auto completation - ncm2
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
+
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+"  'on_complete': ['ncm2#on_complete#delay', 180,
+"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+au User Ncm2Plugin call ncm2#register_source({
+            \ 'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+            \ })
 
 " --------------------------------------
 "  AutoClose
@@ -332,24 +364,10 @@ let g:pandoc#modules#disabled = ["folding"]
 
 " ------------------------------
 "  fuzzy finder - fzf
-nmap ff :FZF<CR>
+nmap f. :FZF<CR>
 nmap fh :FZF ~<CR>
 nmap fb :Buffers<CR>
-
-" ripgrep to find in multiple files
-" :Rg pattern
-
-" ferret find in multiple, case sensitive
-" :Ack pattern
-
-" ferret replace in multiple files, case sensitive
-" :Acks pattern/newtext
-
-nnoremap <leader><leader>b :Buffers<CR>
-nnoremap <leader><leader>f :Rg<Cr>
-nmap <leader><leader>a <Plug>(FerretAck)
-nmap <leader><leader>s <Plug>(FerretAckWord)
-nmap <leader><leader>r <Plug>(FerretAcks)
+nmap ff :Rg<CR>
 
 "------------------------------
 " cCommand - atalho: control _ + control _ 
@@ -403,7 +421,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " setlocal fo+=aw
 
 "------------------------------
-" vimtex - LaTex
+" vimtex + ncm2 
 
 let g:tex_flavor  = 'latex'
 let g:tex_conceal = ''
@@ -412,21 +430,23 @@ let g:vimtex_latexmk_continuous = 1
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
 
-" NCM2
-augroup NCM2
-  autocmd!
-  " some other settings...
-  " uncomment this block if you use vimtex for LaTex
-  autocmd Filetype tex call ncm2#register_source({
-            \ 'name': 'vimtex',
-            \ 'priority': 8,
+" NCM2 Auto Complete + vimtex
+au User Ncm2Plugin call ncm2#register_source({
+            \ 'name' : 'vimtex',
+            \ 'priority': 1,
+            \ 'subscope_enable': 1,
+            \ 'complete_length': 1,
             \ 'scope': ['tex'],
+            \ 'matcher': {'name': 'combine',
+            \           'matchers': [
+            \               {'name': 'abbrfuzzy', 'key': 'menu'},
+            \               {'name': 'prefix', 'key': 'word'},
+            \           ]},
             \ 'mark': 'tex',
             \ 'word_pattern': '\w+',
-            \ 'complete_pattern': g:vimtex#re#ncm2,
+            \ 'complete_pattern': g:vimtex#re#ncm,
             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
             \ })
-augroup END
 
 "------------------------------
 " Vim Hard Mode
@@ -599,18 +619,25 @@ endfu
 nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
 
 "------------------------------
-" smooth scrolling too slow
-" fun! s:smoothScroll(up)
-"     execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-"     redraw
-"     for l:count in range(3, &scroll, 2)
-"         sleep 5m
-"         execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-"         redraw
-"     endfor
-" endf
+" LanguageTool
 "
-" nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
-" nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
+" set spelllang=en_us
+" set spelllang=pt_br
+"
+let g:languagetool_jar='$HOME/languagetool/languagetool-standalone/target/LanguageTool-5.0-SNAPSHOT/LanguageTool-5.0-SNAPSHOT/languagetool-commandline.jar'
 
+" grammar errors in blue, and spelling errors in red
+hi LanguageToolGrammarError  guisp=blue gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=blue term=underline cterm=none
+hi LanguageToolSpellingError guisp=red  gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=red  term=underline cterm=none
+
+let g:languagetool_disable_rules='ENGLISH_WORD_REPEAT_BEGINNING_RULE,WHITESPACE_RULE,EN_QUOTES,FRENCH_WHITESPACE,UPPERCASE_SENTENCE_START,APOS'
+
+let g:languagetool_enable_rules='PASSIVE_VOICE'
+
+"------------------------------
+" ncm2 pyclang c++
+"
+let g:ncm2_pyclang#library_path = '/usr/lib/llvm-5.0/lib'
+
+autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 

@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/roney/.oh-my-zsh"
 
-#export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -296,25 +296,24 @@ addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
 }
 
-# find and open in nvim, from ~/
-fv() {
-    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
-}
-
 # find and open in nvim, from current directory
 fv.() {
-    # nvim $(fzf)
     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
 }
 
-# fzf folder (directory), from ~/
-ff() {
-    cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+# find and open in nvim, from ~/
+fvh() {
+    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
 }
 
 # fzf folder (directory), from current directory
-ff.() {
+fd.() {
     cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+}
+
+# fzf folder (directory), from ~/
+fdh() {
+    cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 # fzf open file (with fd)
@@ -322,9 +321,24 @@ fop() {
     fd -t f -I --hidden --follow --exclude ".git" | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
 
-# space to show package's details
-fpk() {
-    sudo pacman -Syy $(pacman -Ssq | fzf -m --preview="pacman -Si {}" --preview-window=:hidden --bind=space:toggle-preview)
+# fzf pacman
+fpc() {
+    sudo pacman -Syy $(pacman -Ssq | fzf -m --preview="pacman -Si {}" --preview-window=:hidden)
+}
+
+# fzf yay
+fyy() {
+    yay -Syy $(yay -Ssq | fzf -m --preview-window=:hidden --preview="yay -Si {}")
+}
+
+# fzf bibliography, fb $BIB or fb references.bib 
+fbi(){
+    bibtex-ls $1 | fzf --multi --ansi --preview-window=:hidden | bibtex-cite -separator=', @'
+}
+
+# fzf reference, fr $BIB or fr references.bib
+fre(){
+    bibtex-ls $1 | fzf --multi --ansi --preview-window=:hidden
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

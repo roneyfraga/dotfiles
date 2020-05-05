@@ -24,16 +24,20 @@ Softwares
 - [joplin](https://joplinapp.org/)
 - [r](https://cran.r-project.org/)
 - [python](https://duckduckgo.com/?q=python+site:www.python.org)
+- [go](https://golang.org/)
+- [clang](https://clang.llvm.org/)
+- [latex](https://wiki.archlinux.org/index.php/TeX_Live)
+- [fzf](https://github.com/junegunn/fzf)
+- [fzf-bibtex](https://github.com/msprev/fzf-bibtex)
 
 Dependences 
-- [fzf](https://github.com/junegunn/fzf)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
-- [languagetool](https://www.languagetool.org/)
-- [GNU sed](https://security.archlinux.org/package/sed)
+- [LanguageTool](https://github.com/dpelle/vim-LanguageTool)
 - [pip](https://pypi.org/project/pip/)
 -  `python3 -m pip install pynvim`
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+- [bibtool](https://ctan.org/pkg/bibtool?lang=en)
 
 Plugin Managers
 - [vimplug](https://github.com/junegunn/vim-plug) (nvim)
