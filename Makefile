@@ -8,12 +8,12 @@ configfolder=~/.config
 ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
-	ln -s $(dotfolder)/vimrc ~/.vimrc
-	ln -s $(dotfolder)/vim/spell ~/.vim/spell 
-	ln -s $(dotfolder)/vim/snippets/markdown.snippets ~/.vim/plugged/snipmate.vim/snippets/markdown.snippets
-	ln -s $(dotfolder)/vim/snippets/md.snippets ~/.vim/plugged/snipmate.vim/snippets/md.snippets
-	ln -s $(dotfolder)/vim/snippets/rmd.snippets ~/.vim/plugged/snipmate.vim/snippets/rmd.snippets
-	ln -s $(dotfolder)/vim/snippets/r.snippets ~/.vim/plugged/snipmate.vim/snippets/r.snippets
+	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $(dotfolder)/nvim/spell ~/.vim/spell 
+	ln -s $(dotfolder)/nvim/snippets/markdown.snippets ~/.vim/plugged/snipmate.vim/snippets/markdown.snippets
+	ln -s $(dotfolder)/nvim/snippets/md.snippets ~/.vim/plugged/snipmate.vim/snippets/md.snippets
+	ln -s $(dotfolder)/nvim/snippets/rmd.snippets ~/.vim/plugged/snipmate.vim/snippets/rmd.snippets
+	ln -s $(dotfolder)/nvim/snippets/r.snippets ~/.vim/plugged/snipmate.vim/snippets/r.snippets
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/joplin/keymap.json $(configfolder)/joplin/keymap.json 
@@ -42,19 +42,21 @@ ln_guarani:
 rm:
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
-	rm -f ~/.vimrc
+	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.vim/spell
 	rm -f ~/.vim/plugged/snipmate.vim/snippets/markdown.snippets
 	rm -f ~/.vim/plugged/snipmate.vim/snippets/md.snippets
 	rm -f ~/.vim/plugged/snipmate.vim/snippets/rmd.snippets
 	rm -f ~/.vim/plugged/snipmate.vim/snippets/r.snippets
 	rm -f ~/.Rprofile
+	rm -f ~/.gitconfig
 	rm -f $(configfolder)/joplin/keymap.json 
 	rm -f $(configfolder)/ranger/rc.conf
 	rm -f $(configfolder)/ranger/rifle.conf
 	rm -f $(configfolder)/zathura/zathurarc
 	rm -f $(configfolder)/terminator/config
 	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f $(configfolder)/mimeapps.list
 
 rm_x270:
 	rm -f $(configfolder)/i3/config
