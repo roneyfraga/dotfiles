@@ -296,6 +296,12 @@ addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
 }
 
+# R_in_buffer: 0 no, 1 yes
+r_in_buffer(){
+    sed -i "s/^let R_in_buffer.*/let R_in_buffer = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
+}
+
+# intalled packages
 pacmanIP(){
     pacman -Q | awk '{print $1}' > $HOME/OneDrive/CLI/dotfiles/pacman_packages_installed.txt
 }
