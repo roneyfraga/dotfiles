@@ -296,6 +296,10 @@ addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
 }
 
+pacmanIP(){
+    pacman -Q | awk '{print $1}' > $HOME/OneDrive/CLI/dotfiles/pacman_packages_installed.txt
+}
+
 # find and open in nvim, from current directory
 fv.() {
     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
