@@ -301,13 +301,7 @@ set completeopt=noinsert,menuone,noselect
 " found' messages
 set shortmess+=c
 
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" select an item in the poup-up menu without insert a new line control-y"
 
 " wrap existing omnifunc
 " Note that omnifunc does not run in background and may probably block the
@@ -369,8 +363,8 @@ let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 
-" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"ignore R and Rmd files
+autocmd BufRead,BufNewFile *.R,*.Rmd ALEDisable
 
 " --------------------------------------
 "  AutoClose
