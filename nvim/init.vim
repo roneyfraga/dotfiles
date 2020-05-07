@@ -264,7 +264,7 @@ let R_rcomment_string = '# '
 let R_nvimpager = 'horizontal'
 
 " abrir o terminal no R em uma janela independente = 0
-let R_in_buffer = 0
+let R_in_buffer = 1
 let R_term = 'urxvt' 
 
 " ------------------------------

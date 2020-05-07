@@ -34,7 +34,6 @@ Dependences
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
 - [LanguageTool](https://github.com/dpelle/vim-LanguageTool)  
-<!--    > chmod +x languagetool-commandline.jar -->
 - [pip](https://pypi.org/project/pip/)
 -  `python3 -m pip install pynvim`
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
