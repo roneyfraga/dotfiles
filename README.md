@@ -31,13 +31,21 @@ Softwares
 - [fzf-bibtex](https://github.com/msprev/fzf-bibtex)
 
 Dependences 
+-  `python3 -m pip install pynvim`
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
 - [LanguageTool](https://github.com/dpelle/vim-LanguageTool)  
 - [pip](https://pypi.org/project/pip/)
--  `python3 -m pip install pynvim`
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [bibtool](https://ctan.org/pkg/bibtool?lang=en)
+- [papers](https://github.com/perrette/papers)
+- [unoconv](https://github.com/unoconv/unoconv)
+- [pandoc](https://pandoc.org/)
+- [translate-shell](https://github.com/soimort/translate-shell)
+- [youtube-dl](https://youtube-dl.org/)
+- [goldendict](http://www.goldendict.org/)
+- [asciiquarium](https://github.com/cmatsuoka/asciiquarium)
+- [termdown](https://github.com/trehn/termdown)
 
 Plugin Managers
 - [vimplug](https://github.com/junegunn/vim-plug) (nvim)
