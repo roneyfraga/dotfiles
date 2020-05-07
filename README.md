@@ -15,7 +15,7 @@ will link specifics files.
 
 Softwares
 - [oh-my-zsh](https://ohmyz.sh/)
-- [nvim](https://neovim.io/)
+- [neovim](https://neovim.io/)
 - [tmux](https://github.com/tmux/tmux/wiki)
 - [zathura](https://pwmt.org/projects/zathura/)
 - [ranger](https://github.com/ranger/ranger)
