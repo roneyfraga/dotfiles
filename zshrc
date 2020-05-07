@@ -175,7 +175,7 @@ alias r4='mplayer http://185.33.21.112:80/radiogaia_128'
 alias r5='mplayer http://158.69.27.227:8000'
 
 # files
-alias vimrc="nvim ~/.vimrc"
+alias init.vim="nvim ~/.config/nvim/init.vim"
 alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
