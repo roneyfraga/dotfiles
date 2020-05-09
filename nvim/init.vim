@@ -94,16 +94,6 @@ let @5="0i_jj$a_jj"
 let @6="0i__jj$a__jj"
 
 " ------------------------------
-" setas do teclado funcinarem no mode inserção com tmux
-nnoremap <Esc>A <up>
-inoremap <Esc>C <right>
-inoremap <Esc>D <left>
-inoremap <Esc>A <up>
-inoremap <Esc>B <down>
-inoremap <Esc>C <right>
-inoremap <Esc>D <left>
-
-" ------------------------------
 " adicionando o dicionário português do Brasil e inglês
 hi clear SpellBad
 set spelllang=pt,en
@@ -216,8 +206,8 @@ Plug 'ncm2/ncm2-match-highlight'    "matches highlight
 Plug 'ncm2/ncm2-snipmate'
 Plug 'tomtom/tlib_vim'              
 Plug 'marcweber/vim-addon-mw-utils'
-Plug 'garbas/vim-snipmate'          "fork mais recente de 'msanders/snipmate.vim', parado há 10 anos
-Plug 'roneyfraga/vim-snippets'      "snippets source                 
+Plug 'garbas/vim-snipmate'          
+Plug 'roneyfraga/vim-snippets'      "snippets source           
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -236,7 +226,6 @@ call plug#end()
 
 "------------------------------------
 " Nvim-R
-"------------------------------------
 "usar espaço para enviar comandos para o R
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
@@ -252,10 +241,7 @@ nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 
-" indent with magrittr pipe %>% 
-" let g:r_indent_op_pattern = '\(&\||\|+\|-\|\*\|/\|=\|\~\|%\|->\)\s*$'
-
-" porque comentários via \xx não funcionam em arquivos .Rmd
+" porque tComment (control+_ control+_) não funciona em arquivo .Rmd
 " comment   \xc 
 " uncomment \xu
 let R_rcomment_string = '# '
