@@ -10,10 +10,6 @@ ln:
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
 	ln -s $(dotfolder)/nvim/spell ~/.vim/spell 
-	ln -s $(dotfolder)/nvim/snippets/markdown.snippets ~/.vim/plugged/snipmate.vim/snippets/markdown.snippets
-	ln -s $(dotfolder)/nvim/snippets/md.snippets ~/.vim/plugged/snipmate.vim/snippets/md.snippets
-	ln -s $(dotfolder)/nvim/snippets/rmd.snippets ~/.vim/plugged/snipmate.vim/snippets/rmd.snippets
-	ln -s $(dotfolder)/nvim/snippets/r.snippets ~/.vim/plugged/snipmate.vim/snippets/r.snippets
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/joplin/keymap.json $(configfolder)/joplin/keymap.json 
@@ -44,10 +40,6 @@ rm:
 	rm -f ~/.tmux.conf
 	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.vim/spell
-	rm -f ~/.vim/plugged/snipmate.vim/snippets/markdown.snippets
-	rm -f ~/.vim/plugged/snipmate.vim/snippets/md.snippets
-	rm -f ~/.vim/plugged/snipmate.vim/snippets/rmd.snippets
-	rm -f ~/.vim/plugged/snipmate.vim/snippets/r.snippets
 	rm -f ~/.Rprofile
 	rm -f ~/.gitconfig
 	rm -f $(configfolder)/joplin/keymap.json 

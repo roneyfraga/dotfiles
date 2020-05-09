@@ -117,6 +117,7 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 
 " auto spell to markdown files
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal spell
 
 " utilizar o dicionário como fonte das palavras sugeridas no autocompletar
@@ -169,9 +170,6 @@ Plug 'joshdick/onedark.vim'
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
 
-" TextMate's snippets
-Plug 'msanders/snipmate.vim'
-
 " status line
 " Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'
@@ -214,10 +212,12 @@ Plug 'ncm2/ncm2-path'               "paths
 Plug 'ncm2/ncm2-pyclang'            "c++
 Plug 'ncm2/ncm2-match-highlight'    "matches highlight 
 
-" Optional: for snippet support
-" Further configuration might be required, read below
-" Plug 'sirver/UltiSnips'
-" Plug 'ncm2/ncm2-ultisnips'
+" Snipmate 
+Plug 'ncm2/ncm2-snipmate'
+Plug 'tomtom/tlib_vim'              
+Plug 'marcweber/vim-addon-mw-utils'
+Plug 'garbas/vim-snipmate'          "fork mais recente de 'msanders/snipmate.vim', parado há 10 anos
+Plug 'roneyfraga/vim-snippets'      "snippets source                 
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -347,6 +347,14 @@ au User Ncm2Plugin call ncm2#register_source({
             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
             \ })
 
+"-----------
+" ncm2 + snippets completation
+" tab 
+inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
+
+" control+u
+inoremap <expr> <c-u> ncm2_snipmate#expand_or("\<Plug>snipMateTrigger", "m")
+
 " --------------------------------------
 " dense-analysis/ale: syntax check
 "
@@ -363,16 +371,20 @@ let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 
-"ignore R and Rmd files
-autocmd BufRead,BufNewFile *.R,*.Rmd ALEDisable
+"ignore R, Rmd, and TeX files
+autocmd BufRead,BufNewFile *.R,*.Rmd,*.tex ALEDisable
 
 " --------------------------------------
 "  AutoClose
 " inoremap ' ''<left>
-inoremap " ""<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
+" inoremap " ""<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+
+" if has('nvim')
+"     tnoremap <Esc> <C-\><C-n>
+" endif
 
 " --------------------------------------
 "  Python configs
