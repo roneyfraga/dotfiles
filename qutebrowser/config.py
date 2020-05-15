@@ -43,7 +43,7 @@ c.content.host_blocking.enabled = True
 c.content.javascript.enabled = True
 c.content.plugins = True
 # Zoom
-c.zoom.default = '100%'
+c.zoom.default = '110%'
 
 # BINDINGS
 # read mode

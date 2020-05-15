@@ -310,7 +310,7 @@ for_window [class="^.*"] border pixel 3
         exec --no-startup-id xautolock -time 10 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
-        exec --no-startup-id telegram-dektop
+        exec --no-startup-id telegram-desktop
         exec_always unclutter
 
 # Monitores
@@ -322,7 +322,7 @@ for_window [class="^.*"] border pixel 3
 # exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-2 --primary --mode 1920x1080 --pos 1080x685 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate right --output DVI-I-3 --off
 #
 # nvidia drive = landascape + landascape
-exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-2 --primary --mode 1920x1080 --pos 1920x105 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DVI-I-3 --off
+exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --primary --mode 1920x1080 --pos 1920x151 --rotate normal --output DVI-I-3 --off
 
 
 # Keyboard

@@ -1,6 +1,8 @@
 
 set selection-clipboard clipboard
 
+# set font "anonymous pro 9"             # status line font
+
 # zathurarc-dark
 set notification-error-bg       "#586e75" # base01  # seem not work
 set notification-error-fg       "#dc322f" # red
@@ -37,22 +39,25 @@ set render-loading              true
 set render-loading-fg           "#073642" # base02
 set render-loading-bg           "#073642" # base02
 
-# Recolor book content's color
+# ------------------------------
+# permite abrir com sepia como padrão
+#
+# Recolor sepia
+# set recolor                     true
+# set recolor-lightcolor          "#FBF0D9" # fundo
+# set recolor-darkcolor           "#654321" # texto 
+
+# ------------------------------
+# Colors
+#
+# Sepia as default color
 set recolor                     true
 set recolor-lightcolor          "#FBF0D9" # fundo
 set recolor-darkcolor           "#654321" # texto 
 
-# setia
-#background: #FBF0D9
-#color: #5F4B32
-
-# :set default-bg \#FBF0D9
-# :set default-bg
-#
-# set default-bg "#FBF0D9"
-# set recolor-lightcolor "#5F4B32" 
-
-# set recolor true
-# set recolor-darkcolor "dcdccc"
-# set recolor-lightcolor "#5F4B32"
+map ! feedkeys ":set recolor-lightcolor \#ffffff<Return>:set recolor-darkcolor \#000000<Return>"        # default back and whhite
+map @ feedkeys ":set recolor-lightcolor \#FBF0D9<Return>:set recolor-darkcolor \#654321<Return>"        # sepia
+map \# feedkeys ":set recolor-lightcolor \#073642<Return>:set recolor-darkcolor \#ededed<Return>"       # solarized dark 
+map $ feedkeys ":set recolor-lightcolor \#1e1e1e<Return>:set recolor-darkcolor \#d9e6e6<Return>"        # dark gray and white  
+map % feedkeys ":set recolor-lightcolor \#000000<Return>:set recolor-darkcolor \#d9e6e6<Return>"        # black and white  
 
