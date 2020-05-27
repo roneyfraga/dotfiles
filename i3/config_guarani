@@ -314,16 +314,8 @@ for_window [class="^.*"] border pixel 3
         exec_always unclutter
 
 # Monitores
-# free drive
-# exec_always xrandr --output DVI-I-1 --primary --mode 1920x1080 --pos 1080x355 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate right --output VGA-1 --off
-#
-# nvidia drive = vertical + landscape
-# exec_always xrandr --output DVI-I-0 --off --output VGA-0 --off --output DVI-I-1 --primary --mode 1920x1080 --pos 1080x341 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate right
-# exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-2 --primary --mode 1920x1080 --pos 1080x685 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate right --output DVI-I-3 --off
-#
-# nvidia drive = landascape + landascape
-exec_always xrandr --output DVI-I-0 --off --output DVI-I-1 --off --output DVI-I-2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --primary --mode 1920x1080 --pos 1920x151 --rotate normal --output DVI-I-3 --off
-
+# AMD Radeon RX 270 with 3 monitors
+exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1920x840 --rotate normal --primary --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 3840x0 --rotate right --output DVI-D-0 --mode 1920x1080 --pos 0x347 --rotate normal
 
 # Keyboard
         # pok3r 

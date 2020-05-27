@@ -533,7 +533,6 @@ lib32-mesa
 lib32-mesa-demos
 lib32-mesa-vdpau
 lib32-ncurses
-lib32-nvidia-340xx-utils
 lib32-readline
 lib32-util-linux
 lib32-vulkan-intel
@@ -832,7 +831,6 @@ links
 linux-api-headers
 linux-firmware
 linux414
-linux414-nvidia-340xx
 linux414-r8168
 linux414-virtualbox-host-modules
 lirc
@@ -896,12 +894,6 @@ mhwd
 mhwd-amdgpu
 mhwd-ati
 mhwd-db
-mhwd-nvidia-340xx
-mhwd-nvidia-390xx
-mhwd-nvidia-418xx
-mhwd-nvidia-430xx
-mhwd-nvidia-435xx
-mhwd-nvidia-440xx
 minetime
 minizip
 mjpegtools
@@ -956,7 +948,6 @@ nss
 nss-mdns
 ntfs-3g
 ntp
-nvidia-340xx-utils
 onedrive-abraunegg
 oniguruma
 open-fuse-iso
@@ -1518,11 +1509,6 @@ xf86-input-keyboard
 xf86-input-libinput
 xf86-input-mouse
 xf86-input-void
-xf86-video-amdgpu
-xf86-video-ati
-xf86-video-intel
-xf86-video-nouveau
-xf86-video-vesa
 xfburn
 xfce4-power-manager
 xfconf

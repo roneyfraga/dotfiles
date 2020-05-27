@@ -163,8 +163,10 @@ alias mutt='cd ~/Downloads && neomutt'
 alias onedrive_log='journalctl --user-unit onedrive -f'
 alias def='goldendict'
 alias syn='~/bin/dicsyn.R'
+alias doi2bib='~/bin/doi2bibtex.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
+alias verb='cat $HOME/OneDrive/CLI/verbs.md | fzf --multi --ansi --preview-window=:hidden'
 
 # radio
 alias r1='mplayer http://listen.shoutcast.com/gaiafm'
@@ -288,15 +290,6 @@ topdf(){
     unoconv -f pdf $1
 }
 
-# references pdf bibtex
-getref2(){
-    papers extract $1
-}
-
-addref(){
-    $* >> $HOME/OneDrive/CLI/bibliography.bib
-}
-
 # R_in_buffer: 0 no, 1 yes
 r_in_buffer(){
     sed -i "s/^let R_in_buffer.*/let R_in_buffer = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
@@ -350,6 +343,15 @@ fbi(){
 # fzf reference, fr $BIB or fr references.bib
 fre(){
     bibtex-ls $1 | fzf --multi --ansi --preview-window=:hidden
+}
+
+# references pdf bibtex
+getref2(){
+    papers extract $1
+}
+
+addref(){
+    $* >> $HOME/OneDrive/CLI/bibliography.bib
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

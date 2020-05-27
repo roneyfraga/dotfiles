@@ -13,17 +13,26 @@ set encoding=utf-8
 "  quebra de linha por padrão
 set wrap
 
+" destacar coluna e linha onde esta o cursor
+" set cuc cul 
+
 "mostra o modo em que estamos
 set showmode 
 
 "faz o vim ignorar maiúsculas e minúsculas nas buscas
 set ignorecase 
 
+"  linas destacadas
+" set cursorline
+
 " usar 256 cores
 set t_Co=256
 
 " não destacar buscar
 set nohlsearch
+
+" sempre mostrar a barra inferior com o status
+set laststatus=2
 
 " funções do mouse funcionando no terminal com tmux
 set mouse=a
@@ -33,6 +42,12 @@ set backspace=2
 
 " Enabling clipboard
 set clipboard=unnamed
+
+
+" ------------------------------
+" mostrar a coluna número 100, para ter uma noção de espaço 
+" set colorcolumn=100
+" highlight ColorColumn term=NONE cterm=NONE ctermfg=222  ctermbg=64   gui=NONE guifg=#ffd787 guibg=#5f8700
 
 " ------------------------------
 " Cor da barra lateral quando marcas são feitas
@@ -71,33 +86,29 @@ set smarttab
 " always uses spaces instead of tab characters
 set expandtab
 
-" ------------------------------
 " Italic inside tmux
-set t_ZH=^[[3m
-set t_ZR=^[[23m
-
-" italic to comment
-highlight Comment cterm=italic
+" set t_ZH=^[[3m
+" set t_ZR=^[[23m
 
 " ------------------------------
 "Better Esc
 inoremap jj <esc>
+" inoremap jk <esc>
 
-" Permanent Macros  
-" palavra entre ``, itálico, e negrito
-" linha entre ``, itálico, e negrito
-
-let @1="Bi`ea`"
-let @2="Bi_ea_"
-let @3="Bi__ea__"
-let @4="0I`$a`"
-let @5="0I_$a_"
-let @6="0I__$a__"
+" ------------------------------
+" setas do teclado funcinarem no mode inserção com tmux
+nnoremap <Esc>A <up>
+inoremap <Esc>C <right>
+inoremap <Esc>D <left>
+inoremap <Esc>A <up>
+inoremap <Esc>B <down>
+inoremap <Esc>C <right>
+inoremap <Esc>D <left>
 
 " ------------------------------
 " adicionando o dicionário português do Brasil e inglês
 hi clear SpellBad
-set spelllang=pt,en
+set spelllang=pt,en 
 
 " não corrigir palavras no início da linha em minúsculo
 set spellfile=~/.vim/spell/lowercase.utf-8.add
@@ -108,7 +119,6 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 
 " auto spell to markdown files
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal spell
 
 " utilizar o dicionário como fonte das palavras sugeridas no autocompletar
@@ -118,14 +128,10 @@ set complete+=kspell
 " desabilita/habilitar o corretor ortográfico
 set nospell
 
-" F2 pt_br
-" F3 en_us
-" F4 pt_br, en_us
 " F5 nospell
-nmap <F2> :setlocal spell spelllang=pt_br<CR>
-nmap <F3> :setlocal spell spelllang=en_us<CR>
-nmap <F4> :setlocal spell spelllang=pt_br,en_us<CR>
-nmap <F5> :setlocal nospell<CR>
+" F6 spell
+map <F5> <Esc>:setlocal nospell<CR>
+map <F6> <Esc>:setlocal spell spelllang=pt,en<CR>
 
 "------------------------------------
 " Specify a directory for plugins
@@ -140,8 +146,10 @@ Plug 'kshenoy/vim-signature'
 Plug 'christoomey/vim-tmux-navigator'
 
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" [] () {} '' 
+Plug 'vim-scripts/AutoClose'
 
 " move like a pro
 Plug 'wikitopian/hardmode'
@@ -150,7 +158,7 @@ Plug 'wikitopian/hardmode'
 Plug 'vim-scripts/tComment'
 
 " easy navegation
-" Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 
 " R plugin 
 Plug 'jalvesaq/Nvim-R'
@@ -161,10 +169,13 @@ Plug 'joshdick/onedark.vim'
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
 
+" TextMate's snippets
+Plug 'msanders/snipmate.vim'
+
 " status line
-" Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " rainbow colors to {} [] ()
 Plug 'luochen1990/rainbow'
@@ -173,11 +184,8 @@ Plug 'luochen1990/rainbow'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim'
 
-"  Delete buffer withou messing the layout :Bd
+" Buffers
 Plug 'moll/vim-bbye'
-
-" Buffers in tabs
-Plug 'ap/vim-buftabline'
 
 " Markdown 
 Plug 'vim-pandoc/vim-pandoc'
@@ -190,46 +198,31 @@ Plug 'junegunn/goyo.vim'
 " Calendar 
 Plug 'itchyny/calendar.vim'
 
-" Python
+" Python 
 Plug 'jalvesaq/vimcmdline'
 
 " Auto complete
 Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'              "nvim support: pip3 install pynvim
-Plug 'gaalcaras/ncm-R'              "r
-Plug 'ncm2/ncm2-jedi'               "python
-Plug 'ncm2/ncm2-bufword'            "buffers
-Plug 'ncm2/ncm2-path'               "paths
-Plug 'ncm2/ncm2-pyclang'            "c++
-Plug 'ncm2/ncm2-match-highlight'    "matches highlight 
+Plug 'roxma/nvim-yarp'
+Plug 'gaalcaras/ncm-R'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 
-" Snipmate 
-Plug 'ncm2/ncm2-snipmate'
-Plug 'tomtom/tlib_vim'              
-Plug 'marcweber/vim-addon-mw-utils'
-Plug 'garbas/vim-snipmate'          
-Plug 'roneyfraga/vim-snippets'      "snippets source           
+" Optional: for snippet support
+" Further configuration might be required, read below
+" Plug 'sirver/UltiSnips'
+" Plug 'ncm2/ncm2-ultisnips'
 
 " LaTeX
-Plug 'lervag/vimtex'
-
-" bracket mappings
-Plug 'tpope/vim-unimpaired'
-
-" grammar checker
-Plug 'dpelle/vim-LanguageTool'
-
-" syntax check
-Plug 'dense-analysis/ale'
-
-" neovim in browser text box
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+ Plug 'lervag/vimtex'
 
 " Initialize plugin system
 call plug#end()
 
 "------------------------------------
 " Nvim-R
+"------------------------------------
 "usar espaço para enviar comandos para o R
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
@@ -245,7 +238,10 @@ nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 
-" porque tComment (control+_ control+_) não funciona em arquivo .Rmd
+" indent with magrittr pipe %>% 
+" let g:r_indent_op_pattern = '\(&\||\|+\|-\|\*\|/\|=\|\~\|%\|->\)\s*$'
+
+" porque comentários via \xx não funcionam em arquivos .Rmd
 " comment   \xc 
 " uncomment \xu
 let R_rcomment_string = '# '
@@ -254,32 +250,31 @@ let R_rcomment_string = '# '
 let R_nvimpager = 'horizontal'
 
 " abrir o terminal no R em uma janela independente = 0
-let R_in_buffer = 1
-let R_term = 'urxvt' 
+let R_in_buffer = 0
+let R_term = 'urxvt'   
 
 " ------------------------------
-" Buffers and TabLine
+" Buffers and Terminal Mode
+let g:airline#extensions#tabline#enabled = 1
 
-let buftabline_show = 0
-
-highlight TabLine gui=NONE guibg=NONE guifg=NONE cterm=NONE term=NONE ctermfg=NONE ctermbg=NONE
-highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE
+" theme
+" let g:airline_theme='simple'
 
 " buffers escondidos
-" set hidden 
+set hidden 
 
-" mudar entre buffers de forma rápida
-"nnoremap <Tab> :bnext<CR>
-"nnoremap <S-Tab> :bprevious<CR>
-
-" ------------------------------
-" better Teminal Mode exit
+" better teminal mode exit
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
 endif
 
+" mudar entre buffers de forma rápida
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
+
 " ------------------------------
-"  auto completation - ncm2
+"  auto completation
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -287,94 +282,6 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
 
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
-" select an item in the poup-up menu without insert a new line control-y"
-
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
-"  'on_complete': ['ncm2#on_complete#delay', 180,
-"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-            \ })
-
-"-----------
-" ncm2 pyclang c++
-"
-let g:ncm2_pyclang#library_path = '/usr/lib/llvm-5.0/lib'
-
-" gd go to declaration
-autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-
-"-----------
-" ncm2 + vimtex
-au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'vimtex',
-            \ 'priority': 1,
-            \ 'subscope_enable': 1,
-            \ 'complete_length': 1,
-            \ 'scope': ['tex'],
-            \ 'matcher': {'name': 'combine',
-            \           'matchers': [
-            \               {'name': 'abbrfuzzy', 'key': 'menu'},
-            \               {'name': 'prefix', 'key': 'word'},
-            \           ]},
-            \ 'mark': 'tex',
-            \ 'word_pattern': '\w+',
-            \ 'complete_pattern': g:vimtex#re#ncm,
-            \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-            \ })
-
-"-----------
-" ncm2 + snippets completation
-" tab 
-inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
-
-" control+u
-inoremap <expr> <c-u> ncm2_snipmate#expand_or("\<Plug>snipMateTrigger", "m")
-
-" --------------------------------------
-" dense-analysis/ale: syntax check
-"
-nmap <F6> :ALEToggle<CR>
-
-let g:ale_fixers = {'r': ['styler']}
-
-let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_warn_about_trailing_blank_lines = 0
-
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-
-let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0
-
-"ignore R, Rmd, and TeX files
-autocmd BufRead,BufNewFile *.R,*.Rmd,*.tex ALEDisable
-
-" --------------------------------------
-"  AutoClose
-" inoremap ' ''<left>
-" inoremap " ""<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
-
-" if has('nvim')
-"     tnoremap <Esc> <C-\><C-n>
-" endif
 
 " --------------------------------------
 "  Python configs
@@ -383,16 +290,38 @@ let cmdline_term_height = 18
 let cmdline_app           = {}
 let cmdline_app['python'] = 'ipython'
 
+" --------------------------------------
+" Markdown
+
+" :make 
+" :make html
+" :make pdf
+"
+" ou simplismente via atalhos
+nmap <leader>mh :!make html 
+nmap <leader>mp :!make pdf
+nmap <leader>md :!make docx
+
+" vim-pandoc
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#modules#disabled = ["folding"]
+
+" MarkdownPreview
+
+" Start the preview
+" :MarkdownPreview
+
+" Stop the preview"
+" :MarkdownPreviewStop
+
 " ------------------------------
 "  fuzzy finder - fzf
-nmap f. :FZF<CR>
+nmap ff :FZF<CR>
 nmap fh :FZF ~<CR>
-nmap fb :Buffers<CR>
-nmap ff :Rg<CR>
 
 "------------------------------
 " cCommand - atalho: control _ + control _ 
-" map <leader>xx <C-_><C-_>
+map <leader>xx <C-_><C-_>
 
 "------------------------------
 " Maps to resizing a window split
@@ -442,7 +371,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " setlocal fo+=aw
 
 "------------------------------
-" vimtex + ncm2 
+" vimtex - LaTex
 
 let g:tex_flavor  = 'latex'
 let g:tex_conceal = ''
@@ -450,6 +379,22 @@ let g:vimtex_fold_manual = 1
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
+
+" NCM2
+augroup NCM2
+  autocmd!
+  " some other settings...
+  " uncomment this block if you use vimtex for LaTex
+  autocmd Filetype tex call ncm2#register_source({
+            \ 'name': 'vimtex',
+            \ 'priority': 8,
+            \ 'scope': ['tex'],
+            \ 'mark': 'tex',
+            \ 'word_pattern': '\w+',
+            \ 'complete_pattern': g:vimtex#re#ncm2,
+            \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+            \ })
+augroup END
 
 "------------------------------
 " Vim Hard Mode
@@ -464,44 +409,67 @@ nnoremap <leader>hd <Esc>:call ToggleHardMode()<CR>
 " Calendar
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 0
-" --------------------------------------
-" Markdown
 
-" :make 
-" :make html
-" :make pdf
-"
-" ou simplismente via atalhos
-nmap <leader>m :!make<CR>  
-nmap <leader>mh :!make html 
-nmap <leader>mp :!make pdf
-nmap <leader>md :!make docx
-
-" vim-pandoc
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#modules#disabled = ["folding"]
-
-" MarkdownPreview
-"
-" :MarkdownPreview
-" :MarkdownPreviewStop
-" :MarkdownPreviewToggle
-
-" nmap <C-s> <Plug>MarkdownPreview
-" nmap <M-s> <Plug>MarkdownPreviewStop
-nmap <C-p> <Plug>MarkdownPreviewToggle
-
-" ---------
+" ------------------------------
 "  MarkdownPreview
+
+" set to 1, nvim will open the preview window after entering the markdown 
+" buffer
+" default: 0
 let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
 let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
 let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 1
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
 let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
 let g:mkdp_browser = 'qutebrowser'
-let g:mkdp_echo_preview_url = 1
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
 let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
 let g:mkdp_preview_options = {
     \ 'mkit': {},
     \ 'katex': {},
@@ -512,10 +480,20 @@ let g:mkdp_preview_options = {
     \ 'hide_yaml_meta': 1,
     \ 'sequence_diagrams': {}
     \ }
+
+" use a custom markdown style must be absolute path
 let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
 let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
 let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
+
 
 "------------------------------
 " clipboard
@@ -558,48 +536,3 @@ let g:rainbow_conf = {
             \}
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
-"------------------------------
-" minimal status line
-function! StatuslineGit()
-    let l:branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-    return strlen(l:branchname) > 0?"".l:branchname.' ':''
-endfunction
-
-set laststatus=0 
-
-set ruler rulerformat=%70(%=%<%F%m\ \
-                      \›\ %{StatuslineGit()}\ \
-                      \›\ %l/%L:%v%)
-
-
-"------------------------------
-" zoom in buffer
-fu s:window_zoom_toggle() abort
-    if winnr('$') == 1 | return | endif
-    if exists('t:zoom_restore') && win_getid() == t:zoom_restore.winid
-        exe get(t:zoom_restore, 'cmd', '')
-        unlet t:zoom_restore
-    else
-        let t:zoom_restore = {'cmd': winrestcmd(), 'winid': win_getid()}
-        wincmd |
-        wincmd _
-    endif
-endfu
-
-nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
-
-"------------------------------
-" LanguageTool
-"
-" set spelllang=en_us
-" set spelllang=pt_br
-"
-let g:languagetool_jar='$HOME/languagetool/languagetool-standalone/target/LanguageTool-5.0-SNAPSHOT/LanguageTool-5.0-SNAPSHOT/languagetool-commandline.jar'
-
-" grammar errors in blue, and spelling errors in red
-hi LanguageToolGrammarError  guisp=blue gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=blue term=underline cterm=none
-hi LanguageToolSpellingError guisp=red  gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=red  term=underline cterm=none
-
-let g:languagetool_disable_rules='ENGLISH_WORD_REPEAT_BEGINNING_RULE,WHITESPACE_RULE,EN_QUOTES,FRENCH_WHITESPACE,UPPERCASE_SENTENCE_START,APOS'
-
-let g:languagetool_enable_rules='PASSIVE_VOICE'
