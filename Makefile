@@ -23,17 +23,19 @@ ln_x270:
 	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_x270 $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_x270.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/Xresources ~/.Xresources
+	ln -s $(dotfolder)/Xresources_x270 ~/.Xresources
 
 ln_frank:
 	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
+	ln -s $(dotfolder)/Xresources ~/.Xresources
 
 ln_guarani:
 	ln -s $(dotfolder)/i3/config_guarani $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
+	ln -s $(dotfolder)/Xresources ~/.Xresources
 
 rm:
 	rm -f ~/.zshrc
@@ -60,9 +62,11 @@ rm_frank:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f ~/.Xresources
 
 rm_guarani:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f ~/.Xresources
 
