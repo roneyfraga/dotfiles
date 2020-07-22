@@ -253,9 +253,8 @@ let R_rcomment_string = '# '
 " Help
 let R_nvimpager = 'horizontal'
 
-" abrir o terminal no R em uma janela independente = 0
-let R_in_buffer = 1
-let R_term = 'urxvt' 
+" abrir o terminal no R em uma janela independente 
+let R_external_term = 0
 
 " ------------------------------
 " Buffers and TabLine
@@ -472,7 +471,7 @@ let g:calendar_google_task = 0
 " :make pdf
 "
 " ou simplismente via atalhos
-nmap <leader>m :!make<CR>  
+nmap <leader>mm :!make<CR>  
 nmap <leader>mh :!make html 
 nmap <leader>mp :!make pdf
 nmap <leader>md :!make docx
@@ -559,18 +558,27 @@ let g:rainbow_conf = {
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 "------------------------------
-" minimal status line
-function! StatuslineGit()
-    let l:branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-    return strlen(l:branchname) > 0?"".l:branchname.' ':''
+" Status Line
+
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
 
-set laststatus=0 
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
 
-set ruler rulerformat=%70(%=%<%F%m\ \
-                      \›\ %{StatuslineGit()}\ \
-                      \›\ %l/%L:%v%)
-
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ %l:%c
 
 "------------------------------
 " zoom in buffer

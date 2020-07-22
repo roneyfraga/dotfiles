@@ -73,11 +73,7 @@ settings:
         ',h': 'set-cmd-text -s :help '
         ',j': set-cmd-text :set content.javascript.enabled false
         ',m': set-cmd-text :bookmark-
-        ',n': config-cycle content.user_stylesheets ~/OneDrive/CLI/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css
-          ""
         ',q': set-cmd-text :quickmark-
-        ',s': config-cycle content.user_stylesheets ~/OneDrive/CLI/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css
-          ""
         '-': zoom-out
         /: set-cmd-text /
         ':': 'set-cmd-text :'
@@ -125,6 +121,8 @@ settings:
         \h: 'set-cmd-text -s :help '
         \q: set-cmd-text :quickmark-
         \s: config-cycle content.user_stylesheets ~/OneDrive/CLI/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css
+          ""
+        \l: config-cycle content.user_stylesheets ~/OneDrive/CLI/solarized-everything-css/css/solarized-light/solarized-light-all-sites.css
           ""
         ']]': navigate next
         '`': enter-mode set_mark

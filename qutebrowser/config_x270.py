@@ -51,7 +51,7 @@ config.bind('<Ctrl-r>', 'spawn --userscript readability', mode='normal')
 # poket # sp Save Pocket
 config.bind('sp', "spawn --userscript qutepocket")
 # mpv
-mpv_command = 'spawn mpv --ontop --autofit 30% --geometry 100%:100%'
+mpv_command = 'spawn mpv'
 config.bind(';p', 'hint links ' + mpv_command + ' {hint-url}', mode='normal')
 config.bind(';P', mpv_command + ' {url}', mode='normal')
 # }}}

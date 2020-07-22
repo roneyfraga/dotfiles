@@ -167,6 +167,7 @@ alias doi2bib='~/bin/doi2bibtex.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias verb='cat $HOME/OneDrive/CLI/verbs.md | fzf --multi --ansi --preview-window=:hidden'
+alias info2='screenfetch'
 
 # radio
 alias r1='mplayer http://listen.shoutcast.com/gaiafm'
@@ -195,10 +196,10 @@ alias qualis='cd ~/OneDrive/Profissional/PubPar/Qualis'
 alias dw='cd ~/Downloads'
 
 # ssh
-alias rpi='ssh -p 12246 bibr@192.168.191.250'
-alias rpi_pub='ssh -p 12246 bibr@200.17.60.42'
-alias rpi_bibr='ssh -p 12246 bibr@192.168.191.250'
-alias fusca='ssh bibr@192.168.191.32'
+alias rpi='ssh -p 19239 bibr@200.17.60.42'
+alias rpi_local='ssh -p 19239 bibr@192.168.191.239'
+alias fusca_local='ssh bibr@192.168.191.250'
+alias frank='ssh -p 19127 roney@200.17.60.42'
 alias ubuntu_nyc='ssh bibr@159.89.36.185'
 alias caipora='ssh -D 5555 caipora@159.89.36.185'
 alias nas='ssh roney@192.168.191.29'
@@ -290,9 +291,9 @@ topdf(){
     unoconv -f pdf $1
 }
 
-# R_in_buffer: 0 no, 1 yes
-r_in_buffer(){
-    sed -i "s/^let R_in_buffer.*/let R_in_buffer = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
+# r_external_term: 0 no, 1 yes, or terminal name
+r_external_term(){
+    sed -i "s/^let R_external_term.*/let R_external_term = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
 }
 
 # intalled packages
@@ -300,13 +301,13 @@ pacmanIP(){
     pacman -Q | awk '{print $1}' > $HOME/OneDrive/CLI/dotfiles/pacman_packages_installed.txt
 }
 
-# find and open in nvim, from current directory
-fv.() {
+# find file and open it in nvim, from current directory
+ff.() {
     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
 }
 
-# find and open in nvim, from ~/
-fvh() {
+# find file and open it in nvim, from ~/
+ffh() {
     cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
 }
 
@@ -352,6 +353,11 @@ getref2(){
 
 addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
+}
+
+# audio
+vol(){
+    sh -c "pactl set-sink-mute 1 false ; pactl set-sink-volume 1 $1%"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -34,7 +34,7 @@ bindsym $super+Shift+q exec i3-msg exit
 bindsym $super+Return exec 'terminator'
 
 # ranger
-bindsym $alt+r exec $terminal -e ranger 
+bindsym $alt+r exec urxvt -e ranger 
 
 # terminal with nvim
 bindsym $alt+n exec $terminal -e nvim
@@ -67,30 +67,18 @@ mode "$mode_system" {
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
 exec --no-startup-id volumeicon
-# bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-bindsym $mod+Ctrl+m exec terminal -e 'amixer'
-# exec --no-startup-id pulseaudio
-# exec --no-startup-id pa-applet
-# bindsym $mod+Ctrl+m exec pavucontrol
-
-bindsym XF86AudioMute exec amixer sset 'Master' toggle
-bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
-bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
-
-# como o fn do teclado apple sem fio não funciona, 
-# tive que adicionar Super + (F10, F11 e F12) para os controles de audio
-bindcode $super+76 exec amixer sset 'Master' toggle
-bindcode $super+95 exec amixer sset 'Master' 5%-
-bindcode $super+96 exec amixer sset 'Master' 5%+
-
-
-# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
-# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
-# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 #
-# bindsym XF86AudioPlay exec playerctl play-pause
-# bindsym XF86AudioNext exec playerctl next
-# bindsym XF86AudioPrev exec playerctl previous
+# Pulse Audio controls
+#
+# multimidia keys
+# bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
+# bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
+# bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
+# 
+bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"             # increase sound volume
+bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"             # decrease sound volume
+bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"             # mute sound
+#
 # }}}
 
 # APPEARANCE {{{
@@ -247,7 +235,7 @@ for_window [class="^.*"] border pixel 3
 # RESIZE {{{
     mode "Normal:Resize: [hjkl|HJKL]" {
 # Get back from inception
-        bindsym $super+semicolon mode "default"
+            bindsym $super+semicolon mode "default"
             bindsym BackSpace mode "default"
             bindsym Return mode "default"
             bindsym Escape mode "default"

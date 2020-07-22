@@ -34,7 +34,7 @@ bindsym $super+Shift+q exec i3-msg exit
 bindsym $super+Return exec 'terminator'
 
 # ranger
-bindsym $alt+r exec $terminal -e ranger 
+bindsym $alt+r exec urxvt -e ranger 
 
 # terminal with nvim
 bindsym $alt+n exec $terminal -e nvim
@@ -250,21 +250,21 @@ for_window [class="^.*"] border pixel 3
 # RESIZE {{{
     mode "Normal:Resize: [hjkl|HJKL]" {
 # Get back from inception
-        bindsym $super+semicolon mode "default"
+            bindsym $super+semicolon mode "default"
             bindsym BackSpace mode "default"
             bindsym Return mode "default"
             bindsym Escape mode "default"
             bindsym Control+c mode "default"
             bindsym q mode "default"
 # Actions
-            bindsym l       resize shrink width  5  px or 5  ppt
-            bindsym k       resize grow   height 5  px or 5  ppt
-            bindsym j       resize shrink height 5  px or 5  ppt
-            bindsym h       resize grow   width  5  px or 5  ppt
-            bindsym Shift+l resize shrink width  10 px or 10 ppt
-            bindsym Shift+k resize grow   height 10 px or 10 ppt
-            bindsym Shift+j resize shrink height 10 px or 10 ppt
-            bindsym Shift+h resize grow   width  10 px or 10 ppt
+            bindsym h       resize shrink width  5  px or 5  ppt
+            bindsym j       resize grow   height 5  px or 5  ppt
+            bindsym k       resize shrink height 5  px or 5  ppt
+            bindsym l       resize grow   width  5  px or 5  ppt
+            bindsym Shift+h resize shrink width  10 px or 10 ppt
+            bindsym Shift+j resize grow   height 10 px or 10 ppt
+            bindsym Shift+k resize shrink height 10 px or 10 ppt
+            bindsym Shift+l resize grow   width  10 px or 10 ppt
     }
 # }}}
 # MOVE {{{
@@ -319,14 +319,10 @@ for_window [class="^.*"] border pixel 3
         exec_always unclutter
 
 # Caps->Control LR_Shift->Caps
-        exec_always setxkbmap -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_lalt_lwin
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 
 
-# delete como tecla de ejetar cd
-        #exec_always /home/roney/bin/apple_keyboard.sh
-        #exec /home/roney/bin/nextcloud.sh
-
-# Natural scroll mouse
-        #exec synclient NaturalScrolling=1 VertScrollDelta=-113
+# PrtSc as Alt
+        exec_always /home/roney/bin/x270_keyboard.sh
 
 # }}}
 # vim: fdm=marker nowrap
