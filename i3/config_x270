@@ -302,7 +302,7 @@ for_window [class="^.*"] border pixel 3
         exec --no-startup-id pamac-tray
         exec --no-startup-id clipit
         # exec --no-startup-id blueman-applet
-        exec --no-startup-id dropbox
+        # exec --no-startup-id dropbox
         exec --no-startup-id syncthing -no-browser
         exec --no-startup-id telegram-desktop
         # exec --no-startup-id skypeforlinux

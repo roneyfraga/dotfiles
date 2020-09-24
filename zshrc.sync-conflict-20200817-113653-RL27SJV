@@ -117,6 +117,8 @@ export RES=$HOME/OneDrive/CLI/RES.md
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
+    --preview 'head -100 {}'\
+    --preview-window=right:50%:wrap\
     --multi --no-height\
     --bind=ctrl-b:backward-kill-word\
     --bind=ctrl-d:kill-word\
@@ -139,14 +141,9 @@ source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
 
-# nnn
-export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;b:~/OneDrive/Biblioteca;h:~'
-export NNN_PLUG='d:fzz;m:nmount'
-
 # softwares
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
-alias n='nnn -e'
 alias rrsync='rsync -lhr --info=progress2'
 alias j='joplin'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
@@ -202,7 +199,7 @@ alias dw='cd ~/Downloads'
 alias rpi='ssh -p 19239 bibr@200.17.60.42'
 alias rpi_local='ssh -p 19239 bibr@192.168.191.239'
 alias fusca_local='ssh bibr@192.168.191.250'
-alias frank='ssh -p 19127 -D 5555 roney@200.17.60.42'
+alias frank='ssh -p 19127 roney@200.17.60.42'
 alias ubuntu_nyc='ssh bibr@159.89.36.185'
 alias caipora='ssh -D 5555 caipora@159.89.36.185'
 alias nas='ssh roney@192.168.191.29'
@@ -261,7 +258,6 @@ ytp(){
     mpv $1 --no-video --shuffle
 }
 
-# nnn pmount better option
 # un/mount by external's drive name
 pen(){
     udevil $1 /dev/disk/by-label/$2
@@ -357,6 +353,11 @@ getref2(){
 
 addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
+}
+
+# audio
+vol(){
+    sh -c "pactl set-sink-mute 1 false ; pactl set-sink-volume 1 $1%"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

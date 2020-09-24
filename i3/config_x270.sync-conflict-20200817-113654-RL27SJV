@@ -33,6 +33,12 @@ bindsym $super+Shift+q exec i3-msg exit
 # start a terminal
 bindsym $super+Return exec 'terminator'
 
+# ranger
+bindsym $alt+r exec urxvt -e ranger 
+
+# terminal with nvim
+bindsym $alt+n exec $terminal -e nvim
+
 # inverted colors
 bindsym $super+i exec xrandr-invert-colors
 bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
@@ -61,18 +67,30 @@ mode "$mode_system" {
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
 exec --no-startup-id volumeicon
+# bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+bindsym $mod+Ctrl+m exec terminal -e 'amixer'
+# exec --no-startup-id pulseaudio
+# exec --no-startup-id pa-applet
+# bindsym $mod+Ctrl+m exec pavucontrol
+
+bindsym XF86AudioMute exec amixer sset 'Master' toggle
+bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
+bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
+
+# como o fn do teclado apple sem fio não funciona, 
+# tive que adicionar Super + (F10, F11 e F12) para os controles de audio
+bindcode $super+76 exec amixer sset 'Master' toggle
+bindcode $super+95 exec amixer sset 'Master' 5%-
+bindcode $super+96 exec amixer sset 'Master' 5%+
+
+
+# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 #
-# Pulse Audio controls
-#
-# multimidia keys
-# bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
-# bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
-# 
-bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"             # increase sound volume
-bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"             # decrease sound volume
-bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"             # mute sound
-#
+# bindsym XF86AudioPlay exec playerctl play-pause
+# bindsym XF86AudioNext exec playerctl next
+# bindsym XF86AudioPrev exec playerctl previous
 # }}}
 
 # APPEARANCE {{{
@@ -146,7 +164,10 @@ for_window [class="^.*"] border pixel 3
 
 # APP SHORTCUTS {{{
 # Rofi
-    bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 10' -show combi"
+    bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 13' -show combi"
+
+# rofi-calc
+    bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
 
 # flameshot
     bindsym $super+p exec "flameshot gui"
@@ -189,7 +210,7 @@ for_window [class="^.*"] border pixel 3
         bindsym Shift+$alt+1 move container to workspace 1; workspace 1
         bindsym Shift+$alt+2 move container to workspace 2; workspace 2
         bindsym Shift+$alt+3 move container to workspace 3; workspace 3
-        bindsym Shift+$alt+4 move container to workspace 4; workspace 4
+        bindsym Shift+$alt+4 move container to workspace 3; workspace 4
         bindsym Shift+$alt+5 move container to workspace 5; workspace 5
         bindsym Shift+$alt+6 move container to workspace 6; workspace 6
         bindsym Shift+$alt+7 move container to workspace 7; workspace 7
@@ -281,36 +302,27 @@ for_window [class="^.*"] border pixel 3
         exec --no-startup-id pamac-tray
         exec --no-startup-id clipit
         # exec --no-startup-id blueman-applet
-        # exec --no-startup-id dropbox
-        # exec --no-startup-id nextcloud
+        exec --no-startup-id dropbox
         exec --no-startup-id syncthing -no-browser
+        exec --no-startup-id telegram-desktop
         # exec --no-startup-id skypeforlinux
-        exec --no-startup-id flameshot
+        # exec --no-startup-id flameshot
+        exec --no-startup-id xpad
         # exec --no-startup-id minetime
         exec --no-startup-id goldendict
         # exec --no-startup-id start_conky_maia
-        exec --no-startup-id xautolock -time 15 -locker blurlock
+        exec --no-startup-id xautolock -time 60 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
-        exec --no-startup-id telegram-desktop
+        exec_always --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off
+        exec xrandr --dpi 90
         exec_always unclutter
 
-# Monitores
-# AMD Radeon RX 270 with 3 monitors
-exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --primary --mode 1920x1080 --pos 1920x467 --rotate normal --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 3840x0 --rotate right --output DVI-D-0 --mode 1920x1080 --pos 0x467 --rotate normal
+# Caps->Control LR_Shift->Caps
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 
 
-# Keyboard
-        # pok3r 
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
-        # apple wireless keyboard
-        # Caps->Control LR_Shift->Caps
-        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
-        # delete como tecla de ejetar cd
-        # exec_always /home/roney/bin/apple_keyboard.sh
-
-# Natural scroll mouse
-        exec synclient NaturalScrolling=1 VertScrollDelta=-113
+# PrtSc as Alt
+        exec_always /home/roney/bin/x270_keyboard.sh
 
 # }}}
-
 # vim: fdm=marker nowrap

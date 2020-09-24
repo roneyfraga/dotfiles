@@ -254,7 +254,9 @@ let R_rcomment_string = '# '
 let R_nvimpager = 'horizontal'
 
 " abrir o terminal no R em uma janela independente 
+" let R_external_term = 'urxvt'
 let R_external_term = 0
+
 
 " ------------------------------
 " Buffers and TabLine
@@ -384,10 +386,10 @@ let cmdline_app['python'] = 'ipython'
 
 " ------------------------------
 "  fuzzy finder - fzf
-nmap f. :FZF<CR>
-nmap fh :FZF ~<CR>
-nmap fb :Buffers<CR>
-nmap ff :Rg<CR>
+nmap ;. :FZF<CR>
+nmap ;h :FZF ~<CR>
+nmap ;b :Buffers<CR>
+nmap ;f :Rg<CR>
 
 "------------------------------
 " cCommand - atalho: control _ + control _ 
