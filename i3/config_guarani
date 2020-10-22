@@ -294,10 +294,11 @@ for_window [class="^.*"] border pixel 3
         exec_always --no-startup-id fix_xcursor
         exec --no-startup-id telegram-desktop
         exec_always unclutter
+        exec --no-startup-id discord
 
 # Monitores
 # AMD Radeon RX 270 with 3 monitors
-exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --primary --mode 1920x1080 --pos 1920x467 --rotate normal --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 3840x0 --rotate right --output DVI-D-0 --mode 1920x1080 --pos 0x467 --rotate normal
+exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DisplayPort-2 --mode 1920x1080 --pos 0x525 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x1080 --rotate normal --output DVI-D-0 --off
 
 # Keyboard
         # pok3r 

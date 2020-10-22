@@ -40,6 +40,7 @@ application/x-bittorrent=deluge.desktop;
 application/vnd.ms-publisher=mousepad.desktop;
 application/x-java-jnlp-file=firefox.desktop;
 text/x-r-source=nvim.desktop;
+video/mp4=mpv.desktop;
 video/mp4=vlc.desktop;
 text/x-bibtex=nvim.desktop;
 video/webm=vlc.desktop;

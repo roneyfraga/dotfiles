@@ -317,6 +317,7 @@ for_window [class="^.*"] border pixel 3
         exec_always --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off
         exec xrandr --dpi 90
         exec_always unclutter
+        exec --no-startup-id discord
 
 # Caps->Control LR_Shift->Caps
         exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 

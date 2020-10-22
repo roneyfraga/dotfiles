@@ -141,7 +141,9 @@ bindkey '^p' autosuggest-toggle
 
 # nnn
 export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;b:~/OneDrive/Biblioteca;h:~'
-export NNN_PLUG='d:fzz;m:nmount'
+export NNN_PLUG='h:fzz;.:fzcd;m:nmount;t:treeview'
+# export NNN_FCOLORS='0000E6310000000000000000'
+set --export NNN_FIFO "/tmp/nnn.fifo"
 
 # softwares
 alias t='env TERM=screen-256color tmux'
@@ -162,7 +164,6 @@ alias db='~/bin/dropbox.py'
 alias drop='~/.dropbox-dist/dropboxd &'
 alias penlabel='ls /dev/disk/by-label/'
 alias py='python'
-alias mutt='cd ~/Downloads && neomutt'
 alias onedrive_log='journalctl --user-unit onedrive -f'
 alias def='goldendict'
 alias syn='~/bin/dicsyn.R'
@@ -306,14 +307,19 @@ pacmanIP(){
 }
 
 # find file and open it in nvim, from current directory
-ff.() {
-    nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
-}
+# ff.() {
+#     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
+# }
 
 # find file and open it in nvim, from ~/
-ffh() {
-    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
-}
+# ffh() {
+#     cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
+# }
+
+# fzf open file (with fd)
+# fop() {
+#     fd -t f -I --hidden --follow --exclude ".git" | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
+# }
 
 # fzf folder (directory), from current directory
 fd.() {
@@ -323,11 +329,6 @@ fd.() {
 # fzf folder (directory), from ~/
 fdh() {
     cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
-}
-
-# fzf open file (with fd)
-fop() {
-    fd -t f -I --hidden --follow --exclude ".git" | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
 
 # fzf pacman
