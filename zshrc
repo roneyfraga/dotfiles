@@ -172,6 +172,8 @@ alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" 
 alias timer='termdown'
 alias verb='cat $HOME/OneDrive/CLI/verbs.md | fzf --multi --ansi --preview-window=:hidden'
 alias info2='screenfetch'
+alias kbe='setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win'
+alias kbi='setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win'
 
 # radio
 alias r1='mplayer http://listen.shoutcast.com/gaiafm'
