@@ -60,19 +60,20 @@ mode "$mode_system" {
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec --no-startup-id volumeicon
-#
+exec_always volumeicon volumeicon
+
 # Pulse Audio controls
 #
 # multimidia keys
-# bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
-# bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
-# 
-bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"             # increase sound volume
-bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"             # decrease sound volume
-bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"             # mute sound
-#
+bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
+# super+f12
+# super+f11
+# super+f10
+bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +7%"            # increase sound volume 
+bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -7%"            # decrease sound volume 
+bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"           # mute sound           
 # }}}
 
 # APPEARANCE {{{

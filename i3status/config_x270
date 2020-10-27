@@ -24,6 +24,7 @@ general {
 order += "tztime local"
 # order += "ipv6"
 order += "battery all"
+order += "keyboard_layout"
 
 cpu_usage {
         format = " cpu  %usage "
@@ -69,4 +70,13 @@ tztime local {
         # format = "%Y-%m-%d %H:%M:%S"
         # format = " %d.%m. %H:%M "
 }
+
+# keyboard_layout {
+#     cache_timeout = 1
+#     button_next = 1
+#     button_prev = 3
+#     layouts = ['us','us -variant intl','br']
+#     format = " {layout} {variant}"
+#     color_us = "#ffffff"
+# }
 
