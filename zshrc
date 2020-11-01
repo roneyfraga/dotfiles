@@ -139,16 +139,14 @@ source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
 
-# nnn
-export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;b:~/OneDrive/Biblioteca;h:~'
+# nnn (n)
+export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~'
 export NNN_PLUG='h:fzz;.:fzcd;m:nmount;t:treeview'
-# export NNN_FCOLORS='0000E6310000000000000000'
-set --export NNN_FIFO "/tmp/nnn.fifo"
+export NNN_COLORS="5136" 
 
 # softwares
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
-alias n='nnn -e'
 alias rrsync='rsync -lhr --info=progress2'
 alias j='joplin'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
@@ -360,6 +358,36 @@ getref2(){
 
 addref(){
     $* >> $HOME/OneDrive/CLI/bibliography.bib
+}
+
+# nnn
+# cd and quit 
+# control+g
+n(){
+    # Block nesting of nnn in subshells
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # To cd on quit only on ^G, remove the "export" as in:
+    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    # NOTE: NNN_TMPFILE is fixed, should not be modified
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    nnn "$@"
+
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
