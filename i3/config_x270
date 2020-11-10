@@ -246,7 +246,6 @@ for_window [class="^.*"] border pixel 3
 # Actions
                 bindsym r mode "Normal:Resize: [hjkl|HJKL]"
                 bindsym m mode "Normal:Move: [hjkl|HJKL]"
-                bindsym k mode "Normal:Keyboard: [e|i]"
         }
 # RESIZE {{{
     mode "Normal:Resize: [hjkl|HJKL]" {
@@ -288,20 +287,29 @@ for_window [class="^.*"] border pixel 3
             bindsym Shift+l   move  right 50
     }
 # }}}
-# KEYBOARD {{{
-    mode "Normal:Keyboard: [e|i]" {
-# Actions
-        bindsym $super+semicolon mode "default"
-            bindsym BackSpace mode "default"
-            bindsym Return mode "default"
-            bindsym Escape mode "default"
-            bindsym Control+c mode "default"
-            bindsym q mode "default"
-# Actions
-            bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
-            bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
-    }
 # }}}
+
+# KEYBOARD {{{
+
+# default keyboard
+# Caps->Control LR_Shift->Caps
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 
+
+# MODE to change layout
+        set $mode_keyboard Keyboard: [e]nglish [i]nternational
+        bindsym $super+z mode "$mode_keyboard"
+
+        mode "$mode_keyboard"{
+# Get back from inception
+            bindsym $super+z mode "default"
+                bindsym BackSpace mode "default"
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Control+c mode "default"
+# Actions
+                bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
+                bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
+        }
 # }}}
 
 # AUTOSTART APPS {{{
@@ -329,9 +337,6 @@ for_window [class="^.*"] border pixel 3
         exec xrandr --dpi 90
         exec_always unclutter
         exec --no-startup-id discord
-
-# Caps->Control LR_Shift->Caps
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 
 
 # PrtSc as Alt
         exec_always /home/roney/bin/x270_keyboard.sh
