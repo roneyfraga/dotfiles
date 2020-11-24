@@ -4,5 +4,6 @@
         "rmd": ["r"]
     },
     "suggest.noselect": false,
-    "r.lsp.diagnostics": true
+    "r.lsp.diagnostics": true,
+    "explorer.icon.enableNerdfont": true
 }

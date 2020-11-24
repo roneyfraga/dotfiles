@@ -95,6 +95,10 @@ highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE
 " menu de autocompletar
 highlight Pmenu ctermfg=7 ctermbg=0
 highlight PmenuSel ctermfg=0 ctermbg=7
+
+" destacar enquanto yank
+highlight HighlightedyankRegion term=bold ctermbg=0 guibg=#13354A
+
 "}}}
 
 " Spell check ------------------------------{{{
@@ -228,7 +232,6 @@ let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,tidyver
 " atalhos com \
 nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
 nmap <silent> <LocalLeader>h :call RAction("head")<CR>
-nmap <silent> <LocalLeader>nm :call RAction("names")<CR>
 nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
@@ -258,7 +261,9 @@ let R_external_term = 0
 " CoC ------------------------------------{{{
 
 " install extensions
-" let g:coc_global_extensions=['coc-json', 'coc-git', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-css', 'coc-html', 'coc-r-lsp', 'coc-snippets', 'coc-texlab', 'coc-explorer']
+" coc-json, coc-git, coc-python, coc-vimlsp, coc-clangd, coc-css, 
+" coc-html, coc-r-lsp, coc-snippets, coc-texlab, coc-explorer
+" coc-sh
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -342,8 +347,8 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+" Symbol renaming: new name
+nmap <leader>nn <Plug>(coc-rename)
 
 " Formatting selected code.
 " xmap <leader>f  <Plug>(coc-format-selected)
@@ -369,14 +374,14 @@ augroup end
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 " Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
@@ -394,8 +399,8 @@ endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -428,6 +433,12 @@ nnoremap <silent><nowait> ;j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
+
+" coc-yank
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
+" coc-extensions
+nnoremap <space>e :CocCommand explorer<CR>
 
 " }}}
 
