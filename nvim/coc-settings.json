@@ -2,6 +2,7 @@
     "snippets.extends":{
         "c": ["cpp"],
         "rmd": ["r"]
-    }
+    },
+    "suggest.noselect": false,
+    "r.lsp.diagnostics": true
 }
-

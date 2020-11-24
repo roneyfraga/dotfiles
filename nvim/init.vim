@@ -10,7 +10,7 @@ set nocompatible
 set encoding=utf-8
 
 "  quebra de linha por padrão
-set wrap
+set nowrap
 
 "mostra o modo em que estamos
 set showmode 
@@ -79,16 +79,22 @@ highlight Comment cterm=italic
 
 "}}}
 
-" SideBar and StatusBar ------------------------------{{{
+" Highlight Color  ------------------------------{{{
+" SideBar,StatusBar and Menus
 " Cor da barra lateral quando marcas são feitas
-hi SignColumn guibg=none
-hi SignColumn ctermbg=none
-hi SignatureMarkText ctermbg=none
+highlight SignColumn guibg=none
+highlight SignColumn ctermbg=none
+highlight SignatureMarkText ctermbg=none
 
 let buftabline_show = 0
 
+" tabline
 highlight TabLine gui=NONE guibg=NONE guifg=NONE cterm=NONE term=NONE ctermfg=NONE ctermbg=NONE
 highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE
+
+" menu de autocompletar
+highlight Pmenu ctermfg=7 ctermbg=0
+highlight PmenuSel ctermfg=0 ctermbg=7
 "}}}
 
 " Spell check ------------------------------{{{
@@ -232,6 +238,15 @@ nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 " uncomment \xu
 let R_rcomment_string = '# '
 
+" In Rnoweb files, a `<` is replaced with `<<>>=\n@`, disable 
+let R_rnowebchunk = 0
+
+" grave accent (backtick) is replaced with chunk delimiters, disable
+let R_rmdchunk = 0
+
+" __ to <-
+let R_assign = 2
+
 " Help
 let R_nvimpager = 'horizontal'
 
@@ -243,8 +258,7 @@ let R_external_term = 0
 " CoC ------------------------------------{{{
 
 " install extensions
-" let g:coc_global_extensions=['coc-json', 'coc-git','coc-python','coc-vimlsp','coc-clangd', 
-"                               'coc-css','coc-html','coc-rlsp','coc-snippets', 'coc-texlab', 'coc-explorer']
+" let g:coc_global_extensions=['coc-json', 'coc-git', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-css', 'coc-html', 'coc-r-lsp', 'coc-snippets', 'coc-texlab', 'coc-explorer']
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -286,6 +300,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" snippets with tab
 let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
