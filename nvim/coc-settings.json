@@ -1,0 +1,7 @@
+{
+    "snippets.extends":{
+        "c": ["cpp"],
+        "rmd": ["r"]
+    }
+}
+

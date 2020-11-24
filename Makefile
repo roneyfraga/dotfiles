@@ -9,6 +9,7 @@ ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $(dotfolder)/nvim/coc-settins.json ~/.config/nvim/coc-settins.json
 	ln -s $(dotfolder)/nvim/spell ~/.vim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig

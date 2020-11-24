@@ -143,6 +143,7 @@ bindkey '^p' autosuggest-toggle
 export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~'
 export NNN_PLUG='h:fzz;.:fzcd;m:nmount;t:treeview'
 export NNN_COLORS="5136" 
+export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
 
 # softwares
 alias t='env TERM=screen-256color tmux'
