@@ -309,11 +309,11 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" if has('nvim')
+"   inoremap <silent><expr> <c-space> coc#refresh()
+" else
+"   inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -435,10 +435,10 @@ nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
 
 " coc-yank
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> ;y  :<C-u>CocList -A --normal yank<cr>
 
 " coc-extensions
-nnoremap <space>e :CocCommand explorer<CR>
+nnoremap ;f :CocCommand explorer<CR>
 
 " }}}
 
@@ -672,7 +672,7 @@ let g:languagetool_enable_rules='PASSIVE_VOICE'
 " C++ configs ------------------------------ {{{
 "
 " https://github.com/mizlan/vim-and-cp
-"
+
 let g:os = substitute(system('uname'), '\n', '', '')
 
 " important option that should already be set!
@@ -699,8 +699,8 @@ function! TermWrapper(command) abort
 	exec 'startinsert'
 endfunction
 
-command! -nargs=0 CompileAndRun call TermWrapper(printf('g++ -std=c++11 %s && ./a.out', expand('%')))
-command! -nargs=1 CompileAndRunWithFile call TermWrapper(printf('g++ -std=c++11 %s && ./a.out < %s', expand('%'), <args>))
+command! -nargs=0 CompileAndRun call TermWrapper(printf('g++ -std=c++20 %s && ./a.out', expand('%')))
+command! -nargs=1 CompileAndRunWithFile call TermWrapper(printf('g++ -std=c++20 %s && ./a.out < %s', expand('%'), <args>))
 autocmd FileType cpp nnoremap <leader>fw :CompileAndRun<CR>
 
 " For those of you that like to use the default ./a.out
@@ -709,7 +709,7 @@ autocmd FileType cpp nnoremap <leader>fw :CompileAndRun<CR>
 " NOTE: this version is more stable than the other version with specified
 " output executable!
 augroup CppToolkit
-	autocmd FileType cpp nnoremap <leader>fb :!g++ -std=c++11 % && ./a.out<CR>
+	autocmd FileType cpp nnoremap <leader>fb :!g++ -std=c++20 % && ./a.out<CR>
 	autocmd FileType cpp nnoremap <leader>fr :!./a.out<CR>
 	autocmd FileType cpp nnoremap <leader>fw :CompileAndRun<CR>
 augroup END
