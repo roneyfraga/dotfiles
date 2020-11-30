@@ -213,6 +213,9 @@ Plug 'tpope/vim-unimpaired'
 " grammar checker
 Plug 'dpelle/vim-LanguageTool'
 
+" julia
+Plug 'JuliaEditorSupport/julia-vim'
+
 " neovim in browser text box
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
@@ -438,7 +441,7 @@ nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
 nnoremap <silent> ;y  :<C-u>CocList -A --normal yank<cr>
 
 " coc-extensions
-nnoremap ;f :CocCommand explorer<CR>
+nnoremap ;x :CocCommand explorer<CR>
 
 " }}}
 
@@ -629,10 +632,17 @@ set statusline=
 set statusline+=%#PmenuSel#
 set statusline+=%{StatuslineGit()}
 set statusline+=%#LineNr#
+set statusline+=\ ›
+set statusline+=\ b%n
+set statusline+=\ ›
 set statusline+=\ %f
-set statusline+=%m
+set statusline+=\ ›
+" set statusline+=\ ››
 set statusline+=%=
-set statusline+=%#CursorColumn#
+set statusline+=%m
+set statusline+=\ %F\ 
+" set statusline+=%#CursorColumn#   " fundo cinza
+set statusline+=%#PmenuSel#         " fundo dourado
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\ %l:%c
 "}}}

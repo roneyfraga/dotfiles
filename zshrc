@@ -298,9 +298,9 @@ topdf(){
 }
 
 # r_external_term: 0 no, 1 yes, or terminal name
-r_external_term(){
-    sed -i "s/^let R_external_term.*/let R_external_term = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
-}
+# r_external_term(){
+#     sed -i "s/^let R_external_term.*/let R_external_term = ${1}/" $HOME/OneDrive/CLI/dotfiles/nvim/init.vim 
+# }
 
 # intalled packages
 pacmanIP(){
