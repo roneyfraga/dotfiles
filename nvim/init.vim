@@ -259,7 +259,21 @@ let R_nvimpager = 'horizontal'
 
 " abrir o terminal no R em uma janela independente 
 " let R_external_term = 'urxvt'
-let R_external_term = 0
+" let R_external_term = 0
+
+let hostname = substitute(system('hostname'), '\n', '', '')
+
+if hostname == "frank"
+    let R_external_term = 0
+elseif hostname == "fusca"
+    let R_external_term = 0
+elseif hostname == "x270"
+    let R_external_term = 0
+elseif hostname == "guarani"
+    let R_external_term = 'urxvt'
+endif
+
+
 " }}}
 
 " CoC ------------------------------------{{{
