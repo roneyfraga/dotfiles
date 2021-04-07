@@ -6,5 +6,7 @@ linters: with_defaults(
     commented_code_linter = NULL, 
     trailing_blank_lines_linter = NULL,
     trailing_whitespace_linter = NULL,
-    single_quotes_linter = NULL
+    single_quotes_linter = NULL,
+    open_curly_linter = NULL,
+    closed_curly_linter = NULL
     )

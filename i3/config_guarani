@@ -60,7 +60,7 @@ mode "$mode_system" {
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec_always volumeicon volumeicon
+exec volumeicon volumeicon
 
 # Pulse Audio controls
 #
@@ -148,6 +148,9 @@ for_window [class="^.*"] border pixel 3
 # APP SHORTCUTS {{{
 # Rofi
     bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 10' -show combi"
+
+# rofi-calc
+    bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
 
 # flameshot
     bindsym $super+p exec "flameshot gui"

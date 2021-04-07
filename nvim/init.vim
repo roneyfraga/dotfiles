@@ -235,6 +235,7 @@ let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,tidyver
 " atalhos com \
 nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
 nmap <silent> <LocalLeader>h :call RAction("head")<CR>
+nmap <silent> <LocalLeader>nm :call RAction("names")<CR>
 nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
@@ -312,11 +313,11 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
-" if has('nvim')
-"   inoremap <silent><expr> <c-space> coc#refresh()
-" else
-"   inoremap <silent><expr> <c-@> coc#refresh()
-" endif
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -377,14 +378,14 @@ augroup end
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-" xmap if <Plug>(coc-funcobj-i)
-" omap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap af <Plug>(coc-funcobj-a)
-" xmap ic <Plug>(coc-classobj-i)
-" omap ic <Plug>(coc-classobj-i)
-" xmap ac <Plug>(coc-classobj-a)
-" omap ac <Plug>(coc-classobj-a)
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 " Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
@@ -402,8 +403,8 @@ endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-" nmap <silent> <C-s> <Plug>(coc-range-select)
-" xmap <silent> <C-s> <Plug>(coc-range-select)
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -417,7 +418,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -493,9 +494,18 @@ let g:gist_post_private = 1
 let g:gist_open_browser_after_post = 1
 " }}}
 
-" HTML ------------------------------{{{
+" HTML or XML------------------------------{{{
 " 
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+
+" indent xml
+" `:%!xmllint --format %`
+
+" fold and syntax
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
 " }}}
 
 " Latex ------------------------------{{{
@@ -628,23 +638,24 @@ function! StatuslineGit()
   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-set statusline=
-set statusline+=%#PmenuSel#
-set statusline+=%{StatuslineGit()}
-set statusline+=%#LineNr#
-set statusline+=\ ›
-set statusline+=\ b%n
-set statusline+=\ ›
-set statusline+=\ %f
-set statusline+=\ ›
-" set statusline+=\ ››
-set statusline+=%=
-set statusline+=%m
-set statusline+=\ %F\ 
-" set statusline+=%#CursorColumn#   " fundo cinza
+set laststatus=2
+set statusline= 
 set statusline+=%#PmenuSel#         " fundo dourado
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\ %l:%c
+set statusline+=%{StatuslineGit()}  " função para obter branch
+set statusline+=%#LineNr#           " fundo transparente
+set statusline+=\ %F\               " file name and Path
+set statusline+=%m                  " + to edited file
+set statusline+=\ [%n]\               " file name and Path
+set statusline+=%=                  " alinhar a direita
+set statusline+=%#PmenuSel#         
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " encoding
+set statusline+=\ %p%%                                     " porcentagem
+set statusline+=\ %l:%c                                    " linhas
+
+set noshowcmd
+set cmdheight=1
+
+
 "}}}
 
 " Zoom in buffer ------------------------------ {{{

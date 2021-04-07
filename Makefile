@@ -38,6 +38,11 @@ ln_guarani:
 	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
+ln_fusca:
+	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
+	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
+
 rm:
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
