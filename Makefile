@@ -10,7 +10,7 @@ ln:
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
 	ln -s $(dotfolder)/nvim/coc-settins.json ~/.config/nvim/coc-settins.json
-	ln -s $(dotfolder)/nvim/spell ~/.vim/spell 
+	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/joplin/keymap.json $(configfolder)/joplin/keymap.json 
@@ -57,6 +57,7 @@ rm:
 	rm -f $(configfolder)/terminator/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
+	rm -f $(configfolder)/nvim/coc-settins.json
 
 rm_x270:
 	rm -f $(configfolder)/i3/config
@@ -65,6 +66,12 @@ rm_x270:
 	rm -f ~/.Xresources
 
 rm_frank:
+	rm -f $(configfolder)/i3/config
+	rm -f $(configfolder)/i3status/config
+	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f ~/.Xresources
+
+rm_fusca:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py

@@ -3,3 +3,6 @@
 	email = roneyfraga@gmail.com
 [credential]
 	helper = cache
+[init]
+	defatultBranch = main
+	defaultBranch = main

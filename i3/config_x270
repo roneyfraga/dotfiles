@@ -294,6 +294,8 @@ for_window [class="^.*"] border pixel 3
 # default keyboard
 # Caps->Control LR_Shift->Caps
         exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win 
+        # apple com fio
+        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
 
 # MODE to change layout
         set $mode_keyboard Keyboard: [e]nglish [i]nternational

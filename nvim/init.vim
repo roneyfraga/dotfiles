@@ -86,8 +86,6 @@ highlight SignColumn guibg=none
 highlight SignColumn ctermbg=none
 highlight SignatureMarkText ctermbg=none
 
-let buftabline_show = 0
-
 " tabline
 highlight TabLine gui=NONE guibg=NONE guifg=NONE cterm=NONE term=NONE ctermfg=NONE ctermbg=NONE
 highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE
@@ -102,37 +100,32 @@ highlight HighlightedyankRegion term=bold ctermbg=0 guibg=#13354A
 "}}}
 
 " Spell check ------------------------------{{{
-" adicionando o dicionário português do Brasil e inglês
-hi clear SpellBad
-set spelllang=pt,en
-
-" não corrigir palavras no início da linha em minúsculo
-set spellfile=~/.vim/spell/lowercase.utf-8.add
-set spellcapcheck=
+"
+" dicionário em dois idiomas
+setlocal spell spelllang=pt,en
 
 " alterando a forma como o vim sinaliza as palavras erradas
 hi clear SpellBad
 hi SpellBad cterm=underline
 
-" auto spell to markdown files
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-autocmd BufRead,BufNewFile *.md setlocal spell
+" não corrigir palavras no início da linha em minúsculo
+set spellfile=~/.config/nvim/spell/lowercase.utf-8.add
+set spellcapcheck=
 
 " utilizar o dicionário como fonte das palavras sugeridas no autocompletar
-" set dictionary=/usr/share/dict/words
+set dictionary=/usr/share/dict/words
 set complete+=kspell
-
-" desabilita/habilitar o corretor ortográfico
-set nospell
 
 " F2 pt_br
 " F3 en_us
 " F4 pt_br, en_us
 " F5 nospell
-nmap <F2> :setlocal spell spelllang=pt_br<CR>
-nmap <F3> :setlocal spell spelllang=en_us<CR>
-nmap <F4> :setlocal spell spelllang=pt_br,en_us<CR>
-nmap <F5> :setlocal nospell<CR>
+nmap <F2> :set spell! spelllang=pt_br<CR>
+nmap <F3> :set spell! spelllang=en_us<CR>
+nmap <F4> :set spell! spelllang=pt_br,en_us<CR>
+nmap <F5> :set nospell<CR>
+
+
 "}}}
 
 " Plugins ------------------------------------{{{
@@ -150,6 +143,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" Register on side bar: " ou @ in normal mode; Control+R in normal mode
+Plug 'junegunn/vim-peekaboo'
 
 " move like a pro
 Plug 'wikitopian/hardmode'
@@ -181,12 +177,9 @@ Plug 'mattn/gist-vim'
 "  Delete buffer withou messing the layout :Bd
 Plug 'moll/vim-bbye'
 
-" Buffers in tabs
-Plug 'ap/vim-buftabline'
-
 " Markdown 
 Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 " distraction free :Goyo
@@ -219,6 +212,10 @@ Plug 'JuliaEditorSupport/julia-vim'
 " neovim in browser text box
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
+" wiki and Zettelkasten
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vim-zettel'
+
 " Initialize plugin system
 call plug#end()
 "}}}
@@ -230,7 +227,7 @@ vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 
 " forcar o R a carregar esses pacotes ao iniciar, para ajudar no ominicompletation
-let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,tidyverse,pipeR"
+let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,dplyr,fs,purrr"
 
 " atalhos com \
 nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
@@ -264,13 +261,15 @@ let R_nvimpager = 'horizontal'
 let hostname = substitute(system('hostname'), '\n', '', '')
 
 if hostname == "frank"
+    " let R_external_term = 'urxvt'
     let R_external_term = 0
 elseif hostname == "fusca"
     let R_external_term = 0
 elseif hostname == "x270"
     let R_external_term = 0
 elseif hostname == "guarani"
-    let R_external_term = 'urxvt'
+    " let R_external_term = 'urxvt'
+    let R_external_term = 0
 endif
 
 
@@ -470,8 +469,10 @@ let cmdline_app['python'] = 'ipython'
 " fuzzy finder - fzf ------------------------------{{{
 nmap ;. :FZF<CR>
 nmap ;h :FZF ~<CR>
+nmap ;w :FZF ~/Wiki<CR>
 nmap ;b :Buffers<CR>
-nmap ;f :Rg<CR>
+nmap ;l :FZFBLines<CR>
+nmap ;L :FZFLines<CR>
 "}}}
 
 " Maps to resizing a window split ------------------------------{{{
@@ -484,9 +485,10 @@ nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>'
 " snippets ------------------------------{{{
 " 
 " arquivos Rnw usando snippets de r tex e rnoweb
-au BufRead,BufNewFile *.rnw set ft=rnoweb.r.tex
+" au BufRead,BufNewFile *.rnw set ft=rnoweb.r.tex
 " arquivos  Rmd usando snippets de r e rmd
-au BufRead,BufNewFile *.rmd set ft=rmd.r
+" au BufRead,BufNewFile *.rmd set ft=rmd.r
+" au BufRead,BufNewFile *.Rmd set ft=rmd.r
 " }}}
 
 " Backup files ------------------------------ {{{
@@ -522,17 +524,6 @@ au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
 " }}}
 
-" Latex ------------------------------{{{
-" vimtex + ncm2 
-
-let g:tex_flavor  = 'latex'
-let g:tex_conceal = ''
-let g:vimtex_fold_manual = 1
-let g:vimtex_latexmk_continuous = 1
-let g:vimtex_compiler_progname = 'nvr'
-let g:vimtex_view_method = 'zathura'
-" }}}
-
 " Vim Hard Mode ------------------------------{{{
 " 
 " desables hjkl, arrow keys and page up/down
@@ -545,6 +536,9 @@ nnoremap <leader>hd <Esc>:call ToggleHardMode()<CR>
 
 " Markdown --------------------------------------{{{
 " 
+
+" txt as markdown
+" autocmd BufRead,BufNewFile *.txt set filetype=markdown
 
 " :make 
 " :make html
@@ -569,6 +563,33 @@ let g:pandoc#modules#disabled = ["folding"]
 " nmap <C-s> <Plug>MarkdownPreview
 " nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
+" }}}
+
+" Markdown VimWiki --------------------------------------{{{
+" 
+let g:vimwiki_list = [
+    \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/aaTODO', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Actions', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Class_Stack', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Inbox', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Orientacoes', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Photo', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Portal_Periodicos', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Portugues', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Projects_Stack', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Publications', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/RES', 'syntax': 'markdown', 'ext': '.md'}]
+
 " }}}
 
 " MarkdownPreview ---------{{{
@@ -737,7 +758,9 @@ autocmd FileType cpp nnoremap <leader>h :CompileAndRunHorizontal<CR>
 autocmd FileType cpp nnoremap <leader>v :CompileAndRunVertical<CR>
 autocmd FileType cpp nnoremap <leader>r :!./a.out<CR>
 autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
-
 " }}}
+
+" forcar desabilitar o dicionário 
+autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
 
 " vim: fdm=marker nowrap

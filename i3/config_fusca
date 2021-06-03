@@ -272,8 +272,10 @@ for_window [class="^.*"] border pixel 3
 # KEYBOARD {{{
 
 # Keyboard on startup
+        # apple com fio
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel
         # pok3r 
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
+        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
         # apple wireless keyboard
         # Caps->Control LR_Shift->Caps
         # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl

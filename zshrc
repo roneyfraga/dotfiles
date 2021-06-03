@@ -130,6 +130,10 @@ export FZF_DEFAULT_OPTS="\
     --bind=ctrl-c:cancel\
     --bind=ctrl-y:yank\
     --bind=ctrl-p:toggle-preview\
+    --bind=ctrl-t:toggle-all\
+    --bind=ctrl-z:deselect-all\
+    --bind=tab:toggle+down\
+    --bind=shift-tab:toggle+up\
     "
 
 # CREDENTIALS
@@ -140,7 +144,7 @@ bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
 
 # nnn (n)
-export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~'
+export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~;s:~/Sync'
 export NNN_PLUG='h:fzz;.:fzcd;m:nmount;t:treeview'
 export NNN_COLORS="5136" 
 export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
@@ -148,6 +152,7 @@ export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
 # softwares
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
+alias vw='nvim ~/Wiki/index.md'
 alias rrsync='rsync -lhr --info=progress2'
 alias j='joplin'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
