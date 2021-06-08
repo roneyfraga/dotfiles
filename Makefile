@@ -19,6 +19,7 @@ ln:
 	ln -s $(dotfolder)/zathura/zathurarc $(configfolder)/zathura/zathurarc
 	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
+	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
 
 ln_x270:
 	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config

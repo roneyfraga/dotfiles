@@ -9,22 +9,22 @@ set modifiable
 set nocompatible
 set encoding=utf-8
 
-"  quebra de linha por padrão
+"  no break lines by default
 set nowrap
 
 "mostra o modo em que estamos
 set showmode 
 
-"faz o vim ignorar maiúsculas e minúsculas nas buscas
+"faz o vim ignorar maiusculas e minusculas nas buscas
 set ignorecase 
 
 " usar 256 cores
 set t_Co=256
 
-" não destacar buscar
+" nao destacar buscar
 set nohlsearch
 
-" funções do mouse funcionando no terminal com tmux
+" funcoes do mouse funcionando no terminal com tmux
 set mouse=a
 
 " make backspace work like most other apps
@@ -36,7 +36,7 @@ set clipboard=unnamed
 " Envia mais caracteres ao terminal, melhorando o redraw de janelas
 set ttyfast
 
-" mostrar o número de linhas 
+" mostrar o numero de linhas 
 set nu! 
 
 " relative number in lines
@@ -81,7 +81,7 @@ highlight Comment cterm=italic
 
 " Highlight Color  ------------------------------{{{
 " SideBar,StatusBar and Menus
-" Cor da barra lateral quando marcas são feitas
+" Cor da barra lateral quando marcas sao feitas
 highlight SignColumn guibg=none
 highlight SignColumn ctermbg=none
 highlight SignatureMarkText ctermbg=none
@@ -101,18 +101,18 @@ highlight HighlightedyankRegion term=bold ctermbg=0 guibg=#13354A
 
 " Spell check ------------------------------{{{
 "
-" dicionário em dois idiomas
-setlocal spell spelllang=pt,en
+" dicionario em dois idiomas
+setlocal nospell spelllang=pt,en
 
 " alterando a forma como o vim sinaliza as palavras erradas
 hi clear SpellBad
 hi SpellBad cterm=underline
 
-" não corrigir palavras no início da linha em minúsculo
+" nao corrigir palavras no inicio da linha em minusculo
 set spellfile=~/.config/nvim/spell/lowercase.utf-8.add
 set spellcapcheck=
 
-" utilizar o dicionário como fonte das palavras sugeridas no autocompletar
+" utilizar o dicionario como fonte das palavras sugeridas no autocompletar
 set dictionary=/usr/share/dict/words
 set complete+=kspell
 
@@ -178,7 +178,7 @@ Plug 'mattn/gist-vim'
 Plug 'moll/vim-bbye'
 
 " Markdown 
-Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
@@ -195,7 +195,7 @@ Plug 'jalvesaq/vimcmdline'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " snippets 
-Plug 'roneyfraga/vim-snippets'      "snippets source           
+Plug 'roneyfraga/vim-snippets'
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -203,18 +203,18 @@ Plug 'lervag/vimtex'
 " bracket mappings
 Plug 'tpope/vim-unimpaired'
 
+" Rename Mkdir Move Delete Unlink
+Plug 'tpope/vim-eunuch'
+
 " grammar checker
 Plug 'dpelle/vim-LanguageTool'
-
-" julia
-Plug 'JuliaEditorSupport/julia-vim'
 
 " neovim in browser text box
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " wiki and Zettelkasten
 Plug 'vimwiki/vimwiki'
-Plug 'michal-h21/vim-zettel'
+" Plug 'michal-h21/vim-zettel'
 
 " Initialize plugin system
 call plug#end()
@@ -222,7 +222,7 @@ call plug#end()
 
 " Nvim-R ------------------------------------{{{
 " 
-"usar espaço para enviar comandos para o R
+"usar espaco para enviar comandos para o R
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 
@@ -237,7 +237,7 @@ nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 
-" porque tComment (control+_ control+_) não funciona em arquivo .Rmd
+" porque tComment (control+_ control+_) nao funciona em arquivo .Rmd
 " comment   \xc 
 " uncomment \xu
 let R_rcomment_string = '# '
@@ -261,15 +261,15 @@ let R_nvimpager = 'horizontal'
 let hostname = substitute(system('hostname'), '\n', '', '')
 
 if hostname == "frank"
-    " let R_external_term = 'urxvt'
-    let R_external_term = 0
+    let R_external_term = 'urxvt'
+    " let R_external_term = 0
 elseif hostname == "fusca"
     let R_external_term = 0
 elseif hostname == "x270"
     let R_external_term = 0
 elseif hostname == "guarani"
-    " let R_external_term = 'urxvt'
-    let R_external_term = 0
+    let R_external_term = 'urxvt'
+    " let R_external_term = 0
 endif
 
 
@@ -471,8 +471,8 @@ nmap ;. :FZF<CR>
 nmap ;h :FZF ~<CR>
 nmap ;w :FZF ~/Wiki<CR>
 nmap ;b :Buffers<CR>
-nmap ;l :FZFBLines<CR>
-nmap ;L :FZFLines<CR>
+nmap ;l :BLines<CR>
+nmap ;L :Lines<CR>
 "}}}
 
 " Maps to resizing a window split ------------------------------{{{
@@ -577,7 +577,6 @@ let g:vimwiki_list = [
     \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Inbox', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Orientacoes', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
@@ -588,7 +587,37 @@ let g:vimwiki_list = [
     \{'path': '~/Wiki/Publications', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/RES', 'syntax': 'markdown', 'ext': '.md'}]
+
+" fun��o para formatar nome do arquivo: 
+" espa�o substituir�por - 
+" caracteres em ascii
+"
+func! Rename2ascii()
+    execute "normal yypV"
+    s/\s\+/ /g 
+    s/\s\+$//g 
+    s/ /-/g 
+    s/-\+/-/g 
+    s/[[=a=]]/a/g 
+    s/[[=e=]]/e/g 
+    s/[[=i=]]/i/g 
+    s/[[=o=]]/o/g 
+    s/[[=u=]]/u/g  
+    s/[[=n=]]/n/g 
+    s/[[=c=]]/c/g
+    execute "normal 0i($a)k0i[$a]Jxli"
+endfunc
+
+" Time Stamps
+inoremap <F6> <C-R>=strftime("%Y%m%d-")<CR>
+nnoremap <F6> "=strftime("%Y%m%d-")<CR>P
+inoremap <F7> <C-R>=strftime("%Y%m%d-%H%M%S-")<CR>
+nnoremap <F7> "=strftime("%Y%m%d-%H%M%S-")<CR>P
+
+" Rename2ascii
+nnoremap <F8> :execute Rename2ascii()<CR>P
 
 " }}}
 
@@ -758,9 +787,10 @@ autocmd FileType cpp nnoremap <leader>h :CompileAndRunHorizontal<CR>
 autocmd FileType cpp nnoremap <leader>v :CompileAndRunVertical<CR>
 autocmd FileType cpp nnoremap <leader>r :!./a.out<CR>
 autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
-" }}}
+" }}
 
-" forcar desabilitar o dicionário 
+" force to disable dictionary in markdown files
 autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
+autocmd BufRead,BufNewFile *.Rmd,*.md set nowrap
 
 " vim: fdm=marker nowrap

@@ -152,7 +152,7 @@ export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
 # softwares
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
-alias vw='nvim ~/Wiki/index.md'
+alias vw='cd ~/Wiki; nvim index.md'
 alias rrsync='rsync -lhr --info=progress2'
 alias j='joplin'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
