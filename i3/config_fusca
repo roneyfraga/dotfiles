@@ -1,4 +1,3 @@
-
 # BINDINGS {{{
 # Variables
         set $super    Mod4
@@ -60,7 +59,7 @@ mode "$mode_system" {
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec_always volumeicon volumeicon
+exec --no-startup-id volumeicon volumeicon
 
 # Pulse Audio controls
 #
@@ -272,30 +271,34 @@ for_window [class="^.*"] border pixel 3
 # KEYBOARD {{{
 
 # Keyboard on startup
-        # apple com fio
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel
-        # pok3r 
-        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
-        # apple wireless keyboard
-        # Caps->Control LR_Shift->Caps
-        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
-        # delete como tecla de ejetar cd
-        # exec_always /home/roney/bin/apple_keyboard.sh
-        
-        # Mode
+# apple com fio
+    exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel
+
+# pok3r 
+# exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
+
+# apple wireless keyboard
+# Caps->Control LR_Shift->Caps
+# exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+
+# delete como tecla de ejetar cd
+# exec_always /home/roney/bin/apple_keyboard.sh
+
+# Mode
         set $mode_keyboard Keyboard: [e]nglish [i]nternational
         bindsym $super+z mode "$mode_keyboard"
 
-mode "$mode_keyboard"{
+        mode "$mode_keyboard"{
 # Get back from inception
-        bindsym $super+z mode "default"
-        bindsym BackSpace mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym Control+c mode "default"
+            bindsym $super+z mode "default"
+                bindsym BackSpace mode "default"
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Control+c mode "default"
+
 # Actions
-        bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
-        bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
+                bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
+                bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
         }
 # }}}
 
@@ -310,9 +313,11 @@ mode "$mode_keyboard"{
         # exec --no-startup-id blueman-applet
         # exec --no-startup-id dropbox
         # exec --no-startup-id nextcloud
+        exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         # exec --no-startup-id skypeforlinux
-        exec --no-startup-id flameshot
+        # exec --no-startup-id flameshot
+        exec --no-startup-id ksnip
         # exec --no-startup-id minetime
         # exec --no-startup-id goldendict
         # exec --no-startup-id start_conky_maia
@@ -323,9 +328,10 @@ mode "$mode_keyboard"{
         exec_always unclutter
         # exec --no-startup-id discord
 
-# Monitores
-# AMD Radeon RX 270 with 3 monitors
-# exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DisplayPort-2 --mode 1920x1080 --pos 0x525 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x1080 --rotate normal --output DVI-D-0 --off
+# Monitor
+# exec_always 
+    exec_always xrandr --output VGA-1 --primary --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1280x1024 --pos 1280x0 --rotate normal
+
 
 # Natural scroll mouse
         exec synclient NaturalScrolling=1 VertScrollDelta=-113
@@ -333,3 +339,4 @@ mode "$mode_keyboard"{
 # }}}
 
 # vim: fdm=marker nowrap
+

@@ -164,8 +164,7 @@ alias aq='asciiquarium'
 alias h='htop'
 alias zt='zathura'
 alias sys='sudo systemctl'
-alias db='~/bin/dropbox.py'
-alias drop='~/.dropbox-dist/dropboxd &'
+alias dropbox='~/.dropbox-dist/dropboxd &'
 alias penlabel='ls /dev/disk/by-label/'
 alias py='python'
 alias onedrive_log='journalctl --user-unit onedrive -f'
@@ -204,6 +203,8 @@ alias cli='cd ~/OneDrive/CLI'
 alias dot='cd ~/OneDrive/CLI/dotfiles'
 alias qualis='cd ~/OneDrive/Profissional/PubPar/Qualis'
 alias dw='cd ~/Downloads'
+alias safra='cd ~/OneDrive/Profissional/2021-CropLife/report'
+alias textos='cd ~/vGrive/2021-safra/textos'
 
 # ssh
 alias rpi='ssh -p 19239 bibr@200.17.60.42'
@@ -242,14 +243,6 @@ alias gds='git diff --stage '
 # functions
 # scpSuper file class
 # scpSuper file class/IntroMicro
-scpSuper(){
-    scp -r "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/"$2"
-}
-
-# remenber to use / in the end of folder
-rsyncSuper(){
-    rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/"$2"
-}
 
 rsyncVolume(){
     rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"

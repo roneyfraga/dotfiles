@@ -120,9 +120,9 @@ set complete+=kspell
 " F3 en_us
 " F4 pt_br, en_us
 " F5 nospell
-nmap <F2> :set spell! spelllang=pt_br<CR>
-nmap <F3> :set spell! spelllang=en_us<CR>
-nmap <F4> :set spell! spelllang=pt_br,en_us<CR>
+nmap <F2> :set spell! spelllang=pt<CR>
+nmap <F3> :set spell! spelllang=en<CR>
+nmap <F4> :set spell! spelllang=pt,en<CR>
 nmap <F5> :set nospell<CR>
 
 
@@ -144,11 +144,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'junegunn/gv.vim'
+
 " Register on side bar: " ou @ in normal mode; Control+R in normal mode
 Plug 'junegunn/vim-peekaboo'
-
-" move like a pro
-Plug 'wikitopian/hardmode'
 
 " comment any file 
 Plug 'vim-scripts/tComment'
@@ -161,11 +163,6 @@ Plug 'joshdick/onedark.vim'
 
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
-
-" status line
-" Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
 
 " rainbow colors to {} [] ()
 Plug 'luochen1990/rainbow'
@@ -216,6 +213,9 @@ Plug 'dpelle/vim-LanguageTool'
 Plug 'vimwiki/vimwiki'
 " Plug 'michal-h21/vim-zettel'
 
+" slide presentation
+Plug 'sotte/presenting.vim'
+
 " Initialize plugin system
 call plug#end()
 "}}}
@@ -233,20 +233,18 @@ let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,dplyr,f
 nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
 nmap <silent> <LocalLeader>h :call RAction("head")<CR>
 nmap <silent> <LocalLeader>nm :call RAction("names")<CR>
+nmap <silent> <LocalLeader>v :call RAction("View")<CR>
 nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 
-" porque tComment (control+_ control+_) nao funciona em arquivo .Rmd
+" porque tComment (control_ + control_) nao funciona em arquivo .Rmd
 " comment   \xc 
 " uncomment \xu
 let R_rcomment_string = '# '
 
-" In Rnoweb files, a `<` is replaced with `<<>>=\n@`, disable 
-let R_rnowebchunk = 0
-
 " grave accent (backtick) is replaced with chunk delimiters, disable
-let R_rmdchunk = 0
+" let R_rmdchunk = 0
 
 " __ to <-
 let R_assign = 2
@@ -261,14 +259,14 @@ let R_nvimpager = 'horizontal'
 let hostname = substitute(system('hostname'), '\n', '', '')
 
 if hostname == "frank"
-    let R_external_term = 'urxvt'
-    " let R_external_term = 0
+    " let R_external_term = 'urxvt'
+    let R_external_term = 0
 elseif hostname == "fusca"
     let R_external_term = 0
 elseif hostname == "x270"
     let R_external_term = 0
 elseif hostname == "guarani"
-    let R_external_term = 'urxvt'
+    " let R_external_term = 'urxvt'
     " let R_external_term = 0
 endif
 
@@ -525,13 +523,17 @@ au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 " }}}
 
 " Vim Hard Mode ------------------------------{{{
-" 
-" desables hjkl, arrow keys and page up/down
-" \hd para mudar o modo de uso
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call EasyMode()
-" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-nnoremap <leader>hd <Esc>:call ToggleHardMode()<CR>
-" :call EasyMode() para sair 
+" disables hl arrow keys
+
+map <left> <nop>
+map <right> <nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
+" bad habits
+" map l <nop>
+" map h <nop>
+
 " }}}
 
 " Markdown --------------------------------------{{{
@@ -549,6 +551,8 @@ nmap <leader>mm :!make<CR>
 nmap <leader>mh :!make html 
 nmap <leader>mp :!make pdf
 nmap <leader>md :!make docx
+nmap <leader>mr :!make rsync_book<CR>  
+nmap <leader>ma :!make all<CR>  
 
 " vim-pandoc
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
@@ -613,11 +617,13 @@ endfunc
 " Time Stamps
 inoremap <F6> <C-R>=strftime("%Y%m%d-")<CR>
 nnoremap <F6> "=strftime("%Y%m%d-")<CR>P
-inoremap <F7> <C-R>=strftime("%Y%m%d-%H%M%S-")<CR>
-nnoremap <F7> "=strftime("%Y%m%d-%H%M%S-")<CR>P
+inoremap <F7> <C-R>=strftime("%Y-%m-%d_%H:%M")<CR>
+nnoremap <F7> "=strftime("%Y-%m-%d_%H:%M")<CR>P
+inoremap <F8> <C-R>=strftime("%Y%m%d-%H%M%S-")<CR>
+nnoremap <F8> "=strftime("%Y%m%d-%H%M%S-")<CR>P
 
-" Rename2ascii
-nnoremap <F8> :execute Rename2ascii()<CR>P
+" remove ^M quebra de página
+nnoremap <F9> :%s/\r//g <CR>
 
 " }}}
 
@@ -787,10 +793,27 @@ autocmd FileType cpp nnoremap <leader>h :CompileAndRunHorizontal<CR>
 autocmd FileType cpp nnoremap <leader>v :CompileAndRunVertical<CR>
 autocmd FileType cpp nnoremap <leader>r :!./a.out<CR>
 autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
-" }}
+" }}}
+
+" Git ------------------------------ {{{
+nnoremap gB :GBranches<CR>
+nnoremap gT :GTags<CR>
+nnoremap gC :GV<CR>
+" }}}
+
+" Presentation ------------------------------ {{{
+" letters to the box
+au Filetype markdown nnoremap <buffer> <F12> :.!toilet -w 200 -f term -F border<CR>
+
+" }}}
+
+" Source Nvim configuration file and install plugins
+nnoremap <leader>1 :source ~/.config/nvim/init.vim <CR>
+nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
 
 " force to disable dictionary in markdown files
 autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
-autocmd BufRead,BufNewFile *.Rmd,*.md set nowrap
+autocmd BufRead,BufNewFile *.Rmd,*.md set wrap
 
 " vim: fdm=marker nowrap
+"

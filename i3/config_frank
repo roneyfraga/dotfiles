@@ -297,11 +297,34 @@ for_window [class="^.*"] border pixel 3
             bindsym Control+c mode "default"
             bindsym q mode "default"
 # Actions
-            bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
-            bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win, mode "default"
+            bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
+            bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
     }
 # }}}
 #    
+# }}}
+
+# KEYBOARD {{{
+
+# default keyboard
+# Caps->Control LR_Shift->Caps
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+
+# MODE to change layout
+        set $mode_keyboard Keyboard: [e]nglish [i]nternational
+        bindsym $super+z mode "$mode_keyboard"
+
+        mode "$mode_keyboard"{
+# Get back from inception
+            bindsym $super+z mode "default"
+                bindsym BackSpace mode "default"
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Control+c mode "default"
+# Actions
+                bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
+                bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
+        }
 # }}}
 
 # WINDOWS RULES {{{
@@ -318,6 +341,7 @@ for_window [class="^.*"] border pixel 3
         exec --no-startup-id clipit
         # exec --no-startup-id blueman-applet
         # exec --no-startup-id dropbox
+        exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         # exec --no-startup-id skypeforlinux
         exec --no-startup-id flameshot
@@ -342,7 +366,7 @@ for_window [class="^.*"] border pixel 3
         # Vortex Pok3r 
         # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
         # Apple wireless keyboard
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+        # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
         # Apple com fio full size
         # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel
 
