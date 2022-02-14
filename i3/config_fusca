@@ -33,10 +33,10 @@ bindsym $super+Shift+q exec i3-msg exit
 bindsym $super+Return exec 'terminator'
 
 # inverted colors
-bindsym $super+i exec xrandr-invert-colors
-bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
-bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
-bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
+# bindsym $super+i exec xrandr-invert-colors
+# bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
+# bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
+# bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
 
 # Set shut down, restart and locking features
 bindsym $super+0 mode "$mode_system"
@@ -59,7 +59,7 @@ mode "$mode_system" {
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec --no-startup-id volumeicon volumeicon
+exec volumeicon volumeicon
 
 # Pulse Audio controls
 #
@@ -148,8 +148,11 @@ for_window [class="^.*"] border pixel 3
 # Rofi
     bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 10' -show combi"
 
+# rofi-calc
+    bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
+
 # flameshot
-    bindsym $super+p exec "flameshot gui"
+    # bindsym $super+p exec "flameshot gui"
 
 # }}}
 
@@ -270,21 +273,11 @@ for_window [class="^.*"] border pixel 3
 
 # KEYBOARD {{{
 
-# Keyboard on startup
-# apple com fio
-    exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel
-
-# pok3r 
-# exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
-
-# apple wireless keyboard
+# default keyboard
 # Caps->Control LR_Shift->Caps
-# exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
 
-# delete como tecla de ejetar cd
-# exec_always /home/roney/bin/apple_keyboard.sh
-
-# Mode
+# MODE to change layout
         set $mode_keyboard Keyboard: [e]nglish [i]nternational
         bindsym $super+z mode "$mode_keyboard"
 
@@ -295,11 +288,11 @@ for_window [class="^.*"] border pixel 3
                 bindsym Return mode "default"
                 bindsym Escape mode "default"
                 bindsym Control+c mode "default"
-
 # Actions
-                bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
-                bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel, mode "default"
+                bindsym e exec --no-startup-id setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
+                bindsym i exec --no-startup-id setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl, mode "default"
         }
+
 # }}}
 
 # AUTOSTART APPS {{{
@@ -313,7 +306,7 @@ for_window [class="^.*"] border pixel 3
         # exec --no-startup-id blueman-applet
         # exec --no-startup-id dropbox
         # exec --no-startup-id nextcloud
-        exec --no-startup-id vgrive
+        # exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         # exec --no-startup-id skypeforlinux
         # exec --no-startup-id flameshot
@@ -330,7 +323,8 @@ for_window [class="^.*"] border pixel 3
 
 # Monitor
 # exec_always 
-    exec_always xrandr --output VGA-1 --primary --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1280x1024 --pos 1280x0 --rotate normal
+    # exec_always xrandr --output VGA-1 --primary --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1280x1024 --pos 1280x0 --rotate normal
+    exec_always xrandr --output VGA-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1440x900 --pos 1920x0 --rotate normal
 
 
 # Natural scroll mouse

@@ -152,8 +152,11 @@ Plug 'junegunn/gv.vim'
 " Register on side bar: " ou @ in normal mode; Control+R in normal mode
 Plug 'junegunn/vim-peekaboo'
 
-" comment any file 
-Plug 'vim-scripts/tComment'
+" comment any file with motion gc[motion] 
+Plug 'tpope/vim-commentary'
+
+" repeat vim and plugin commands with .
+Plug 'tpope/vim-repeat'
 
 " R plugin 
 Plug 'jalvesaq/Nvim-R'
@@ -197,14 +200,17 @@ Plug 'roneyfraga/vim-snippets'
 " LaTeX
 Plug 'lervag/vimtex'
 
-" bracket mappings
+" bracket mappings - quickfix navigation
 Plug 'tpope/vim-unimpaired'
 
 " Rename Mkdir Move Delete Unlink
 Plug 'tpope/vim-eunuch'
 
+" surround a object with (`c` chance, `d` delete, `y` you surround) 
+Plug 'tpope/vim-surround'
+
 " grammar checker
-Plug 'dpelle/vim-LanguageTool'
+" Plug 'dpelle/vim-LanguageTool'
 
 " neovim in browser text box
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -241,7 +247,7 @@ nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 " porque tComment (control_ + control_) nao funciona em arquivo .Rmd
 " comment   \xc 
 " uncomment \xu
-let R_rcomment_string = '# '
+" let R_rcomment_string = '# '
 
 " grave accent (backtick) is replaced with chunk delimiters, disable
 " let R_rmdchunk = 0
@@ -471,6 +477,10 @@ nmap ;w :FZF ~/Wiki<CR>
 nmap ;b :Buffers<CR>
 nmap ;l :BLines<CR>
 nmap ;L :Lines<CR>
+
+" \ca close all buffers except the current one
+nnoremap <leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+
 "}}}
 
 " Maps to resizing a window split ------------------------------{{{
@@ -805,6 +815,22 @@ nnoremap gC :GV<CR>
 " letters to the box
 au Filetype markdown nnoremap <buffer> <F12> :.!toilet -w 200 -f term -F border<CR>
 
+" }}}
+
+" Quickfix and Grep ------------------------------ {{{
+"
+" nowrap in quickfix window
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal nowrap
+augroup END
+
+" open quickfix-window after: :make, :grep, :lvimgrep and friends
+augroup myvimrc
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
 " }}}
 
 " Source Nvim configuration file and install plugins

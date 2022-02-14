@@ -312,7 +312,7 @@ mode "$mode_keyboard"{
         # exec --no-startup-id dropbox
         # exec --no-startup-id nextcloud
         # exec --no-startup-id ~/.dropbox-dist/dropboxd
-        exec --no-startup-id vgrive
+        # exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         # exec --no-startup-id skypeforlinux
         # exec --no-startup-id flameshot
