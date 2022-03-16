@@ -1,3 +1,4 @@
+
 if (interactive()) {
     suppressMessages(require(colorout))
     # suppressMessages(require(devtools))
@@ -24,12 +25,12 @@ if (interactive()) {
 options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
 
 options(
-  usethis.full_name = "Roney Fraga Souza",
-  usethis.description = list(
-    `Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), 
-    comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'
-  ),
-  usethis.protocol  = "ssh"
+        usethis.full_name = "Roney Fraga Souza",
+        usethis.description = list(
+                                   `Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), 
+                                   comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'
+        ),
+usethis.protocol  = "ssh"
 )
 
 options(browser = "/usr/bin/firefox")

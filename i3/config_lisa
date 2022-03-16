@@ -334,8 +334,8 @@ mode "$mode_keyboard"{
 # exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1080x0 --rotate normal --output DisplayPort-2 --mode 1920x1080 --pos 0x0 --rotate right --output HDMI-A-0 --primary --mode 1920x1080 --pos 1080x1080 --rotate normal --output DVI-D-0 --off
 
 # AMD Radeon RX 270 with 2 monitors horizontal
-    exec_always xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x420 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 3840x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x420 --rotate normal --output DVI-D-0 --off
-    # exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 3840x0 --rotate right --output DisplayPort-2 --mode 1920x1080 --pos 0x420 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x420 --rotate normal --output DVI-D-0 --off
+    # exec_always xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DisplayPort-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 3840x0 --rotate normal --output DVI-D-0 --off
+    exec_always xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x302 --rotate normal --output DisplayPort-1 --primary --mode 1920x1080 --pos 1920x302 --rotate normal --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 3840x0 --rotate right --output DVI-D-0 --off
 
 # Natural scroll mouse
         exec synclient NaturalScrolling=1 VertScrollDelta=-113

@@ -159,7 +159,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 
 " R plugin 
-Plug 'jalvesaq/Nvim-R'
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
 " collection of colorschemes
 Plug 'joshdick/onedark.vim'

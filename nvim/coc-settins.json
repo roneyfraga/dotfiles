@@ -1,0 +1,30 @@
+{
+    "snippets.extends":{
+        "c": ["cpp"],
+        "rmd": ["r"]
+    },
+    "suggest.noselect": false,
+    "r.lsp.diagnostics": true,
+    "clangd.disableDiagnostics": true,
+    "explorer.icon.enableNerdfont": true,
+    "diagnostic.enable": true,
+    "diagnostic.enableSign": true,
+    "diagnostic.errorSign": "•",
+    "diagnostic.warningSign": "⚠️",
+    "diagnostic.infoSign": "!",
+    "diagnostic.hintSign": "•",
+    "diagnostic.enableHighlightLineNumber": true,
+    "diagnostic.checkCurrentLine": true,
+    "jedi.enable": true,
+    "jedi.startupMessage": true,
+    "jedi.markupKindPreferred": "plaintext",
+    "jedi.executable.command": "jedi-language-server",
+    "jedi.executable.args": [],
+    "jedi.completion.disableSnippets": false,
+    "jedi.diagnostics.enable": true,
+    "jedi.diagnostics.didOpen": true,
+    "jedi.diagnostics.didChange": true,
+    "jedi.diagnostics.didSave": true,
+    "jedi.workspace.extraPaths": [],
+    "jedi.jediSettings.autoImportModules": []
+}
