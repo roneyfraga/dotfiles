@@ -1,8 +1,8 @@
 [Default Applications]
-x-scheme-handler/http=qutebrowser.desktop
-x-scheme-handler/https=qutebrowser.desktop
 x-scheme-handler/ftp=firefox.desktop
 x-scheme-handler/chrome=firefox.desktop
+x-scheme-handler/http=qutebrowser.desktop
+x-scheme-handler/https=qutebrowser.desktop
 text/html=firefox.desktop
 application/x-extension-htm=firefox.desktop
 application/x-extension-html=firefox.desktop
@@ -35,7 +35,7 @@ image/jpeg=viewnior.desktop;gpicview.desktop;
 image/png=foxitreader.desktop;viewnior.desktop;gpicview.desktop;
 text/plain=nvim.desktop;mousepad.desktop;
 message/rfc822=userapp-Thunderbird.desktop;
-application/pdf=foxitreader.desktop;epdfview.desktop;org.pwmt.zathura-pdf-mupdf.desktop;org.pwmt.zathura.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;org.pwmt.zathura.desktop;foxitreader.desktop;epdfview.desktop;
 application/x-bittorrent=deluge.desktop;
 application/vnd.ms-publisher=mousepad.desktop;
 application/x-java-jnlp-file=firefox.desktop;

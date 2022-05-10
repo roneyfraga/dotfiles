@@ -4,13 +4,13 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/roney/.oh-my-zsh"
 
-export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="clean"
+ZSH_THEME="afowler"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -107,19 +107,25 @@ export LC_ALL="en_US.UTF-8"
 
 export EDITOR='nvim'
 export VISUAL='nvim'
-export READER='zathura'
-export TERMINAL='terminator'
-export TRUEBROWSER='qutebrowser'
-export BIB=$HOME/OneDrive/CLI/bibliography.bib
-export RES=$HOME/OneDrive/CLI/RES.md
+# export READER='zathura'
+# # export TERMINAL='st'
+# export TRUEBROWSER='firefox'
+# export VIDEO='mpv'
+
+if [ $(hostname) = 'lisa' ]; 
+then
+    export BIB=/mnt/raid0/pessoal/OneDrive/CLI/bibliography.bib
+else 
+    export BIB=$HOME/OneDrive/CLI/bibliography.bib
+fi
 
 # fzf
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
+# export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
     --multi --no-height\
     --bind=ctrl-b:backward-kill-word\
-    --bind=ctrl-d:kill-word\
     --bind=ctrl-g:top\
     --bind=ctrl-u:page-up\
     --bind=ctrl-d:page-down\
@@ -137,24 +143,45 @@ export FZF_DEFAULT_OPTS="\
     "
 
 # CREDENTIALS
-source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
+if [ $(hostname) = 'lisa' ]; 
+then
+    source /mnt/raid0/Pessoal/OneDrive/CLI/dotfiles/credentials/elsevier.sh
+else 
+    source $HOME/OneDrive/CLI/dotfiles/credentials/elsevier.sh
+fi
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
 
+# monitor orientation: benq 27" + samsung 24"
+if [ $(hostname) = 'lisa' ]; 
+then
+    alias hori='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off'
+    alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
+fi
+
 # nnn (n)
-export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~;s:~/Sync'
-export NNN_PLUG='h:fzz;.:fzcd;m:nmount;t:treeview'
+export NNN_PLUG='c:fzcd;o:fzopen;d:dragdrop;v:imgview;p:preview-tabbed;n:nuke;l:launch;k:pskill;m:mimelist;x:xdgdefault'
 export NNN_COLORS="5136" 
 export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
+export NNN_TRASH=1  # needs trash-cli                               
+export NNN_FIFO=/tmp/nnn.fifo
+export NNN_OPENER=nuke
+
+if [ $(hostname) = 'lisa' ]; 
+then
+    export NNN_BMS='k:~/Desktop;w:~/Downloads;0:/mnt/raid0;r:/mnt/raid0/Pessoal/OneDrive/Rworkspace;p:/mnt/raid0/Pessoal/OneDrive/Profissional;i:/mnt/raid0/Pessoal/OneDrive/CLI;B:/mnt/raid0/Pessoal/OneDrive/Biblioteca;P:/mnt/raid0/Pessoal/OneDrive/Profissional/PubPar;h:~;s:~/Sync'
+else 
+    export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/OneDrive/Rworkspace;p:~/OneDrive/Profissional;m:/media;i:~/OneDrive/CLI;B:~/OneDrive/Biblioteca;P:~/OneDrive/Profissional/PubPar;h:~;s:~/Sync'
+fi
 
 # softwares
+alias f='vifm .'
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
 alias vw='cd ~/Wiki; nvim index.md'
 alias rrsync='rsync -lhr --info=progress2'
-alias j='joplin'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias x='clear'
 alias l='ls -lNh --color=auto --group-directories-first'
@@ -163,11 +190,8 @@ alias ref='source ~/.zshrc'
 alias aq='asciiquarium'
 alias h='htop'
 alias zt='zathura'
-alias sys='sudo systemctl'
-alias dropbox='~/.dropbox-dist/dropboxd &'
 alias penlabel='ls /dev/disk/by-label/'
 alias py='python'
-alias onedrive_log='journalctl --user-unit onedrive -f'
 alias def='goldendict'
 alias syn='~/bin/dicsyn.R'
 alias doi2bib='~/bin/doi2bibtex.R'
@@ -175,15 +199,6 @@ alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" 
 alias timer='termdown'
 alias verb='cat $HOME/OneDrive/CLI/verbs.md | fzf --multi --ansi --preview-window=:hidden'
 alias info2='screenfetch'
-alias kbe='setxkbmap -layout us -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win'
-alias kbi='setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option altwin:swap_alt_win'
-
-# radio
-alias r1='mplayer http://listen.shoutcast.com/gaiafm'
-alias r2='mplayer http://listen.radionomy.com:80/RADIOGAIAhits'
-alias r3='mplayer http://108.163.223.242:8344/stream'
-alias r4='mplayer http://185.33.21.112:80/radiogaia_128'
-alias r5='mplayer http://158.69.27.227:8000'
 
 # files
 alias init.vim="nvim ~/.config/nvim/init.vim"
@@ -191,31 +206,50 @@ alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
 alias zathurarc='nvim ~/.config/zathura/zathurarc'
-alias rc.conf='nvim ~/.config/ranger/rc.conf'
 
 # places 
-alias rw='cd ~/OneDrive/Rworkspace'
-alias pubpar='cd ~/OneDrive/Profissional/PubPar'
-alias prof='cd ~/OneDrive/Profissional'
-alias lat='cd ~/OneDrive/Profissional/Latex'
-alias ori='cd ~/OneDrive/Profissional/UFMT\ -\ Orientacoes'
-alias cli='cd ~/OneDrive/CLI'
-alias dot='cd ~/OneDrive/CLI/dotfiles'
-alias qualis='cd ~/OneDrive/Profissional/PubPar/Qualis'
+alias dk='cd ~/Desktop'
 alias dw='cd ~/Downloads'
-alias safra='cd ~/OneDrive/Profissional/2021-CropLife/report'
+
+# places lisa
+if [ $(hostname) = 'lisa' ]; then
+    alias r0='cd /mnt/raid0'
+    alias one='cd /mnt/raid0/Pessoal/OneDrive/'
+    alias rw='cd /mnt/raid0/Pessoal/OneDrive/Rworkspace'
+    alias pubpar='cd /mnt/raid0/Pessoal/OneDrive/Profissional/PubPar'
+    alias prof='cd /mnt/raid0/Pessoal/OneDrive/Profissional'
+    alias lat='cd /mnt/raid0/Pessoal/OneDrive/Profissional/Latex'
+    alias ori='cd /mnt/raid0/Pessoal/OneDrive/Profissional/UFMT\ -\ Orientacoes'
+    alias cli='cd /mnt/raid0/Pessoal/OneDrive/CLI'
+    alias dot='cd /mnt/raid0/Pessoal/OneDrive/CLI/dotfiles'
+    alias qualis='cd /mnt/raid0/Pessoal/OneDrive/Profissional/PubPar/Qualis'
+    alias rd='cd /mnt/raid0/'
+else 
+    alias rw='cd ~/OneDrive/Rworkspace'
+    alias pubpar='cd ~/OneDrive/Profissional/PubPar'
+    alias prof='cd ~/OneDrive/Profissional'
+    alias lat='cd ~/OneDrive/Profissional/Latex'
+    alias ori='cd ~/OneDrive/Profissional/UFMT\ -\ Orientacoes'
+    alias cli='cd ~/OneDrive/CLI'
+    alias dot='cd ~/OneDrive/CLI/dotfiles'
+    alias qualis='cd ~/OneDrive/Profissional/PubPar/Qualis'
+fi
 
 # ssh
+# ufmt
 alias rpi='ssh -p 19239 bibr@200.17.60.42'
 alias rpi_local='ssh -p 19239 bibr@192.168.191.239'
-alias fusca='ssh -p 19246 roney@200.17.60.42'
-alias fusca_local='ssh -p 19246 roney@192.168.191.246'
-alias frank='ssh -p 19127 roney@200.17.60.42'
-alias frank_local='ssh -p 19127 roney@192.168.191.127'
+alias fusca='ssh -p 19127 roney@200.17.60.42'
+alias fusca_local='ssh -p 19127 roney@192.168.191.127'
+alias guarani='ssh -p 19250 roney@200.17.60.42'
+alias guarani_local='ssh -p 19250 roney@192.168.191.250'
+alias lisa='ssh -p 13000 roney@179.217.119.6'
+alias lisa_local='ssh -p 13000 roney@192.168.0.130'
+# alias frank='ssh -p 19127 roney@200.17.60.42'
+# alias frank_local='ssh -p 19127 roney@192.168.191.127'
+# nuvem
 alias ubuntu_nyc='ssh bibr@159.89.36.185'
 alias caipora='ssh -D 5555 caipora@159.89.36.185'
-alias nas='ssh roney@192.168.191.29'
-alias guarani='ssh roney@179.217.124.233'
 
 # git
 alias g='git '
@@ -307,14 +341,14 @@ pacmanIP(){
 }
 
 # find file and open it in nvim, from current directory
-# ff.() {
-#     nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
-# }
-
+ff.() {
+    nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
+}
+ 
 # find file and open it in nvim, from ~/
-# ffh() {
-#     cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
-# }
+ffh() {
+    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
+}
 
 # fzf open file (with fd)
 # fop() {

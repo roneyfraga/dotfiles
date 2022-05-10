@@ -112,18 +112,18 @@ hi SpellBad cterm=underline
 set spellfile=~/.config/nvim/spell/lowercase.utf-8.add
 set spellcapcheck=
 
+" control + n
 " utilizar o dicionario como fonte das palavras sugeridas no autocompletar
 set dictionary=/usr/share/dict/words
 set complete+=kspell
 
+" não precisa do nospell, pois, 'spell!' é toggle
 " F2 pt_br
 " F3 en_us
 " F4 pt_br, en_us
-" F5 nospell
 nmap <F2> :set spell! spelllang=pt<CR>
 nmap <F3> :set spell! spelllang=en<CR>
 nmap <F4> :set spell! spelllang=pt,en<CR>
-nmap <F5> :set nospell<CR>
 
 
 "}}}
@@ -180,7 +180,7 @@ Plug 'moll/vim-bbye'
 " Markdown 
 " Plug 'vim-pandoc/vim-pandoc'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " distraction free :Goyo
 Plug 'junegunn/goyo.vim'
@@ -221,6 +221,12 @@ Plug 'vimwiki/vimwiki'
 
 " slide presentation
 Plug 'sotte/presenting.vim'
+
+" nnn inside vim
+" Plug 'mcchrish/nnn.vim'
+
+" vifm inside vim
+Plug 'vifm/vifm.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -282,9 +288,14 @@ endif
 " CoC ------------------------------------{{{
 
 " install extensions
+" :CocInstall 
 " coc-json, coc-git, coc-python, coc-vimlsp, coc-clangd, coc-css, 
 " coc-html, coc-r-lsp, coc-snippets, coc-texlab, coc-explorer
-" coc-sh
+" coc-sh, coc-markdownlint, coc-yank, coc-omni, coc-dictionary
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -305,7 +316,7 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("patch-8.1.1564")
+if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
 else
@@ -325,9 +336,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" snippets with tab
-let g:coc_snippet_next = '<tab>'
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -368,12 +376,12 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Symbol renaming: new name
-nmap <leader>nn <Plug>(coc-rename)
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -385,13 +393,16 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-" nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-" nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -405,17 +416,13 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
-" Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-
-" NeoVim-only mapping for visual mode scroll
-" Useful on signatureHelp after jump placeholder of snippet expansion
-if has('nvim')
-  vnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#nvim_scroll(1, 1) : "\<C-f>"
-  vnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#nvim_scroll(0, 1) : "\<C-b>"
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " Use CTRL-S for selections ranges.
@@ -424,18 +431,18 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -471,8 +478,8 @@ let cmdline_app['python'] = 'ipython'
 "}}}
 
 " fuzzy finder - fzf ------------------------------{{{
-nmap ;. :FZF<CR>
-nmap ;h :FZF ~<CR>
+nmap ;. :fzf<cr>
+nmap ;h :fzf ~<cr>
 nmap ;w :FZF ~/Wiki<CR>
 nmap ;b :Buffers<CR>
 nmap ;l :BLines<CR>
@@ -565,8 +572,8 @@ nmap <leader>mr :!make rsync_book<CR>
 nmap <leader>ma :!make all<CR>  
 
 " vim-pandoc
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#modules#disabled = ["folding"]
+" let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+" let g:pandoc#modules#disabled = ["folding"]
 
 " MarkdownPreview
 "
@@ -625,8 +632,8 @@ func! Rename2ascii()
 endfunc
 
 " Time Stamps
-inoremap <F6> <C-R>=strftime("%Y%m%d-")<CR>
-nnoremap <F6> "=strftime("%Y%m%d-")<CR>P
+inoremap <F6> <C-R>=strftime("%Y-%m-%d ")<CR>
+nnoremap <F6> "=strftime("%Y-%m-%d ")<CR>P
 inoremap <F7> <C-R>=strftime("%Y-%m-%d_%H:%M")<CR>
 nnoremap <F7> "=strftime("%Y-%m-%d_%H:%M")<CR>P
 inoremap <F8> <C-R>=strftime("%Y%m%d-%H%M%S-")<CR>
@@ -634,6 +641,9 @@ nnoremap <F8> "=strftime("%Y%m%d-%H%M%S-")<CR>P
 
 " remove ^M quebra de página
 nnoremap <F9> :%s/\r//g <CR>
+
+" wrap
+nnoremap <F10> :set wrap! <CR>
 
 " }}}
 
@@ -645,7 +655,7 @@ let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'qutebrowser'
+let g:mkdp_browser = 'firefox'
 let g:mkdp_echo_preview_url = 1
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
@@ -833,13 +843,21 @@ augroup myvimrc
 augroup END
 " }}}
 
+" vifm ------------------------------ {{{
+"
+
+nmap <LocalLeader>f :EditVifm<CR>
+
+" }}}
+
+
 " Source Nvim configuration file and install plugins
 nnoremap <leader>1 :source ~/.config/nvim/init.vim <CR>
 nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
 
 " force to disable dictionary in markdown files
-autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
-autocmd BufRead,BufNewFile *.Rmd,*.md set wrap
+" autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
+" autocmd BufRead,BufNewFile *.Rmd,*.md set wrap
 
 " vim: fdm=marker nowrap
 "

@@ -31,13 +31,13 @@
     bindsym $super+Shift+q exec i3-msg exit
 
 # start a terminal
-        bindsym $super+Return exec 'terminator'
+        bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
 
 # inverted colors
-# bindsym $super+i exec xrandr-invert-colors
-# bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
-# bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
-# bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
+bindsym $super+i exec xrandr-invert-colors
+bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
+bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
+bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
 
 # Set shut down, restart and locking features
         bindsym $super+0 mode "$mode_system"

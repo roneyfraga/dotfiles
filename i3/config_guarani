@@ -9,7 +9,7 @@
 # Default applications
         set $filer    ranger
         set $browser  qutebrowser
-        set $terminal terminator
+        set $terminal st
         set $player   mpv
 # General bindings
         bindsym $super+Tab              workspace back_and_forth
@@ -17,7 +17,7 @@
 # bindsym a, y, i, p, z, x, c, v, ', /, \
 # }}}
 
-# UTILS {{{
+# UTILS {{{ 
 # kill focused window
 bindsym $super+q kill
 
@@ -31,7 +31,7 @@ bindsym $super+Shift+r restart;
 bindsym $super+Shift+q exec i3-msg exit
 
 # start a terminal
-bindsym $super+Return exec 'terminator'
+    bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
 
 # inverted colors
 # bindsym $super+i exec xrandr-invert-colors
@@ -60,20 +60,23 @@ mode "$mode_system" {
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec volumeicon volumeicon
+exec volumeicon 
 
 # Pulse Audio controls
-#
+# 
+# para encontrar a saída de audio (0 ou 1)
+# > pacmd list-sinks | grep -e 'name:' -e 'index:'
+# 
 # multimidia keys
-bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
+        bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 0 +7%"   # increase sound volume
+        bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 0 -7%"   # decrease sound volume
+        bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 0 toggle"          # mute sound
 # super+f12
 # super+f11
 # super+f10
-bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +7%"            # increase sound volume 
-bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -7%"            # decrease sound volume 
-bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"           # mute sound           
+        bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 0 +7%"            # increase sound volume 
+        bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 0 -7%"            # decrease sound volume 
+        bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 0 toggle"           # mute sound           
 # }}}
 
 # APPEARANCE {{{
@@ -275,7 +278,7 @@ for_window [class="^.*"] border pixel 3
 # KEYBOARD {{{
 
 # Keyboard on startup
-        # pok3r 
+        # pok3r  
         exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
         # apple wireless keyboard
         # Caps->Control LR_Shift->Caps
@@ -325,17 +328,11 @@ mode "$mode_keyboard"{
         exec_always --no-startup-id fix_xcursor
         exec --no-startup-id telegram-desktop
         exec_always unclutter
-        exec --no-startup-id discord
+        # exec --no-startup-id discord
         exec --no-startup-id keynav
 
 # Monitores
-# AMD Radeon RX 270 with 3 monitors
-# exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DisplayPort-2 --mode 1920x1080 --pos 0x525 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x1080 --rotate normal --output DVI-D-0 --off
-# exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 1080x0 --rotate normal --output DisplayPort-2 --mode 1920x1080 --pos 0x0 --rotate right --output HDMI-A-0 --primary --mode 1920x1080 --pos 1080x1080 --rotate normal --output DVI-D-0 --off
-
-# AMD Radeon RX 270 with 2 monitors horizontal
-    exec_always xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x420 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 3840x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x420 --rotate normal --output DVI-D-0 --off
-    # exec_always xrandr --output DisplayPort-0 --off --output DisplayPort-1 --mode 1920x1080 --pos 3840x0 --rotate right --output DisplayPort-2 --mode 1920x1080 --pos 0x420 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --pos 1920x420 --rotate normal --output DVI-D-0 --off
+    exec_always xrandr --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --mode 1920x1080 --pos 3840x0 --rotate normal
 
 # Natural scroll mouse
         exec synclient NaturalScrolling=1 VertScrollDelta=-113

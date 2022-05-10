@@ -1,6 +1,6 @@
 # BINDINGS {{{
 # Variables
-        set $super    Mod4
+    set $super    Mod4
         set $alt      Mod1
         set $swap     Mod4+Control
         set $exec     exec --no-startup-id
@@ -18,84 +18,87 @@
 
 # UTILS {{{
 # kill focused window
-bindsym $super+q kill
+    bindsym $super+q kill
 
 # reload the configuration file
-bindsym $super+Shift+c reload
+        bindsym $super+Shift+c reload
 
 # restart i3 inplace
-bindsym $super+Shift+r restart;
+        bindsym $super+Shift+r restart;
 
 # exit i3
-bindsym $super+Shift+q exec i3-msg exit
+    bindsym $super+Shift+q exec i3-msg exit
 
 # start a terminal
-bindsym $super+Return exec 'terminator'
+        bindsym $super+Return exec 'terminator'
 
 # inverted colors
-# bindsym $super+i exec xrandr-invert-colors
-# bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
-# bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
-# bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
+        bindsym $super+i exec xrandr-invert-colors
+        bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
+        bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
+        bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
 
 # Set shut down, restart and locking features
-bindsym $super+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+        bindsym $super+0 mode "$mode_system"
+        set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+        mode "$mode_system" {
+            bindsym l exec --no-startup-id i3exit lock, mode "default"
+                bindsym s exec --no-startup-id i3exit suspend, mode "default"
+                bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+                bindsym e exec --no-startup-id i3exit logout, mode "default"
+                bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+                bindsym r exec --no-startup-id i3exit reboot, mode "default"
+                bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+# exit system mode: "Enter" or "Escape"
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+        }
 # }}}
 
 # AUDIO {{{
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
-exec volumeicon volumeicon
+    exec volumeicon
 
 # Pulse Audio controls
-#
+# 
+# para encontrar a saída de audio (0 ou 1)
+# > pacmd list-sinks | grep -e 'name:' -e 'index:'
+# 
 # multimidia keys
-bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 +10%"   # increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 1 -10%"   # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"          # mute sound
+        bindsym XF86AudioRaiseVolume exec --no-startup-id sh -c "pactl set-sink-volume 0 +7%"   # increase sound volume
+        bindsym XF86AudioLowerVolume exec --no-startup-id sh -c "pactl set-sink-volume 0 -7%"   # decrease sound volume
+        bindsym XF86AudioMute exec --no-startup-id sh -c "pactl set-sink-mute 0 toggle"          # mute sound
 # super+f12
 # super+f11
 # super+f10
-bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 1 +7%"            # increase sound volume 
-bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 1 -7%"            # decrease sound volume 
-bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 1 toggle"           # mute sound           
+        bindcode $super+96 exec --no-startup-id sh -c "pactl set-sink-volume 0 +7%"            # increase sound volume 
+        bindcode $super+95 exec --no-startup-id sh -c "pactl set-sink-volume 0 -7%"            # decrease sound volume 
+        bindcode $super+76 exec --no-startup-id sh -c "pactl set-sink-mute 0 toggle"           # mute sound           
 # }}}
 
 # APPEARANCE {{{
-font xft:URWGothic-Book 11
+    font xft:URWGothic-Book 11
 
 # COLORS                border  backgrd text    indicator
 # set window colors
-client.focused          #4E9C00 #4E9C00 #FFFFFF #FFFFFF
-client.focused_inactive #1B3600 #1B3600 #FFFFFF #FFFFFF
-client.unfocused        #333333 #333333 #888888 #FFFFFF
-client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
+        client.focused          #4E9C00 #4E9C00 #FFFFFF #FFFFFF
+        client.focused_inactive #1B3600 #1B3600 #FFFFFF #FFFFFF
+        client.unfocused        #333333 #333333 #888888 #FFFFFF
+        client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
 # }}} 
 
 # GAPS {{{
 # Set inner/outer gaps
-gaps inner 1
-gaps outer 1
+    gaps inner 1
+        gaps outer 1
 
 # Smart gaps (gaps used if only more than one container on the workspace)
-smart_gaps on
-smart_borders on
+        smart_gaps on
+        smart_borders on
 
-for_window [class="^.*"] border pixel 3
+        for_window [class="^.*"] border pixel 3
 
 # }}}
 
@@ -132,16 +135,16 @@ for_window [class="^.*"] border pixel 3
 
 # BEHAVIOR {{{
     focus_follows_mouse no
-    # Mouse+$super to drag floating windows
-    floating_modifier $alt
-    # If popup when fullscreen
-    popup_during_fullscreen smart
-    # $super+self go to prev workspace
-    workspace_auto_back_and_forth yes
-    # delay windows hint focus uppon wkspc change
-    force_display_urgency_hint 500 ms
-    # Focus if the windows is in the cur wkspc
-    focus_on_window_activation smart
+# Mouse+$super to drag floating windows
+        floating_modifier $alt
+# If popup when fullscreen
+        popup_during_fullscreen smart
+# $super+self go to prev workspace
+        workspace_auto_back_and_forth yes
+# delay windows hint focus uppon wkspc change
+        force_display_urgency_hint 500 ms
+# Focus if the windows is in the cur wkspc
+        focus_on_window_activation smart
 # }}}
 
 # APP SHORTCUTS {{{
@@ -149,15 +152,15 @@ for_window [class="^.*"] border pixel 3
     bindsym $super+space exec "rofi -combi-modi window,drun,ssh -theme solarized -font 'hack 10' -show combi"
 
 # rofi-calc
-    bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
+        bindsym $super+c exec --no-startup-id "rofi -show calc -theme solarized -font 'hack 13'  -modi calc -no-show-match -no-sort"
 
 # flameshot
-    # bindsym $super+p exec "flameshot gui"
+# bindsym $super+p exec "flameshot gui"
 
 # }}}
 
 # TREE {{{
-        bindsym $super+u        focus parent
+    bindsym $super+u        focus parent
         bindsym $super+d        focus child
         bindsym $super+f        fullscreen  toggle
         bindsym $super+Shift+f  fullscreen  toggle global
@@ -179,7 +182,7 @@ for_window [class="^.*"] border pixel 3
 
 # WORKSPACES {{{
 # switch to workspace
-        bindsym $super+1 workspace 1
+    bindsym $super+1 workspace 1
         bindsym $super+2 workspace 2
         bindsym $super+3 workspace 3
         bindsym $super+4 workspace 4
@@ -273,9 +276,8 @@ for_window [class="^.*"] border pixel 3
 
 # KEYBOARD {{{
 
-# default keyboard
-# Caps->Control LR_Shift->Caps
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+# Apple wireless keyboard
+    exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
 
 # MODE to change layout
         set $mode_keyboard Keyboard: [e]nglish [i]nternational
@@ -297,35 +299,34 @@ for_window [class="^.*"] border pixel 3
 
 # AUTOSTART APPS {{{
 # Autostart applications
-        exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
         exec --no-startup-id nitrogen --restore; sleep 1; compton -b
         exec --no-startup-id nm-applet
         exec --no-startup-id xfce4-power-manager
         exec --no-startup-id pamac-tray
         exec --no-startup-id clipit
-        # exec --no-startup-id blueman-applet
-        # exec --no-startup-id dropbox
-        # exec --no-startup-id nextcloud
-        # exec --no-startup-id vgrive
+# exec --no-startup-id blueman-applet
+# exec --no-startup-id dropbox
+# exec --no-startup-id nextcloud
+# exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
-        # exec --no-startup-id skypeforlinux
-        # exec --no-startup-id flameshot
+# exec --no-startup-id skypeforlinux
+# exec --no-startup-id flameshot
         exec --no-startup-id ksnip
-        # exec --no-startup-id minetime
-        # exec --no-startup-id goldendict
-        # exec --no-startup-id start_conky_maia
-        exec --no-startup-id xautolock -time 15 -locker blurlock
+# exec --no-startup-id minetime
+# exec --no-startup-id goldendict
+# exec --no-startup-id start_conky_maia
+        exec --no-startup-id xautolock -time 45 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
-        # exec --no-startup-id telegram-desktop
+        exec --no-startup-id telegram-desktop
         exec_always unclutter
-        # exec --no-startup-id discord
+        exec --no-startup-id keynav
+# exec --no-startup-id discord
 
 # Monitor
-# exec_always 
-    # exec_always xrandr --output VGA-1 --primary --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1280x1024 --pos 1280x0 --rotate normal
-    exec_always xrandr --output VGA-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off --output DVI-I-1-1 --mode 1440x900 --pos 1920x0 --rotate normal
-
+        exec_always xrandr --output HDMI-1 --primary --mode 1920x1080 --pos 1280x0 --rotate normal
+        # exec_always xrandr --output DVI-I-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal
 
 # Natural scroll mouse
         exec synclient NaturalScrolling=1 VertScrollDelta=-113

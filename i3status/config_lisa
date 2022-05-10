@@ -6,12 +6,17 @@
 # ß
 # If the above line is not correctly displayed, fix your editor first!
 
+# bar {
+#     status_command /home/roney/bin/i3script.sh
+# }
+
 general {
         colors = true
         interval = 5
         color_good = "#2AA198"
         color_bad = "#586E75"
         color_degraded = "#DC322F"
+        #output_format = i3bar
 }
 
 # order += "cpu_usage"

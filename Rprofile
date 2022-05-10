@@ -1,14 +1,6 @@
 
 if (interactive()) {
     suppressMessages(require(colorout))
-    # suppressMessages(require(devtools))
-    # suppressMessages(require(roxygen2))
-    # suppressMessages(require(testthat))
-    # suppressMessages(require(knitr))
-    # suppressMessages(require(tidyverse))
-    # suppressMessages(require(pipeR))
-    # suppressMessages(require(dplyr))
-    # suppressMessages(require(rio))
     conflicted::conflict_prefer("filter", "dplyr")
     conflicted::conflict_prefer("pluck", "purrr")
 

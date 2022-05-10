@@ -2,7 +2,8 @@
 # make ln 					## para links gerais, e depois
 # make ln _[máquina] 		## para máquina de desejo
 
-dotfolder=~/OneDrive/CLI/dotfiles
+#dotfolder=~/OneDrive/CLI/dotfiles
+dotfolder=/mnt/raid0/Pessoal/OneDrive/CLI/dotfiles
 configfolder=~/.config
 
 ln:
@@ -21,6 +22,8 @@ ln:
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
 	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
 	ln -s $(dotfolder)/lintr ~/.lintr
+	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/colors
+	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 
 ln_x270:
 	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
@@ -33,6 +36,7 @@ ln_lisa:
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
+	ln -s $(dotfolder)/vifm/vifmrc_lisa /home/roney/.config/vifm/vifmrc
 
 ln_frank:
 	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
@@ -45,6 +49,7 @@ ln_guarani:
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
+	ln -s $(dotfolder)/vifm/vifmrc /home/roney/.config/vifm/vifmrc
 
 ln_fusca:
 	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
@@ -68,6 +73,7 @@ rm:
 	rm -f $(configfolder)/mimeapps.list
 	rm -f $(configfolder)/nvim/coc-settins.json
 	rm -f ~/.lintr
+	rm -f ~/.pydoro.ini
 
 rm_x270:
 	rm -f $(configfolder)/i3/config

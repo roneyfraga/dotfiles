@@ -306,9 +306,9 @@ for_window [class="^.*"] border pixel 3
 
 # KEYBOARD {{{
 
-# default keyboard
+# keyboard apple com fio
 # Caps->Control LR_Shift->Caps
-        exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
+    exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel -option ctrl:ralt_rctrl
 
 # MODE to change layout
         set $mode_keyboard Keyboard: [e]nglish [i]nternational
@@ -352,16 +352,10 @@ for_window [class="^.*"] border pixel 3
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
         exec_always unclutter
+        exec --no-startup-id keynav
 
 # Monitors
-        # drive open source
-        # exec_always xrandr --output DVI-I-1 --primary --mode 1920x1080 --pos 1080x420 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate right  --output VGA-1 --off
-        # drive nvidia
-        # exec_always xrandr --output DVI-I-0 --off --output VGA-0 --off --output DVI-I-1 --primary --mode 1920x1080 --pos 1080x420 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate right
-        # exec_always xrandr --output DVI-I-0 --off --output VGA-0 --off --output DVI-I-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal
-        # exec_always xrandr --output DVI-I-1 --off --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
-        # exec_always xrandr --output DVI-I-1 --off --output VGA-1 --mode 1280x1024 --pos 1920x56 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
-        exec_always xrandr --output DVI-I-1 --off --output VGA-1 --primary --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-1 --off
+        exec_always xrandr --output DVI-I-1 --mode 1920x1080 --pos 0x0 --rotate left --output VGA-1 --off --output HDMI-1 --primary --mode 1920x1080 --pos 1080x563 --rotate normal
 
 # Keyboard
         # Vortex Pok3r 
