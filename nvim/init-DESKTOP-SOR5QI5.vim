@@ -209,7 +209,10 @@ Plug 'tpope/vim-surround'
 
 " wiki 
 Plug 'vimwiki/vimwiki'
-Plug 'michal-h21/vim-zettel'
+
+" zettelkasten
+Plug 'renerocksai/telekasten.nvim'
+Plug 'renerocksai/calendar-vim'
 
 " slide presentation
 Plug 'sotte/presenting.vim'
@@ -274,32 +277,6 @@ elseif hostname == "guarani"
     " let R_external_term = 0
 endif
 
-" function to ident R code as lintr pattern
-" :call Rlimpo()
-function! Rlimpo()
-    :s/,/, /ge
-    :s/ ,/,/ge
-    :s/-/ - /ge
-    :s/+/ + /ge
-    :s/*/ * /ge
-    :s/\// \/ /ge
-    :s/=/ = /ge
-    :s/ =  = / == /ge
-    :s/ \{2,\}/ /ge
-    :s/\[\s/\[/ge
-    :s/\] )/\])/ge
-    :s/ - - /--/ge
-    :s/</ < /ge
-    :s/>/ > /ge
-    :s/< =/ <= /ge
-    :s/> =/ >= /ge
-    :s/>/ > /ge
-    :s/! =/ != /ge
-    :s/ \{2,\}/ /ge
-    :s/< -/<-/ge
-    :s/| >/|>/ge
-endfunction
- 
 
 " }}}
 
@@ -858,6 +835,7 @@ nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
 " force to disable dictionary in markdown files
 " autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
 " autocmd BufRead,BufNewFile *.Rmd,*.md set wrap
+
 
 " vim: fdm=marker nowrap
 "

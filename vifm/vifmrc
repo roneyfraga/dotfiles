@@ -120,12 +120,13 @@ mark w ~/Downloads/
 mark s ~/Sync/
 mark l ~/LisaShared/
 mark m ~/AndroidShared/Musicas/
-mark o ~/OneDrive/
-mark i ~/OneDrive/CLI/dotfiles/
-mark b ~/OneDrive/Biblioteca/
-mark r ~/OneDrive/Rworkspace/
-mark p ~/OneDrive/Profissional/
-mark P ~/OneDrive/Profissional/PubPar
+mark o ~/Documents/
+mark i ~/Documents/CLI/dotfiles/
+mark b ~/Documents/Biblioteca/
+mark r ~/Documents/Rworkspace/
+mark p ~/Documents/Profissional/
+mark P ~/Documents/Profissional/PubPar
+mark o ~/Documents/Profissional/UFMT_Orientacoes
 
 " ------------------------------------------------------------------------------
 

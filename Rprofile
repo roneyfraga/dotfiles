@@ -1,10 +1,8 @@
 
 if (interactive()) {
-    suppressMessages(require(colorout))
-    conflicted::conflict_prefer("filter", "dplyr")
-    conflicted::conflict_prefer("pluck", "purrr")
 
     # cores do terminal
+    suppressMessages(require(colorout))
     setOutputColors256(normal = 39, number = 51, negnum = 183, date = 43, string = 79, const = 75, verbose = FALSE)
 
     # função para enviar para o R qual a largura do terminal de saída dos dados

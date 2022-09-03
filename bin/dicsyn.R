@@ -57,16 +57,23 @@ if (length(args) < 2) {
 }
 
 # teste aqui
-args <- list('pt', 'amor')
+# args <- list('pt', 'amor')
 
-page <- read_html(paste(url, args[1], args[2], sep = '/'))
+# page <- read_html(paste(url, args[1], args[2], sep = '/'))
 
-html_nodes(page, xpath = '//*[contains(concat( " ", @class, " " ), concat( " ", "synonyms-list-group", " " ))] | //*[contains(concat( " ", @class, " " ), concat( " ", "upper-synonyms", " " ))]//a') |>
-        html_text() ->
-        p1
+# html_nodes(page, xpath = '//*[@id="content"]/div[3]/div/div/div[2]/div/div[3]/ol/li/div') %>>% 
+#     html_text2() %>>% 
+#     (gsub('^.*:|\\n', ' ', .)) %>>% 
+#     (trimws(., which = 'both', whitespace = "[ \t\r\n]"))  %>>% 
+#     (strsplit(., split = " +")) %>>% 
+#     (. -> a)
 
-paste(p1, collapse = ' ') -> p2
-gsub(' Significado: ', '')
-
+# # todos, exceto o primeiro sinônimo
+# html_nodes(page, xpath = '//*[@id="content"]/ol/li[*]') %>>% 
+#     html_text2() %>>% 
+#     (gsub('^.*:|\\n', ' ', .)) %>>% 
+#     (trimws(., which = 'both', whitespace = "[ \t\r\n]"))  %>>% 
+#     (strsplit(., split = " +")) %>>% 
+#     (. -> b)
 
 

@@ -2,15 +2,16 @@
 # make ln 					## para links gerais, e depois
 # make ln _[máquina] 		## para máquina de desejo
 
-#dotfolder=~/OneDrive/CLI/dotfiles
-dotfolder=/mnt/raid0/Pessoal/OneDrive/CLI/dotfiles
+dotfolder=/mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Documents/CLI/dotfiles
+# dotfolder=~/Documents/CLI/dotfiles
+# dotfolder=/mnt/raid0/Pessoal/Documents/CLI/dotfiles
 configfolder=~/.config
 
 ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
-	ln -s $(dotfolder)/nvim/coc-settins.json ~/.config/nvim/coc-settins.json
+	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
@@ -22,8 +23,9 @@ ln:
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
 	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
 	ln -s $(dotfolder)/lintr ~/.lintr
-	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/colors
+	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_x270:
 	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
@@ -36,7 +38,7 @@ ln_lisa:
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
-	ln -s $(dotfolder)/vifm/vifmrc_lisa /home/roney/.config/vifm/vifmrc
+	ln -s $(dotfolder)/vifm/vifmrc_lisa $(configfolder)/.config/vifm/vifmrc
 
 ln_frank:
 	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
@@ -72,8 +74,11 @@ rm:
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
 	rm -f $(configfolder)/nvim/coc-settins.json
+	rm -f $(configfolder)/vifm/colors
+	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f ~/.lintr
 	rm -f ~/.pydoro.ini
+	rm -f $(configfolder)/nvim/coc-settings.json
 
 rm_x270:
 	rm -f $(configfolder)/i3/config

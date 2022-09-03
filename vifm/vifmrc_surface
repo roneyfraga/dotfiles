@@ -120,19 +120,17 @@ endif
 " :mark mark /full/directory/path [filename]
 
 mark h ~/
-mark k ~/Desktop/
-mark w ~/Downloads/
-mark s ~/Sync/
-mark l ~/LisaShared/
-mark m ~/AndroidShared/Musicas/
-mark 0 /mnt/raid0/
-mark d /mnt/raid0/Pessoal/Documents/
+mark k /mnt/c/Users/roney/Desktop/
+mark w /mnt/c/Users/roney/Downloads/
+mark s /mnt/c/Users/roney/Sync/
+mark d /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/
 mark i /mnt/raid0/Pessoal/Documents/CLI/dotfiles/
 mark b /mnt/raid0/Pessoal/Documents/Biblioteca/
-mark r /mnt/raid0/Pessoal/Documents/Rworkspace/
-mark p /mnt/raid0/Pessoal/Documents/Profissional/
-mark P /mnt/raid0/Pessoal/Documents/Profissional/PubPar
-mark o /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes
+mark r /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace/
+mark R /mnt/c/Users/roney/
+mark p /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/
+mark P /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar/
+mark o /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissiona/UFMT_Orientacoes/
 
 " ------------------------------------------------------------------------------
 
