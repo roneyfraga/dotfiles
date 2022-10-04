@@ -285,9 +285,10 @@ function! Rlimpo()
     :s/\// \/ /ge
     :s/=/ = /ge
     :s/ =  = / == /ge
-    :s/ \{2,\}/ /ge
+    :s/ \{2\}/ /ge
     :s/\[\s/\[/ge
     :s/\] )/\])/ge
+    :s/ )/)/ge
     :s/ - - /--/ge
     :s/</ < /ge
     :s/>/ > /ge
@@ -295,7 +296,7 @@ function! Rlimpo()
     :s/> =/ >= /ge
     :s/>/ > /ge
     :s/! =/ != /ge
-    :s/ \{2,\}/ /ge
+    :s/ \{2\}/ /ge
     :s/< -/<-/ge
     :s/| >/|>/ge
 endfunction

@@ -534,6 +534,7 @@ alias dk='cd ~/Desktop'
 alias dw='cd ~/Downloads'
 alias cfg='cd ~/.config'
 
+
 # places lisa
 if [ $(hostname) = 'lisa' ]; then
     alias r0='cd /mnt/raid0'
