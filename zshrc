@@ -112,15 +112,20 @@ export VISUAL='nvim'
 # export TRUEBROWSER='firefox'
 # export VIDEO='mpv'
 
-if [ $(hostname) = 'lisa' ]; 
-then
-    export BIB=/mnt/raid0/Pessoal/Documents/CLI/bibliography.bib
+# hostname Manjaro and Arch (WSL2)
+nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' | sed 's/[[:space:]]//' | sed 's/[[:blank:]]//')
+
+# conferir
+# printenv nome_do_computador
+
+if [ $nome_do_computador = 'lisa' ]; then
+    print 'lisa'
 else 
-    export BIB=$HOME/Documents/CLI/bibliography.bib
+   print 'algum outro'
 fi
 
 # fzf
-if [ $(hostname) = 'SurfacePro8' ]; 
+if [ $nome_do_computador = 'SurfacePro8' ]; 
 then
     export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
 else 
@@ -148,14 +153,14 @@ export FZF_DEFAULT_OPTS="\
     "
 
 # CREDENTIALS
-source ~/dotfiles/credentials/elsevier.sh
+source ~/.credentials/elsevier.sh
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
 
 # monitor orientation: benq 27" + samsung 24"
-if [ $(hostname) = 'lisa' ]; 
+if [ $nome_do_computador = 'lisa' ]; 
 then
     alias hori='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off'
     alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
@@ -169,10 +174,10 @@ export NNN_TRASH=1  # needs trash-cli
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_OPENER=nuke
 
-if [ $(hostname) = 'lisa' ]; 
+if [ $nome_do_computador = 'lisa' ]; 
 then
     export NNN_BMS='k:~/Desktop;w:~/Downloads;0:/mnt/raid0;r:/mnt/raid0/Pessoal/Documents/Rworkspace;p:/mnt/raid0/Pessoal/Documents/Profissional;i:/mnt/raid0/Pessoal/Documents/CLI;B:/mnt/raid0/Pessoal/Documents/Biblioteca;P:/mnt/raid0/Pessoal/Documents/Profissional/PubPar;h:~;s:~/Sync'
-elif [ $(hostname) = 'SufacePro8' ]; 
+elif [ nome_do_computador = 'SufacePro8' ]; 
 then
     export NNN_BMS='k:/mnt/c/Users/roney/Desktop;w:/mnt/c/Users/roney/Downloads;r:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace;p:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional;i:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI;B:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Biblioteca;P:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar;h:/mnt/c/Users/roney/;s:/mnt/c/Users/roney/Sync'
 else 
@@ -184,7 +189,7 @@ alias f='vifm .'
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
 
-if [ $(hostname) = 'SufacePro8' ]; 
+if [ $nome_do_computador = 'SufacePro8' ]; 
 then
     alias vw='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
 else 
@@ -198,9 +203,7 @@ alias l='ls -lNh --color=auto --group-directories-first'
 alias yt='youtube-dl'
 alias ref='source ~/.zshrc'
 alias aq='asciiquarium'
-alias h='htop'
 alias zt='zathura'
-alias penlabel='ls /dev/disk/by-label/'
 alias py='python'
 alias def='goldendict'
 alias syn='~/bin/dicsyn.R'
@@ -222,18 +225,18 @@ alias dw='cd ~/Downloads'
 alias cfg='cd ~/.config'
 alias dot='cd ~/dotfiles'
 
-# places lisa
-if [ $(hostname) = 'lisa' ]; then
+# places 
+if [ $nome_do_computador = 'lisa' ]; then
     alias r0='cd /mnt/raid0'
+    alias pes='cd /mnt/raid0/Pessoal'
     alias dc='cd /mnt/raid0/Pessoal/Documents/'
     alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
     alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
     alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
-    alias lat='cd /mnt/raid0/Pessoal/Documents/Profissional/Latex'
     alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
     alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
-elif [ $(hostname) = 'SurfacePro8' ]; then
+elif [ $nome_do_computador = 'SurfacePro8' ]; then
     alias roney='cd /mnt/c/Users/roney'
     alias dk='cd /mnt/c/Users/roney/Desktop'
     alias dw='cd /mnt/c/Users/roney/Downloads'
@@ -242,10 +245,18 @@ elif [ $(hostname) = 'SurfacePro8' ]; then
     alias rw='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace'
     alias pubpar='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar'
     alias prof='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional'
-    alias lat='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissiona/Latex'
     alias ori='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissiona/UFMT_Orientacoes'
     alias cli='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar/Qualis'
+elif [ $nome_do_computador = 'guarani' ]; then
+    alias pes='cd /mnt/ssh1tb/Pessoal'
+    alias dc='cd /mnt/ssh1tb/Pessoal/Documents/'
+    alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
+    alias pubpar='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd /mnt/ssh1tb/Pessoal/Documents/Profissional'
+    alias ori='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+    alias cli='cd /mnt/ssh1tb/Pessoal/Documents/CLI'
+    alias qualis='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
 else 
     alias dc='cd ~/Documents/'
     alias rw='cd ~/Documents/Rworkspace'

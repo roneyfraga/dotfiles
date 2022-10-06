@@ -1,6 +1,10 @@
 # como utilizar
+#
 # make ln 					## para links gerais, e depois
 # make ln _[máquina] 		## para máquina de desejo
+# 
+# make rm					## remover links
+# make rm_[máquina]			## remover links para máquina específica
 
 dotfolder=~/dotfiles
 configfolder=~/.config
@@ -25,18 +29,17 @@ ln:
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
-ln_x270:
-	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
-	ln -s $(dotfolder)/i3status/config_x270 $(configfolder)/i3status/config
-	ln -s $(dotfolder)/qutebrowser/config_x270.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/xresources/Xresources_x270 ~/.Xresources
-
 ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
-	ln -s $(dotfolder)/vifm/vifmrc_lisa $(configfolder)/.config/vifm/vifmrc
+
+ln_x270:
+	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3status/config_x270 $(configfolder)/i3status/config
+	ln -s $(dotfolder)/qutebrowser/config_x270.py $(configfolder)/qutebrowser/config.py
+	ln -s $(dotfolder)/xresources/Xresources_x270 ~/.Xresources
 
 ln_frank:
 	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
