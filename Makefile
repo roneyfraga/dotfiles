@@ -2,9 +2,7 @@
 # make ln 					## para links gerais, e depois
 # make ln _[máquina] 		## para máquina de desejo
 
-dotfolder=/mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Documents/CLI/dotfiles
-# dotfolder=~/Documents/CLI/dotfiles
-# dotfolder=/mnt/raid0/Pessoal/Documents/CLI/dotfiles
+dotfolder=~/dotfiles
 configfolder=~/.config
 
 ln:
