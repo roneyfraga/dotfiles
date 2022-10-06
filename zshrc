@@ -115,16 +115,9 @@ export VISUAL='nvim'
 # hostname Manjaro and Arch (WSL2)
 nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' | sed 's/[[:space:]]//' | sed 's/[[:blank:]]//')
 
-# conferir
+# conferir nome_do_computador com:
 # printenv nome_do_computador
 
-# fzf
-if [ $nome_do_computador = 'SurfacePro8' ]; 
-then
-    export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --no-ignore-vcs"
-else 
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-fi
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
