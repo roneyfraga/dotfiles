@@ -118,12 +118,6 @@ nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' |
 # conferir
 # printenv nome_do_computador
 
-if [ $nome_do_computador = 'lisa' ]; then
-    print 'lisa'
-else 
-   print 'algum outro'
-fi
-
 # fzf
 if [ $nome_do_computador = 'SurfacePro8' ]; 
 then

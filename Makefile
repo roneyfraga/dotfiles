@@ -52,7 +52,6 @@ ln_guarani:
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
-	ln -s $(dotfolder)/vifm/vifmrc /home/roney/.config/vifm/vifmrc
 
 ln_fusca:
 	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
