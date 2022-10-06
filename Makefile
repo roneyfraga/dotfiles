@@ -77,6 +77,8 @@ rm:
 	rm -f ~/.lintr
 	rm -f ~/.pydoro.ini
 	rm -f $(configfolder)/nvim/coc-settings.json
+	rm -f $(configfolder)/vifm/favicons.vifm
+	rm -f $(configfolder)/vifm/vifmrc
 
 rm_x270:
 	rm -f $(configfolder)/i3/config
