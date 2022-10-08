@@ -112,12 +112,10 @@ export VISUAL='nvim'
 # export TRUEBROWSER='firefox'
 # export VIDEO='mpv'
 
-# hostname Manjaro and Arch (WSL2)
-nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' | sed 's/[[:space:]]//' | sed 's/[[:blank:]]//')
-
+# hostname Manjaro or Arch (WSL2)
+export nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' | sed 's/[[:space:]]//' | sed 's/[[:blank:]]//')
 # conferir nome_do_computador com:
-# printenv nome_do_computador
-
+# print $nome_do_computador 
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
@@ -238,14 +236,14 @@ elif [ $nome_do_computador = 'SurfacePro8' ]; then
     alias cli='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar/Qualis'
 elif [ $nome_do_computador = 'guarani' ]; then
-    alias pes='cd /mnt/ssh1tb/Pessoal'
-    alias dc='cd /mnt/ssh1tb/Pessoal/Documents/'
-    alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
-    alias pubpar='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd /mnt/ssh1tb/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd /mnt/ssh1tb/Pessoal/Documents/CLI'
-    alias qualis='cd /mnt/ssh1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
+    alias pes='cd /mnt/ssd1tb/Pessoal'
+    alias dc='cd /mnt/ssd1tb/Pessoal/Documents/'
+    alias rw='cd /mnt/ssd1tb/Pessoal/Documents/Rworkspace'
+    alias pubpar='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd /mnt/ssd1tb/Pessoal/Documents/Profissional'
+    alias ori='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+    alias cli='cd /mnt/ssd1tb/Pessoal/Documents/CLI'
+    alias qualis='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
 else 
     alias dc='cd ~/Documents/'
     alias rw='cd ~/Documents/Rworkspace'
