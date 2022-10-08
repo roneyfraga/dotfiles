@@ -212,6 +212,7 @@ alias dot='cd ~/dotfiles'
 
 # places 
 if [ $nome_do_computador = 'lisa' ]; then
+    alias sy='cd ~/Sync'
     alias r0='cd /mnt/raid0'
     alias pes='cd /mnt/raid0/Pessoal'
     alias dc='cd /mnt/raid0/Pessoal/Documents/'
@@ -236,6 +237,7 @@ elif [ $nome_do_computador = 'SurfacePro8' ]; then
     alias cli='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar/Qualis'
 elif [ $nome_do_computador = 'guarani' ]; then
+    alias sy='cd ~/Sync'
     alias pes='cd /mnt/ssd1tb/Pessoal'
     alias dc='cd /mnt/ssd1tb/Pessoal/Documents/'
     alias rw='cd /mnt/ssd1tb/Pessoal/Documents/Rworkspace'
