@@ -282,29 +282,34 @@ endif
 
 " function to ident R code as lintr pattern
 " :call Rlimpo()
+"
+" group search: \(algum padrão\)
+" return fisrt group: \1
 function! Rlimpo()
-    :s/,/, /ge
-    :s/ ,/,/ge
-    :s/-/ - /ge
-    :s/+/ + /ge
-    :s/*/ * /ge
-    :s/\// \/ /ge
-    :s/=/ = /ge
-    :s/ =  = / == /ge
-    :s/ \{2\}/ /ge
+    :s/,\([a-zA-Z]\)/, \1/ge
+    :s/\([a-zA-Z]\) ,/\1,/ge
+    :s/-\([a-zA-Z0-9]\)/- \1/ge
+    :s/\([a-zA-Z0-9]\)-/\1 -/ge
+    :s/+\([a-zA-Z0-9]\)/+ \1/ge
+    :s/\([a-zA-Z0-9]\)+/\1 +/ge
+    :s/\*\([a-zA-Z0-9]\)/\* \1/ge
+    :s/\([a-zA-Z0-9]\)\*/\1 \*/ge
+    :s/\/\([a-zA-Z0-9]\)/\/ \1/ge
+    :s/\([a-zA-Z0-9]\)\//\1 \//ge
+    :s/=\(.*\)/= \1/ge
+    :s/\([a-zA-Z0-9]\)=/\1 =/ge
     :s/\[\s/\[/ge
     :s/\] )/\])/ge
     :s/ )/)/ge
-    :s/ - - /--/ge
-    :s/</ < /ge
-    :s/>/ > /ge
-    :s/< =/ <= /ge
-    :s/> =/ >= /ge
-    :s/>/ > /ge
-    :s/! =/ != /ge
-    :s/ \{2\}/ /ge
-    :s/< -/<-/ge
-    :s/| >/|>/ge
+    :s/<\([a-zA-Z0-9]\)/< \1/ge
+    :s/\([a-zA-Z0-9]\)</\1 </ge
+    :s/>\([a-zA-Z0-9]\)/> \1/ge
+    :s/\([a-zA-Z0-9]\)>/\1 >/ge
+    :s/<=\([a-zA-Z0-9]\)/<= \1/ge
+    :s/\([a-zA-Z0-9]\)<=/\1 <=/ge
+    :s/>=\([a-zA-Z0-9]\)/>= \1/ge
+    :s/\([a-zA-Z0-9]\)>=/\1 >=/ge
+    :s/! =/!=/ge
 endfunction
  
 
