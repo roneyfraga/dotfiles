@@ -176,7 +176,7 @@ alias v='nvim'
 
 if [ $nome_do_computador = 'SufacePro8' ]; 
 then
-    alias vw='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
+    alias vw='cd /mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
 else 
     alias vw='cd ~/Wiki; nvim index.md'
 fi
