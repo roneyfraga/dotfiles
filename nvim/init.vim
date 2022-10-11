@@ -186,7 +186,7 @@ Plug 'junegunn/goyo.vim'
 " Calendar 
 " Plug 'itchyny/calendar.vim'
 
-" Python
+" Python, Julia, Go
 Plug 'jalvesaq/vimcmdline'
 
 " Auto complete
@@ -219,6 +219,12 @@ Plug 'mcchrish/nnn.vim'
 
 " vifm inside vim
 " Plug 'vifm/vifm.vim'
+
+" julia 
+Plug 'JuliaEditorSupport/julia-vim'
+
+" vim go language
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
@@ -486,13 +492,6 @@ nnoremap ;x :CocCommand explorer<CR>
 
 
 " }}}
-
-" Python configs --------------------------------------{{{
-" vimcmdline mappings
-let cmdline_term_height = 18     
-let cmdline_app           = {}
-let cmdline_app['python'] = 'ipython'
-"}}}
 
 " fuzzy finder - fzf ------------------------------{{{
 nmap ;. :Files<cr>
@@ -848,6 +847,26 @@ augroup END
 "
 
 nmap <LocalLeader>f :EditVifm<CR>
+
+" }}}
+
+" Python, Julia and vimcmdline------------------------------ {{{
+"
+" vimcmdline mappings
+
+let cmdline_app           = {}
+let cmdline_app['python'] = 'ipython'
+
+" <LocalLeader>s to start the interpreter.
+" <Space> to send the current line to the interpreter.
+" <LocalLeader><Space> to send the current line to the interpreter and keep the cursor on the current line.
+" <LocalLeader>q to send the quit command to the interpreter.
+" <Space> to send a selection of text to the interpreter.
+" <LocalLeader>p to send from the line to the end of paragraph.
+" <LocalLeader>b to send block of code between the two closest marks.
+" <LocalLeader>f to send the entire file to the interpreter.
+" <LocalLeader>m to send the text in the following motion to the interpreter. For example 
+" <LocalLeader>miw would send the selected word.
 
 " }}}
 

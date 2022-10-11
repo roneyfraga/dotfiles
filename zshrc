@@ -258,7 +258,7 @@ else
 fi
 
 # ssh tailscale
-alias lisa='ssh -p 13000 roney@179.217.119.6'
+alias lisa='ssh -p 13000 roney@100.103.109.70'
 alias guarani='ssh -p 19250 roney@100.93.227.70'
 alias surface='ssh roney@100.112.124.26'
 alias ubuntu_nyc='ssh bibr@100.104.99.20'
