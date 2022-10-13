@@ -501,6 +501,7 @@ nnoremap ;x :CocCommand explorer<CR>
 " fuzzy finder - fzf ------------------------------{{{
 nmap ;. :Files<cr>
 nmap ;h :Files ~<cr>
+nmap ;r :Files /<cr>
 nmap ;w :Files ~/Wiki<CR>
 nmap ;b :Buffers<CR>
 nmap ;l :BLines<CR>
