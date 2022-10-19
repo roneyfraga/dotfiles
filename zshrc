@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/roney/.oh-my-zsh"
 
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -196,6 +196,7 @@ alias doi2bib='~/bin/doi2bibtex.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='screenfetch'
+alias rrepl="rustup run nightly-2016-08-01 ~/.cargo/bin/rusti"
 
 # files
 alias init.vim="nvim ~/.config/nvim/init.vim"

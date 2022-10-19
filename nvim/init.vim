@@ -226,6 +226,9 @@ Plug 'JuliaEditorSupport/julia-vim'
 " vim go language
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+Plug 'rust-lang/rust.vim'
+Plug 'autozimu/LanguageClient-neovim'
+
 " Initialize plugin system
 call plug#end()
 "}}}
@@ -316,7 +319,7 @@ endfunction
 " CoC ------------------------------------{{{
 "
 " install extensions
-" :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary
+" :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-rust-analyzer
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -874,14 +877,25 @@ let cmdline_app['python'] = 'ipython'
 
 " }}}
 
+" Rust ------------------------------ {{{
+"
+" :RustRun
 
+" local mappings
+let g:rustfmt_autosave = 1
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ }
+
+" }}}
+
+" Source Nvim ------------------------------ {{{
+"
 " Source Nvim configuration file and install plugins
 nnoremap <leader>1 :source ~/.config/nvim/init.vim <CR>
 nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
-
-" force to disable dictionary in markdown files
-" autocmd BufRead,BufNewFile *.Rmd,*.md set nospell 
-" autocmd BufRead,BufNewFile *.Rmd,*.md set wrap
+" }}}
 
 " vim: fdm=marker nowrap
 "
