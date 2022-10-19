@@ -31,7 +31,7 @@ set mouse=a
 set backspace=2 
 
 " Enabling clipboard
-set clipboard=unnamed
+set clipboard+=unnamedplus
 
 " Envia mais caracteres ao terminal, melhorando o redraw de janelas
 set ttyfast
@@ -227,7 +227,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'rust-lang/rust.vim'
-Plug 'autozimu/LanguageClient-neovim'
+" Plug 'autozimu/LanguageClient-neovim'
 
 " Initialize plugin system
 call plug#end()
@@ -884,9 +884,9 @@ let cmdline_app['python'] = 'ipython'
 " local mappings
 let g:rustfmt_autosave = 1
 
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ }
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"     \ }
 
 " }}}
 
