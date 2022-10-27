@@ -288,7 +288,7 @@ endif
 "
 " group search: \(algum padrão\)
 " return fisrt group: \1
-function! Rlimpo()
+function! CodigoLimpo()
     :s/,\([a-zA-Z]\)/, \1/ge
     :s/\([a-zA-Z]\) ,/\1,/ge
     :s/-\([a-zA-Z0-9]\)/- \1/ge
@@ -527,6 +527,7 @@ nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>'
 " arquivos  Rmd usando snippets de r e rmd
 " au BufRead,BufNewFile *.rmd set ft=rmd.r
 " au BufRead,BufNewFile *.Rmd set ft=rmd.r
+au BufRead,BufNewFile *.qmd set ft=rmd.r
 " }}}
 
 " Backup files ------------------------------ {{{

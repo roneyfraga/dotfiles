@@ -196,7 +196,10 @@ alias doi2bib='~/bin/doi2bibtex.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='screenfetch'
-alias rrepl="rustup run nightly-2016-08-01 ~/.cargo/bin/rusti"
+
+# quarto
+alias qr='quarto render'
+alias qp='quarto preview'
 
 # files
 alias init.vim="nvim ~/.config/nvim/init.vim"
