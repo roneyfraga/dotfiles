@@ -55,20 +55,21 @@ endif
 
 " By default, Vim indents code by 8 spaces. Most people prefer 4 " spaces: 
 " size of a hard tabstop
-set tabstop=4
+set tabstop=2
 
 " size of an "indent"
-set shiftwidth=4
+set shiftwidth=2
 
 " a combination of spaces and tabs are used to simulate tab stops at a width
 " other than the (hard)tabstop
-set softtabstop=4
+set softtabstop=2
 
 " make "tab" insert indents instead of tabs at the beginning of a line
 set smarttab
 
 " always uses spaces instead of tab characters
 set expandtab
+
 
 " Italic inside tmux
 set t_ZH=^[[3m
@@ -284,7 +285,7 @@ elseif hostname == "guarani"
 endif
 
 " function to ident R code as lintr pattern
-" :call Rlimpo()
+" :call CodigoLimpo()
 "
 " group search: \(algum padrão\)
 " return fisrt group: \1
@@ -608,6 +609,7 @@ nmap <leader>ma :!make all<CR>
 " nmap <C-s> <Plug>MarkdownPreview
 " nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
+
 " }}}
 
 " Markdown VimWiki --------------------------------------{{{
@@ -849,13 +851,6 @@ augroup myvimrc
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l*    lwindow
 augroup END
-" }}}
-
-" vifm ------------------------------ {{{
-"
-
-nmap <LocalLeader>f :EditVifm<CR>
-
 " }}}
 
 " Python, Julia and vimcmdline------------------------------ {{{
