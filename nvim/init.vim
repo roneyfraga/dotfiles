@@ -590,8 +590,8 @@ map <Down> <Nop>
 "
 " ou simplismente via atalhos
 nmap <leader>mm :!make<CR>  
-nmap <leader>mh :!make html 
-nmap <leader>mp :!make pdf
+nmap <leader>mh :!make html<CR><CR>
+nmap <leader>mp :!make pdf<CR><CR>
 nmap <leader>md :!make docx
 nmap <leader>mr :!make rsync_book<CR>  
 nmap <leader>ma :!make all<CR>  
