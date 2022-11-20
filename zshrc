@@ -170,7 +170,7 @@ else
 fi
 
 # softwares
-alias f='vifm .'
+alias fm='vifm .'
 alias t='env TERM=screen-256color tmux'
 alias v='nvim'
 
@@ -292,10 +292,7 @@ alias gbd='git branch -d'
 alias gd='git diff '
 alias gds='git diff --stage '
 
-# functions
-# scpSuper file class
-# scpSuper file class/IntroMicro
-
+# small functions
 rsyncVolume(){
     rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
 }
@@ -316,64 +313,10 @@ ytp(){
     mpv $1 --no-video --shuffle
 }
 
-# nnn pmount better option
-# un/mount by external's drive name
-pen(){
-    udevil $1 /dev/disk/by-label/$2
-}
-
-# exfat mount/unmount
-penexfat(){
-    sudo $1 -t exfat /dev/disk/by-label/$2 /media/$2
-}
-
-# pandoc to html
-panhtml(){
-    pandoc --filter pandoc-crossref --filter pandoc-citeproc $1.md -o $1.html -r markdown+simple_tables+table_captions+yaml_metadata_block+smart+hard_line_breaks -w html --template=http://www.roneyfraga.com/pandoc/templates/html.template --css=http://www.roneyfraga.com/pandoc/marked/kultiad-serif.css --csl=http://www.roneyfraga.com/pandoc/csl/abnt-ipea.csl --bibliography=/home/roney/OneDrive/CLI/bibliography.bib --resource-path=$2
-}
-
-# lastpass
-lpass_find(){
-    lpass ls | grep -i $1
-}
-
-lpass_copy(){
-    lpass show -c --password $1
-}
-
-lpass_login(){
-    lpass login --trust --plaintext-key --force --color=auto $1
-}
-
 # any format to pdf
 topdf(){
     unoconv -f pdf $1
 }
-
-# r_external_term: 0 no, 1 yes, or terminal name
-# r_external_term(){
-#     sed -i "s/^let R_external_term.*/let R_external_term = ${1}/" $HOME/dotfiles/nvim/init.vim 
-# }
-
-# intalled packages
-pacmanIP(){
-    pacman -Q | awk '{print $1}' > $HOME/dotfiles/pacman_packages_installed.txt
-}
-
-# find file and open it in nvim, from current directory
-ff.() {
-    nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf)"
-}
- 
-# find file and open it in nvim, from ~/
-ffh() {
-    cd $HOME && nvim "$(fd -t f -I --hidden --follow --exclude '.git' | fzf )"
-}
-
-# fzf open file (with fd)
-# fop() {
-#     fd -t f -I --hidden --follow --exclude ".git" | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
-# }
 
 # fzf folder (directory), from current directory
 fd.() {
@@ -383,35 +326,6 @@ fd.() {
 # fzf folder (directory), from ~/
 fdh() {
     cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
-}
-
-# fzf pacman
-fpc() {
-    sudo pacman -Syy $(pacman -Ssq | fzf -m --preview="pacman -Si {}" --preview-window=:hidden)
-}
-
-# fzf yay
-fyy() {
-    yay -Syy $(yay -Ssq | fzf -m --preview-window=:hidden --preview="yay -Si {}")
-}
-
-# fzf bibliography, fb $BIB or fb references.bib 
-fbi(){
-    bibtex-ls $1 | fzf --multi --ansi --preview-window=:hidden | bibtex-cite -separator=', @'
-}
-
-# fzf reference, fr $BIB or fr references.bib
-fre(){
-    bibtex-ls $1 | fzf --multi --ansi --preview-window=:hidden
-}
-
-# references pdf bibtex
-getref2(){
-    papers extract $1
-}
-
-addref(){
-    $* >> $HOME/OneDrive/CLI/bibliography.bib
 }
 
 # nnn
