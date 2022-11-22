@@ -246,9 +246,6 @@ let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,dplyr,f
 " atalhos com \
 nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
 nmap <silent> <LocalLeader>h :call RAction("head")<CR>
-nmap <silent> <LocalLeader>nm :call RAction("names")<CR>
-nmap <silent> <LocalLeader>v :call RAction("View")<CR>
-nmap <silent> <LocalLeader>s :call RAction("str")<CR>
 nmap <silent> <LocalLeader>d :call RAction("dim")<CR>
 nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 
@@ -505,6 +502,7 @@ nmap ;. :Files<cr>
 nmap ;h :Files ~<cr>
 nmap ;r :Files /<cr>
 nmap ;w :Files ~/Wiki<CR>
+nmap ;s :Files ~/Sync<CR>
 nmap ;b :Buffers<CR>
 nmap ;l :BLines<CR>
 nmap ;L :Lines<CR>
@@ -870,19 +868,6 @@ let cmdline_app['python'] = 'ipython'
 " <LocalLeader>f to send the entire file to the interpreter.
 " <LocalLeader>m to send the text in the following motion to the interpreter. For example 
 " <LocalLeader>miw would send the selected word.
-
-" }}}
-
-" Rust ------------------------------ {{{
-"
-" :RustRun
-
-" local mappings
-let g:rustfmt_autosave = 1
-
-" let g:LanguageClient_serverCommands = {
-"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-"     \ }
 
 " }}}
 
