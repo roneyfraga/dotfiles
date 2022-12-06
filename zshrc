@@ -112,8 +112,7 @@ export VISUAL='nvim'
 # export TRUEBROWSER='firefox'
 # export VIDEO='mpv'
 
-# hostname Manjaro or Arch (WSL2)
-export nome_do_computador=$(hostnamectl | grep hostname | sed 's/Static hostname: //' | sed 's/[[:space:]]//' | sed 's/[[:blank:]]//')
+export nome_do_computador=$(hostname)
 # conferir nome_do_computador com:
 # print $nome_do_computador 
 
