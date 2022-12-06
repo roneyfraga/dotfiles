@@ -126,14 +126,14 @@ rm_guarani:
 	rm -f ~/.Xresources
 
 rm_macos:
-	ln -r ~/.zshrc
-	ln -r ~/.tmux.conf
-	ln -r ~/.config/nvim/init.vim
-	ln -r $(configfolder)/nvim/coc-settings.json
-	ln -r ~/.config/nvim/spell 
-	ln -r ~/.Rprofile
-	ln -r ~/.gitconfig
-	ln -r ~/.lintr
-	ln -r $(configfolder)/vifm/
-	ln -r $(configfolder)/vifm/favicons.vifm
-	ln -r $(configfolder)/vifm/vifmrc
+	rm -r ~/.zshrc
+	rm -r ~/.tmux.conf
+	rm -r ~/.config/nvim/init.vim
+	rm -r $(configfolder)/nvim/coc-settings.json
+	rm -r ~/.config/nvim/spell 
+	rm -r ~/.Rprofile
+	rm -r ~/.gitconfig
+	rm -r ~/.lintr
+	rm -r $(configfolder)/vifm/
+	rm -r $(configfolder)/vifm/favicons.vifm
+	rm -r $(configfolder)/vifm/vifmrc
