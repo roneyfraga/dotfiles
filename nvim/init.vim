@@ -826,7 +826,7 @@ nnoremap gC :GV<CR>
 
 " Presentation ------------------------------ {{{
 " letters to the box
-au Filetype markdown nnoremap <buffer> <F12> :.!toilet -w 200 -f term -F border<CR>
+" au Filetype markdown nnoremap <buffer> <F12> :.!toilet -w 200 -f term -F border<CR>
 
 " }}}
 

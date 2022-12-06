@@ -58,6 +58,19 @@ ln_fusca:
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
+ln_macos:
+	ln -s $(dotfolder)/zshrc ~/.zshrc
+	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
+	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
+	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
+	ln -s $(dotfolder)/Rprofile ~/.Rprofile
+	ln -s $(dotfolder)/gitconfig ~/.gitconfig
+	ln -s $(dotfolder)/lintr ~/.lintr
+	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
+	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
+
 rm:
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
