@@ -254,6 +254,16 @@ elif [ $nome_do_computador = 'guarani' ]; then
     alias ori='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
     alias cli='cd /mnt/ssd1tb/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
+elif [ $nome_do_computador = 'mpb-m1.local' ]; then
+    alias sy='cd ~/Sync'
+    alias pes='cd ~/Pessoal/'
+    alias dc='cd ~/Pessoal/Documents/'
+    alias rw='cd ~/Pessoal/Documents/Rworkspace'
+    alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd ~/Pessoal/Documents/Profissional'
+    alias ori='cd ~/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+    alias cli='cd ~/Pessoal/Documents/CLI'
+    alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
 else 
     alias dc='cd ~/Documents/'
     alias rw='cd ~/Documents/Rworkspace'
