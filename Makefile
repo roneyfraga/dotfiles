@@ -125,3 +125,15 @@ rm_guarani:
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f ~/.Xresources
 
+rm_macos:
+	ln -r ~/.zshrc
+	ln -r ~/.tmux.conf
+	ln -r ~/.config/nvim/init.vim
+	ln -r $(configfolder)/nvim/coc-settings.json
+	ln -r ~/.config/nvim/spell 
+	ln -r ~/.Rprofile
+	ln -r ~/.gitconfig
+	ln -r ~/.lintr
+	ln -r $(configfolder)/vifm/
+	ln -r $(configfolder)/vifm/favicons.vifm
+	ln -r $(configfolder)/vifm/vifmrc
