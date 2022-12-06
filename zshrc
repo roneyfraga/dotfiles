@@ -5,7 +5,7 @@ export nome_do_computador=$(hostname)
 # conferir nome_do_computador com:
 # print $nome_do_computador 
 
-if [ $nome_do_computador = 'mpb-m1.local' ]; 
+if [ $nome_do_computador = 'mbp-m1.local' ]; 
 then
   export ZSH="/Users/roney/.oh-my-zsh"
 else 
@@ -254,7 +254,7 @@ elif [ $nome_do_computador = 'guarani' ]; then
     alias ori='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
     alias cli='cd /mnt/ssd1tb/Pessoal/Documents/CLI'
     alias qualis='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
-elif [ $nome_do_computador = 'mpb-m1.local' ]; then
+elif [ $nome_do_computador = 'mbp-m1.local' ]; then
     alias sy='cd ~/Sync'
     alias pes='cd ~/Pessoal/'
     alias dc='cd ~/Pessoal/Documents/'
