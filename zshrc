@@ -1,8 +1,16 @@
 #rg --files --hidden --follow --no-ignore-vcs If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/roney/.oh-my-zsh"
+export nome_do_computador=$(hostname)
+# conferir nome_do_computador com:
+# print $nome_do_computador 
+
+if [ $nome_do_computador = 'mpb-m1.local' ]; 
+then
+  export ZSH="/Users/roney/.oh-my-zsh"
+else 
+  export ZSH="/home/roney/.oh-my-zsh"
+fi
 
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 
@@ -112,9 +120,6 @@ export VISUAL='nvim'
 # export TRUEBROWSER='firefox'
 # export VIDEO='mpv'
 
-export nome_do_computador=$(hostname)
-# conferir nome_do_computador com:
-# print $nome_do_computador 
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
