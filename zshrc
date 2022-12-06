@@ -78,7 +78,13 @@ ZSH_THEME="afowler"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z fzf zsh-autosuggestions)
+
+if [ $nome_do_computador = 'mbp-m1.local' ]; 
+then
+  plugins=(git z fzf)
+else 
+  plugins=(git z fzf zsh-autosuggestions)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -188,7 +194,7 @@ fi
 alias rrsync='rsync -lhr --info=progress2'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias x='clear'
-alias l='ls -lNh --color=auto --group-directories-first'
+alias l='ls -l'
 alias yt='youtube-dl'
 alias ref='source ~/.zshrc'
 alias aq='asciiquarium'
