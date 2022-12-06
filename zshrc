@@ -282,6 +282,11 @@ else
 fi
 
 # ssh tailscale
+if [ $nome_do_computador = 'mbp-m1.local' ]; 
+then
+  alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+fi
+#
 alias lisa='ssh -p 13000 roney@100.103.109.70'
 alias guarani='ssh -p 19250 roney@100.93.227.70'
 alias surface='ssh roney@100.112.124.26'
