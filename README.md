@@ -34,8 +34,6 @@ Dependences
 -  `python3 -m pip install pynvim`
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
-- [LanguageTool](https://github.com/dpelle/vim-LanguageTool)  
-  - using webbrowser version 
 - [pip](https://pypi.org/project/pip/)
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [bibtool](https://ctan.org/pkg/bibtool?lang=en)
