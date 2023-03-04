@@ -23,4 +23,3 @@ options(
 usethis.protocol  = "ssh"
 )
 
-options(browser = "/usr/bin/firefox")

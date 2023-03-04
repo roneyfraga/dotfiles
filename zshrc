@@ -129,23 +129,23 @@ export VISUAL='nvim'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
-    --multi --no-height\
-    --bind=ctrl-b:backward-kill-word\
-    --bind=ctrl-g:top\
-    --bind=ctrl-u:page-up\
-    --bind=ctrl-d:page-down\
-    --bind=ctrl-f:toggle-all\
-    --bind=ctrl-q:clear-query\
-    --bind=ctrl-s:clear-selection\
-    --bind=ctrl-o:jump\
-    --bind=ctrl-c:cancel\
-    --bind=ctrl-y:yank\
-    --bind=ctrl-p:toggle-preview\
-    --bind=ctrl-t:toggle-all\
-    --bind=ctrl-z:deselect-all\
-    --bind=tab:toggle+down\
-    --bind=shift-tab:toggle+up\
-    "
+  --multi --no-height\
+  --bind=ctrl-b:backward-kill-word\
+  --bind=ctrl-g:top\
+  --bind=ctrl-u:page-up\
+  --bind=ctrl-d:page-down\
+  --bind=ctrl-f:toggle-all\
+  --bind=ctrl-q:clear-query\
+  --bind=ctrl-s:clear-selection\
+  --bind=ctrl-o:jump\
+  --bind=ctrl-c:cancel\
+  --bind=ctrl-y:yank\
+  --bind=ctrl-p:toggle-preview\
+  --bind=ctrl-t:toggle-all\
+  --bind=ctrl-z:deselect-all\
+  --bind=tab:toggle+down\
+  --bind=shift-tab:toggle+up\
+  "
 
 # CREDENTIALS
 source ~/.credentials/elsevier.sh
@@ -157,8 +157,8 @@ bindkey '^p' autosuggest-toggle
 # monitor orientation: benq 27" + samsung 24"
 if [ $nome_do_computador = 'lisa' ]; 
 then
-    alias hori='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off'
-    alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
+  alias hori='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off'
+  alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
 fi
 
 # nnn (n)
@@ -171,12 +171,12 @@ export NNN_OPENER=nuke
 
 if [ $nome_do_computador = 'lisa' ]; 
 then
-    export NNN_BMS='k:~/Desktop;w:~/Downloads;0:/mnt/raid0;r:/mnt/raid0/Pessoal/Documents/Rworkspace;p:/mnt/raid0/Pessoal/Documents/Profissional;i:/mnt/raid0/Pessoal/Documents/CLI;B:/mnt/raid0/Pessoal/Documents/Biblioteca;P:/mnt/raid0/Pessoal/Documents/Profissional/PubPar;h:~;s:~/Sync'
+  export NNN_BMS='k:~/Desktop;w:~/Downloads;0:/mnt/raid0;r:/mnt/raid0/Pessoal/Documents/Rworkspace;p:/mnt/raid0/Pessoal/Documents/Profissional;i:/mnt/raid0/Pessoal/Documents/CLI;B:/mnt/raid0/Pessoal/Documents/Biblioteca;P:/mnt/raid0/Pessoal/Documents/Profissional/PubPar;h:~;s:~/Sync'
 elif [ nome_do_computador = 'SufacePro8' ]; 
 then
-    export NNN_BMS='k:/mnt/c/Users/roney/Desktop;w:/mnt/c/Users/roney/Downloads;r:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace;p:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional;i:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI;B:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Biblioteca;P:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar;h:/mnt/c/Users/roney/;s:/mnt/c/Users/roney/Sync'
+  export NNN_BMS='k:/mnt/c/Users/roney/Desktop;w:/mnt/c/Users/roney/Downloads;r:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace;p:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional;i:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI;B:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Biblioteca;P:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar;h:/mnt/c/Users/roney/;s:/mnt/c/Users/roney/Sync'
 else 
-    export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/Documents/Rworkspace;p:~/Documents/Profissional;m:/media;i:~/Documents/CLI;B:~/Documents/Biblioteca;P:~/Documents/Profissional/PubPar;h:~;s:~/Sync'
+  export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/Documents/Rworkspace;p:~/Documents/Profissional;m:/media;i:~/Documents/CLI;B:~/Documents/Biblioteca;P:~/Documents/Profissional/PubPar;h:~;s:~/Sync'
 fi
 
 # softwares
@@ -186,9 +186,14 @@ alias v='nvim'
 
 if [ $nome_do_computador = 'SufacePro8' ]; 
 then
-    alias vw='cd /mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
+  alias vw='cd /mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
 else 
-    alias vw='cd ~/Wiki; nvim index.md'
+  alias vw='cd ~/Wiki; nvim index.md'
+fi
+
+if [ $nome_do_computador = 'mbp-m1.local' ]; 
+then
+  alias quarto='/Applications/quarto/bin/quarto'
 fi
 
 alias rrsync='rsync -lhr --info=progress2'
@@ -226,59 +231,59 @@ alias dot='cd ~/dotfiles'
 
 # places 
 if [ $nome_do_computador = 'lisa' ]; then
-    alias sy='cd ~/Sync'
-    alias r0='cd /mnt/raid0'
-    alias pes='cd /mnt/raid0/Pessoal'
-    alias dc='cd /mnt/raid0/Pessoal/Documents/'
-    alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
-    alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
-    alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
+  alias sy='cd ~/Sync'
+  alias r0='cd /mnt/raid0'
+  alias pes='cd /mnt/raid0/Pessoal'
+  alias dc='cd /mnt/raid0/Pessoal/Documents/'
+  alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
+  alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
+  alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+  alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
+  alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
 elif [ $nome_do_computador = 'SurfacePro8' ]; then
-    alias roney='cd /mnt/c/Users/roney'
-    alias dk='cd /mnt/c/Users/roney/Desktop'
-    alias dw='cd /mnt/c/Users/roney/Downloads'
-    alias pes='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal'
-    alias wk='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Wiki'
-    alias sy='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Sync'
-    alias dc='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents'
-    alias rw='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace'
-    alias pubpar='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI'
-    alias qualis='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar/Qualis'
+  alias roney='cd /mnt/c/Users/roney'
+  alias dk='cd /mnt/c/Users/roney/Desktop'
+  alias dw='cd /mnt/c/Users/roney/Downloads'
+  alias pes='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal'
+  alias wk='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Wiki'
+  alias sy='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Sync'
+  alias dc='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents'
+  alias rw='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace'
+  alias pubpar='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional'
+  alias ori='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+  alias cli='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI'
+  alias qualis='cd /mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional/PubPar/Qualis'
 elif [ $nome_do_computador = 'guarani' ]; then
-    alias sy='cd ~/Sync'
-    alias pes='cd /mnt/ssd1tb/Pessoal'
-    alias dc='cd /mnt/ssd1tb/Pessoal/Documents/'
-    alias rw='cd /mnt/ssd1tb/Pessoal/Documents/Rworkspace'
-    alias pubpar='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd /mnt/ssd1tb/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd /mnt/ssd1tb/Pessoal/Documents/CLI'
-    alias qualis='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
+  alias sy='cd ~/Sync'
+  alias pes='cd /mnt/ssd1tb/Pessoal'
+  alias dc='cd /mnt/ssd1tb/Pessoal/Documents/'
+  alias rw='cd /mnt/ssd1tb/Pessoal/Documents/Rworkspace'
+  alias pubpar='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd /mnt/ssd1tb/Pessoal/Documents/Profissional'
+  alias ori='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+  alias cli='cd /mnt/ssd1tb/Pessoal/Documents/CLI'
+  alias qualis='cd /mnt/ssd1tb/Pessoal/Documents/Profissional/PubPar/Qualis'
 elif [ $nome_do_computador = 'mbp-m1.local' ]; then
-    alias sy='cd ~/Sync'
-    alias pes='cd ~/Pessoal/'
-    alias dc='cd ~/Pessoal/Documents/'
-    alias rw='cd ~/Pessoal/Documents/Rworkspace'
-    alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd ~/Pessoal/Documents/Profissional'
-    alias ori='cd ~/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd ~/Pessoal/Documents/CLI'
-    alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
+  alias sy='cd ~/Sync'
+  alias pes='cd ~/Pessoal/'
+  alias dc='cd ~/Pessoal/Documents/'
+  alias rw='cd ~/Pessoal/Documents/Rworkspace'
+  alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd ~/Pessoal/Documents/Profissional'
+  alias ori='cd ~/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+  alias cli='cd ~/Pessoal/Documents/CLI'
+  alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
 else 
-    alias dc='cd ~/Documents/'
-    alias rw='cd ~/Documents/Rworkspace'
-    alias prof='cd ~/Documents/Profissional'
-    alias pubpar='cd ~/Documents/Profissional/PubPar'
-    alias lat='cd ~/Documents/Profissional/Latex'
-    alias ori='cd ~/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd ~/Documents/CLI'
-    alias qualis='cd ~/Documents/Profissional/PubPar/Qualis'
+  alias dc='cd ~/Documents/'
+  alias rw='cd ~/Documents/Rworkspace'
+  alias prof='cd ~/Documents/Profissional'
+  alias pubpar='cd ~/Documents/Profissional/PubPar'
+  alias lat='cd ~/Documents/Profissional/Latex'
+  alias ori='cd ~/Documents/Profissional/UFMT_Orientacoes'
+  alias cli='cd ~/Documents/CLI'
+  alias qualis='cd ~/Documents/Profissional/PubPar/Qualis'
 fi
 
 # ssh tailscale
@@ -319,49 +324,49 @@ alias gds='git diff --stage '
 
 # small functions
 rsyncVolume(){
-    rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
+  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
 }
 
 # translate-shell
 # tenpt -argumento 'texto para traduzir'
 # argumento é opcional
 tenpt(){
-    trans en:pt $1 $2  
+  trans en:pt $1 $2  
 }
 
 tpten(){
-    trans pt:en $1 $2
+  trans pt:en $1 $2
 }
 
 # play audio of youtube videos
 ytp(){
-    mpv $1 --no-video --shuffle
+  mpv $1 --no-video --shuffle
 }
 
 # any format to pdf
 topdf(){
-    unoconv -f pdf $1
+  unoconv -f pdf $1
 }
 
 # fzf folder (directory), from current directory
 fd.() {
-    cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 # fzf folder (directory), from ~/
 fdh() {
-    cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+  cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 # nnn
 # cd and quit 
 # control+g
 n(){
-    # Block nesting of nnn in subshells
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-        echo "nnn is already running"
-        return
-    fi
+  # Block nesting of nnn in subshells
+  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+    echo "nnn is already running"
+    return
+  fi
 
     # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
     # To cd on quit only on ^G, remove the "export" as in:
@@ -378,10 +383,10 @@ n(){
     nnn "$@"
 
     if [ -f "$NNN_TMPFILE" ]; then
-            . "$NNN_TMPFILE"
-            rm -f "$NNN_TMPFILE" > /dev/null
+      . "$NNN_TMPFILE"
+      rm -f "$NNN_TMPFILE" > /dev/null
     fi
-}
+  }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

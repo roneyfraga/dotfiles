@@ -317,7 +317,7 @@ endfunction
 " CoC ------------------------------------{{{
 "
 " install extensions
-" :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-rust-analyzer
+" :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim

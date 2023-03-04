@@ -27,5 +27,6 @@
     "jedi.diagnostics.didSave": true,
     "jedi.workspace.extraPaths": [],
     "jedi.jediSettings.autoImportModules": [],
-    "suggest.noselect": false
+    "suggest.noselect": false,
+    "snippets.ultisnips.pythonPrompt": false
 }
