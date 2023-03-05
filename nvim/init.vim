@@ -694,20 +694,22 @@ let g:mkdp_page_title = '「${name}」'
 "}}}
 
 " clipboard ------------------------------{{{
-" 
-let g:clipboard = {
-  \   'name': 'xclip-xfce4-clipman',
-  \   'copy': {
-  \      '+': 'xclip -selection clipboard',
-  \      '*': 'xclip -selection clipboard',
-  \    },
-  \   'paste': {
-  \      '+': 'xclip -selection clipboard -o',
-  \      '*': 'xclip -selection clipboard -o',
-  \   },
-  \   'cache_enabled': 1,
-  \}
+" conflito com macOS, desnecess�rio
+
+" let g:clipboard = {
+"   \   'name': 'xclip-xfce4-clipman',
+"   \   'copy': {
+"   \      '+': 'xclip -selection clipboard',
+"   \      '*': 'xclip -selection clipboard',
+"   \    },
+"   \   'paste': {
+"   \      '+': 'xclip -selection clipboard -o',
+"   \      '*': 'xclip -selection clipboard -o',
+"   \   },
+"   \   'cache_enabled': 1,
+"   \}
 "}}}
+
 
 " luochen1990/rainbow ------------------------------{{{
 " 
