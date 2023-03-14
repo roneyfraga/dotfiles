@@ -293,12 +293,9 @@ then
 fi
 #
 alias lisa='ssh -p 13000 roney@100.103.109.70'
-alias guarani='ssh -p 19250 roney@100.93.227.70'
-alias surface='ssh roney@100.112.124.26'
+alias fusca='ssh -p 19127 roney@100.80.25.38'
 alias ubuntu_nyc='ssh bibr@100.104.99.20'
 alias caipora='ssh -D 5555 caipora@100.104.99.20'
-# alias fusca='ssh -p 19127 roney@200.17.60.42'
-# alias frank='ssh -p 19127 roney@200.17.60.42'
 # alias rpi='ssh -p 19239 bibr@200.17.60.42'
 
 # git
