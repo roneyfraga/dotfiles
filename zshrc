@@ -148,7 +148,7 @@ export FZF_DEFAULT_OPTS="\
   "
 
 # CREDENTIALS
-source ~/.credentials/elsevier.sh
+# source ~/.credentials/elsevier.sh
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
