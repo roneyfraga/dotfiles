@@ -18,10 +18,7 @@ ln:
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/joplin/keymap.json $(configfolder)/joplin/keymap.json 
-	ln -s $(dotfolder)/ranger/rc.conf $(configfolder)/ranger/rc.conf
-	ln -s $(dotfolder)/ranger/rifle.conf $(configfolder)/ranger/rifle.conf
 	ln -s $(dotfolder)/zathura/zathurarc $(configfolder)/zathura/zathurarc
-	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
 	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
 	ln -s $(dotfolder)/lintr ~/.lintr
@@ -35,22 +32,10 @@ ln_lisa:
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
-ln_x270:
-	ln -s $(dotfolder)/i3/config_x270 $(configfolder)/i3/config
-	ln -s $(dotfolder)/i3status/config_x270 $(configfolder)/i3status/config
-	ln -s $(dotfolder)/qutebrowser/config_x270.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/xresources/Xresources_x270 ~/.Xresources
-
-ln_frank:
-	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
-	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
-	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
-
-ln_guarani:
-	ln -s $(dotfolder)/i3/config_guarani $(configfolder)/i3/config
-	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
-	ln -s $(dotfolder)/qutebrowser/config.py $(configfolder)/qutebrowser/config.py
+ln_rambo:
+	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
+	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
 ln_fusca:
@@ -80,10 +65,7 @@ rm:
 	rm -f ~/.Rprofile
 	rm -f ~/.gitconfig
 	rm -f $(configfolder)/joplin/keymap.json 
-	rm -f $(configfolder)/ranger/rc.conf
-	rm -f $(configfolder)/ranger/rifle.conf
 	rm -f $(configfolder)/zathura/zathurarc
-	rm -f $(configfolder)/terminator/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
 	rm -f $(configfolder)/nvim/coc-settins.json
@@ -95,31 +77,19 @@ rm:
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f $(configfolder)/vifm/vifmrc
 
-rm_x270:
-	rm -f $(configfolder)/i3/config
-	rm -f $(configfolder)/i3status/config
-	rm -f $(configfolder)/qutebrowser/config.py
-	rm -f ~/.Xresources
-
 rm_lisa:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f ~/.Xresources
 
-rm_frank:
+rm_rambo:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f ~/.Xresources
 
 rm_fusca:
-	rm -f $(configfolder)/i3/config
-	rm -f $(configfolder)/i3status/config
-	rm -f $(configfolder)/qutebrowser/config.py
-	rm -f ~/.Xresources
-
-rm_guarani:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py

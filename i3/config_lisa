@@ -320,8 +320,9 @@
         exec_always --no-startup-id fix_xcursor
         exec --no-startup-id telegram-desktop
         exec_always unclutter
-        exec --no-startup-id discord
+        # exec --no-startup-id discord
         exec --no-startup-id keynav
+        exec --no-startup-id barrier
 
 # Monitores
 # AMD Radeon RX 270 with 2 monitors
