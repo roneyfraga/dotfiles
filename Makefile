@@ -29,15 +29,18 @@ ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
+	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
 ln_rambo:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
+	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
 ln_fusca:
 	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
+	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
@@ -71,6 +74,7 @@ rm:
 	rm -f $(configfolder)/nvim/coc-settings.json
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f $(configfolder)/vifm/vifmrc
+	rm -f $(configfolder)/.Xresources
 
 rm_lisa:
 	rm -f $(configfolder)/i3/config
