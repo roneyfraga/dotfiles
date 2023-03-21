@@ -17,7 +17,6 @@ ln:
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
-	ln -s $(dotfolder)/joplin/keymap.json $(configfolder)/joplin/keymap.json 
 	ln -s $(dotfolder)/zathura/zathurarc $(configfolder)/zathura/zathurarc
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
 	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
@@ -30,18 +29,15 @@ ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
 ln_rambo:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
-	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
 ln_fusca:
 	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
-	ln -s $(dotfolder)/xresources/Xresources ~/.Xresources
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
@@ -64,7 +60,6 @@ rm:
 	rm -f ~/.vim/spell
 	rm -f ~/.Rprofile
 	rm -f ~/.gitconfig
-	rm -f $(configfolder)/joplin/keymap.json 
 	rm -f $(configfolder)/zathura/zathurarc
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
@@ -81,19 +76,16 @@ rm_lisa:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
-	rm -f ~/.Xresources
 
 rm_rambo:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
-	rm -f ~/.Xresources
 
 rm_fusca:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
-	rm -f ~/.Xresources
 
 rm_macos:
 	rm -r ~/.zshrc
