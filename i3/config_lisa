@@ -63,10 +63,10 @@
 # sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 
     # start pulseaudio
-    exec_always pulseaudio --start
+    # exec_always pulseaudio --start
 
     # icon
-    #exec --no-startup-id volumeicon 
+    exec --no-startup-id volumeicon 
 
 # Pulse Audio controls
 # 

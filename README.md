@@ -51,8 +51,10 @@ Plugin Managers
 - [vimplug](https://github.com/junegunn/vim-plug) (nvim)
 - [tpm](https://github.com/tmux-plugins/tpm) (tmux)
 
-Install from packages from `pacman_packages_installed.txt`
+Install from packages `pacman_packages_list.txt` 
+
 ```
-pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pacman_packages_installed.txt))
+pacman -Q | awk '{print $1}' > pacman_packages_list.txt
+pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pacman_packages_list.txt))
 ```
 
