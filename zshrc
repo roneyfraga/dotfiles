@@ -277,7 +277,7 @@ then
   alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 fi
 #
-alias lisa='ssh -p 13000 roney@100.103.109.70'
+alias lisa='ssh -p 13000 roney@100.77.23.115'
 alias fusca='ssh -p 19127 roney@100.80.25.38'
 alias ubuntu_nyc='ssh bibr@100.104.99.20'
 alias caipora='ssh -D 5555 caipora@100.104.99.20'
