@@ -118,15 +118,16 @@ mark h ~/
 mark k ~/Desktop/
 mark w ~/Downloads/
 mark s ~/Sync/
-mark l ~/LisaShared/
-mark m ~/AndroidShared/Musicas/
-mark o ~/Documents/
-mark i ~/Documents/CLI/dotfiles/
-mark b ~/Documents/Biblioteca/
-mark r ~/Documents/Rworkspace/
-mark p ~/Documents/Profissional/
-mark P ~/Documents/Profissional/PubPar
-mark o ~/Documents/Profissional/UFMT_Orientacoes
+mark a ~/AndroidShared/
+mark d ~/dotfiles/
+mark p /mnt/raid0/Pessoal
+mark d /mnt/raid0/Pessoal/Documents/
+mark i /mnt/raid0/Pessoal/Documents/CLI/
+mark b /mnt/raid0/Pessoal/Documents/Biblioteca/
+mark r /mnt/raid0/Pessoal/Documents/Rworkspace/
+mark p /mnt/raid0/Pessoal/Documents/Profissional/
+mark P /mnt/raid0/Pessoal/Documents/Profissional/PubPar/
+mark o /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes/
 
 " ------------------------------------------------------------------------------
 

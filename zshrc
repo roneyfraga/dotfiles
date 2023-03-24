@@ -148,7 +148,7 @@ export FZF_DEFAULT_OPTS="\
   "
 
 # CREDENTIALS
-# source ~/.credentials/elsevier.sh
+source ~/.credentials/elsevier.sh
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
@@ -161,27 +161,8 @@ then
   alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
 fi
 
-# nnn (n)
-export NNN_PLUG='c:fzcd;o:fzopen;d:dragdrop;v:imgview;p:preview-tabbed;n:nuke;l:launch;k:pskill;m:mimelist;x:xdgdefault'
-export NNN_COLORS="5136" 
-export NNN_ARCHIVE="\\.(zip|7z|bz2|gz|tar|tgz)$"
-export NNN_TRASH=1  # needs trash-cli                               
-export NNN_FIFO=/tmp/nnn.fifo
-export NNN_OPENER=nuke
-
-if [ $nome_do_computador = 'lisa' ]; 
-then
-  export NNN_BMS='k:~/Desktop;w:~/Downloads;0:/mnt/raid0;r:/mnt/raid0/Pessoal/Documents/Rworkspace;p:/mnt/raid0/Pessoal/Documents/Profissional;i:/mnt/raid0/Pessoal/Documents/CLI;B:/mnt/raid0/Pessoal/Documents/Biblioteca;P:/mnt/raid0/Pessoal/Documents/Profissional/PubPar;h:~;s:~/Sync'
-elif [ nome_do_computador = 'SufacePro8' ]; 
-then
-  export NNN_BMS='k:/mnt/c/Users/roney/Desktop;w:/mnt/c/Users/roney/Downloads;r:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Rworkspace;p:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Profissional;i:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/CLI;B:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal/Documents/Biblioteca;P:/mnt/c/Users/roney/Onedrive\ -\ ufmt.br/Pessoal\Documents/Profissional/PubPar;h:/mnt/c/Users/roney/;s:/mnt/c/Users/roney/Sync'
-else 
-  export NNN_BMS='k:~/Desktop;w:~/Downloads;r:~/Documents/Rworkspace;p:~/Documents/Profissional;m:/media;i:~/Documents/CLI;B:~/Documents/Biblioteca;P:~/Documents/Profissional/PubPar;h:~;s:~/Sync'
-fi
-
 # softwares
 alias fm='vifm .'
-alias t='env TERM=screen-256color tmux'
 alias v='nvim'
 
 if [ $nome_do_computador = 'SufacePro8' ]; 
@@ -197,7 +178,6 @@ then
 fi
 
 alias rrsync='rsync -lhr --info=progress2'
-alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias x='clear'
 alias l='ls -l'
 alias yt='youtube-dl'
@@ -206,8 +186,8 @@ alias aq='asciiquarium'
 alias zt='zathura'
 alias py='python'
 alias def='goldendict'
-alias syn='~/bin/dicsyn.R'
-alias doi2bib='~/bin/doi2bibtex.R'
+alias syn='~/dotfiles/bin/dicsyn.R'
+alias doi2bib='~/dotfiles/bin/doi2bibtex.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='screenfetch'
@@ -221,7 +201,6 @@ alias init.vim="nvim ~/.config/nvim/init.vim"
 alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
-alias zathurarc='nvim ~/.config/zathura/zathurarc'
 
 # places 
 alias dk='cd ~/Desktop'
@@ -339,36 +318,6 @@ cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -
 fdh() {
   cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
-
-# nnn
-# cd and quit 
-# control+g
-n(){
-  # Block nesting of nnn in subshells
-  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-    echo "nnn is already running"
-    return
-  fi
-
-    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
-    # To cd on quit only on ^G, remove the "export" as in:
-    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-    # NOTE: NNN_TMPFILE is fixed, should not be modified
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
-    # stty start undef
-    # stty stop undef
-    # stty lwrap undef
-    # stty lnext undef
-
-    nnn "$@"
-
-    if [ -f "$NNN_TMPFILE" ]; then
-      . "$NNN_TMPFILE"
-      rm -f "$NNN_TMPFILE" > /dev/null
-    fi
-  }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
