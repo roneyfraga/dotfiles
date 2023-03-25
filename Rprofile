@@ -1,18 +1,20 @@
 
 if (interactive()) {
 
-    # cores do terminal
-    suppressMessages(require(colorout))
-    setOutputColors256(normal = 39, number = 51, negnum = 183, date = 43, string = 79, const = 75, verbose = FALSE)
+  # cores do terminal
+  suppressMessages(require(colorout))
+  setOutputColors256(normal = 39, number = 51, negnum = 183, date = 43, string = 79, const = 75, verbose = FALSE)
 
-    # função para enviar para o R qual a largura do terminal de saída dos dados
-    largura <- function() {
-        options(width = system("tput cols", intern = TRUE))
-    }
+  # função para enviar para o R qual a largura do terminal de saída dos dados
+  largura <- function() {
+    options(width = system("tput cols", intern = TRUE))
+  }
 
 }
 
 options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
+
+options(browser="/usr/bin/firefox")
 
 options(
         usethis.full_name = "Roney Fraga Souza",
