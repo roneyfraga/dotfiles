@@ -323,6 +323,7 @@
         # exec --no-startup-id discord
         exec --no-startup-id keynav
         exec --no-startup-id barrier
+        exec --no-startup-id insync
 
 # Monitores
 # AMD Radeon RX 270 with 2 monitors
