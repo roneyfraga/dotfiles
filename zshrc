@@ -161,16 +161,17 @@ then
   alias vert='xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off'
 fi
 
+# monitor orientation: perseus pro 27" + samsung 22"
+if [ $nome_do_computador = 'rambo' ]; 
+then
+  alias hori='xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x234 --rotate normal --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off'
+  alias vert='xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off'
+fi
+
 # softwares
 alias fm='vifm .'
 alias v='nvim'
-
-if [ $nome_do_computador = 'SufacePro8' ]; 
-then
-  alias vw='cd /mnt/c/Users/roney/OneDrive\ -\ ufmt.br/Pessoal/Wiki; nvim index.md'
-else 
-  alias vw='cd ~/Wiki; nvim index.md'
-fi
+alias vw='cd ~/Wiki; nvim index.md'
 
 if [ $nome_do_computador = 'mbp-m1.local' ]; 
 then

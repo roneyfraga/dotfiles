@@ -326,11 +326,8 @@
         exec --no-startup-id insync start
 
 # Monitores
-# AMD Radeon RX 270 with 2 monitors
-        # horizontal
-        # exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off
         # vertical
-        exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x380 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off
+        exec_always xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
 
 # }}}
 
