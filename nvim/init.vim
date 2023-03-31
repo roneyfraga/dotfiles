@@ -710,7 +710,6 @@ let g:mkdp_page_title = '「${name}」'
 "   \}
 "}}}
 
-
 " luochen1990/rainbow ------------------------------{{{
 " 
 let g:rainbow_conf = {
