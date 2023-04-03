@@ -42,6 +42,11 @@ ln_fusca:
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
+ln_frank:
+	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
+	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
+
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
@@ -87,6 +92,11 @@ rm_rambo:
 	rm -f $(configfolder)/qutebrowser/config.py
 
 rm_fusca:
+	rm -f $(configfolder)/i3/config
+	rm -f $(configfolder)/i3status/config
+	rm -f $(configfolder)/qutebrowser/config.py
+
+rm_frank:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
