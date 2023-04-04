@@ -323,10 +323,10 @@
         # exec --no-startup-id discord
         exec --no-startup-id keynav
         exec --no-startup-id barrier
-        # exec --no-startup-id insync start
+        exec --no-startup-id insync start
 
 # Monitores
-        # vertical
+        # 27" 2K horizontal + 22" FullHD vertical
         exec_always xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
 
 # }}}

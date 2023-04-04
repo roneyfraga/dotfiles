@@ -203,52 +203,32 @@ alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
 
-# places 
+# lisa and rambo use the same paths
 alias dk='cd ~/Desktop'
 alias dw='cd ~/Downloads'
 alias cfg='cd ~/.config'
 alias dot='cd ~/dotfiles'
 alias sy='cd ~/Sync'
+alias r0='cd /mnt/raid0'
+alias pes='cd /mnt/raid0/Pessoal'
+alias doc='cd /mnt/raid0/Pessoal/Documents/'
+alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
+alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
+alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
+alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
+alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
 
-# places 
-if [ $nome_do_computador = 'lisa' ]; then
-  alias r0='cd /mnt/raid0'
-  alias pes='cd /mnt/raid0/Pessoal'
-  alias dc='cd /mnt/raid0/Pessoal/Documents/'
-  alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
-  alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
-  alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
-  alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-  alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
-  alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
-elif [ $nome_do_computador = 'fusca' ]; then
-  alias sy='cd ~/Sync'
-  alias pes='cd /mnt/ssd240/Pessoal'
-  alias dc='cd /mnt/ssd240/Pessoal/Documents/'
-  alias rw='cd /mnt/ssd240/Pessoal/Documents/Rworkspace'
-  alias pubpar='cd /mnt/ssd240/Pessoal/Documents/Profissional/PubPar'
-  alias prof='cd /mnt/ssd240/Pessoal/Documents/Profissional'
-  alias ori='cd /mnt/ssd240/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-  alias cli='cd /mnt/ssd240/Pessoal/Documents/CLI'
-  alias qualis='cd /mnt/ssd240/Pessoal/Documents/Profissional/PubPar/Qualis'
-elif [ $nome_do_computador = 'mbp-m1.local' ]; then
+if [ $nome_do_computador = 'mbp-m1.local' ]; 
+then
   alias pes='cd ~/Pessoal'
-  alias dc='cd ~/Pessoal/Documents/'
+  alias doc='cd ~/Pessoal/Documents/'
   alias rw='cd ~/Pessoal/Documents/Rworkspace'
   alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
   alias prof='cd ~/Pessoal/Documents/Profissional'
   alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
   alias cli='cd ~/Pessoal/Documents/CLI'
   alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
-else 
-  alias dc='cd ~/Documents/'
-  alias rw='cd ~/Documents/Rworkspace'
-  alias prof='cd ~/Documents/Profissional'
-  alias pubpar='cd ~/Documents/Profissional/PubPar'
-  alias lat='cd ~/Documents/Profissional/Latex'
-  alias ori='cd ~/Documents/Profissional/UFMT_Orientacoes'
-  alias cli='cd ~/Documents/CLI'
-  alias qualis='cd ~/Documents/Profissional/PubPar/Qualis'
 fi
 
 # ssh tailscale
