@@ -1,4 +1,3 @@
-
 # BINDINGS {{{
 
 # Variables
@@ -307,32 +306,23 @@
         exec --no-startup-id xfce4-power-manager
         exec --no-startup-id pamac-tray
         exec --no-startup-id clipit
-        # exec --no-startup-id blueman-applet
-# exec --no-startup-id dropbox
-# exec --no-startup-id nextcloud
-# exec --no-startup-id ~/.dropbox-dist/dropboxd
-# exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         exec --no-startup-id ksnip
         exec --no-startup-id goldendict
-        # exec_always --no-startup-id xautolock -time 15 -locker blurlock
+        exec_always --no-startup-id xautolock -time 30 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
         exec --no-startup-id telegram-desktop
         exec_always unclutter
-        # exec --no-startup-id discord
         exec --no-startup-id keynav
         exec --no-startup-id barrier
-        exec --no-startup-id insync
+        exec --no-startup-id insync start
 
 # Monitores
-# AMD Radeon RX 270 with 2 monitors
-        # horizontal
-        # exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate normal --output DVI-D-0 --off
-        # vertical
-        # exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x380 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off
-        exec_always xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x171 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate left --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
+        # Perseus 27" 2k horizontal + Samsung 22" FullHD vertical
+        exec_always xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x171 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
 
 # }}}
 
 # vim: fdm=marker nowrap
+

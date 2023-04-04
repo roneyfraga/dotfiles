@@ -35,12 +35,6 @@
 # start a terminal
         bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
 
-# inverted colors
-        # bindsym $super+i exec xrandr-invert-colors
-        # bindsym $super+Shift+1 exec xrandr-invert-colors -s 0
-        # bindsym $super+Shift+2 exec xrandr-invert-colors -s 1
-        # bindsym $super+Shift+3 exec xrandr-invert-colors -s 2
-
 # Set shut down, restart and locking features
         bindsym $super+0 mode "$mode_system"
         set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
@@ -307,26 +301,20 @@
         exec --no-startup-id xfce4-power-manager
         exec --no-startup-id pamac-tray
         exec --no-startup-id clipit
-        # exec --no-startup-id blueman-applet
-# exec --no-startup-id dropbox
-# exec --no-startup-id nextcloud
-# exec --no-startup-id ~/.dropbox-dist/dropboxd
-# exec --no-startup-id vgrive
         exec --no-startup-id syncthing -no-browser
         exec --no-startup-id ksnip
         exec --no-startup-id goldendict
-        # exec_always --no-startup-id xautolock -time 15 -locker blurlock
+        exec_always --no-startup-id xautolock -time 30 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
         exec --no-startup-id telegram-desktop
         exec_always unclutter
-        # exec --no-startup-id discord
         exec --no-startup-id keynav
         exec --no-startup-id barrier
         exec --no-startup-id insync start
 
 # Monitores
-        # 27" 2K horizontal + 22" FullHD vertical
+        # Benq 27" 2K horizontal + Samsung 22" FullHD vertical
         exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right --output DVI-D-0 --off
 
 # }}}
