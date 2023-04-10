@@ -1,17 +1,15 @@
 
 How to use
 
-`Make ln` 
+`make ln` 
 
-As __x270__, __fusca__, __lisa__ and __frank__ are computers 
+As __lisa__, __rambo__, __fusca__ and __frank__ are computers:
 
-`Make ln_x270` 
+`make ln_fusca` 
 
-`Make ln_fusca` 
+`make ln_lisa` 
 
-`Make ln_lisa` 
-
-`Make ln_frank` 
+`make ln_frank` 
 
 will link specifics files. 
 
