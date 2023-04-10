@@ -166,6 +166,7 @@ if [ $nome_do_computador = 'rambo' ];
 then
   alias hori='xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x234 --rotate normal --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off'
   alias vert='xrandr --output DisplayPort-0 --off --output HDMI-A-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off'
+  alias vert_only='xrandr --output DisplayPort-0 --off --output HDMI-A-0 --off --pos 0x0 --rotate normal --output DVI-D-0 --primary --mode 1920x1080 --pos 2560x0 --rotate right --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off'
 fi
 
 # softwares
