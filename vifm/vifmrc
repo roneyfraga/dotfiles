@@ -181,8 +181,11 @@ command! reload :write | restart full
 " program.
 
 " Pdf
-filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c
-fileviewer {*.pdf},<application/pdf> pdftotext -nopgbrk %c -
+filextype {*.pdf},<application/pdf> 
+        \ {View in mupdf}
+        \ mupdf %f,
+        \ {View in zathura}
+        \ zathura %f,
 
 " PostScript
 filextype {*.ps,*.eps,*.ps.gz},<application/postscript>

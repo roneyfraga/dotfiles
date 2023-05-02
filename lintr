@@ -14,5 +14,5 @@ linters: linters_with_defaults(
     allow_right_assign = TRUE,
     allow_trailing = TRUE),
   T_and_F_symbol_linter = NULL,
-  brace_linter(allow_single_line = FALSE)
+  brace_linter(allow_single_line = TRUE)
   )
