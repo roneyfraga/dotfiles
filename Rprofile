@@ -14,11 +14,12 @@ if (interactive()) {
 
 options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
 
-# linux
-# options(browser="/usr/bin/firefox")
-#
-# macos
-# options(browser="/Applications/Firefox.app/Contents/MacOS/firefox-bin")
+# browser: linux or mac?
+if (as.character(Sys.info()["sysname"]) == 'Linux') {
+  options(browser = "/usr/bin/firefox") 
+} else {
+  options(browser = "/applications/firefox.app/contents/macos/firefox-bin")
+}
 
 options(
         usethis.full_name = "Roney Fraga Souza",
