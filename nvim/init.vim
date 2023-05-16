@@ -2,11 +2,11 @@
 " General ------------------------------{{{
 filetype on
 syntax enable
-filetype plugin on
 filetype indent on
-syntax on
 set modifiable
 set nocompatible
+filetype plugin on
+syntax on
 set encoding=utf-8
 
 "  no break lines by default
@@ -144,6 +144,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'msprev/fzf-bibtex' 
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -203,7 +204,7 @@ Plug 'lervag/vimtex'
 Plug 'tpope/vim-unimpaired'
 
 " Rename Mkdir Move Delete Unlink
-Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-eunuch'
 
 " surround a object with (`c` chance, `d` delete, `y` you surround) 
 Plug 'tpope/vim-surround'
@@ -216,7 +217,7 @@ Plug 'michal-h21/vim-zettel'
 Plug 'sotte/presenting.vim'
 
 " nnn inside vim
-Plug 'mcchrish/nnn.vim'
+" Plug 'mcchrish/nnn.vim'
 
 " vifm inside vim
 " Plug 'vifm/vifm.vim'
@@ -225,9 +226,9 @@ Plug 'mcchrish/nnn.vim'
 Plug 'JuliaEditorSupport/julia-vim'
 
 " vim go language
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 " Plug 'autozimu/LanguageClient-neovim'
 
 " Initialize plugin system
@@ -318,6 +319,7 @@ endfunction
 "
 " install extensions
 " :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
+" CocInstall @yaegassy/coc-marksman
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -497,10 +499,17 @@ nmap ;. :Files<cr>
 nmap ;h :Files ~<cr>
 nmap ;r :Files /<cr>
 nmap ;w :Files ~/Wiki<CR>
+nmap ;z :Files ~/Wiki/Zet<CR>
 nmap ;s :Files ~/Sync<CR>
 nmap ;b :Buffers<CR>
 nmap ;l :BLines<CR>
 nmap ;L :Lines<CR>
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
 " \ca close all buffers except the current one
 nnoremap <leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
@@ -609,29 +618,23 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 " 
 let g:vimwiki_list = [
     \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/aaTODO', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Actions', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/AATODO', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Class_Stack', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Orientacoes', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Photo', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Portal_Periodicos', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Portugues', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Projects_Stack', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Publications', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/RES', 'syntax': 'markdown', 'ext': '.md'}]
+    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.qmd'}]
 
 " função para formatar nome do arquivo: 
-" espaço substituir­por - 
+" espaço substituir ppor - 
 " caracteres em ascii
 "
 func! Rename2ascii()

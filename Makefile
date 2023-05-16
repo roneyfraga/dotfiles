@@ -24,6 +24,7 @@ ln:
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
+	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
 
 ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
