@@ -318,6 +318,7 @@ endfunction
 "
 " install extensions
 " :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
+" CocInstall @yaegassy/coc-marksman
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -609,26 +610,26 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 " 
 let g:vimwiki_list = [
     \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/aaTODO', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Actions', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/AATODO', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Class_Stack', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Orientacoes', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Photo', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Portal_Periodicos', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Portugues', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Projects_Stack', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Publications', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/RES', 'syntax': 'markdown', 'ext': '.md'}]
+    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.md'}]
+   
+" title
+let g:zettel_format = "%y%m%d-%H%M-%title"   
+
+" template
+let g:zettel_options = [{"template" :  "~/Wiki/Zet/Templates/mytemplate.tpl"}]
 
 " função para formatar nome do arquivo: 
 " espaço substituir­por - 
