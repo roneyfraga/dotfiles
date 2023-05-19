@@ -579,7 +579,7 @@ let g:gist_post_private = 1
 let g:gist_open_browser_after_post = 1
 " }}}
 
-" HTML or XML------------------------------{{{
+" HTML, XML, PHP ------------------------------{{{
 " 
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
@@ -590,6 +590,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
+au BufEnter,BufNew *.php :set filetype=html
 
 " }}}
 
