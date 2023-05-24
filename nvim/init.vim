@@ -10,7 +10,7 @@ syntax on
 set encoding=utf-8
 
 "  no break lines by default
-set nowrap
+set wrap
 
 "mostra o modo em que estamos
 set showmode 
@@ -557,7 +557,9 @@ nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>'
 " arquivos  Rmd usando snippets de r e rmd
 " au BufRead,BufNewFile *.rmd set ft=rmd.r
 " au BufRead,BufNewFile *.Rmd set ft=rmd.r
+"
 au BufRead,BufNewFile *.qmd set ft=rmd.r
+
 " }}}
 
 " Backup files ------------------------------ {{{
@@ -660,7 +662,7 @@ let g:vimwiki_list = [
     \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.qmd'}]
+    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.md'}]
 
 " função para formatar nome do arquivo: 
 " espaço substituir ppor - 
@@ -687,14 +689,11 @@ inoremap <F6> <C-R>=strftime("%Y-%m-%d ")<CR>
 nnoremap <F6> "=strftime("%Y-%m-%d ")<CR>P
 inoremap <F7> <C-R>=strftime("%Y-%m-%d_%H:%M")<CR>
 nnoremap <F7> "=strftime("%Y-%m-%d_%H:%M")<CR>P
-inoremap <F8> <C-R>=strftime("%Y%m%d-%H%M%S-")<CR>
-nnoremap <F8> "=strftime("%Y%m%d-%H%M%S-")<CR>P
-
 " remove ^M quebra de página
 nnoremap <F9> :%s/\r//g <CR>
 
 " wrap
-nnoremap <F10> :set wrap! <CR>
+nnoremap <F10> :set nowrap! <CR>
 
 " }}}
 
