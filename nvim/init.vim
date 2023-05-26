@@ -500,7 +500,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Manage extensions.
 " nnoremap <silent><nowait> ;e  :<C-u>CocList extensions<cr>
 " Show commands.
-" nnoremap <silent><nowait> ;c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> ;c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 " nnoremap <silent><nowait> ;o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
