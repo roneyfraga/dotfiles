@@ -285,11 +285,12 @@ function! CodigoLimpo()
     :s/\([a-zA-Z0-9]\)>=/\1 >=/ge
     :s/! =/!=/ge
 endfunction
+" }}}
  
 " Markdown VimWiki --------------------------------------{{{
 " 
 
-let g:vimwiki_key_mappings = { 'table_mappings': 0, }
+" let g:vimwiki_key_mappings = { 'table_mappings': 0, }
 " let g:vimwiki_key_mappings = { 'all_maps': 0, }
 
 let g:vimwiki_list = [
@@ -340,8 +341,6 @@ nnoremap <F9> :%s/\r//g <CR>
 
 " wrap
 nnoremap <F10> :set nowrap! <CR>
-
-" }}}
 
 " }}}
 
