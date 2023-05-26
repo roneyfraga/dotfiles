@@ -219,6 +219,7 @@ alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
 alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
 alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
 alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
+alias cti='cd /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
 alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
 
 if [ $nome_do_computador = 'mbp-m1.local' ]; 
@@ -229,6 +230,7 @@ then
   alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
   alias prof='cd ~/Pessoal/Documents/Profissional'
   alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+  alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
   alias cli='cd ~/Pessoal/Documents/CLI'
   alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
 fi
