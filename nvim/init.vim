@@ -70,7 +70,6 @@ set smarttab
 " always uses spaces instead of tab characters
 set expandtab
 
-
 " Italic inside tmux
 set t_ZH=^[[3m
 set t_ZR=^[[23m
@@ -172,21 +171,11 @@ Plug 'godlygeek/tabular'
 " rainbow colors to {} [] ()
 Plug 'luochen1990/rainbow'
 
-" Gist
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim'
-
 "  Delete buffer withou messing the layout :Bd
 Plug 'moll/vim-bbye'
 
-" Markdown 
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
 " distraction free :Goyo
 Plug 'junegunn/goyo.vim'
-
-" Calendar 
-" Plug 'itchyny/calendar.vim'
 
 " Python, Julia, Go
 Plug 'jalvesaq/vimcmdline'
@@ -203,9 +192,6 @@ Plug 'lervag/vimtex'
 " bracket mappings - quickfix navigation
 Plug 'tpope/vim-unimpaired'
 
-" Rename Mkdir Move Delete Unlink
-" Plug 'tpope/vim-eunuch'
-
 " surround a object with (`c` chance, `d` delete, `y` you surround) 
 Plug 'tpope/vim-surround'
 
@@ -213,23 +199,11 @@ Plug 'tpope/vim-surround'
 Plug 'vimwiki/vimwiki'
 Plug 'michal-h21/vim-zettel'
 
-" slide presentation
-Plug 'sotte/presenting.vim'
-
-" nnn inside vim
-" Plug 'mcchrish/nnn.vim'
-
-" vifm inside vim
-" Plug 'vifm/vifm.vim'
-
 " julia 
 Plug 'JuliaEditorSupport/julia-vim'
 
 " vim go language
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-" Plug 'rust-lang/rust.vim'
-" Plug 'autozimu/LanguageClient-neovim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
@@ -312,6 +286,62 @@ function! CodigoLimpo()
     :s/! =/!=/ge
 endfunction
  
+" Markdown VimWiki --------------------------------------{{{
+" 
+
+let g:vimwiki_key_mappings = { 'table_mappings': 0, }
+" let g:vimwiki_key_mappings = { 'all_maps': 0, }
+
+let g:vimwiki_list = [
+    \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/AATODO', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Photo', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Portugues', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.md'}]
+
+" funÁ„o para formatar nome do arquivo: 
+" espaÁo substituir ppor - 
+" caracteres em ascii
+"
+func! Rename2ascii()
+    execute "normal yypV"
+    s/\s\+/ /g 
+    s/\s\+$//g 
+    s/ /-/g 
+    s/-\+/-/g 
+    s/[[=a=]]/a/g 
+    s/[[=e=]]/e/g 
+    s/[[=i=]]/i/g 
+    s/[[=o=]]/o/g 
+    s/[[=u=]]/u/g  
+    s/[[=n=]]/n/g 
+    s/[[=c=]]/c/g
+    execute "normal 0i($a)k0i[$a]Jxli"
+endfunc
+
+" Time Stamps
+inoremap <F6> <C-R>=strftime("%Y-%m-%d ")<CR>
+inoremap <F7> <C-R>=strftime("%H:%M")<CR>
+" nnoremap <F6> "=strftime("%Y-%m-%d ")<CR>P
+" nnoremap <F7> "=strftime("%H:%M")<CR>P
+
+" remove ^M quebra de p·gina
+nnoremap <F9> :%s/\r//g <CR>
+
+" wrap
+nnoremap <F10> :set nowrap! <CR>
+
+" }}}
 
 " }}}
 
@@ -349,16 +379,16 @@ set signcolumn=auto
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-"
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -468,27 +498,28 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
+" Manage extensions.
+" nnoremap <silent><nowait> ;e  :<C-u>CocList extensions<cr>
+" Show commands.
+" nnoremap <silent><nowait> ;c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+" nnoremap <silent><nowait> ;o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+" nnoremap <silent><nowait> ;s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+" nnoremap <silent><nowait> ;j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+" nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+" nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
+
 " Show all diagnostics.
 nnoremap <silent><nowait> ;a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> ;e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> ;c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> ;o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> ;s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> ;j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
 
 " coc-yank
 nnoremap <silent> ;y  :<C-u>CocList -A --normal yank<cr>
 
-" coc-extensions
+" coc-explorer
 nnoremap ;x :CocCommand explorer<CR>
 
 
@@ -558,7 +589,11 @@ nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>'
 " au BufRead,BufNewFile *.rmd set ft=rmd.r
 " au BufRead,BufNewFile *.Rmd set ft=rmd.r
 "
-au BufRead,BufNewFile *.qmd set ft=rmd.r
+autocmd BufRead,BufNewFile *.qmd set ft=rmd.r
+
+" markdown flavor 
+" autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+
 
 " }}}
 
@@ -570,15 +605,6 @@ set nobackup
 " set backupdir=~/.vimbackup
 " Set where to store swap files
 " set dir=~/.vimbackup
-" }}}
-
-" Vim Gist ------------------------------{{{
-" 
-" ver ~/.gist.vim para acessar o token fornecido pelo Github
-let g:gist_clip_command = 'pbcopy'
-let g:gist_post_private = 1
-" let g:gist_post_anonymous = 1
-let g:gist_open_browser_after_post = 1
 " }}}
 
 " HTML, XML, PHP ------------------------------{{{
@@ -614,12 +640,10 @@ map <Down> <Nop>
 " Markdown --------------------------------------{{{
 " 
 
-" txt as markdown
-" autocmd BufRead,BufNewFile *.txt set filetype=markdown
-
 " :make 
 " :make html
 " :make pdf
+" :make all
 "
 " ou simplismente via atalhos
 nmap <leader>mm :!make<CR>  
@@ -629,117 +653,7 @@ nmap <leader>md :!make docx
 nmap <leader>mr :!make rsync_book<CR>  
 nmap <leader>ma :!make all<CR>  
 
-" vim-pandoc
-" let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-" let g:pandoc#modules#disabled = ["folding"]
-
-" MarkdownPreview
-"
-" :MarkdownPreview
-" :MarkdownPreviewStop
-" :MarkdownPreviewToggle
-
-" nmap <C-s> <Plug>MarkdownPreview
-" nmap <M-s> <Plug>MarkdownPreviewStop
-nmap <C-p> <Plug>MarkdownPreviewToggle
-
 " }}}
-
-" Markdown VimWiki --------------------------------------{{{
-" 
-let g:vimwiki_list = [
-    \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/AATODO', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Cozer', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Cpp', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/English', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Math', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Papers', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Photo', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Portugues', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Python', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/R', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Reflexoes', 'syntax': 'markdown', 'ext': '.md'},
-    \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.md'}]
-
-" funÁ„o para formatar nome do arquivo: 
-" espaÁo substituir ppor - 
-" caracteres em ascii
-"
-func! Rename2ascii()
-    execute "normal yypV"
-    s/\s\+/ /g 
-    s/\s\+$//g 
-    s/ /-/g 
-    s/-\+/-/g 
-    s/[[=a=]]/a/g 
-    s/[[=e=]]/e/g 
-    s/[[=i=]]/i/g 
-    s/[[=o=]]/o/g 
-    s/[[=u=]]/u/g  
-    s/[[=n=]]/n/g 
-    s/[[=c=]]/c/g
-    execute "normal 0i($a)k0i[$a]Jxli"
-endfunc
-
-" Time Stamps
-inoremap <F6> <C-R>=strftime("%Y-%m-%d ")<CR>
-nnoremap <F6> "=strftime("%Y-%m-%d ")<CR>P
-inoremap <F7> <C-R>=strftime("%Y-%m-%d_%H:%M")<CR>
-nnoremap <F7> "=strftime("%Y-%m-%d_%H:%M")<CR>P
-" remove ^M quebra de p·gina
-nnoremap <F9> :%s/\r//g <CR>
-
-" wrap
-nnoremap <F10> :set nowrap! <CR>
-
-" }}}
-
-" MarkdownPreview ---------{{{
-"  
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 0
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 1
-let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'firefox'
-let g:mkdp_echo_preview_url = 1
-let g:mkdp_browserfunc = ''
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {}
-    \ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '„Äå${name}„Äç'
-"}}}
-
-" clipboard ------------------------------{{{
-" conflito com macOS, desnecess·rio
-
-" let g:clipboard = {
-"   \   'name': 'xclip-xfce4-clipman',
-"   \   'copy': {
-"   \      '+': 'xclip -selection clipboard',
-"   \      '*': 'xclip -selection clipboard',
-"   \    },
-"   \   'paste': {
-"   \      '+': 'xclip -selection clipboard -o',
-"   \      '*': 'xclip -selection clipboard -o',
-"   \   },
-"   \   'cache_enabled': 1,
-"   \}
-"}}}
 
 " luochen1990/rainbow ------------------------------{{{
 " 
@@ -854,12 +768,6 @@ autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
 nnoremap gB :GBranches<CR>
 nnoremap gT :GTags<CR>
 nnoremap gC :GV<CR>
-" }}}
-
-" Presentation ------------------------------ {{{
-" letters to the box
-" au Filetype markdown nnoremap <buffer> <F12> :.!toilet -w 200 -f term -F border<CR>
-
 " }}}
 
 " Quickfix and Grep ------------------------------ {{{
