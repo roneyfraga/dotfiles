@@ -109,7 +109,9 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 
 " nao corrigir palavras no inicio da linha em minusculo
-set spellfile=~/.config/nvim/spell/lowercase.utf-8.add
+set spellfile=~/Sync/.spell/lowercase.utf-8.add
+set spellfile=~/Sync/.spell/pt.utf-8.add
+set spellfile=~/Sync/.spell/en.utf-8.add
 set spellcapcheck=
 
 " control + n
@@ -124,7 +126,6 @@ set complete+=kspell
 nmap <F2> :set spell! spelllang=pt<CR>
 nmap <F3> :set spell! spelllang=en<CR>
 nmap <F4> :set spell! spelllang=pt,en<CR>
-
 
 "}}}
 
