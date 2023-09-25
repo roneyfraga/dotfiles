@@ -166,8 +166,8 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 " Colorschemes and Statusline
 " Plug 'joshdick/onedark.vim'
 Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
-" Plug 'itchyny/lightline.vim'
-" Plug 'itchyny/vim-gitbranch'
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
 
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
