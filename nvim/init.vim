@@ -163,8 +163,11 @@ Plug 'tpope/vim-repeat'
 " R plugin 
 Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
-" collection of colorschemes
-Plug 'joshdick/onedark.vim'
+" Colorschemes and Statusline
+" Plug 'joshdick/onedark.vim'
+Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
+" Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/vim-gitbranch'
 
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
@@ -208,6 +211,25 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
+"}}}
+
+" Color Scheme --------------------------------------{{{
+" 
+
+syntax on
+colorscheme nightfly
+
+set laststatus=2
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
 "}}}
 
 " Nvim-R ------------------------------------{{{
@@ -495,7 +517,7 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Manage extensions.
@@ -683,31 +705,31 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 " Status Line ------------------------------ {{{
 
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
+" function! GitBranch()
+"   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" endfunction
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
+" function! StatuslineGit()
+"   let l:branchname = GitBranch()
+"   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+" endfunction
 
-set laststatus=2
-set statusline= 
-set statusline+=%#PmenuSel#         " fundo dourado
-set statusline+=%{StatuslineGit()}  " função para obter branch
-set statusline+=%#LineNr#           " fundo transparente
-set statusline+=\ %F\               " file name and Path
-set statusline+=%m                  " + to edited file
-set statusline+=\ [%n]\               " file name and Path
-set statusline+=%=                  " alinhar a direita
-set statusline+=%#PmenuSel#         
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " encoding
-set statusline+=\ %p%%                                     " porcentagem
-set statusline+=\ %l:%c                                    " linhas
+" set laststatus=2
+" set statusline= 
+" set statusline+=%#PmenuSel#         " fundo dourado
+" set statusline+=%{StatuslineGit()}  " funcao para obter branch
+" set statusline+=%#LineNr#           " fundo transparente
+" set statusline+=\ %F\               " file name and Path
+" set statusline+=%m                  " + to edited file
+" set statusline+=\ [%n]\               " file name and Path
+" set statusline+=%=                  " alinhar a direita
+" set statusline+=%#PmenuSel#         
+" set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " encoding
+" set statusline+=\ %p%%                                     " porcentagem
+" set statusline+=\ %l:%c                                    " linhas
 
-set noshowcmd
-set cmdheight=1
+" set noshowcmd
+" set cmdheight=1
 
 
 "}}}
@@ -810,6 +832,8 @@ let cmdline_app['python'] = 'ipython'
 " Source Nvim configuration file and install plugins
 nnoremap <leader>1 :source ~/.config/nvim/init.vim <CR>
 nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
+set cmdheight=1
+
 " }}}
 
 " vim: fdm=marker nowrap
