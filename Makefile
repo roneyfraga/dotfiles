@@ -25,6 +25,7 @@ ln:
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
+	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
 
 ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
@@ -81,6 +82,7 @@ rm:
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f $(configfolder)/vifm/vifmrc
 	rm -f $(configfolder)/.Xresources
+	rm -f $(configfolder)/terminator/config
 
 rm_lisa:
 	rm -f $(configfolder)/i3/config

@@ -165,7 +165,10 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
 " Colorschemes and Statusline
 " Plug 'joshdick/onedark.vim'
+Plug 'navarasu/onedark.nvim'
 Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
+Plug 'ellisonleao/gruvbox.nvim'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 
@@ -213,14 +216,18 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 "}}}
 
-" Color Scheme --------------------------------------{{{
+" Color Scheme and Colorschemes --------------------------------------{{{
 " 
 
 syntax on
-colorscheme nightfly
+
+set background=dark " or light if you want light mode
+colorscheme gruvbox
 
 set laststatus=2
+
 let g:lightline = {
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -832,6 +839,8 @@ let cmdline_app['python'] = 'ipython'
 " Source Nvim configuration file and install plugins
 nnoremap <leader>1 :source ~/.config/nvim/init.vim <CR>
 nnoremap <leader>2 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
+
+" command line with 1 line 
 set cmdheight=1
 
 " }}}
