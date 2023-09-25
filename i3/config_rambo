@@ -32,7 +32,8 @@
         bindsym $super+Shift+q exec i3-msg exit
 
 # start a terminal
-        bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
+        # bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
+        bindsym $super+Return exec "terminator -l roney"
 
 # inverted colors
         # bindsym $super+i exec xrandr-invert-colors
