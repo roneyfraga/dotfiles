@@ -325,6 +325,7 @@ endfunction
 
 let g:vimwiki_list = [
     \{'path': '~/Wiki/', 'syntax': 'markdown', 'ext': '.md'},
+    \{'path': '~/Wiki/archive', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/AATODO', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/Books', 'syntax': 'markdown', 'ext': '.md'},
     \{'path': '~/Wiki/CLI', 'syntax': 'markdown', 'ext': '.md'},
@@ -341,7 +342,7 @@ let g:vimwiki_list = [
     \{'path': '~/Wiki/Zet', 'syntax': 'markdown', 'ext': '.md'}]
 
 " função para formatar nome do arquivo: 
-" espaço substituir ppor - 
+" espaço substituir por - 
 " caracteres em ascii
 "
 func! Rename2ascii()
