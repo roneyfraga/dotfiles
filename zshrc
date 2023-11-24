@@ -256,7 +256,7 @@ alias gds='git diff --stage '
 
 # small functions
 rsyncVolume(){
-  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
+  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@100.104.99.20:/var/www/roneyfraga.com/public_html/volume/"$2"
 }
 
 # translate-shell
