@@ -159,12 +159,6 @@ bindkey '^p' autosuggest-toggle
 alias fm='vifm .'
 alias v='nvim'
 alias vw='cd ~/Wiki; nvim index.md'
-
-if [ $nome_do_computador = 'mbp-m1.local' ]; 
-then
-  alias quarto='/Applications/quarto/bin/quarto'
-fi
-
 alias rrsync='rsync -lhr --info=progress2'
 alias x='clear'
 alias l='ls -l'
@@ -196,6 +190,8 @@ alias dw='cd ~/Downloads'
 alias cfg='cd ~/.config'
 alias dot='cd ~/dotfiles'
 alias sy='cd ~/Sync'
+alias wk='cd ~/Wiki'
+alias zt='ce ~/Wiki/Zet'
 alias r0='cd /mnt/raid0'
 alias pes='cd /mnt/raid0/Pessoal'
 alias doc='cd /mnt/raid0/Pessoal/Documents/'
@@ -211,7 +207,7 @@ if [ $nome_do_computador = 'mbp-m1.local' ];
 then
   alias pes='cd ~/Pessoal'
   alias doc='cd ~/Pessoal/Documents/'
-  alias rw='cd ~/Pessoal/Documents/Rworkspace'
+  # alias rw='cd ~/Pessoal/Documents/Rworkspace'
   alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
   alias prof='cd ~/Pessoal/Documents/Profissional'
   alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
@@ -226,12 +222,11 @@ then
   alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 fi
 #
-alias rambo='ssh -p 10022 roney@100.77.82.122'
+alias rambo='ssh -p 10127 roney@100.77.82.122'
 alias lisa='ssh -p 13000 roney@100.77.23.115'
-alias fusca='ssh -p 19127 roney@100.80.25.38'
+alias frank='ssh -p 19031 roney@100.78.33.76'
 alias ubuntu_nyc='ssh bibr@100.104.99.20'
 alias caipora='ssh -D 5555 caipora@100.104.99.20'
-# alias rpi='ssh -p 19239 bibr@200.17.60.42'
 
 # git
 alias g='git '
