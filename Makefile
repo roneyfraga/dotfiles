@@ -60,7 +60,7 @@ ln_macos:
 	ln -s $(dotfolder)/lintr ~/.lintr
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
-	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
+	ln -s $(dotfolder)/vifm/vifmrc_mac $(configfolder)/vifm/vifmrc
 
 rm:
 	rm -f ~/.zshrc
@@ -113,6 +113,6 @@ rm_macos:
 	rm -r ~/.Rprofile
 	rm -r ~/.gitconfig
 	rm -r ~/.lintr
-	rm -r $(configfolder)/vifm/
 	rm -r $(configfolder)/vifm/favicons.vifm
 	rm -r $(configfolder)/vifm/vifmrc
+
