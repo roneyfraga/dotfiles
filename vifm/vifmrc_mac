@@ -119,14 +119,14 @@ mark k ~/Desktop/
 mark w ~/Downloads/
 mark s ~/Sync/
 mark a ~/AndroidShared/
-mark d /mnt/raid0/Pessoal/Documents/
-mark i /mnt/raid0/Pessoal/Documents/CLI/
-mark b /mnt/raid0/Pessoal/Documents/Biblioteca/
-mark r /mnt/raid0/Pessoal/Documents/Rworkspace/
-mark p /mnt/raid0/Pessoal/Documents/Profissional/
-mark c /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao/
-mark P /mnt/raid0/Pessoal/Documents/Profissional/PubPar/
-mark o /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes/
+mark d ~/Pessoal/Documents/
+mark i ~/Pessoal/Documents/CLI/
+mark b ~/Pessoal/Documents/Biblioteca/
+mark r ~/Pessoal/Documents/Rworkspace/
+mark p ~/Pessoal/Documents/Profissional/
+mark c ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao/
+mark P ~/Pessoal/Documents/Profissional/PubPar/
+mark o ~/Pessoal/Documents/Profissional/UFMT_Orientacoes/
 
 " ------------------------------------------------------------------------------
 
