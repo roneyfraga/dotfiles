@@ -119,13 +119,13 @@ mark k ~/Desktop/
 mark w ~/Downloads/
 mark s ~/Sync/
 mark a ~/AndroidShared/
-mark d ~/dotfiles/
 mark p /mnt/raid0/Pessoal
 mark d /mnt/raid0/Pessoal/Documents/
 mark i /mnt/raid0/Pessoal/Documents/CLI/
 mark b /mnt/raid0/Pessoal/Documents/Biblioteca/
 mark r /mnt/raid0/Pessoal/Documents/Rworkspace/
 mark p /mnt/raid0/Pessoal/Documents/Profissional/
+mark c /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao
 mark P /mnt/raid0/Pessoal/Documents/Profissional/PubPar/
 mark o /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes/
 
