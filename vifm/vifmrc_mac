@@ -180,7 +180,8 @@ command! reload :write | restart full
 " program.
 
 " Pdf
-filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c
+filetype *.pdf open -a Preview %f &
+"filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c
 " filextype {*.pdf},<application/pdf> zathura %c %i 
 " fileviewer {*.pdf},<application/pdf> pdftotext -nopgbrk %c -
 
@@ -245,6 +246,7 @@ filetype {*.[1-8]},<text/troff> man ./%c
 fileviewer {*.[1-8]},<text/troff> man ./%c | col -b
 
 " Images
+filetype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm} open -a Preview %f &
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
         \ {View in viewnior}
         \ viewnior %c %i &,
