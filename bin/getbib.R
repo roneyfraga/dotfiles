@@ -6,7 +6,8 @@
 suppressMessages(library(rcrossref))
 suppressMessages(library(clipr))
 
-# args <- 'https://doi.org/10.1177/09673911209120'
+# args <- 'https://doi.org/10.3389/fddsv.2023.1201419'
+# args <- 'https://doi.org/10.3390/land11101748'
 
 # receber o comando do terminal
 args <- commandArgs(TRUE)
@@ -28,7 +29,8 @@ gsub(', title', ', \n  title', bib) |>
   {\(x) gsub(', month=', ', \n  month = ', x)}() |>
   {\(x) gsub(', pages=', ', \n  pages = ', x)}() |>
   {\(x) gsub(', DOI=', ', \n  DOI = ', x)}() |>
-  {\(x) gsub('}\n$', '\n}\n', x)}() ->
+  {\(x) gsub('}\n$', '\n}\n', x)}() |>
+  {\(x) sub('_', '', x)}() ->
   bib2
 
 cat(bib2)
