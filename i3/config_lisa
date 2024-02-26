@@ -300,7 +300,7 @@
   exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1920x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 4480x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x240 --rotate normal --output DVI-D-0 --off
 
 # Mode
-    set $mode_screen Screens: [h]orizontal for all [v]ertical for laterals [l]eft-vertical [r]igt-vertical  
+    set $mode_screen Screens: [h]orizontal-for-all [v]ertical-for-laterals [l]eft-vertical [r]ight-vertical  
     bindsym $super+x mode "$mode_screen"
 
     mode "$mode_screen"{
@@ -316,7 +316,7 @@
         bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1920x211 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 4480x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x211 --rotate normal --output DVI-D-0 --off
         bindsym v exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1080x211 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 3640x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate right --output DVI-D-0 --off , mode "default"
     }
-# # }}}
+# }}}
 
 # AUTOSTART APPS {{{
 # Autostart applications

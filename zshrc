@@ -224,7 +224,7 @@ fi
 #
 alias rambo='ssh -p 10127 roney@100.77.82.122'
 alias lisa='ssh -p 13000 roney@100.77.23.115'
-alias frank='ssh -p 19031 roney@100.78.33.76'
+alias fusca='ssh -p 19031 roney@100.83.148.110'
 alias ubuntu_nyc='ssh bibr@100.104.99.20'
 alias caipora='ssh -D 5555 caipora@100.104.99.20'
 
