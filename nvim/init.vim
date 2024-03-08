@@ -364,8 +364,9 @@ endfunc
 " Time Stamps
 inoremap <F6> <C-R>=strftime("%Y-%m-%d")<CR>
 inoremap <F7> <C-R>=strftime("%H:%M")<CR>
-" nnoremap <F6> "=strftime("%Y-%m-%d")<CR>P
-" nnoremap <F7> "=strftime("%H:%M")<CR>P
+
+" save on edit mode
+nnoremap <F8> :w <CR>
 
 " remove ^M quebra de página
 nnoremap <F9> :%s/\r//g <CR>
