@@ -366,7 +366,7 @@ inoremap <F6> <C-R>=strftime("%Y-%m-%d")<CR>
 inoremap <F7> <C-R>=strftime("%H:%M")<CR>
 
 " save
-nnoremap <F8> :w <CR>
+nnoremap <F8> :w<CR>
 
 " remove ^M quebra de página
 nnoremap <F9> :%s/\r//g <CR>
