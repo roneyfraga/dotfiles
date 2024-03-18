@@ -1,139 +1,408 @@
-snippet #!
-	#!/usr/bin/env Rscript
-
-# includes
+# library
 snippet lib
-	library(${0:package})
+	library(${1:package}) ${2}
+# require
 snippet req
-	require(${0:package})
-snippet source
-	source('${0:file}')
-
-# conditionals
+	require(${1:package}) ${2}
+# source 
+snippet sou
+	source('${1:file}') ${2:}
+# install.packages
+snippet install
+	install.packages(c('${1:package.name}'), dependencies = TRUE) ${2}
+# magrittR pipe
+snippet pipe
+	%>>%  
+# pipeR  pipe
+snippet pp
+	%>%  
+snippet p
+	|>  
+snippet o
+	->  
+# If Condition
 snippet if
-	if ($1) {
-		${0}
-	}
-snippet el
+	if(${1:condition}){
+	    ${2:}
+	}${3:}
+snippet els
 	else {
-		${0}
-	}
-snippet ei
-	else if ($1) {
-		${0}
-	}
-
-# loops
-snippet wh
-	while(${1:true}) {
-		${0}
-	}
-snippet wht
-	while(true) {
-		${0}
-	}
+	    ${1:}
+	}${2:}
+snippet whi
+	while(${1:condition}){
+	    ${2:}
+	}${3:}
+# For Loop
 snippet for
-	for (${1:item} in ${2:list}) {
-		${3}
-	}
-snippet foreach
-	foreach (${1:item} = ${2:list}) {
-		${3}
-	}
-
-# functions
+	for(${1:i} in ${2:range}){
+	    ${3:}
+	}${4:}
+# lambda
+snippet lam
+	{\(${1:x}) ${2}}() ${3}
+# function
 snippet fun
-	${1:name} <- function (${2:variables}) {
-		${0}
-	}
+	function(${1:x}) ${2}
+# repeat
+snippet rep
+	repeat{
+	    ${1:}
+	    if(${2:condition}) break
+	}${3:}
+# progress_bar
+snippet pro
+	progress::progress_bar$new(format = "[:bar] :current/:total (:percent)", total = length(${1:length()}))
+# return
 snippet ret
-	return(${0})
-
+	return(${1})
+	${2:}
 # dataframes, lists, etc
 snippet df
-	${1:name}[${2:rows}, ${0:cols}]
-snippet c
-	c(${0:items})
-snippet li
-	list(${0:items})
+	${1:name}[${2:rows}, ${3:cols}] ${4:}
 snippet mat
-	matrix(${1:data}, nrow = ${2:rows}, ncol = ${0:cols})
-
+	matrix(${1:data}, nrow = ${2:rows}, ncol = ${3:cols}) ${4:}
 # apply functions
-snippet apply
-	apply(${1:array}, ${2:margin}, ${0:function})
-snippet lapply
-	lapply(${1:list}, ${0:function})
-snippet sapply
-	lapply(${1:list}, ${0:function})
-snippet vapply
-	vapply(${1:list}, ${2:function}, ${0:type})
-snippet mapply
-	mapply(${1:function}, ${0:...})
-snippet tapply
-	tapply(${1:vector}, ${2:index}, ${0:function})
-snippet rapply
-	rapply(${1:list}, ${0:function})
-
-# plyr functions
-snippet dd
-	ddply(${1:frame}, ${2:variables}, ${0:function})
-snippet dl
-	dlply(${1:frame}, ${2:variables}, ${0:function})
-snippet da
-	daply(${1:frame}, ${2:variables}, ${0:function})
-snippet d_
-	d_ply(${1:frame}, ${2:variables}, ${0:function})
-
-snippet ad
-	adply(${1:array}, ${2:margin}, ${0:function})
-snippet al
-	alply(${1:array}, ${2:margin}, ${0:function})
-snippet aa
-	aaply(${1:array}, ${2:margin}, ${0:function})
-snippet a_
-	a_ply(${1:array}, ${2:margin}, ${0:function})
-
-snippet ld
-	ldply(${1:list}, ${0:function})
-snippet ll
-	llply(${1:list}, ${0:function})
-snippet la
-	laply(${1:list}, ${0:function})
-snippet l_
-	l_ply(${1:list}, ${0:function})
-
-snippet	md
-	mdply(${1:matrix}, ${0:function})
-snippet	ml
-	mlply(${1:matrix}, ${0:function})
-snippet	ma
-	maply(${1:matrix}, ${0:function})
-snippet	m_
-	m_ply(${1:matrix}, ${0:function})
-
+snippet app
+	apply(${1:array}, ${2:margin}, ${3:function}) ${4:}
+snippet lap
+	lapply(${1:list}, ${2:function}) ${3:}
+snippet sap
+	lapply(${1:list}, ${2:function}) ${3:}
+snippet vap
+	vapply(${1:list}, ${2:function}, ${3:type}) ${4:}
+# snippet map
+# 	mapply(${1:function}, ${2:...}) ${3:}
+snippet tap
+	tapply(${1:vector}, ${2:index}, ${3:function}) ${4:}
+snippet rap
+	rapply(${1:list}, ${2:function}) ${3:}
 # plot functions
-snippet pl
-	plot(${1:x}, ${0:y})
-snippet ggp
-	ggplot(${1:data}, aes(${0:aesthetics}))
+snippet plo
+	plot(${1:x}, ${2:y}) ${3:}
 snippet img
-	${1:(jpeg,bmp,png,tiff)}(filename = '${2:filename}', width = ${3}, height = ${4}, unit = '${5}')
-	${0:plot}
-	dev.off()
+	${1:(jpeg,bmp,png,tiff)}(filename = "${2:filename}", width = ${3}, height = ${4}, unit = "${5}")
+	${6:plot}
+	dev.off()${7:}
+# read
+snippet read
+	read.${1:csv}(
+				'${2:file}',
+				header = ${3:TRUE/FALSE},
+				sep = '${4:,}',
+				dec = '${5:.}',
+				row.names = ${6:TRUE/FALSE}
+				) ${7:}
+# write
+snippet write
+	write.${1:csv}(
+				${2:x},
+				file = '${3:}',
+				sep = '${4:,}',
+				row.names = ${5:TRUE/FALSE},
+				col.names = ${6:TRUE/FALSE},
+				na = '${7:NA}'
+				) ${8:}
+# subset
+snippet subset
+	subset(
+			${1:data},
+			${2:subset},
+			${3:select},
+		      )${4:}
+snippet ggp
+	ggplot2::ggplot(${1:data}, aes(${2:aesthetics})) ${3:}
+# import
+snippet	imp
+	rio::import('rawfiles/${1:}') ${2}
+# export
+snippet	exp
+	rio::export(${1:data}, 'rawfiles/${2:file}') ${3}
+# dplyr::
+snippet dpl
+	dplyr::${1} 
+# glimpse
+snippet gli
+	dplyr::glimpse(${1}) ${2}
+# select
+snippet sel
+	dplyr::select(${1}) ${2}
+# arrange
+snippet arr
+	dplyr::arrange(${1}) ${2}
+# filter
+snippet fil
+	dplyr::filter(${1}) ${2}
+# group_by
+snippet gro
+	dplyr::group_by(${1}) ${2}
+# summarise
+snippet sum
+	dplyr::summarise(${1}) ${2}
+# mutate
+snippet mut
+	dplyr::mutate(${1}) ${2}
+# count
+snippet cou
+	dplyr::count(${1}, sort = T) ${2}
+# tally
+snippet tal
+	dplyr::tally(${1}, sort = ${2}) ${3}
+# rename
+snippet ren
+	dplyr::rename(${1} = ${2}) ${3}
+# relocate
+snippet rel
+	dplyr::relocate(${1}) ${2}
+# relocate
+snippet rec
+	dplyr::recode(${1}) ${2}
+# pull
+snippet pul
+	dplyr::pull(${1}) ${2}
+# desc
+snippet des
+	dplyr::desc(${1}) ${2}
+# tibble::
+snippet tib
+	tibble::${1}
+snippet ast
+	tibble::as_tibble() ${1}
+snippet col
+	tibble::collect() ${1}
+# left_join
+snippet lef
+	dplyr::left_join(${1}) ${2}
+# right_join
+snippet rig
+	dplyr::right_join(${1}) ${2}
+# full_join
+snippet ful
+	dplyr::full_join(${1}) ${2}
+# distinct
+snippet dis
+	dplyr::distinct(${1:var_name,}.keep_all = TRUE) ${2}
+# ungroup
+snippet ung
+	dplyr::ungroup() ${1}
+# dplyr::rowwise
+snippet row
+	dplyr::rowwise(${1}) ${2}
+# dplyr::case_when
+snippet cas
+	dplyr::case_when(${1}) ${2}
+# dplyr::across
+snippet acr
+	dplyr::across(${1}) ${2}
+# bind_rows bind_cols
+snippet bin
+	dplyr::bind_${1:rows/cols}(${2}) ${3}
+# dplyr::show_query 
+snippet sho
+	dplyr::show_query()${1}
+# tidyr
+snippet tid
+	tidyr::${1}
+# tidyr::separate_rows
+snippet nes
+	tidyr::nest(${1}) ${2}
+snippet unn
+	tidyr::unnest(${1}) ${2}
+# tidyr::separate_rows
+snippet sep
+	tidyr::separate_rows(${1}, sep = ${2}) ${3}
+# print
+snippet pri
+	print(n = ${1:Inf/10/50})
+# dbplyr
+snippet dbp
+	dbplyr::${1}
+# tidygraph::as_tbl_graph
+snippet gra
+	tidygraph::as_tbl_graph(${1}) ${2}
+# tidygraph::activate
+snippet act
+	tidygraph::activate(${1:nodes/edges}) ${2}
+# vector
+snippet vec
+	vector(mode = '${1:numeric/list/character/logical}', length = ${2}) ${3}
+# janitor::clean_names
+snippet cle
+	janitor::clean_names() ${1}
+# lobstr::mem_used
+snippet men
+	lobstr::mem_used(${1}) ${2}
+# purrr::
+snippet pur
+	purrr::${1}
+# purrr::map
+snippet map
+	purrr::map(${1}) ${2}
+# purrr::map_
+snippet map_
+	purrr::map_${1:chr/dbl/int/lgl/dfc/lgl/dfc/at/if}(${2}) ${3}
+# purrr::pmap
+snippet pma
+	purrr::pmap(${1}) ${2}
+# purrr::pmap_
+snippet pma_
+	purrr::pmap_${1:chr/dbl/int/lgl/dfc/lgl/dfc/at/if}(${2}) ${3}
+# purrr::imap
+snippet ima
+	purrr::imap(${1}) ${2}
+# purrr::imap_
+snippet ima_
+	purrr::imap_${1:chr/dbl/int/lgl/dfc/lgl/dfc/at/if}(${2}) ${3}
+# purrr::flatte_
+snippet fla_
+	purrr::flatten_${1:chr/dbl/int/lgl/dfc}(${2}) ${3}
+# walk
+snippet wal
+	purrr::walk(${1}) ${2}
+# pluck
+snippet plu
+	purrr::pluck(${1}) ${2}
+# safely
+snippet saf
+	purrr::safely(${1}) ${2}
+# keep
+snippet kee
+	purrr::keep(${1}) ${2}
+# discard
+snippet dis
+	purrr::discard(${1}) ${2}
+# tictoc::tic
+snippet tic
+	tictoc::tic() ${1}
+# tictoc::toc
+snippet toc
+	tictoc::toc() ${1}
+snippet ins
+	renv::install('${1}')
+# dtplyr
+snippet dtp
+	dtplyr::${1}
+# dtplyr::lazy_dt
+snippet laz
+	dtplyr::lazy_dt() ${1}
+# data.table::
+snippet dat
+	data.table::${1}
+# data.table::fread
+snippet fre
+	data.table::fread(${1}) ${2}
+# data.table::fwrite
+snippet fwr
+	data.table::fwrite(${1}) ${2}
+# data.table::setDT
+snippet set
+	data.table::setDT(${1}) ${2}
+# data.table::getDTthreads
+snippet dtt
+	data.table::getDTthreads(${1}) ${2}
+# data.table::as.data.table
+snippet adt
+	data.table::as.data.table(${1}) ${2}
+# tidyfast::
+snippet tdf
+	tidyfast::${1}
+# tidytable::
+snippet tdt
+	tidytable::${1}
+# string 
+snippet smt
+	stringr::str_trim(stringi::stri_trans_general(tolower(${1}), "Latin-ASCII"))
+snippet her
+	here::here(${1})
+snippet set
+	purrr::set_names(${1})
+# ----------------------------------------
+# Markdown functions
+# rmarkdown::paged_table
+snippet pag
+	rmarkdown::paged_table()
+# kable table
+snippet kab
+	knitr::kable()
+# datatable hide collumn
+snippet dth
+	DT::datatable(
+		rownames = FALSE,
+		filter = 'bottom',
+		extensions = 'Buttons', 
+		options = list(
+					dom = 'Bfrtip', pageLength = ${1},
+                    columnDefs = list(list(visible = FALSE, targets = c(${2}))), 
+                    buttons = list(list(extend = 'colvis', columns = c(${3})))
+                    ))
+# datatable download button
+snippet dtd
+  DT::datatable(
+      extensions = 'Buttons', 
+      rownames = F, 
+      options = list(
+                  dom = 'Bfrtip', 
+                  pageLength = 10, 
+                  buttons = list(list(
+                                      extend = 'collection', 
+                                      buttons = list(list(extend = 'csv', filename = 'data'), 
+                                                      list(extend = 'excel', filename = 'data')), 
+                                                      text = 'Download'))))  
+# ----------------------------------------
+snippet yaml
+	---
+	title: "${1}"
+	date: "today"
+	date-format: iso 
+	author:
+	  - name: Roney Fraga Souza
+	    affiliations:
+	      - name: Universidade Federal de Mato Grosso
+	format: 
+	  html: 
+	    toc: true 
+	    toc-location: right 
+	    fig-width: 8 
+	    fig-height: 4 
+	    code-fold: true 
+	    theme: solar 
+	    code-line-numbers: true
+	  revealjs: 
+	    slide-number: true
+	    highlight-style: tango
+	    code-line-numbers: true
+	    chalkboard: 
+	      buttons: true
+	    footer: <https://roneyfraga.com>
+	  pdf:
+	    documentclass: article
+	    papersize: a4
+	    lof: false
+	    lot: false
+	    toc: false
+	    number-sections: true
+	    code-line-numbers: true
+	    highlight-style: tango
+	    colorlinks: true
+	    geometry:
+	      - top=30mm
+	      - left=20mm
+	      - heightrounded
+	  docx:
+	    number-sections: true
+	    highlight-style: tango 
+	    prefer-html: true
+	    # reference-doc: template-ms-word.docx
+	lang: pt
+	# bibliography: references.bib
+	# csl: abnt-ipea.csl
+	---
 
-# statistical test functions
-snippet fis
-	fisher.test(${1:x}, ${0:y})
-snippet chi
-	chisq.test(${1:x}, ${0:y})
-snippet tt
-	t.test(${1:x}, ${0:y})
-snippet wil
-	wilcox.test(${1:x}, ${0:y})
-snippet cor
-	cor.test(${1:x}, ${0:y})
-snippet fte
-	var.test(${1:x}, ${0:y})
-snippet kvt
-	kv.test(${1:x}, ${0:y})
+snippet zet
+	---
+	title: "${1}"
+	date: "today"
+	date-format: iso 
+	bibliography: aa-references.bib
+	keywords:
+	---
