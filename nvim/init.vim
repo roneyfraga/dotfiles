@@ -46,7 +46,7 @@ set relativenumber
 set linebreak 
 
 "Better Esc
-inoremap jj <esc>
+inoremap jk <esc>
 
 " better Teminal Mode exit
 if has('nvim')
