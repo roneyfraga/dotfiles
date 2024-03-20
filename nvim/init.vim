@@ -46,7 +46,7 @@ set relativenumber
 set linebreak 
 
 "Better Esc
-inoremap jj <esc>
+" inoremap jj <esc>
 
 " better Teminal Mode exit
 if has('nvim')
@@ -150,6 +150,7 @@ Plug 'msprev/fzf-bibtex'
 Plug 'tpope/vim-fugitive'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/gv.vim'
+Plug 'kdheepak/lazygit.nvim'
 
 " Register on side bar: " ou @ in normal mode; Control+R in normal mode
 Plug 'junegunn/vim-peekaboo'
@@ -798,6 +799,22 @@ autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
 nnoremap gB :GBranches<CR>
 nnoremap gT :GTags<CR>
 nnoremap gC :GV<CR>
+
+" lazygit
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+let g:lazygit_floating_window_border_chars = ['¿','¿', '¿', '¿', '¿','¿', '¿', '¿'] " customize lazygit popup window border characters
+let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage floating window if available
+let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
+
+let g:lazygit_use_custom_config_file_path = 0 " config file path is evaluated if this value is 1
+let g:lazygit_config_file_path = '' " custom config file path
+" OR
+let g:lazygit_config_file_path = [] " list of custom config file paths
+
+" setup mapping to call :LazyGit
+nnoremap <silent> <leader>gt :LazyGit<CR>
+
 " }}}
 
 " Quickfix and Grep ------------------------------ {{{

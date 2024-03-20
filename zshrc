@@ -173,6 +173,7 @@ alias bib='~/dotfiles/bin/getbib.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='screenfetch'
+alias lg='lazygit'
 
 # quarto
 alias qr='quarto render'
