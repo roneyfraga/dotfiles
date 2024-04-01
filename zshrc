@@ -172,8 +172,9 @@ alias syn='~/dotfiles/bin/dicsyn.R'
 alias bib='~/dotfiles/bin/getbib.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
-alias info2='screenfetch'
+alias info2='neofetch'
 alias lg='lazygit'
+alias nb='newsboat'
 
 # quarto
 alias qr='quarto render'
