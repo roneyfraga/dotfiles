@@ -26,6 +26,8 @@ ln:
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
 	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
+	# ln -s $(dotfolder)/newsbolt/config ~/.newsboat/config
+	# ln -s $(dotfolder)/newsbolt/urls ~/.newsboat/urls
 
 ln_lisa:
 	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
@@ -83,6 +85,8 @@ rm:
 	rm -f $(configfolder)/vifm/vifmrc
 	rm -f $(configfolder)/.Xresources
 	rm -f $(configfolder)/terminator/config
+	# rm -f ~/.newsboat/config
+	# rm -f ~/.newsboat/urls
 
 rm_lisa:
 	rm -f $(configfolder)/i3/config

@@ -1,0 +1,69 @@
+
+# -----------------------------
+# general settings
+auto-reload yes
+max-items 50
+reload-time 30 # minutes
+show-read-feeds yes
+show-read-articles yes
+
+# podboat settings
+download-path '~/Downloads/%n'
+player 'mpv'
+
+# -----------------------------
+# bind keys - vim style
+bind-key h quit
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key H prev-feed
+bind-key L next-feed
+bind-key g home
+bind-key G end
+bind-key SPACE macro-prefix 
+bind-key b bookmark 
+bind-key ^F pagedown 
+bind-key ^B pageup 
+bind-key ^H toggle-show-read-feeds 
+
+# -----------------------------
+# Dark theme based on Dracula color scheme for newsboat.
+#
+# In order to use this color scheme, you must first configure
+# your terminal emulator to use the Dracula palette.
+# See <https://draculatheme.com/> for more information.
+
+color background default default
+color listnormal color255 default
+color listfocus color238 color255 standout
+color listnormal_unread color47 default
+color listfocus_unread color238 color47 standout
+color info color141 color236
+
+# highlights
+highlight all "---.*---" yellow
+highlight feedlist ".*(0/0))" black
+highlight article "(^Feed:|^Title:|^Date:|^Link:|^Author:)" cyan default bold
+highlight article "https?://[^ ]+" yellow default
+highlight article "\\[[0-9][0-9]*\\]" magenta default bold
+highlight article "\\[image\\ [0-9]+\\]" green default bold
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" green default bold
+highlight article ":.*\\(link\\)$" cyan default
+highlight article ":.*\\(image\\)$" blue default
+highlight article ":.*\\(embedded flash\\)$" magenta default
+
+# styling
+highlight feedlist "[║│]" default default bold
+highlight feedlist "╠═.*" default default bold 
+feedlist-format "%?T?║%4i %n %8u %t (%T) &╠═# %-12t══════════════════════════════════════════════════════════════════════════════════════════════════════════════════?"
+
+# -----------------------------
+# externel softwares
+browser "/usr/bin/firefox %u"
+macro f set browser "/usr/bin/firefox %u"; open-in-browser ; set browser "/usr/bin/w3m %u"
+macro o set browser "/usr/bin/firefox %u"; open-in-browser ; set browser "/usr/bin/w3m %u"
+macro w set browser "w3m"; open-in-browser ; set browser linkhandle
+macro v set browser "setsid -f mpv --really-quiet --no-terminal" ; open-in-browser ; set browser firefox
+
+

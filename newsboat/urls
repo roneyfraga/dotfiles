@@ -1,0 +1,53 @@
+
+queries
+"query:Opinion:tags # \"Opinion\"" meta
+"query:Coding:tags # \"Coding\"" meta
+"query:News:tags # \"News\"" meta
+"query:YouTube:tags # \"YouTube\"" meta
+
+Economists
+https://feeds.folha.uol.com.br/colunas/paulkrugman/rss091.xml "~Paul Krugman" Opinion 
+https://feeds.folha.uol.com.br/colunas/andre-roncaglia/rss091.xml "~André Roncaglia" Opinion
+https://feeds.folha.uol.com.br/colunas/cecilia-machado/rss091.xml "~Cecilia Machado" Opinion
+https://feeds.folha.uol.com.br/colunas/marcos-lisboa/rss091.xml "~Marcos Lisboa" Opinion
+https://feeds.folha.uol.com.br/colunas/marcos-mendes/rss091.xml "~Marcos Mendes" Opinion
+https://feeds.folha.uol.com.br/colunas/martinwolf/rss091.xml "~Martin Wolf" Opinion
+https://feeds.folha.uol.com.br/colunas/michael-franca/rss091.xml "~Michael França" Opinion
+https://feeds.folha.uol.com.br/colunas/painel/rss091.xml "~Painel (Folha)" Opinion
+https://feeds.folha.uol.com.br/colunas/priscilla-bacalhau/rss091.xml "~Priscilla Bacalhau" Opinion
+https://feeds.folha.uol.com.br/colunas/rodrigo-tavares/rss091.xml "~Rodrigo Tavares" Opinion
+https://feeds.folha.uol.com.br/colunas/rodrigo-zeidan/rss091.xml "~Rodrigo Zeidan" Opinion
+https://feeds.folha.uol.com.br/colunas/samuelpessoa/rss091.xml "~Samuel Pessoa"  Opinion
+https://feeds.folha.uol.com.br/colunas/solange-srour/rss091.xml "~Solange Shour" Opinion
+https://feeds.folha.uol.com.br/colunas/thomas-l-friedman/rss091.xml "~Thomas L. Friedman" Opinion
+
+Science
+http://feeds.feedburner.com/RevistaPesquisaBrasil_port "~Revista da Fapesp" News
+https://jornal.usp.br/feed/ "~Jornal da USP" News
+https://feeds.folha.uol.com.br/colunas/suzanaherculanohouzel/rss091.xml "~Suzana Herculano-Houzel" Opinion
+https://feeds.folha.uol.com.br/colunas/alvaro-machado-dias/rss091.xml "~Álvaro Machado Dias" Opinion
+https://feeds.folha.uol.com.br/colunas/caminhos-da-inovacao/rss091.xml "~Caminhos da Inovacao" Opinion
+https://feeds.folha.uol.com.br/blogs/ciencia-fundamental/rss091.xml "~Ciência Fundamental" Opinion
+https://feeds.folha.uol.com.br/blogs/sou-ciencia/rss091.xml "~Sou Ciência (Folha)" Opinion
+
+Policy
+https://feeds.folha.uol.com.br/colunas/camila-rocha/rss091.xml "~Camila Rocha" Opinion
+https://feeds.folha.uol.com.br/colunas/celso-rocha-de-barros/rss091.xml "~Celso Rocha de Barros" Opinion
+https://feeds.folha.uol.com.br/colunas/conrado-hubner-mendes/rss091.xml "~Conrado Hubner Mendes" Opinion
+https://feeds.folha.uol.com.br/colunas/marcus-melo/rss091.xml  "~Marcus Melo" Opinion
+https://feeds.folha.uol.com.br/colunas/maria-herminia-tavares/rss091.xml "~Maria Hermínia Tavares" Opinion
+
+General
+https://feeds.folha.uol.com.br/colunas/ricardo-araujo-pereira/rss091.xml "~Ricardo Araújo Pereira" Opinion
+
+Coding
+https://www.brodrigues.co/blog/index.xml  "~Bruno Rodrigues" "R" Coding
+https://feeds.feedburner.com/RBloggers R Coding
+https://blog.r-project.org/index.xml R Coding
+
+YouTube
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA Youtube "~Luke Smith" Tech YouTube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg Youtube "~DistroTube" YouTube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCTZXht1RTL2Duc3eU8MYGzQ Youtube "~Bruno Rodrigues" Coding Tech YouTube
+
+
