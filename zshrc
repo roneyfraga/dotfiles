@@ -127,7 +127,6 @@ export VISUAL='nvim'
 # export TRUEBROWSER='firefox'
 # export VIDEO='mpv'
 
-
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="\
   --multi --no-height\

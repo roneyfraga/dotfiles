@@ -146,12 +146,15 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'msprev/fzf-bibtex' 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " Git
-Plug 'tpope/vim-fugitive'
-Plug 'stsewd/fzf-checkout.vim'
-Plug 'junegunn/gv.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'stsewd/fzf-checkout.vim'
 Plug 'kdheepak/lazygit.nvim'
+" Plug 'junegunn/gv.vim'
 
 " Register on side bar: " ou @ in normal mode; Control+R in normal mode
 Plug 'junegunn/vim-peekaboo'
@@ -167,12 +170,12 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
 " Colorschemes and Statusline
 " Plug 'joshdick/onedark.vim'
-Plug 'navarasu/onedark.nvim'
-Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
-Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
+" Plug 'navarasu/onedark.nvim'
+" Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
+" Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 Plug 'ellisonleao/gruvbox.nvim'
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
+" Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/vim-gitbranch'
 
 " tabular / alinhar texto
 Plug 'godlygeek/tabular'
@@ -221,23 +224,8 @@ call plug#end()
 " Color Scheme and Colorschemes --------------------------------------{{{
 " 
 
-syntax on
-
 set background=dark " or light if you want light mode
 colorscheme gruvbox
-
-set laststatus=2
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
 
 "}}}
 
@@ -437,14 +425,14 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -534,20 +522,20 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " Manage extensions.
 nnoremap <silent><nowait> ;e  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> ;c  :<C-u>CocList commands<cr>
+" nnoremap <silent><nowait> <leader><leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> ;o  :<C-u>CocList outline<cr>
+" nnoremap <silent><nowait> ;o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> ;s  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent><nowait> ;s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> ;j  :<C-u>CocNext<CR>
+" nnoremap <silent><nowait> ;j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
+" nnoremap <silent><nowait> ;k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
+" nnoremap <silent><nowait> ;p  :<C-u>CocListResume<CR>
 
 " Show all diagnostics.
-nnoremap <silent><nowait> ;a  :<C-u>CocList diagnostics<cr>
+" nnoremap <silent><nowait> ;a  :<C-u>CocList diagnostics<cr>
 
 " coc-yank
 nnoremap <silent> ;y  :<C-u>CocList -A --normal yank<cr>
@@ -558,24 +546,34 @@ nnoremap ;x :CocCommand explorer<CR>
 " }}}
 
 " fuzzy finder - fzf ------------------------------{{{
-nmap ;. :Files<cr>
-nmap ;h :Files ~<cr>
-nmap ;r :Files /<cr>
-nmap ;w :Files ~/Wiki<CR>
-nmap ;z :Files ~/Wiki/Zet<CR>
-nmap ;s :Files ~/Sync<CR>
-nmap ;b :Buffers<CR>
-nmap ;l :BLines<CR>
-nmap ;L :Lines<CR>
+"
+" nmap ;. :Files<cr>
+" nmap ;h :Files ~<cr>
+" nmap ;r :Files /<cr>
+" nmap ;w :Files ~/Wiki<CR>
+" nmap ;z :Files ~/Wiki/Zet<CR>
+" nmap ;s :Files ~/Sync<CR>
+" nmap ;b :Buffers<CR>
+" nmap ;l :BLines<CR>
+" nmap ;L :Lines<CR>
 
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit',
-  \ 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-x': 'split',
+"   \ 'ctrl-v': 'vsplit',
+"   \ 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
 " \ca close all buffers except the current one
-nnoremap <leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+" Find files using Telescope command-line sugar.
+nnoremap ;f <cmd>Telescope find_files<cr>
+nnoremap ;g <cmd>Telescope live_grep<cr>
+nnoremap ;b <cmd>Telescope buffers<cr>
+nnoremap ;h <cmd>Telescope help_tags<cr>
+nnoremap ;o <cmd>Telescope oldfiles<cr>
+nnoremap ;/ <cmd>Telescope file_browser<cr>
+
 "}}}
 
 " fzf-bibtex ------------------------------{{{
@@ -716,31 +714,31 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 " Status Line ------------------------------ {{{
 
-" function! GitBranch()
-"   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-" endfunction
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
 
-" function! StatuslineGit()
-"   let l:branchname = GitBranch()
-"   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-" endfunction
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
 
-" set laststatus=2
-" set statusline= 
-" set statusline+=%#PmenuSel#         " fundo dourado
-" set statusline+=%{StatuslineGit()}  " funcao para obter branch
-" set statusline+=%#LineNr#           " fundo transparente
-" set statusline+=\ %F\               " file name and Path
-" set statusline+=%m                  " + to edited file
-" set statusline+=\ [%n]\               " file name and Path
-" set statusline+=%=                  " alinhar a direita
-" set statusline+=%#PmenuSel#         
+set laststatus=2
+set statusline= 
+set statusline+=%#PmenuSel#         " fundo dourado
+set statusline+=%{StatuslineGit()}  " funcao para obter branch
+set statusline+=%#LineNr#           " fundo transparente
+set statusline+=\ %F\               " file name and Path
+set statusline+=%m                  " + to edited file
+set statusline+=\ [%n]\               " file name and Path
+set statusline+=%=                  " alinhar a direita
+set statusline+=%#PmenuSel#         
 " set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " encoding
-" set statusline+=\ %p%%                                     " porcentagem
-" set statusline+=\ %l:%c                                    " linhas
+set statusline+=\ %p%%                                     " porcentagem
+set statusline+=\ %l:%c                                    " linhas
 
-" set noshowcmd
-" set cmdheight=1
+set noshowcmd
+set cmdheight=1
 
 
 "}}}
@@ -797,24 +795,28 @@ autocmd FileType cpp nnoremap <leader>b :!g++ -std=c++20 % && ./a.out<CR>
 " }}}
 
 " Git ------------------------------ {{{
-nnoremap gB :GBranches<CR>
-nnoremap gT :GTags<CR>
-nnoremap gC :GV<CR>
+"
+" setup mapping to call :LazyGit
+nnoremap <silent> <leader><leader>c :LazyGit<CR>
+
+" nnoremap gB :GBranches<CR>
+" nnoremap gT :GTags<CR>
+" nnoremap gC :GV<CR>
 
 " lazygit
-let g:lazygit_floating_window_winblend = 0 " transparency of floating window
-let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
-let g:lazygit_floating_window_border_chars = ['¿','¿', '¿', '¿', '¿','¿', '¿', '¿'] " customize lazygit popup window border characters
-let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage floating window if available
-let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
+" let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+" let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+" let g:lazygit_floating_window_border_chars = ['¿','¿', '¿', '¿', '¿','¿', '¿', '¿'] " customize lazygit popup window border characters
+" let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage floating window if available
+" let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
 
-let g:lazygit_use_custom_config_file_path = 0 " config file path is evaluated if this value is 1
-let g:lazygit_config_file_path = '' " custom config file path
+" let g:lazygit_use_custom_config_file_path = 0 " config file path is evaluated if this value is 1
+" let g:lazygit_config_file_path = '' " custom config file path
 " OR
-let g:lazygit_config_file_path = [] " list of custom config file paths
+" let g:lazygit_config_file_path = [] " list of custom config file paths
 
 " setup mapping to call :LazyGit
-nnoremap <silent> <leader>gt :LazyGit<CR>
+" nnoremap <silent> <leader>gt :LazyGit<CR>
 
 " }}}
 
