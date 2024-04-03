@@ -332,7 +332,7 @@
     exec_always --no-startup-id xautolock -time 30 -locker blurlock
     exec_always --no-startup-id ff-theme-util
     exec_always --no-startup-id fix_xcursor
-    exec --no-startup-id telegram-desktop
+    # exec --no-startup-id telegram-desktop
     exec_always unclutter
     exec --no-startup-id keynav
     exec --no-startup-id barrier
