@@ -256,7 +256,9 @@ nmap <silent> <LocalLeader>g :call RAction("glimpse")<CR>
 let R_assign = 2
 
 " Help
-let R_nvimpager = 'horizontal'
+let R_nvimpager = 'vertical'
+let R_editor_w = 80
+let R_editor_h = 100
 
 " abrir o terminal no R em uma janela independente 
 " let R_external_term = 'urxvt'
