@@ -192,6 +192,10 @@ Plug 'junegunn/goyo.vim'
 " Python, Julia, Go
 Plug 'jalvesaq/vimcmdline'
 
+" DAP - Debug Adapter Protocol
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'mfussenegger/nvim-dap-python'
+
 " Auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -213,9 +217,6 @@ Plug 'michal-h21/vim-zettel'
 
 " julia 
 Plug 'JuliaEditorSupport/julia-vim'
-
-" vim go language
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
@@ -371,8 +372,11 @@ nnoremap <F10> :set nowrap! <CR>
 " CoC ------------------------------------{{{
 "
 " install extensions
-" :CocInstall coc-json coc-git coc-python coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
+" :CocInstall coc-json coc-git coc-pyright coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
 " CocInstall @yaegassy/coc-marksman
+"
+" :CocConfig
+" or go to ~/.config/nvim/coc-settings.json
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -427,14 +431,14 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
