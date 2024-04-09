@@ -375,8 +375,7 @@ nnoremap <F10> :set nowrap! <CR>
 " CoC ------------------------------------{{{
 "
 " install extensions
-" :CocInstall coc-json coc-git coc-pyright coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia
-" CocInstall @yaegassy/coc-marksman
+" :CocInstall coc-json coc-git coc-pyright coc-vimlsp coc-r-lsp coc-snippets coc-texlab coc-explorer coc-yank coc-omni coc-dictionary coc-julia coc-markmap 
 "
 " :CocConfig
 " or go to ~/.config/nvim/coc-settings.json
@@ -686,11 +685,14 @@ map <Down> <Nop>
 "
 " ou simplismente via atalhos
 nmap <leader>mm :!make<CR>  
-nmap <leader>mh :!make html<CR><CR>
-nmap <leader>mp :!make pdf<CR><CR>
-nmap <leader>md :!make docx
-nmap <leader>mr :!make rsync_book<CR>  
 nmap <leader>ma :!make all<CR>  
+" nmap <leader>mh :!make html<CR><CR>
+" nmap <leader>mp :!make pdf<CR><CR>
+" nmap <leader>md :!make docx
+" nmap <leader>mr :!make rsync_book<CR>  
+
+" mm (mindmaps) as markdown
+autocmd BufRead,BufNewFile *.mm set ft=markdown.pandoc
 
 " }}}
 
