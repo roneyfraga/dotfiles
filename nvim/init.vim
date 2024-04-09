@@ -78,6 +78,9 @@ set t_ZR=^[[23m
 " italic to comment
 highlight Comment cterm=italic
 
+" vertical cursor line, easy identation
+set cursorcolumn
+
 "}}}
 
 " Highlight Color  ------------------------------{{{
