@@ -80,6 +80,7 @@ highlight Comment cterm=italic
 
 " vertical cursor line, easy identation
 set cursorcolumn
+set cursorline
 
 "}}}
 
