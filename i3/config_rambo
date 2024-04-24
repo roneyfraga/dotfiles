@@ -303,10 +303,10 @@
 # SCREENS {{{
 
 # Perseus 27" 2k horizontal + Samsung 22" fullHD vertical + HP Compaq LE2202x
-  exec_always xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x420 --rotate normal --output HDMI-A-0 --primary --mode 2560x1440 --pos 1920x240 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 4480x0 --rotate left --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
+  exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
 
 # Mode
-    set $mode_screen Screens: [h]orizontal-for-all [r]ight-vertical  
+    set $mode_screen Screens: [h]orizontal-for-all [r]ight-vertical  [l]eft-vertical  
     bindsym $super+x mode "$mode_screen"
 
     mode "$mode_screen"{
@@ -317,8 +317,10 @@
         bindsym Escape mode "default"
         bindsym Control+c mode "default"
 # Action
-        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x180 --rotate normal --output HDMI-A-0 --primary --mode 2560x1440 --pos 1920x0 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 4480x180 --rotate normal --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
-        bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --mode 1920x1080 --pos 0x420 --rotate normal --output HDMI-A-0 --primary --mode 2560x1440 --pos 1920x240 --rotate normal --output DVI-D-0 --mode 1920x1080 --pos 4480x0 --rotate left --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off, mode "default"
+
+        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
+        bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate left --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
+        bindsym l exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate left --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
     }
 # }}}
 
