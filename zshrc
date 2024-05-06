@@ -174,6 +174,7 @@ alias timer='termdown'
 alias info2='neofetch'
 alias lg='lazygit'
 alias nb='newsboat'
+alias tm='tmux new -s `basename $PWD`'
 
 # quarto
 alias qr='quarto render'
