@@ -177,6 +177,7 @@ alias nb='newsboat'
 alias tm='tmux'
 alias tmr='tmux new -s `basename $PWD`'
 alias tml='tmux ls'
+alias tma='tmux attach -t'
 
 # quarto
 alias qr='quarto render'
