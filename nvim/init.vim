@@ -695,6 +695,9 @@ nmap <leader>ma :!make all<CR>
 " mm (mindmaps) as markdown
 autocmd BufRead,BufNewFile *.mm set ft=markdown.pandoc
 
+nmap <leader>mc ::CocCommand markmap.create<CR>  
+nmap <leader>mw :CocCommand markmap.watch<CR>  
+
 " }}}
 
 " luochen1990/rainbow ------------------------------{{{

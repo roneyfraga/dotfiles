@@ -175,9 +175,10 @@ alias info2='neofetch'
 alias lg='lazygit'
 alias nb='newsboat'
 alias tm='tmux'
+alias tmn='tmux new -s'
 alias tmr='tmux new -s `basename $PWD`'
 alias tml='tmux ls'
-alias tma='tmux attach -t'
+alias tma='tmux attach-session -t'
 
 # quarto
 alias qr='quarto render'
