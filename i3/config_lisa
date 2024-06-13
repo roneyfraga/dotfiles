@@ -296,13 +296,13 @@
 
 # SCREENS {{{
 
-# Benq 27" 2k horizontal + Samsung 22" fullHD + Samsung 22" fullHD
-  exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1920x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 4480x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x240 --rotate normal --output DVI-D-0 --off
+# Perseus Pro 27" 2k horizontal + Benq 27" 2k horizontal (primary) + Samsung 24" fullHD vertical
+  exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off
 
 # Mode
-    set $mode_screen Screens: [h]orizontal-for-all [v]ertical-for-laterals [l]eft-vertical [r]ight-vertical  
+    set $mode_screen Screens: [h]orizontal-for-all [v]ertical-on-right
     bindsym $super+x mode "$mode_screen"
-
+ 
     mode "$mode_screen"{
 # Get back from inception
       bindsym $super+x mode "default"
@@ -311,10 +311,8 @@
         bindsym Escape mode "default"
         bindsym Control+c mode "default"
 # Action
-        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1920x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 4480x0 --rotate normal --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DVI-D-0 --off
-        bindsym l exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1080x151 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 3640x151 --rotate normal --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate right --output DVI-D-0 --off
-        bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1920x211 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 4480x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x211 --rotate normal --output DVI-D-0 --off
-        bindsym v exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 1080x211 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 3640x0 --rotate right --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate right --output DVI-D-0 --off , mode "default"
+        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off
+        bindsym v exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate right --output HDMI-A-0 --mode 2560x1440 --pos 0x480 --rotate normal --output DVI-D-0 --off, mode "default"
     }
 # }}}
 
@@ -335,7 +333,7 @@
     # exec --no-startup-id telegram-desktop
     exec_always unclutter
     exec --no-startup-id keynav
-    exec --no-startup-id barrier
+    # exec --no-startup-id barrier
     exec --no-startup-id insync start
 
 # }}}
