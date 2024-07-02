@@ -318,9 +318,9 @@
         bindsym Control+c mode "default"
 # Action
 
-        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 2560x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
-        bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate left --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
-        bindsym l exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate left --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
+        bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 2560x0 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off, mode "default"
+        bindsym r exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x394 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 2560x0 --rotate left --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off, mode "default"
+        bindsym l exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x0 --rotate left --output HDMI-A-0 --mode 2560x1440 --pos 1440x607 --rotate normal --output DVI-D-0 --off --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off, mode "default"
     }
 # }}}
 
