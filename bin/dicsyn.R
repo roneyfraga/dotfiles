@@ -10,6 +10,7 @@ suppressMessages(library(pipeR))
 url <- 'https://sinonimos.woxikon.com.br'
 
 # receber o comando do terminal
+# args <- list('pt', 'amor')
 args <- commandArgs(TRUE)
 
 # test if there is at least one argument: if not, return an error
