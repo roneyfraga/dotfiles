@@ -179,6 +179,7 @@ alias tmn='tmux new -s'
 alias tmr='tmux new -s `basename $PWD`'
 alias tml='tmux ls'
 alias tma='tmux attach-session -t'
+alias tmk='tmux kill-session -t'
 
 # quarto
 alias qr='quarto render'
