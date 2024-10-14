@@ -153,6 +153,7 @@ Plug 'msprev/fzf-bibtex'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Git
 " Plug 'tpope/vim-fugitive'
@@ -578,6 +579,8 @@ nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>
 " Find files using Telescope command-line sugar.
 nnoremap ;f <cmd>Telescope find_files<cr>
 nnoremap ;g <cmd>Telescope live_grep<cr>
+nnoremap ;w <cmd>Telescope live_grep search_dirs=~/Wiki/<cr>
+nnoremap ;z <cmd>Telescope live_grep search_dirs=~/Wiki/Zet/<cr>
 nnoremap ;b <cmd>Telescope buffers<cr>
 nnoremap ;h <cmd>Telescope help_tags<cr>
 nnoremap ;o <cmd>Telescope oldfiles<cr>
