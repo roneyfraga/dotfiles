@@ -186,7 +186,7 @@ alias qr='quarto render'
 alias qp='quarto preview'
 
 # files
-alias init.vim="nvim ~/.config/nvim/init.vim"
+alias init.lua="nvim ~/.config/nvim/init.lua"
 alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
