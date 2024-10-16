@@ -160,6 +160,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('R-nvim/cmp-r')
+Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
 Plug('dcampos/cmp-snippy')
@@ -167,6 +168,12 @@ Plug('f3fora/cmp-spell')
 
 -- snippets 
 Plug('roneyfraga/vim-snippets')
+
+-- equation preview in markdown
+Plug('jbyuki/nabla.nvim')
+
+-- image from clipboad, web or file to neovim
+Plug('HakonHarnes/img-clip.nvim')
 
 -- Colorschemes and Statusline
 Plug('ellisonleao/gruvbox.nvim')
@@ -188,7 +195,7 @@ Plug('junegunn/goyo.vim')
 Plug('jalvesaq/vimcmdline')
 
 -- LaTeX
-Plug('lervag/vimtex')
+-- Plug('lervag/vimtex')
 
 -- bracket mappings - quickfix navigation
 Plug('tpope/vim-unimpaired')
@@ -217,7 +224,6 @@ require'lualine'.setup { options = { theme = 'gruvbox_dark' } }
 -- }}}
 
 -- Auto complete ------------------------------------{{{
-
 
 -- instalação manual
 -- npm install -g tree-sitter-cli
@@ -293,6 +299,7 @@ cmp.setup({
     { name = 'spell' }, 
     { name = 'markdown' }, 
     { name = 'markdown_inline' }, 
+    { name = 'latex_symbols' }, 
     { name = 'yaml' }, 
   }, {
     { name = 'buffer', keyword_lengh = 5 },
@@ -306,6 +313,22 @@ cmp.setup.cmdline({ '/', '?' }, {
     { name = 'buffer' }
   }
 })
+
+-- preview equations with nabla.nvim
+-- ;e
+vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
+
+-- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
+require("img-clip").setup({
+    default = {
+        dir_path = ".",  
+        extension = "png",  -- (opcional)
+        file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
+        use_absolute_path = false,  
+    },
+})
+
+vim.cmd[[nnoremap ;p :PasteImage<CR>]]
 
 -- -- }}}
 

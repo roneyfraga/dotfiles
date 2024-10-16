@@ -12,7 +12,7 @@ configfolder=~/.config
 ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
-	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
 	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
@@ -54,7 +54,7 @@ ln_frank:
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
-	ln -s $(dotfolder)/nvim/init.vim ~/.config/nvim/init.vim
+	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
 	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
