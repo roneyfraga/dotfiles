@@ -151,6 +151,7 @@ Plug('tpope/vim-repeat')
 
 -- R  
 Plug('R-nvim/R.nvim')
+-- Plug('quarto-dev/quarto-nvim')
 
 -- Auto complete
 Plug('neovim/nvim-lspconfig')
@@ -159,9 +160,10 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('R-nvim/cmp-r')
-Plug('nvim-treesitter/nvim-treesitter')
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
 Plug('dcampos/cmp-snippy')
+Plug('f3fora/cmp-spell')
 
 -- snippets 
 Plug('roneyfraga/vim-snippets')
@@ -214,19 +216,49 @@ require'lualine'.setup { options = { theme = 'gruvbox_dark' } }
 
 -- }}}
 
--- R-nvim ------------------------------------{{{
- 
--- :RMapsDesc         -- list all commands
--- :RConfigShow       -- list configurations 
-
--- :TSInstall r
-
-vim.cmd[[vmap <Space> <Plug>RDSendSelection]]
-vim.cmd[[nmap <Space> <Plug>RDSendLine]]
-
--- }}}
-
 -- Auto complete ------------------------------------{{{
+
+
+-- instalação manual
+-- npm install -g tree-sitter-cli
+-- para latex, clonar diretório: git clone https://github.com/latex-lsp/tree-sitter-latex
+-- cd tree-sitter-latex
+-- npx tree-sitter generate
+
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.latex = {
+--   install_info = {
+--     url = "~/tree-sitter-latex", -- local path or git repo
+--     files = {"src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+--     -- optional entries:
+--     branch = "main", -- default branch in case of git repo if different from master
+--     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+--     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+--   },
+--   filetype = "tex", -- if filetype does not match the parser name
+-- }
+
+-- treesitter 
+-- :TSInstall r
+-- :TSInstall python
+-- :TSInstall lua
+-- :TSInstall markdown
+-- :TSInstall markdown_inline
+-- :TSInstall yaml
+-- :TSInstall xml
+-- :TSInstall html
+-- :TSInstall tmux
+-- :TSInstall bibtex
+-- :TSInstall latex
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex"},
+  sync_install = false,
+  auto_install = true,
+  ignore_install = { "latex" },
+  highlight = { enable = true, additional_vim_regex_highlighting = false},
+  indent = {enable = true}, 
+}
 
 -- Set up nvim-cmp.
 local cmp = require'cmp'
@@ -257,10 +289,11 @@ cmp.setup({
     { name = 'cmp_r' },
     { name = 'nvim_lsp' },
     { name = 'path', option = { trailing_slash = true } },
-    { name = 'snippy' }, -- For snippy users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
+    { name = 'snippy' }, 
+    { name = 'spell' }, 
+    { name = 'markdown' }, 
+    { name = 'markdown_inline' }, 
+    { name = 'yaml' }, 
   }, {
     { name = 'buffer', keyword_lengh = 5 },
   })
@@ -288,6 +321,16 @@ vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
 -- markdown flavor 
 -- autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+
+-- }}}
+
+-- R-nvim ------------------------------------{{{
+ 
+-- :RMapsDesc         -- list all commands
+-- :RConfigShow       -- list configurations 
+
+vim.cmd[[vmap <Space> <Plug>RDSendSelection]]
+vim.cmd[[nmap <Space> <Plug>RDSendLine]]
 
 -- }}}
 
