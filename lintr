@@ -1,18 +1,27 @@
-linters::linters_with_defaults(
+
+linters: linters_with_defaults(
+    line_length_linter = NULL,
+    commented_code_linter = NULL,
+    whitespace_linter = NULL,
     line_length_linter = NULL, 
-    object_length_linter = NULL, 
-    camel_case_linter = NULL, 
-    object_name_linter = NULL, 
-    commented_code_linter = NULL, 
-    trailing_blank_lines_linter = NULL,
-    trailing_whitespace_linter = NULL,
-    single_quotes_linter = NULL,
-    open_curly_linter = NULL,
-    closed_curly_linter = NULL,
-    assignment_linter(
-      allow_cascading_assign = TRUE,
-      allow_right_assign = TRUE,
-      allow_trailing = TRUE),
+    object_length_linter = NULL,
+    quotes_linter = NULL,
     T_and_F_symbol_linter = NULL,
-    brace_linter(allow_single_line = TRUE)
-    )
+    object_name_linter = NULL,
+    trailing_blank_lines_linter = NULL,
+    brace_linter(
+      allow_single_line = TRUE),
+    indentation_linter(
+      indent = 2L,
+      hanging_indent_style = "tidy",
+      assignment_as_infix = TRUE),
+    assignment_linter(
+      allow_cascading_assign = FALSE, 
+      allow_right_assign = TRUE, 
+      allow_trailing = TRUE, 
+      allow_pipe_assign = TRUE),
+    trailing_whitespace_linter(
+      allow_empty_lines = TRUE, 
+      allow_in_strings = TRUE)
+  )
+

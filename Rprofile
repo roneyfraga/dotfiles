@@ -16,23 +16,12 @@ options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
 
 # browser: linux or mac?
 if (as.character(Sys.info()["sysname"]) == 'Linux') {
-  options(browser = "/usr/bin/firefox") 
+  options(browser = "/usr/bin/firefox")
 } else {
   options(browser = "/applications/firefox.app/contents/macos/firefox-bin")
 }
 
-options(
-        usethis.full_name = "Roney Fraga Souza",
-        usethis.description = list(
-                                   `Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), 
-                                   comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'
-        ),
-usethis.protocol  = "ssh"
-)
+options(usethis.full_name = "Roney Fraga Souza", usethis.description = list(`Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'), usethis.protocol = "ssh")
 
-# lintr.linter_file = "~/.lintr"
-#
-# linters::linters_with_defaults(
-    # line_length_linter(120),
-    # commented_code_linter = NULL
-  # )
+# Disable completion from the language server
+options(languageserver.server_capabilities = list(completionProvider = FALSE, completionItemResolve = FALSE))

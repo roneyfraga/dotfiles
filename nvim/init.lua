@@ -188,6 +188,9 @@ Plug('nvim-lualine/lualine.nvim')
 -- tabular / alinhar texto
 Plug 'godlygeek/tabular'
 
+-- code formater
+Plug 'sbdchd/neoformat'
+
 -- rainbow colors to {} [] ()
 -- Plug('luochen1990/rainbow')
 
@@ -312,9 +315,6 @@ cmp.setup.cmdline({ '/', '?' }, {
     }),
     matching = { disallow_symbol_nonprefix_matching = false }
   })
--- preview equations with nabla.nvim
--- ;e
-vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 
 -- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
 require("img-clip").setup({
@@ -327,6 +327,10 @@ require("img-clip").setup({
 })
 
 vim.cmd[[nnoremap ;p :PasteImage<CR>]]
+
+-- preview equations with nabla.nvim
+-- ;e
+vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 
 -- noice: command line on center
 require("noice").setup({
@@ -391,10 +395,64 @@ local nvim_lsp = require('lspconfig')
 
 nvim_lsp.r_language_server.setup {
   cmd = { "R", "--slave", "-e", "languageserver::run()" },
+  settings = {
+        languageserver = {
+            diagnostics = {
+                globals = { "nvim" }, -- Inclui nvim como global para diagnósticos
+            },
+        },
+    },
 }
 
+local cmp = require'cmp'
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body) -- Se estiver usando luasnip
+        end,
+    },
+    mapping = {
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = {
+        { name = 'nvim_lsp' }, -- Fonte do LSP
+        { name = 'cmp_r' }, -- Fonte do cmp-r
+    },
+})
+
+-- Função para habilitar ou desabilitar o LSP
+local lsp_enabled = true
+
+function ToggleLsp()
+    if lsp_enabled then
+        -- Desabilitar LSP
+        vim.lsp.stop_client(vim.lsp.get_active_clients())
+        print("LSP disabled.")
+    else
+        -- Reativar LSP
+        -- Aqui você deve chamar a configuração do seu servidor LSP específico
+        require('lspconfig').r_language_server.setup{
+            cmd = { "R", "--slave", "-e", "languageserver::run()" },
+            on_attach = function(client, bufnr)
+                -- Mapeamentos de teclas podem ser definidos aqui
+                local bufopts = { noremap=true, silent=true, buffer=bufnr }
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+            end,
+        }
+        print("LSP activated.")
+    end
+    lsp_enabled = not lsp_enabled -- Alterna o estado
+end
+
+-- Mapeamento de tecla para a função ToggleLsp (por exemplo, usando ;l)
+vim.api.nvim_set_keymap('n', ';l', ':lua ToggleLsp()<CR>', { noremap = true, silent = true })
+
+-- R.nvim: Configurações gerais
 require("r").setup({
-  -- Configurações gerais
   -- R_args = {"--quiet", "--no-save"}, -- Argumentos passados ao R
   min_editor_width = 72, -- Largura mínima do editor
   rconsole_width = 78, -- Largura do console R
@@ -413,6 +471,11 @@ require("r").setup({
   },
 })
 
+-- :Neoformat
+-- formatar o código de R
+-- seguido de
+-- gg=G
+
 -- }}}
 
 -- Markdown VimWiki --------------------------------------{{{
@@ -424,12 +487,6 @@ vim.g.vimwiki_list = {
 		syntax = 'markdown',
 		ext = '.md',
 	}
-}
-
-vim.g.vimwiki_ext2syntax = {
-	['.md'] = 'markdown',
-	['.markdown'] = 'markdown',
-	['.mdown'] = 'markdown',
 }
 
 vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
