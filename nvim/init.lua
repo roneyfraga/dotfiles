@@ -159,6 +159,7 @@ Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
+Plug('hrsh7th/cmp-cmdline')
 Plug('R-nvim/cmp-r')
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
@@ -174,6 +175,11 @@ Plug('jbyuki/nabla.nvim')
 
 -- image from clipboad, web or file to neovim
 Plug('HakonHarnes/img-clip.nvim')
+
+-- command line on center of screen
+Plug('MunifTanjim/nui.nvim')
+Plug('rcarriga/nvim-notify')
+Plug('folke/noice.nvim')
 
 -- Colorschemes and Statusline
 Plug('ellisonleao/gruvbox.nvim')
@@ -223,26 +229,7 @@ require'lualine'.setup { options = { theme = 'gruvbox_dark' } }
 
 -- }}}
 
--- Auto complete ------------------------------------{{{
-
--- instalação manual
--- npm install -g tree-sitter-cli
--- para latex, clonar diretório: git clone https://github.com/latex-lsp/tree-sitter-latex
--- cd tree-sitter-latex
--- npx tree-sitter generate
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.latex = {
---   install_info = {
---     url = "~/tree-sitter-latex", -- local path or git repo
---     files = {"src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
---     -- optional entries:
---     branch = "main", -- default branch in case of git repo if different from master
---     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
---     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
---   },
---   filetype = "tex", -- if filetype does not match the parser name
--- }
+-- Auto complete and Beauty ------------------------------------{{{
 
 -- treesitter 
 -- :TSInstall r
@@ -261,7 +248,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex"},
   sync_install = false,
   auto_install = true,
-  ignore_install = { "latex" },
+  -- ignore_install = { "latex" },
   highlight = { enable = true, additional_vim_regex_highlighting = false},
   indent = {enable = true}, 
 }
@@ -270,7 +257,7 @@ require'nvim-treesitter.configs'.setup {
 local cmp = require'cmp'
 
 cmp.setup({
-  snippet = {
+    snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
@@ -294,7 +281,8 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'cmp_r' },
     { name = 'nvim_lsp' },
-    { name = 'path', option = { trailing_slash = true } },
+    { name = 'path'},
+    { name = 'cmdline' }, 
     { name = 'snippy' }, 
     { name = 'spell' }, 
     { name = 'markdown' }, 
@@ -302,8 +290,8 @@ cmp.setup({
     { name = 'latex_symbols' }, 
     { name = 'yaml' }, 
   }, {
-    { name = 'buffer', keyword_lengh = 5 },
-  })
+      { name = 'buffer', keyword_lengh = 5 },
+    })
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -314,6 +302,16 @@ cmp.setup.cmdline({ '/', '?' }, {
   }
 })
 
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    }),
+    matching = { disallow_symbol_nonprefix_matching = false }
+  })
 -- preview equations with nabla.nvim
 -- ;e
 vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
@@ -321,7 +319,7 @@ vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 -- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
 require("img-clip").setup({
     default = {
-        dir_path = ".",  
+        dir_path = "./",  
         extension = "png",  -- (opcional)
         file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
         use_absolute_path = false,  
@@ -329,6 +327,37 @@ require("img-clip").setup({
 })
 
 vim.cmd[[nnoremap ;p :PasteImage<CR>]]
+
+-- noice: command line on center
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+  cmdline = {
+    opts = {
+      position = { 
+        row = "50%", -- posição vertical (50% para centralizar)
+        col = "50%", -- posição horizontal (50% para centralizar)
+      },
+    },
+  },
+  })
+
+-- noice: desabilitar mensagens
+vim.keymap.set('n', ';d', '<cmd>NoiceDismiss<CR>', {desc = 'Dismiss Noice Message'})
 
 -- -- }}}
 
@@ -351,9 +380,38 @@ vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
  
 -- :RMapsDesc         -- list all commands
 -- :RConfigShow       -- list configurations 
+--
 
-vim.cmd[[vmap <Space> <Plug>RDSendSelection]]
-vim.cmd[[nmap <Space> <Plug>RDSendLine]]
+-- require("cmp_r").setup({
+--   filetypes = {"r", "rmd", "quarto"},
+--   doc_width = 58
+--   })
+
+local nvim_lsp = require('lspconfig')
+
+nvim_lsp.r_language_server.setup {
+  cmd = { "R", "--slave", "-e", "languageserver::run()" },
+}
+
+require("r").setup({
+  -- Configurações gerais
+  -- R_args = {"--quiet", "--no-save"}, -- Argumentos passados ao R
+  min_editor_width = 72, -- Largura mínima do editor
+  rconsole_width = 78, -- Largura do console R
+  disable_cmds = { -- Comandos desabilitados
+    -- "RSPlot",
+    "RSaveClose",
+  },
+  hook = {
+    on_filetype = function()
+      -- Mapeamentos de teclas específicos para arquivos R
+      vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+      vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
+      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+      vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
+    end,
+  },
+})
 
 -- }}}
 

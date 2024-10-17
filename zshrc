@@ -15,6 +15,12 @@ fi
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 
+# npm permissions for user
+# mkdir ~/.npm-global
+# npm config set prefix '~/.npm-global'
+export PATH=$HOME/.npm-global/bin:$PATH
+# now do: npm install -g <package>
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME

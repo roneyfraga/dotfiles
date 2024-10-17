@@ -30,3 +30,9 @@ options(
 usethis.protocol  = "ssh"
 )
 
+# lintr.linter_file = "~/.lintr"
+#
+# linters::linters_with_defaults(
+    # line_length_linter(120),
+    # commented_code_linter = NULL
+  # )
