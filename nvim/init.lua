@@ -34,40 +34,7 @@ vim.cmd[[highlight Comment cterm=italic]]
 vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true })
 vim.cmd[[set nohlsearch]]
 
--- \ca close all buffers except the current one
-vim.cmd[[nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>]]
-
 -- }}}
-
--- Spell check ------------------------------{{{
---
--- dicionario em dois idiomas
-vim.cmd[[setlocal nospell spelllang=pt,en]]
-
--- alterando a forma como o vim sinaliza as palavras erradas
-vim.cmd[[hi clear SpellBad]]
-vim.cmd[[hi SpellBad cterm=underline]]
-
--- nao corrigir palavras no inicio da linha em minusculo
-vim.cmd[[set spellfile=~/Sync/.spell/lowercase.utf-8.add]]
-vim.cmd[[set spellfile=~/Sync/.spell/pt.utf-8.add]]
-vim.cmd[[set spellfile=~/Sync/.spell/en.utf-8.add]]
-vim.cmd[[set spellcapcheck=]]
-
--- control + n
--- utilizar o dicionario como fonte das palavras sugeridas no autocompletar
-vim.cmd[[set dictionary=/usr/share/dict/words]]
-vim.cmd[[set complete+=kspell]]
-
--- não precisa do nospell, pois, 'spell!' é toggle
--- F2 pt_br
--- F3 en_us
--- F4 pt_br, en_us
-vim.cmd[[nmap <F2> :set spell! spelllang=pt<CR>]]
-vim.cmd[[nmap <F3> :set spell! spelllang=en<CR>]]
-vim.cmd[[nmap <F4> :set spell! spelllang=pt,en<CR>]]
-
---}}}
 
 -- Highlight Color  ------------------------------{{{
 -- SideBar,StatusBar and Menus
@@ -165,7 +132,6 @@ Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
 Plug('dcampos/cmp-snippy')
-Plug('f3fora/cmp-spell')
 
 -- snippets 
 Plug('roneyfraga/vim-snippets')
@@ -298,7 +264,6 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'path'},
     { name = 'cmdline' }, 
-    { name = 'spell' }, 
     { name = 'markdown' }, 
     { name = 'markdown_inline' }, 
     { name = 'latex_symbols' }, 
@@ -355,7 +320,7 @@ require("noice").setup({
   },
   -- you can enable a preset for easier configuration
   presets = {
-    bottom_search = true, -- use a classic bottom cmdline for search
+    bottom_search = false, -- use a classic bottom cmdline for search
     command_palette = true, -- position the cmdline and popupmenu together
     long_message_to_split = true, -- long messages will be sent to a split
     inc_rename = false, -- enables an input dialog for inc-rename.nvim
@@ -373,6 +338,9 @@ require("noice").setup({
 
 -- noice: desabilitar mensagens
 vim.keymap.set('n', ';d', '<cmd>NoiceDismiss<CR>', {desc = 'Dismiss Noice Message'})
+
+-- \ca close all buffers except the current one
+vim.cmd[[nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>]]
 
 -- -- }}}
 
