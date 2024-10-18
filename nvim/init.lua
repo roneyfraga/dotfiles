@@ -384,7 +384,7 @@ vim.keymap.set('n', ';d', '<cmd>NoiceDismiss<CR>', {desc = 'Dismiss Noice Messag
 -- au BufRead,BufNewFile *.rmd set ft=rmd.r
 -- au BufRead,BufNewFile *.Rmd set ft=rmd.r
 
-vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
 -- markdown flavor 
 -- autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -398,7 +398,10 @@ vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 --
 
 require("cmp_r").setup({
-  filetypes = {"r", "rmd", "qmd", "quarto"},
+  filetypes = {"r", "rmd", "quarto"},
+  sources = {
+    { name = 'cmp_r' },
+  }
 })
 
 local nvim_lsp = require('lspconfig')
@@ -583,23 +586,6 @@ vim.cmd[[nnoremap <expr> <C-w>+ v:count1 * 10 . '<C-w>+']]
 vim.cmd[[nnoremap <expr> <C-w>- v:count1 * 10 . '<C-w>-']]
 vim.cmd[[nnoremap <expr> <C-w>< v:count1 * 10 . '<C-w><']]
 vim.cmd[[nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>']]
--- }}}
-
--- snippets ------------------------------{{{
--- 
--- arquivos Rnw usando snippets de r tex e rnoweb
--- au BufRead,BufNewFile *.rnw set ft=rnoweb.r.tex
--- arquivos  Rmd usando snippets de r e rmd
--- au BufRead,BufNewFile *.rmd set ft=rmd.r
--- au BufRead,BufNewFile *.Rmd set ft=rmd.r
-
--- MUDAR AQUI
--- autocmd BufRead,BufNewFile *.qmd set ft=rmd.r
-
--- markdown flavor 
--- autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-
-
 -- }}}
 
 -- Python, Julia and vimcmdline------------------------------ {{{
