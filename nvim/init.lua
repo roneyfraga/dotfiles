@@ -256,37 +256,48 @@ require'nvim-treesitter.configs'.setup {
   indent = {enable = true}, 
 }
 
+-- snippy
+require('snippy').setup({
+  mappings = {
+    is = {
+      ['<Tab>'] = 'expand_or_advance',
+      ['<S-Tab>'] = 'previous',
+    },
+    nx = {
+      ['<leader>x'] = 'cut_text',
+    },
+  },
+})
+
 -- Set up nvim-cmp.
 local cmp = require'cmp'
 
 cmp.setup({
-    snippet = {
-    -- REQUIRED - you must specify a snippet engine
+  snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+      require('snippy').expand_snippet(args.body) 
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
+    ['<C-n>'] = cmp.mapping.select_next_item(), 
+    ['<C-p>'] = cmp.mapping.select_prev_item(), 
+    ['<C-Space>'] = cmp.mapping.complete(), 
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), 
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<C-c>'] = cmp.mapping.abort(),
   }),
   sources = cmp.config.sources({
+    { name = 'snippy' }, 
     { name = 'cmp_r' },
     { name = 'nvim_lsp' },
     { name = 'path'},
     { name = 'cmdline' }, 
-    { name = 'snippy' }, 
     { name = 'spell' }, 
     { name = 'markdown' }, 
     { name = 'markdown_inline' }, 
@@ -386,77 +397,52 @@ vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 -- :RConfigShow       -- list configurations 
 --
 
--- require("cmp_r").setup({
---   filetypes = {"r", "rmd", "quarto"},
---   doc_width = 58
---   })
+require("cmp_r").setup({
+  filetypes = {"r", "rmd", "qmd", "quarto"},
+})
 
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.r_language_server.setup {
   cmd = { "R", "--slave", "-e", "languageserver::run()" },
   settings = {
-        languageserver = {
-            diagnostics = {
-                globals = { "nvim" }, -- Inclui nvim como global para diagnósticos
-            },
-        },
+    languageserver = {
+      diagnostics = {
+        globals = { "nvim" }, -- Inclui nvim como global para diagnósticos
+      },
     },
+  },
 }
 
-local cmp = require'cmp'
-
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- Se estiver usando luasnip
-        end,
-    },
-    mapping = {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = {
-        { name = 'nvim_lsp' }, -- Fonte do LSP
-        { name = 'cmp_r' }, -- Fonte do cmp-r
-    },
-})
-
--- Função para habilitar ou desabilitar o LSP
+-- LSP Disable and Enable
 local lsp_enabled = true
 
 function ToggleLsp()
-    if lsp_enabled then
-        -- Desabilitar LSP
-        vim.lsp.stop_client(vim.lsp.get_active_clients())
-        print("LSP disabled.")
-    else
-        -- Reativar LSP
-        -- Aqui você deve chamar a configuração do seu servidor LSP específico
-        require('lspconfig').r_language_server.setup{
-            cmd = { "R", "--slave", "-e", "languageserver::run()" },
-            on_attach = function(client, bufnr)
-                -- Mapeamentos de teclas podem ser definidos aqui
-                local bufopts = { noremap=true, silent=true, buffer=bufnr }
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-            end,
-        }
-        print("LSP activated.")
-    end
-    lsp_enabled = not lsp_enabled -- Alterna o estado
+  if lsp_enabled then
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    print("LSP disabled.")
+  else
+    require('lspconfig').r_language_server.setup{
+      cmd = { "R", "--slave", "-e", "languageserver::run()" },
+      on_attach = function(client, bufnr)
+        local bufopts = { noremap=true, silent=true, buffer=bufnr }
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+      end,
+    }
+    print("LSP activated.")
+  end
+  lsp_enabled = not lsp_enabled 
 end
 
--- Mapeamento de tecla para a função ToggleLsp (por exemplo, usando ;l)
+-- map shortcut ;l
 vim.api.nvim_set_keymap('n', ';l', ':lua ToggleLsp()<CR>', { noremap = true, silent = true })
 
--- R.nvim: Configurações gerais
+-- R.nvim: configurações gerais
 require("r").setup({
-  -- R_args = {"--quiet", "--no-save"}, -- Argumentos passados ao R
-  min_editor_width = 72, -- Largura mínima do editor
-  rconsole_width = 78, -- Largura do console R
-  disable_cmds = { -- Comandos desabilitados
+  -- R_args = {"--quiet", "--no-save"}, 
+  min_editor_width = 72, 
+  rconsole_width = 78, 
+  disable_cmds = { 
     -- "RSPlot",
     "RSaveClose",
   },

@@ -1,6 +1,5 @@
 
 if (interactive()) {
-
   # cores do terminal
   suppressMessages(require(colorout))
   setOutputColors256(normal = 39, number = 51, negnum = 183, date = 43, string = 79, const = 75, verbose = FALSE)
@@ -9,13 +8,12 @@ if (interactive()) {
   largura <- function() {
     options(width = system("tput cols", intern = TRUE))
   }
-
 }
 
 options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
 
 # browser: linux or mac?
-if (as.character(Sys.info()["sysname"]) == 'Linux') {
+if (as.character(Sys.info()["sysname"]) == "Linux") {
   options(browser = "/usr/bin/firefox")
 } else {
   options(browser = "/applications/firefox.app/contents/macos/firefox-bin")
