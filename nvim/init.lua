@@ -77,9 +77,11 @@ vim.cmd("set complete+=kspell")
 -- F2 pt_br
 -- F3 en_us
 -- F4 pt_br, en_us
-vim.cmd("nmap <F2> :set spell! spelllang=pt<CR>")
-vim.cmd("nmap <F3> :set spell! spelllang=en<CR>")
-vim.cmd("nmap <F4> :set spell! spelllang=pt,en<CR>")
+--
+-- see which-key configs
+-- vim.cmd("nmap <F2> :set spell! spelllang=pt<CR>")
+-- vim.cmd("nmap <F3> :set spell! spelllang=en<CR>")
+-- vim.cmd("nmap <F4> :set spell! spelllang=pt,en<CR>")
 
 -- }}}
 
@@ -155,6 +157,9 @@ Plug('nvim-lualine/lualine.nvim')
 Plug('folke/which-key.nvim')
 Plug('echasnovski/mini.icons')
 
+-- date and time insertion
+Plug('AntonVanAssche/date-time-inserter.nvim')
+
 -- tabular / alinhar texto
 Plug('godlygeek/tabular')
 
@@ -189,7 +194,7 @@ vim.call('plug#end')
 vim.cmd("set background=dark") -- or light if you want light mode
 vim.cmd("colorscheme gruvbox") 
 
-require'lualine'.setup { options = { theme = 'gruvbox_dark' } }
+require'lualine'.setup { options = { theme = 'gruvbox' } }
 
 -- }}}
 
@@ -297,11 +302,13 @@ require("img-clip").setup({
     },
 })
 
-vim.cmd[[nnoremap ;p :PasteImage<CR>]]
+-- see which-key
+-- vim.cmd[[nnoremap ;p :PasteImage<CR>]]
 
+-- see which-key
 -- preview equations with nabla.nvim
 -- ;e
-vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
+-- vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 
 -- noice: command line on center
 require("noice").setup({
@@ -331,26 +338,13 @@ require("noice").setup({
   },
   })
 
+-- see which-key
 -- noice: desabilitar mensagens
-vim.keymap.set('n', ';d', '<cmd>NoiceDismiss<CR>', {desc = 'Dismiss Noice Message'})
+-- vim.keymap.set('n', ';d', '<cmd>NoiceDismiss<CR>', {desc = 'Dismiss Noice Message'})
 
+-- see which-key
 -- \ca close all buffers except the current one
-vim.cmd[[nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>]]
-
--- -- }}}
-
--- snippets ------------------------------{{{
--- 
--- arquivos Rnw usando snippets de r tex e rnoweb
--- au BufRead,BufNewFile *.rnw set ft=rnoweb.r.tex
--- arquivos  Rmd usando snippets de r e rmd
--- au BufRead,BufNewFile *.rmd set ft=rmd.r
--- au BufRead,BufNewFile *.Rmd set ft=rmd.r
-
--- vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
-
--- markdown flavor 
--- autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+-- vim.cmd[[nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>]]
 
 -- }}}
 
@@ -400,8 +394,9 @@ function ToggleLsp()
   lsp_enabled = not lsp_enabled 
 end
 
+-- see which-key
 -- map shortcut ;l
-vim.api.nvim_set_keymap('n', ';l', ':lua ToggleLsp()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', ';l', ':lua ToggleLsp()<CR>', { noremap = true, silent = true })
 
 -- R.nvim: configurações gerais
 require("r").setup({
@@ -416,9 +411,9 @@ require("r").setup({
     on_filetype = function()
       -- Mapeamentos de teclas específicos para arquivos R
       vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-      vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
       vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
-      vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
+      -- vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
+      -- vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
     end,
   },
 })
@@ -447,39 +442,11 @@ vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generati
 vim.g.taskwiki_markdown_syntax = "markdown"
 vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
 
--- Time Stamps
-vim.cmd[[inoremap <F6> <C-R>=strftime("%Y-%m-%d")<CR>]]
-vim.cmd[[ inoremap <F7> <C-R>=strftime("%H:%M")<CR>]]
-
--- save
-vim.cmd[[nnoremap <F8> :w<CR>]]
-
--- remove ^M quebra de página
-vim.cmd[[nnoremap <F9> :%s/\r//g <CR>]]
-
--- wrap
-vim.cmd[[nnoremap <F10> :set nowrap! <CR>]]
-
--- Makefile
--- :make 
--- :make html
--- :make pdf
--- :make all
-
--- ou simplismente via atalhos
-vim.cmd[[nmap <leader>mm :!make<CR>]]
-vim.cmd[[nmap <leader>ma :!make all<CR>]]
--- nmap <leader>md :!make docx
-
--- mm (mindmaps) as markdown
-vim.cmd[[autocmd BufRead,BufNewFile *.mm set ft=markdown.pandoc]]
-
-vim.cmd[[nmap <leader>mc ::CocCommand markmap.create<CR>]]
-vim.cmd[[nmap <leader>mw :CocCommand markmap.watch<CR>]] 
-
 -- }}}
 
 -- Fuzzy Finder - fzf-lua --------------------------------------{{{
+
+-- all shortcuts in which-key
 
 -- find files and buffers
 -- ;f find files
@@ -496,18 +463,34 @@ vim.cmd[[nmap <leader>mw :CocCommand markmap.watch<CR>]]
 -- ;Z grep content from ~/Wiki/Zet 
 
 -- files or buffers
-vim.keymap.set('n', ';f', require('fzf-lua').files)
-vim.keymap.set('n', ';b', require('fzf-lua').buffers)
-vim.keymap.set('n', ';o', require('fzf-lua').oldfiles)
-vim.keymap.set("n", ";w", function() require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki" })
-vim.keymap.set("n", ";z", function() require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki/Zet" })
+-- vim.keymap.set('n', ';f', require('fzf-lua').files)
+-- vim.keymap.set('n', ';b', require('fzf-lua').buffers)
+-- vim.keymap.set('n', ';o', require('fzf-lua').oldfiles)
+-- vim.keymap.set("n", ";w", function() require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki" })
+-- vim.keymap.set("n", ";z", function() require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki/Zet" })
 
 -- content inside files and buffers
-vim.keymap.set('n', ';\\', require('fzf-lua').lgrep_curbuf)    
-vim.keymap.set('n', ';G', require('fzf-lua').live_grep)
-vim.keymap.set('n', ';B', require('fzf-lua').lines)             
-vim.keymap.set("n", ";W", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki/Zet" })
-vim.keymap.set("n", ";Z", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki" })
+-- vim.keymap.set('n', ';\\', require('fzf-lua').lgrep_curbuf)    
+-- vim.keymap.set('n', ';G', require('fzf-lua').live_grep)
+-- vim.keymap.set('n', ';B', require('fzf-lua').lines)             
+-- vim.keymap.set("n", ";W", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki/Zet" })
+-- vim.keymap.set("n", ";Z", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki" })
+
+function WikiOpen()
+  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+end
+
+function WikiZetOpen()
+  require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+end
+
+function WikiGrep()
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+end
+
+function WikiZetGrep()
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+end
 
 -- }}}
 
@@ -541,7 +524,6 @@ inoremap <silent> @@ <c-g>u<c-o>:call fzf#run({
 
 vim.cmd("call Bibtex_ls()")
 
-
 -- }}}
 
 -- Maps to resizing a window split ------------------------------{{{
@@ -555,7 +537,7 @@ vim.cmd[[nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>']]
 --
 -- vimcmdline mappings
 
-vim.cmd[[let cmdline_app           = {}]]
+vim.cmd[[let cmdline_app = {}]]
 vim.cmd[[let cmdline_app['python'] = 'ipython']]
 
 -- <LocalLeader>s to start the interpreter.
@@ -573,17 +555,12 @@ vim.cmd[[let cmdline_app['python'] = 'ipython']]
 
 -- HTML, XML, PHP ------------------------------{{{
 
-vim.cmd[[autocmd FileType html set omnifunc=htmlcomplete#CompleteTags]]
-
--- indent xml
--- `:%!xmllint --format %`
-
+-- vim.cmd[[autocmd FileType html set omnifunc=htmlcomplete#CompleteTags]]
 -- fold and syntax
-vim.cmd[[let g:xml_syntax_folding=1]]
-vim.cmd[[au FileType xml setlocal foldmethod=syntax]]
-vim.cmd[[au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null]]
-
-vim.cmd[[au BufEnter,BufNew *.php :set filetype=html]]
+-- vim.cmd[[let g:xml_syntax_folding=1]]
+-- vim.cmd[[au FileType xml setlocal foldmethod=syntax]]
+-- vim.cmd[[au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null]]
+-- vim.cmd[[au BufEnter,BufNew *.php :set filetype=html]]
 
 -- }}}
 
@@ -601,40 +578,89 @@ fu s:window_zoom_toggle() abort
     endif
 endfu
 
-nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
 ]])
+
+-- see which-key
+-- nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
+
 -- }}}
 
--- Source Nvim ------------------------------ {{{
+-- Date and Time  ------------------------------ {{{
 --
--- Source Nvim configuration file and install plugins
-vim.cmd[[nnoremap <leader>1 :source ~/.config/nvim/init.lua <CR>]]
-vim.cmd[[nnoremap <leader>2 :source ~/.config/nvim/init.lua \| :PlugInstall<CR>]]
+local date_time_inserter_status_ok, date_time_inserter = pcall(require, "date-time-inserter")
+if not date_time_inserter_status_ok then
+    return
+end
+
+date_time_inserter.setup {
+    date_format = 'YYYYMMDD',
+    date_separator = '-',
+    time_format = 24,
+    show_seconds = false,
+    -- insert_date_map = '<leader>dt',
+    -- insert_time_map = '<leader>tt',
+    -- insert_date_time_map = '<leader>dtt',
+}
 
 -- }}}
 
 -- WhichKey Menu ------------------------------ {{{
 
-local wk = require("which-key")
-wk.add({
-  { "<leader>f", group = "file" }, -- group
-  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
-  { "<leader>fb", function() print("hello") end, desc = "Foobar" },
-  { "<leader>fn", desc = "New File" },
-  { "<leader>f1", hidden = true }, -- hide this keymap
-  { "<leader>w", proxy = "<c-w>", group = "windows" }, -- proxy to window mappings
-  { "<leader>b", group = "buffers", expand = function()
-      return require("which-key.extras").expand.buf()
-    end
+-- Configuração do which-key
+require("which-key").setup({
+  preset = 'classic', -- modern, helix, classic
+  plugins = {
+    marks = true, -- Exibe marcas
+    registers = true, -- Exibe registros
+    spelling = {
+      enabled = true, -- Habilita correção ortográfica
+      suggestions = 20, -- Número de sugestões a serem exibidas
+    },
   },
-  {
-    -- Nested mappings are allowed and can be added in any order
-    -- Most attributes can be inherited or overridden on any level
-    -- There's no limit to the depth of nesting
-    mode = { "n", "v" }, -- NORMAL and VISUAL mode
-    { "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- no need to specify mode since it's inherited
-    { "<leader>w", "<cmd>w<cr>", desc = "Write" },
-  }
+  sort = { "order", "local", "group", "alphanum", "mod" }, -- Define a ordem dos mapeamentos
+})
+
+local wk = require("which-key")
+
+wk.add({
+  -- date and time
+  { "<Space>d", group = "[d]ate and time" },
+  { "<Space>db", "<cmd>InsertDateTime<CR>", desc = "both date and time" },
+  { "<Space>dd", "<cmd>InsertDate<CR>", desc = "date" },
+  { "<Space>dt", "<cmd>InsertTime<CR>", desc = "time" },
+  -- file peak
+  { "<Space>f", group = "[f]ile peak" },
+  { "<Space>fb", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers" },
+  { "<Space>ff", "<cmd>lua require('fzf-lua').files()<CR>", desc = "files" },
+  { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep current buffer" },
+  { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
+  { "<Space>fw", WikiOpen, desc = "~/wiki" },
+  { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
+  -- grep content
+  { "<Space>g", group = "[g]rep content" },
+  { "<Space>gb", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "buffers" },
+  { "<Space>gg", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "global search" },
+  { "<Space>gh", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "here" },
+  { "<Space>gq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>gw", WikiGrep, desc = "~/wiki" },
+  { "<Space>gz", WikiZetGrep, desc = "~/wiki/zet" },
+  -- spell: z= for more options
+  { "<Space>s", group = "[s]pell" },
+  { "<Space>sb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
+  { "<Space>se", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
+  { "<Space>sp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
+  -- vim
+  { "<Space>v", group = "[v]im" },
+  { "<Space>vb", "<cmd>set background=light<CR>", desc = "bright background" },
+  { "<Space>vd", "<cmd>set background=dark<CR>", desc = "dark background" },
+  { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
+  { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
+  { "<Space>vi", "<cmd>PlugInstall<CR>", desc = "install plugins" },
+  { "<Space>vl", "<cmd>lua ToggleLsp()<CR>", desc = "lsp toggle" },
+  { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "message dismiss toggle" },
+  { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
+  { "<Space>vs", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
+  { "<Space>vx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
 })
 
 -- }}}
