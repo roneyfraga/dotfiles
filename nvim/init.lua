@@ -151,14 +151,15 @@ Plug('folke/noice.nvim')
 Plug('ellisonleao/gruvbox.nvim')
 Plug('nvim-lualine/lualine.nvim')
 
+-- WhichKey menu
+Plug('folke/which-key.nvim')
+Plug('echasnovski/mini.icons')
+
 -- tabular / alinhar texto
-Plug 'godlygeek/tabular'
+Plug('godlygeek/tabular')
 
 -- code formater
-Plug 'sbdchd/neoformat'
-
--- rainbow colors to {} [] ()
--- Plug('luochen1990/rainbow')
+Plug('sbdchd/neoformat')
 
 --  Delete buffer withou messing the layout :Bd
 Plug('moll/vim-bbye')
@@ -169,9 +170,6 @@ Plug('junegunn/goyo.vim')
 -- Python, Julia, Go
 Plug('jalvesaq/vimcmdline')
 
--- LaTeX
--- Plug('lervag/vimtex')
-
 -- bracket mappings - quickfix navigation
 Plug('tpope/vim-unimpaired')
 
@@ -181,9 +179,6 @@ Plug('tpope/vim-surround')
 -- wiki 
 Plug('vimwiki/vimwiki')
 Plug('michal-h21/vim-zettel')
-
--- julia 
--- Plug 'JuliaEditorSupport/julia-vim'
 
 vim.call('plug#end')
 
@@ -592,7 +587,7 @@ vim.cmd[[au BufEnter,BufNew *.php :set filetype=html]]
 
 -- }}}
 
--- Zoom in buffer ------------------------------ {{{coc#pum#visible() ? coc#pum#confirm() : "\
+-- Zoom in buffer ------------------------------{{{
 vim.cmd([[
 fu s:window_zoom_toggle() abort
     if winnr('$') == 1 | return | endif
@@ -615,6 +610,32 @@ nnoremap <leader>wz :<c-u>call <sid>window_zoom_toggle()<cr>
 -- Source Nvim configuration file and install plugins
 vim.cmd[[nnoremap <leader>1 :source ~/.config/nvim/init.lua <CR>]]
 vim.cmd[[nnoremap <leader>2 :source ~/.config/nvim/init.lua \| :PlugInstall<CR>]]
+
+-- }}}
+
+-- WhichKey Menu ------------------------------ {{{
+
+local wk = require("which-key")
+wk.add({
+  { "<leader>f", group = "file" }, -- group
+  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
+  { "<leader>fb", function() print("hello") end, desc = "Foobar" },
+  { "<leader>fn", desc = "New File" },
+  { "<leader>f1", hidden = true }, -- hide this keymap
+  { "<leader>w", proxy = "<c-w>", group = "windows" }, -- proxy to window mappings
+  { "<leader>b", group = "buffers", expand = function()
+      return require("which-key.extras").expand.buf()
+    end
+  },
+  {
+    -- Nested mappings are allowed and can be added in any order
+    -- Most attributes can be inherited or overridden on any level
+    -- There's no limit to the depth of nesting
+    mode = { "n", "v" }, -- NORMAL and VISUAL mode
+    { "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- no need to specify mode since it's inherited
+    { "<leader>w", "<cmd>w<cr>", desc = "Write" },
+  }
+})
 
 -- }}}
 
