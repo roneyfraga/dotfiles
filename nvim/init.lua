@@ -134,6 +134,7 @@ Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
 Plug('dcampos/cmp-snippy')
+Plug('micangl/cmp-vimtex')
 
 -- snippets 
 Plug('roneyfraga/vim-snippets')
@@ -261,6 +262,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'snippy' }, 
     { name = 'cmp_r' },
+    { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
     { name = 'cmdline' }, 
@@ -418,6 +420,12 @@ require("r").setup({
   },
 })
 
+-- qmd as rmd
+-- to allow snippets in quarto document
+-- but disable quarto chunks tags autocompletion
+vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+
+-- see which-key
 -- :Neoformat
 -- formatar o código de R
 -- seguido de
@@ -448,34 +456,6 @@ vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
 
 -- all shortcuts in which-key
 
--- find files and buffers
--- ;f find files
--- ;b find buffer
--- ;o history opened files
--- ;w find files in ~/Wiki
--- ;z find files in ~/Wiki/Zet
---
--- find content
--- ;\ find content opened buffer
--- ;G find content from current directory
--- ;B find content all buffers
--- ;W grep content from ~/Wiki 
--- ;Z grep content from ~/Wiki/Zet 
-
--- files or buffers
--- vim.keymap.set('n', ';f', require('fzf-lua').files)
--- vim.keymap.set('n', ';b', require('fzf-lua').buffers)
--- vim.keymap.set('n', ';o', require('fzf-lua').oldfiles)
--- vim.keymap.set("n", ";w", function() require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki" })
--- vim.keymap.set("n", ";z", function() require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "files ~/Wiki/Zet" })
-
--- content inside files and buffers
--- vim.keymap.set('n', ';\\', require('fzf-lua').lgrep_curbuf)    
--- vim.keymap.set('n', ';G', require('fzf-lua').live_grep)
--- vim.keymap.set('n', ';B', require('fzf-lua').lines)             
--- vim.keymap.set("n", ";W", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki/Zet" })
--- vim.keymap.set("n", ";Z", function() require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff" } }) end, { desc = "live_grep ~/Wiki" })
-
 function WikiOpen()
   require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
 end
@@ -484,12 +464,20 @@ function WikiZetOpen()
   require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
 end
 
+function SyncOpen()
+  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns  = { ".DS_Store" } }) 
+end
+
 function WikiGrep()
   require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
 end
 
 function WikiZetGrep()
   require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+end
+
+function SyncGrep()
+  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns  = { ".DS_Store" } }) 
 end
 
 -- }}}
@@ -634,21 +622,23 @@ wk.add({
   { "<Space>ff", "<cmd>lua require('fzf-lua').files()<CR>", desc = "files" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
+  { "<Space>fs", SyncOpen, desc = "~/sync" },
   { "<Space>fw", WikiOpen, desc = "~/wiki" },
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
-  -- grep content
-  { "<Space>g", group = "[g]rep content" },
-  { "<Space>gb", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "buffers" },
-  { "<Space>gg", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "global search" },
-  { "<Space>gh", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "here" },
-  { "<Space>gq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
-  { "<Space>gw", WikiGrep, desc = "~/wiki" },
-  { "<Space>gz", WikiZetGrep, desc = "~/wiki/zet" },
+  -- search content
+  { "<Space>s", group = "[s]earch content" },
+  { "<Space>sb", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "buffers" },
+  { "<Space>sg", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "global search" },
+  { "<Space>sh", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "here" },
+  { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>ss", SyncGrep, desc = "~/sync" },
+  { "<Space>sw", WikiGrep, desc = "~/wiki" },
+  { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
   -- spell: z= for more options
-  { "<Space>s", group = "[s]pell" },
-  { "<Space>sb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
-  { "<Space>se", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
-  { "<Space>sp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
+  { "<Space>g", group = "[g]rammar check" },
+  { "<Space>gb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
+  { "<Space>ge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
+  { "<Space>gp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>vb", "<cmd>set background=light<CR>", desc = "bright background" },
@@ -661,6 +651,11 @@ wk.add({
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
   { "<Space>vs", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
   { "<Space>vx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
+  -- vim
+  -- { "<Space>ma", "<cmd>make all<CR>", desc = "all" },
+  -- { "<Space>mh", "<cmd>make html<CR>", desc = "all" },
+  -- { "<Space>mp", "<cmd>make pdf<CR>", desc = "pdf" },
+  -- { "<Space>mw", "<cmd>make word<CR>", desc = "pdf" },
 })
 
 -- }}}
