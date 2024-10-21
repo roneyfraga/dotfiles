@@ -669,6 +669,7 @@ wk.add({
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
   -- search content
   { "<Space>s", group = "[s]earch content" },
+  { "<Space>sa", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "all buffers" },
   { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
