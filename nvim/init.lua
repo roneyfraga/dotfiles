@@ -658,8 +658,9 @@ wk.add({
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
+  { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>fh", FilesHereOpen, desc = "here" },
-  { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep current buffer" },
+  { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep only current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
   { "<Space>fr", RworkspaceOpen, desc = "/mnt/.../rworkspace" },
   { "<Space>fp", ProfissionalOpen, desc = "/mnt/.../profissional" },
@@ -668,7 +669,6 @@ wk.add({
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
   -- search content
   { "<Space>s", group = "[s]earch content" },
-  { "<Space>sb", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "buffers" },
   { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
@@ -676,10 +676,8 @@ wk.add({
   { "<Space>ss", SyncGrep, desc = "~/sync" },
   { "<Space>sw", WikiGrep, desc = "~/wiki" },
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- spell: z= for more options
   -- vim
   { "<Space>v", group = "[v]im" },
-  { "<Space>vt", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
   { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
