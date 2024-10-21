@@ -135,6 +135,8 @@ Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
 Plug('dcampos/cmp-snippy')
 Plug('micangl/cmp-vimtex')
+Plug('tamago324/cmp-zsh')
+Plug('Shougo/deol.nvim')
 
 -- snippets 
 Plug('roneyfraga/vim-snippets')
@@ -186,6 +188,9 @@ Plug('tpope/vim-surround')
 Plug('vimwiki/vimwiki')
 Plug('michal-h21/vim-zettel')
 
+-- nerd tree
+Plug('nvim-tree/nvim-tree.lua')
+
 vim.call('plug#end')
 
 -- }}}
@@ -201,7 +206,7 @@ require'lualine'.setup { options = { theme = 'gruvbox' } }
 
 -- Auto complete and Beauty ------------------------------------{{{
 
--- treesitter 
+-- TreeSitter 
 -- :TSInstall r
 -- :TSInstall python
 -- :TSInstall lua
@@ -213,12 +218,12 @@ require'lualine'.setup { options = { theme = 'gruvbox' } }
 -- :TSInstall tmux
 -- :TSInstall bibtex
 -- :TSInstall latex
+-- :TSInstall make
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex"},
+  ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
   sync_install = false,
   auto_install = true,
-  -- ignore_install = { "latex" },
   highlight = { enable = true, additional_vim_regex_highlighting = false},
   indent = {enable = true}, 
 }
@@ -266,6 +271,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'path'},
     { name = 'cmdline' }, 
+    { name = 'zsh' }, 
     { name = 'markdown' }, 
     { name = 'markdown_inline' }, 
     { name = 'latex_symbols' }, 
@@ -376,29 +382,15 @@ nvim_lsp.r_language_server.setup {
   },
 }
 
--- LSP Disable and Enable
-local lsp_enabled = true
-
-function ToggleLsp()
-  if lsp_enabled then
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    print("LSP disabled.")
-  else
-    require('lspconfig').r_language_server.setup{
-      cmd = { "R", "--slave", "-e", "languageserver::run()" },
-      on_attach = function(client, bufnr)
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-      end,
-    }
-    print("LSP activated.")
-  end
-  lsp_enabled = not lsp_enabled 
+-- LSP Enable 
+function LspEnable()
+  require('lspconfig').r_language_server.setup{
+  cmd = { "R", "--slave", "-e", "languageserver::run()" },
+  }
 end
 
--- see which-key
--- map shortcut ;l
--- vim.api.nvim_set_keymap('n', ';l', ':lua ToggleLsp()<CR>', { noremap = true, silent = true })
+-- LSP Disable
+-- vim.lsp.stop_client(vim.lsp.get_active_clients())
 
 -- R.nvim: configurações gerais
 require("r").setup({
@@ -456,28 +448,48 @@ vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
 
 -- all shortcuts in which-key
 
+function FilesHereOpen()
+  require('fzf-lua').files({ file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
 function WikiOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
 
 function WikiZetOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
 
 function SyncOpen()
-  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns  = { ".DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", "%.spell" } }) 
+end
+
+function RworkspaceOpen()
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
+function ProfissionalOpen()
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
 end
 
 function WikiGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
 
 function WikiZetGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", ".DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
 
 function SyncGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns  = { ".DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", ".spell" } }) 
+end
+
+function RworkspaceGrep()
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
+function ProfissionalGrep()
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
 end
 
 -- }}}
@@ -592,6 +604,36 @@ date_time_inserter.setup {
 
 -- }}}
 
+-- Nerd Tree ------------------------------ {{{
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+--- }}}
+
 -- WhichKey Menu ------------------------------ {{{
 
 -- Configuração do which-key
@@ -611,17 +653,14 @@ require("which-key").setup({
 local wk = require("which-key")
 
 wk.add({
-  -- date and time
-  { "<Space>d", group = "[d]ate and time" },
-  { "<Space>db", "<cmd>InsertDateTime<CR>", desc = "both date and time" },
-  { "<Space>dd", "<cmd>InsertDate<CR>", desc = "date" },
-  { "<Space>dt", "<cmd>InsertTime<CR>", desc = "time" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   { "<Space>fb", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers" },
-  { "<Space>ff", "<cmd>lua require('fzf-lua').files()<CR>", desc = "files" },
+  { "<Space>fh", FilesHereOpen, desc = "here" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
+  { "<Space>fr", RworkspaceOpen, desc = "/mnt/.../rworkspace" },
+  { "<Space>fp", ProfissionalOpen, desc = "/mnt/.../profissional" },
   { "<Space>fs", SyncOpen, desc = "~/sync" },
   { "<Space>fw", WikiOpen, desc = "~/wiki" },
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
@@ -631,31 +670,41 @@ wk.add({
   { "<Space>sg", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "global search" },
   { "<Space>sh", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "here" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
+  { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
   { "<Space>ss", SyncGrep, desc = "~/sync" },
   { "<Space>sw", WikiGrep, desc = "~/wiki" },
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
   -- spell: z= for more options
-  { "<Space>g", group = "[g]rammar check" },
-  { "<Space>gb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
-  { "<Space>ge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
-  { "<Space>gp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
   -- vim
   { "<Space>v", group = "[v]im" },
-  { "<Space>vb", "<cmd>set background=light<CR>", desc = "bright background" },
-  { "<Space>vd", "<cmd>set background=dark<CR>", desc = "dark background" },
+  { "<Space>vc", group = "[c]olor" },
+  { "<Space>vcl", "<cmd>set background=light<CR>", desc = "ligth background" },
+  { "<Space>vcd", "<cmd>set background=dark<CR>", desc = "dark background" },
+  { "<Space>vd", group = "[d]ate and time" },
+  { "<Space>vdb", "<cmd>InsertDateTime<CR>", desc = "both date and time" },
+  { "<Space>vdd", "<cmd>InsertDate<CR>", desc = "date" },
+  { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
+  { "<Space>vg", group = "[g]rammar check" },
+  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
+  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
+  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
+  { "<Space>vl", group = "[l]sp" },
+  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable" },
+  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers" },
+  { "<Space>vle", LspEnable, desc = "lsp enable" },
+  { "<Space>vi", group = "[i]nit.lua" },
+  { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
+  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
+  { "<Space>vu", group = "[u]ncommon" },
+  { "<Space>vux", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
+  { "<Space>vur", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
+  -- main group
+  { "<Space>vt", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
   { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
-  { "<Space>vi", "<cmd>PlugInstall<CR>", desc = "install plugins" },
-  { "<Space>vl", "<cmd>lua ToggleLsp()<CR>", desc = "lsp toggle" },
-  { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "message dismiss toggle" },
+  { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
-  { "<Space>vs", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
-  { "<Space>vx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
-  -- vim
-  -- { "<Space>ma", "<cmd>make all<CR>", desc = "all" },
-  -- { "<Space>mh", "<cmd>make html<CR>", desc = "all" },
-  -- { "<Space>mp", "<cmd>make pdf<CR>", desc = "pdf" },
-  -- { "<Space>mw", "<cmd>make word<CR>", desc = "pdf" },
 })
 
 -- }}}
