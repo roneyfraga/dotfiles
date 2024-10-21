@@ -656,6 +656,7 @@ wk.add({
   -- main group
   { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
+  { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
