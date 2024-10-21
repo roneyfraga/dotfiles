@@ -6,3 +6,5 @@
 [init]
 	defatultBranch = main
 	defaultBranch = main
+[core]
+	excludesfile = /home/roney/.gitignore_global
