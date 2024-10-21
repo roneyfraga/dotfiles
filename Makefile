@@ -12,6 +12,7 @@ configfolder=~/.config
 ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
 	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
+	ln -s $(dotfolder)/tmux/config.yaml ~/.tmux/config.yaml
 	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
 	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
@@ -67,6 +68,7 @@ ln_macos:
 rm:
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
+	rm -f ~/.tmux/config.yaml
 	rm -f ~/.config/nvim/init.vim
 	rm -rf ~/.config/nvim/spell
 	rm -f ~/.vim/spell

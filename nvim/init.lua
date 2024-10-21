@@ -653,9 +653,11 @@ require("which-key").setup({
 local wk = require("which-key")
 
 wk.add({
+  -- main group
+  { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
+  { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
-  { "<Space>fb", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers" },
   { "<Space>fh", FilesHereOpen, desc = "here" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
@@ -667,8 +669,7 @@ wk.add({
   -- search content
   { "<Space>s", group = "[s]earch content" },
   { "<Space>sb", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "buffers" },
-  { "<Space>sg", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "global search" },
-  { "<Space>sh", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "here" },
+  { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
   { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
@@ -678,34 +679,33 @@ wk.add({
   -- spell: z= for more options
   -- vim
   { "<Space>v", group = "[v]im" },
-  { "<Space>vc", group = "[c]olor" },
-  { "<Space>vcl", "<cmd>set background=light<CR>", desc = "ligth background" },
-  { "<Space>vcd", "<cmd>set background=dark<CR>", desc = "dark background" },
-  { "<Space>vd", group = "[d]ate and time" },
-  { "<Space>vdb", "<cmd>InsertDateTime<CR>", desc = "both date and time" },
-  { "<Space>vdd", "<cmd>InsertDate<CR>", desc = "date" },
-  { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
-  { "<Space>vg", group = "[g]rammar check" },
-  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
-  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
-  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
-  { "<Space>vl", group = "[l]sp" },
-  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable" },
-  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers" },
-  { "<Space>vle", LspEnable, desc = "lsp enable" },
-  { "<Space>vi", group = "[i]nit.lua" },
-  { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
-  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
-  { "<Space>vu", group = "[u]ncommon" },
-  { "<Space>vux", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
-  { "<Space>vur", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
-  -- main group
   { "<Space>vt", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
   { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
-})
+  { "<Space>vc", group = "[c]olor" }, -- subgroup
+  { "<Space>vcl", "<cmd>set background=light<CR>", desc = "ligth background" },
+  { "<Space>vcd", "<cmd>set background=dark<CR>", desc = "dark background" },
+  { "<Space>vd", group = "[d]ate and time" }, -- subgroup
+  { "<Space>vdb", "<cmd>InsertDateTime<CR>", desc = "both date and time" },
+  { "<Space>vdd", "<cmd>InsertDate<CR>", desc = "date" },
+  { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
+  { "<Space>vg", group = "[g]rammar check" }, -- subgroup
+  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
+  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
+  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
+  { "<Space>vl", group = "[l]sp" }, -- subgroup
+  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable" },
+  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers" },
+  { "<Space>vle", LspEnable, desc = "lsp enable" },
+  { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
+  { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
+  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
+  { "<Space>vu", group = "[u]ncommon" }, -- subgroup
+  { "<Space>vux", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
+  { "<Space>vur", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
+  })
 
 -- }}}
 

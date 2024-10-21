@@ -1,0 +1,31 @@
+
+command_alias_start_index: 200
+keybindings:
+  prefix_table: Space
+  root_table: C-Space
+title:
+  style: align=centre,bold
+  prefix: tmux
+  prefix_style: fg=green,align=centre,bold
+position:
+  x: R
+  y: P
+macros:
+  restart-pane:
+    - "respawnp -k -c #{pane_current_path}"
+    - display "#{log_info} Pane restarted"
+items:
+  - name: Next pane
+    key: space
+    command: next-pane
+  - name: Respawn pane
+    key: R
+    macro: restart-pane
+  - separator: true
+  - name: +Layout
+    key: l
+    menu:
+      - name: Next
+        key: l
+        command: nextl
+        transient: true
