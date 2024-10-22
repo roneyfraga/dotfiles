@@ -472,6 +472,10 @@ function ProfissionalOpen()
   require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
 end
 
+function DownloadsOpen()
+  require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
 function WikiGrep()
   require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
@@ -490,6 +494,10 @@ end
 
 function ProfissionalGrep()
   require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
+function DownloadsGrep()
+  require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
 end
 
 -- }}}
@@ -665,6 +673,7 @@ wk.add({
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
   { "<Space>fr", RworkspaceOpen, desc = "/mnt/.../rworkspace" },
   { "<Space>fp", ProfissionalOpen, desc = "/mnt/.../profissional" },
+  { "<Space>fd", DownloadsOpen, desc = "~/downloads" },
   { "<Space>fs", SyncOpen, desc = "~/sync" },
   { "<Space>fw", WikiOpen, desc = "~/wiki" },
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
@@ -675,6 +684,7 @@ wk.add({
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
   { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
+  { "<Space>sd", DownloadsGre, desc = "~/downloads" },
   { "<Space>ss", SyncGrep, desc = "~/sync" },
   { "<Space>sw", WikiGrep, desc = "~/wiki" },
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
@@ -705,6 +715,7 @@ wk.add({
   { "<Space>vu", group = "[u]ncommon" }, -- subgroup
   { "<Space>vux", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vur", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
+  { "<Space>vud", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
   })
 
 -- }}}
