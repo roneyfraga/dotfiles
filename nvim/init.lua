@@ -652,6 +652,14 @@ require("nvim-tree").setup({
 
 -- ChatGPT ------------------------------ {{{
 
+-- "gpt-3.5-turbo"
+-- "gpt-4"
+-- "gpt-4.0-turbo"
+-- "gpt-4o-mini"
+-- "gpt-4o"
+-- "o1-preview"
+-- "o1-mini"
+
 require("chatgpt").setup({
   api_key_cmd = "secret-tool lookup openai neovim",
 
@@ -661,14 +669,15 @@ require("chatgpt").setup({
     -- using commands
     -- Example:
     -- model = function()
-    --     if some_condition() then
-    --         return "gpt-4-1106-preview"
-    --     else
-    --         return "gpt-3.5-turbo"
-    --     end
+        -- if some_condition() then
+            -- return "gpt-4-1106-preview"
+        -- else
+            -- return "gpt-3.5-turbo"
+        -- end
     -- end,
     -- model = "gpt-4-1106-preview",
-    model = "gpt-3.5-turbo",
+    -- model = "gpt-4o-mini",
+    model = "gpt-4",
     frequency_penalty = 0,
     presence_penalty = 0,
     max_tokens = 4095,
