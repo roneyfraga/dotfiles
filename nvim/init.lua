@@ -16,7 +16,6 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
-vim.opt.wrap = false
 vim.opt.smartindent = true
 vim.opt.scrolloff = 8
 vim.opt.relativenumber = true
@@ -186,10 +185,19 @@ Plug('tpope/vim-surround')
 
 -- wiki 
 Plug('vimwiki/vimwiki')
+Plug('junegunn/fzf')
+Plug('junegunn/fzf.vim')
 Plug('michal-h21/vim-zettel')
 
 -- nerd tree
 Plug('nvim-tree/nvim-tree.lua')
+
+-- ChatGPT
+-- Plug("MunifTanjim/nui.nvim") -- already instaled
+Plug("nvim-lua/plenary.nvim")
+Plug("folke/trouble.nvim")
+Plug("nvim-telescope/telescope.nvim")
+Plug("jackMort/ChatGPT.nvim")
 
 vim.call('plug#end')
 
@@ -642,13 +650,43 @@ require("nvim-tree").setup({
 
 --- }}}
 
+-- ChatGPT ------------------------------ {{{
+
+require("chatgpt").setup({
+  api_key_cmd = "secret-tool lookup openai neovim",
+
+  openai_params = {
+    -- NOTE: model can be a function returning the model name
+    -- this is useful if you want to change the model on the fly
+    -- using commands
+    -- Example:
+    -- model = function()
+    --     if some_condition() then
+    --         return "gpt-4-1106-preview"
+    --     else
+    --         return "gpt-3.5-turbo"
+    --     end
+    -- end,
+    -- model = "gpt-4-1106-preview",
+    model = "gpt-3.5-turbo",
+    frequency_penalty = 0,
+    presence_penalty = 0,
+    max_tokens = 4095,
+    temperature = 0.2,
+    top_p = 0.1,
+    n = 1,
+  }
+})
+
+--- }}}
+
 -- WhichKey Menu ------------------------------ {{{
 
 -- Configuração do which-key
 require("which-key").setup({
   preset = 'classic', -- modern, helix, classic
   plugins = {
-    marks = true, -- Exibe marcas
+    marks = true, -- Exibe marcacurls
     registers = true, -- Exibe registros
     spelling = {
       enabled = true, -- Habilita correção ortográfica
@@ -688,6 +726,24 @@ wk.add({
   { "<Space>ss", SyncGrep, desc = "~/sync" },
   { "<Space>sw", WikiGrep, desc = "~/wiki" },
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
+  -- ChatGPT
+  { "<Space>c", group = "[c]hat gpt" },
+  { "<Space>cc", "<cmd>ChatGPT<CR>", desc = "ChatGPT" },
+  { "<Space>ce", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instruction", mode = { "n", "v" } },
+  { "<Space>ck",  "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "n", "v" } },
+  { "<Space>cd", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "n", "v" } },
+  { "<Space>ca", "<cmd>ChatGPTRun add_tests<CR>", desc = "Add Tests", mode = { "n", "v" } },
+  { "<Space>co", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize Code", mode = { "n", "v" } },
+  { "<Space>cs", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "n", "v" } },
+  { "<Space>cf", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "n", "v" } },
+  { "<Space>cx", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain Code", mode = { "n", "v" } },
+  { "<Space>cr", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "n", "v" } },
+  { "<Space>cl", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Code Readability Analysis", mode = { "n", "v" } },
+  { "<Space>cg", group = "[g]rammar and translate" }, -- subgroup
+  { "<Space>cgp", "<cmd>ChatGPTRun grammar_correction português brasileiro<CR>", desc = "Grammar Correction pt_br", mode = { "n", "v" } },
+  { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
+  { "<Space>cgP", "<cmd>ChatGPTRun translate to brazilian porgutuese<CR>", desc = "Translate en_pt", mode = { "n", "v" } },
+  { "<Space>cgE", "<cmd>ChatGPTRun translate to american english<CR>", desc = "Translate pt_en", mode = { "n", "v" } },
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
@@ -702,20 +758,20 @@ wk.add({
   { "<Space>vdd", "<cmd>InsertDate<CR>", desc = "date" },
   { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
   { "<Space>vg", group = "[g]rammar check" }, -- subgroup
-  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both" },
-  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" },
-  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português" },
+  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both", mode = { "n", "v" } },
+  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" , mode = { "n", "v" } },
+  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português", mode = { "n", "v" } },
   { "<Space>vl", group = "[l]sp" }, -- subgroup
-  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable" },
-  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers" },
-  { "<Space>vle", LspEnable, desc = "lsp enable" },
+  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
+  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
+  { "<Space>vle", LspEnable, desc = "lsp enable", mode = { "n", "v" } },
   { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
-  { "<Space>vu", group = "[u]ncommon" }, -- subgroup
-  { "<Space>vux", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
-  { "<Space>vur", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
-  { "<Space>vud", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vf", group = "[f]ormat" }, -- subgroup
+  { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
+  { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
+  { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
   })
 
 -- }}}
