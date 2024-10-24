@@ -763,6 +763,7 @@ wk.add({
   { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
+  { "<Space>vw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
   { "<Space>vc", group = "[c]olor" }, -- subgroup
   { "<Space>vcl", "<cmd>set background=light<CR>", desc = "ligth background" },
   { "<Space>vcd", "<cmd>set background=dark<CR>", desc = "dark background" },
