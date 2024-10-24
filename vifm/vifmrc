@@ -504,8 +504,8 @@ command! FZFfind : set noquickview
                 \|     execute 'goto' fnameescape($FZF_PICK)
                 \| endif
 
-nmap ;. :FZFfind<cr>
-nmap ;h :FZFlocate<cr>
+nmap <space>/ :FZFfind<cr>
+nmap <space>h :FZFlocate<cr>
 
 " ------------------------------------------------------------------------------
 
