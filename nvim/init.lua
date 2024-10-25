@@ -199,6 +199,10 @@ Plug("folke/trouble.nvim")
 Plug("nvim-telescope/telescope.nvim")
 Plug("jackMort/ChatGPT.nvim")
 
+-- markmap
+-- also do: yarn global add markmap-cli
+Plug('Zeioth/markmap.nvim', { ['do'] = 'yarn global add markmap-cli' })
+
 vim.call('plug#end')
 
 -- }}}
@@ -689,6 +693,22 @@ require("chatgpt").setup({
 
 --- }}}
 
+-- MarkMap ------------------------------ {{{
+
+require('markmap').setup({
+  cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop"},
+  opts = {
+    html_output = "/tmp/markmap.html",
+    hide_toolbar = false,
+    grace_period = 3600000
+  },
+  config = function(_, opts) require("markmap").setup(opts) end
+})
+
+vim.cmd('autocmd BufNewFile,BufRead *.mm set filetype=markdown')
+
+--- }}}
+
 -- WhichKey Menu ------------------------------ {{{
 
 -- Configuração do which-key
@@ -757,6 +777,12 @@ wk.add({
   { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
   { "<Space>cgP", "<cmd>ChatGPTRun translate to brazilian porgutuese<CR>", desc = "Translate en_pt", mode = { "n", "v" } },
   { "<Space>cgE", "<cmd>ChatGPTRun translate to american english<CR>", desc = "Translate pt_en", mode = { "n", "v" } },
+  -- MarkMap
+  { "<Space>m", group = "[m]arkmap" },
+  { "<Space>mo", "<cmd>MarkmapOpen<CR>", desc = "open" },
+  { "<Space>ms", "<cmd>MarkmapSave<CR>", desc = "save" },
+  { "<Space>mw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
+  { "<Space>mW", "<cmd>MarkmapWatchStop<CR>", desc = "stop watch" },
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
