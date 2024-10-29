@@ -731,7 +731,7 @@ wk.add({
   -- main group
   { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
-  { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
+  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
   { "<Space>w", "<cmd>w<CR>", desc = "write" },
   { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
@@ -750,7 +750,7 @@ wk.add({
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
   -- search content
   { "<Space>s", group = "[s]earch content" },
-  { "<Space>sa", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "all buffers" },
+  { "<Space>sb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
   { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
