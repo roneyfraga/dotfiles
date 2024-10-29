@@ -731,7 +731,7 @@ wk.add({
   -- main group
   { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
-  { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
+  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
   { "<Space>w", "<cmd>w<CR>", desc = "write" },
   { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
