@@ -189,6 +189,9 @@ Plug('junegunn/fzf')
 Plug('junegunn/fzf.vim')
 Plug('michal-h21/vim-zettel')
 
+-- markdown render 
+Plug('MeanderingProgrammer/render-markdown.nvim')
+
 -- nerd tree
 Plug('nvim-tree/nvim-tree.lua')
 
@@ -437,8 +440,7 @@ vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
 -- }}}
 
--- Markdown VimWiki --------------------------------------{{{
--- 
+-- Markdown VimWiki + render + preview --------------------------------------{{{
 
 vim.g.vimwiki_list = {
 	{
@@ -448,11 +450,52 @@ vim.g.vimwiki_list = {
 	}
 }
 
-vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
-vim.g.vimwiki_hl_headers = 1  -- use alternating colours for different heading levels
-vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
-vim.g.taskwiki_markdown_syntax = "markdown"
-vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
+-- vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
+-- vim.g.vimwiki_hl_headers = 1  -- use alternating colours for different heading levels
+-- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
+-- vim.g.taskwiki_markdown_syntax = "markdown"
+-- vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
+
+require('render-markdown').setup({
+  file_types = { 'markdown', 'vimwiki', 'quarto' },
+  render_modes = true, -- preview em todos os modos
+  anti_conceal = { enabled = true },
+  heading = {
+    enabled = true,
+    sign = true,
+    position = 'overlay',
+    icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+    signs = { '󰫎 ' },
+    width = 'full',
+    left_margin = 0,
+    left_pad = 0,
+    right_pad = 0,
+    min_width = 0,
+    border = false,
+    border_virtual = false,
+    border_prefix = false,
+    above = '▄',
+    below = '▀',
+    backgrounds = {
+      'RenderMarkdownH1Bg',
+      'RenderMarkdownH2Bg',
+      'RenderMarkdownH2Bg',
+      'RenderMarkdownH2Bg',
+      'RenderMarkdownH2Bg',
+      'RenderMarkdownH2Bg',
+    },
+    foregrounds = {
+      'RenderMarkdownH1',
+      'RenderMarkdownH2',
+      'RenderMarkdownH3',
+      'RenderMarkdownH4',
+      'RenderMarkdownH5',
+      'RenderMarkdownH6',
+    },
+  },
+})
+
+vim.treesitter.language.register('markdown', 'vimwiki', 'r')
 
 -- }}}
 
@@ -777,12 +820,17 @@ wk.add({
   { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
   { "<Space>cgP", "<cmd>ChatGPTRun translate to brazilian porgutuese<CR>", desc = "Translate en_pt", mode = { "n", "v" } },
   { "<Space>cgE", "<cmd>ChatGPTRun translate to american english<CR>", desc = "Translate pt_en", mode = { "n", "v" } },
-  -- MarkMap
-  { "<Space>m", group = "[m]arkmap" },
-  { "<Space>mo", "<cmd>MarkmapOpen<CR>", desc = "open" },
-  { "<Space>ms", "<cmd>MarkmapSave<CR>", desc = "save" },
-  { "<Space>mw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
-  { "<Space>mW", "<cmd>MarkmapWatchStop<CR>", desc = "stop watch" },
+  -- Markdown
+  { "<Space>m", group = "[m]arkdown" },
+  { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
+  { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
+  { "<Space>me", "<cmd>RenderMarkdown enable<CR>", desc = "enable render" },
+  { "<Space>mg", "<cmd>Goyo<CR>", desc = "goyo" },
+  { "<Space>mm", group = "[m]arkmap" }, -- subgroup
+  { "<Space>mmo", "<cmd>MarkmapOpen<CR>", desc = "open" },
+  { "<Space>mms", "<cmd>MarkmapSave<CR>", desc = "save" },
+  { "<Space>mmw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
+  { "<Space>mmW", "<cmd>MarkmapWatchStop<CR>", desc = "stop watch" },
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
@@ -807,6 +855,7 @@ wk.add({
   { "<Space>vle", LspEnable, desc = "lsp enable", mode = { "n", "v" } },
   { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
+  { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
   { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
