@@ -218,9 +218,11 @@ vim.cmd("colorscheme gruvbox")
 function getWords()
   local wc = vim.fn.wordcount()
   if wc["visual_words"] then 
-    return wc["visual_words"] .. " words | " .. wc['visual_chars'] .. " chars"
+    -- return wc["visual_words"] .. " words"
+    return wc["visual_words"] 
   else 
-    return wc["words"] .. " words"
+    -- return wc["words"] .. " words"
+    return wc["words"] 
   end
 end
 
