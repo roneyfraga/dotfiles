@@ -215,7 +215,36 @@ vim.call('plug#end')
 vim.cmd("set background=dark") -- or light if you want light mode
 vim.cmd("colorscheme gruvbox") 
 
-require'lualine'.setup { options = { theme = 'gruvbox' } }
+function getWords()
+  local wc = vim.fn.wordcount()
+  if wc["visual_words"] then 
+    return wc["visual_words"] .. " words | " .. wc['visual_chars'] .. " chars"
+  else 
+    return wc["words"] .. " words"
+  end
+end
+
+require'lualine'.setup { 
+  options = { theme = 'gruvbox' },
+  sections = {
+    lualine_z = {
+      "location",
+      { getWords },
+    },
+  },
+}
+
+
+-- require'lualine'.setup { 
+--   options = { theme = 'gruvbox' },
+--   sections = {
+--     lualine_z = {
+--       function()
+--         return vim.fn.wordcount().words
+--       end,
+--     },
+--   },
+-- }
 
 -- }}}
 
@@ -861,6 +890,7 @@ wk.add({
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vfn", "<cmd>Neoformat<CR>", desc = "neoformat" },
   })
 
 -- }}}
