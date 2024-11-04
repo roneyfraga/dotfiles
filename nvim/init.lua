@@ -813,7 +813,7 @@ wk.add({
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
-  { "<Space>fh", FilesHereOpen, desc = "here" },
+  { "<Space>f/", FilesHereOpen, desc = "/" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep only current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
   { "<Space>fr", RworkspaceOpen, desc = "/mnt/.../rworkspace" },
