@@ -903,7 +903,17 @@ wk.add({
   { "<Space>mmo", "<cmd>MarkmapOpen<CR>", desc = "open" },
   { "<Space>mms", "<cmd>MarkmapSave<CR>", desc = "save" },
   { "<Space>mmw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
-  { "<Space>mmW", "<cmd>MarkmapWatchStop<CR>", desc = "stop watch" },
+  -- Make 
+  { "<Space>M", group = "[M]ake" },
+  { "<Space>Ml", group = "[l]atex" }, -- subgroup
+  { "<Space>Mlp", "<cmd>!make pdf<CR>", desc = "make pdf" },
+  { "<Space>Mlo", "<cmd>!make pdfopen<CR>", desc = "make pdfopen" },
+  { "<Space>Mq", group = "[q]uarto" }, -- subgroup
+  { "<Space>Mqr", "<cmd>!make qr<CR>", desc = "quarto render" },
+  { "<Space>Mqc", "<cmd>!make qrc<CR>", desc = "quarto render --cache-refresh" },
+  { "<Space>Mqs", "<cmd>!make qs<CR>", desc = "quarto sync" },
+  { "<Space>Mqa", "<cmd>!make all<CR>", desc = "quarto render sync" },
+  { "<Space>MqA", "<cmd>!make qrcs<CR>", desc = "quarto render --cache-refresh sync" },
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
