@@ -18,12 +18,7 @@ message/rfc822=userapp-Thunderbird.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/x-bittorrent=deluge.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
-<<<<<<< HEAD
-x-scheme-handler/msteams=teams.desktop
-=======
 x-scheme-handler/msteams=teams-for-linux.desktop
->>>>>>> dev
-
 [Added Associations]
 x-scheme-handler/http=userapp-Pale Moon.desktop;firefox.desktop;
 x-scheme-handler/https=userapp-Pale Moon.desktop;firefox.desktop;
