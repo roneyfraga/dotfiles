@@ -511,6 +511,43 @@ require('render-markdown').setup({
 
 vim.treesitter.language.register('markdown', 'vimwiki', 'r', 'rmd', 'quarto')
 
+-- Função para copiar o texto selecionado e inseri-lo dentro de um chunk
+function CopyToChunk()
+    -- Obtém a seleção visual
+    local start_line = vim.fn.line("'<")
+    local end_line = vim.fn.line("'>")
+
+    -- Obtém as linhas selecionadas
+    local lines = vim.fn.getline(start_line, end_line)
+
+    -- Define o texto do chunk
+    local chunk_start = "```chunk"
+    local chunk_end = "```"
+
+    -- Cria uma tabela para armazenar as linhas formatadas
+    local formatted_lines = {}
+
+    -- Adiciona o início do chunk
+    table.insert(formatted_lines, chunk_start)
+
+    -- Adiciona as linhas selecionadas
+    for _, line in ipairs(lines) do
+        table.insert(formatted_lines, line)
+    end
+
+    -- Adiciona o final do chunk
+    table.insert(formatted_lines, chunk_end)
+
+    -- Insere o novo conteúdo abaixo da seleção
+    vim.fn.append(end_line, formatted_lines)
+
+    -- Opcional: Remove a seleção original (se desejado)
+    -- vim.fn.deletebufline('%', start_line, end_line)
+end
+
+-- Mapeia a função a um atalho (exemplo: <leader>cck)
+-- vim.api.nvim_set_keymap('v', '<leader>cck', ':lua CopyToChunk()<CR>', { noremap = true, silent = true })
+
 -- }}}
 
 -- Fuzzy Finder - fzf-lua --------------------------------------{{{
@@ -892,6 +929,7 @@ wk.add({
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
   { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
+  { "<Space>vfc", "<cmd>lua CopyToChunk()<CR>", desc = "copy to chunk", mode = { "v" } },
   { "<Space>vfw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
