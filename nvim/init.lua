@@ -236,18 +236,6 @@ require'lualine'.setup {
   },
 }
 
-
--- require'lualine'.setup { 
---   options = { theme = 'gruvbox' },
---   sections = {
---     lualine_z = {
---       function()
---         return vim.fn.wordcount().words
---       end,
---     },
---   },
--- }
-
 -- }}}
 
 -- Auto complete and Beauty ------------------------------------{{{
@@ -408,13 +396,6 @@ require("noice").setup({
 -- :RConfigShow       -- list configurations 
 --
 
-require("cmp_r").setup({
-  filetypes = {"r", "rmd", "quarto"},
-  sources = {
-    { name = 'cmp_r' },
-  }
-})
-
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.r_language_server.setup {
@@ -440,6 +421,10 @@ end
 
 -- R.nvim: configurações gerais
 require("r").setup({
+  -- filetypes = {"r", "rmd", 'rnoweb', 'rhelp', 'quarto'},
+  -- sources = {
+    -- { name = 'cmp_r' },
+  -- },
   -- R_args = {"--quiet", "--no-save"}, 
   min_editor_width = 72, 
   rconsole_width = 78, 
@@ -452,8 +437,6 @@ require("r").setup({
       -- Mapeamentos de teclas específicos para arquivos R
       vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
       vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
-      -- vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
-      -- vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
     end,
   },
 })
@@ -461,7 +444,7 @@ require("r").setup({
 -- qmd as rmd
 -- to allow snippets in quarto document
 -- but disable quarto chunks tags autocompletion
-vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
 -- see which-key
 -- :Neoformat
@@ -481,7 +464,7 @@ vim.g.vimwiki_list = {
 	}
 }
 
--- vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
+vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
 -- vim.g.vimwiki_hl_headers = 1  -- use alternating colours for different heading levels
 -- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
 -- vim.g.taskwiki_markdown_syntax = "markdown"
@@ -526,7 +509,7 @@ require('render-markdown').setup({
   },
 })
 
-vim.treesitter.language.register('markdown', 'vimwiki', 'r')
+vim.treesitter.language.register('markdown', 'vimwiki', 'r', 'rmd', 'quarto')
 
 -- }}}
 
@@ -536,6 +519,10 @@ vim.treesitter.language.register('markdown', 'vimwiki', 'r')
 
 function FilesHereOpen()
   require('fzf-lua').files({ file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
+function FilesHomeOpen()
+  require('fzf-lua').files({ cwd = "~/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
 end
 
 function WikiOpen()
@@ -560,6 +547,10 @@ end
 
 function DownloadsOpen()
   require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+end
+
+function HomeGrep()
+  require('fzf-lua').live_grep({ cwd = "~/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
 end
 
 function WikiGrep()
@@ -634,9 +625,21 @@ vim.cmd[[nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>']]
 vim.cmd[[let cmdline_app = {}]]
 vim.cmd[[let cmdline_app['python'] = 'ipython']]
 
+vim.cmd([[
+ " vimcmdline mappings
+let cmdline_map_start          = '<LocalLeader>s'
+let cmdline_map_send           = '<Enter>'
+let cmdline_map_send_and_stay  = '<LocalLeader><Enter>'
+let cmdline_map_source_fun     = '<LocalLeader>f'
+let cmdline_map_send_paragraph = '<LocalLeader>p'
+let cmdline_map_send_block     = '<LocalLeader>b'
+let cmdline_map_send_motion    = '<LocalLeader>m'
+let cmdline_map_quit           = '<LocalLeader>q'
+]])
+
 -- <LocalLeader>s to start the interpreter.
--- <Space> to send the current line to the interpreter.
--- <LocalLeader><Space> to send the current line to the interpreter and keep the cursor on the current line.
+-- <Enter> to send the current line to the interpreter.
+-- <LocalLeader><Enter> to send the current line to the interpreter and keep the cursor on the current line.
 -- <LocalLeader>q to send the quit command to the interpreter.
 -- <Space> to send a selection of text to the interpreter.
 -- <LocalLeader>p to send from the line to the end of paragraph.
@@ -814,6 +817,7 @@ wk.add({
   { "<Space>f", group = "[f]ile peak" },
   { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>f/", FilesHereOpen, desc = "/" },
+  { "<Space>fh", FilesHomeOpen, desc = "~/" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep only current buffer" },
   { "<Space>fo", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "old files" },
   { "<Space>fr", RworkspaceOpen, desc = "/mnt/.../rworkspace" },
@@ -827,6 +831,7 @@ wk.add({
   { "<Space>sb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
   { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
   { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>sh", HomeGrep, desc = "~/" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
   { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
   { "<Space>sd", DownloadsGre, desc = "~/downloads" },
@@ -865,10 +870,8 @@ wk.add({
   -- vim
   { "<Space>v", group = "[v]im" },
   { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
-  { "<Space>vf", "<cmd>Neoformat<CR>", desc = "neoformat" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
-  { "<Space>vw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
   { "<Space>vc", group = "[c]olor" }, -- subgroup
   { "<Space>vcl", "<cmd>set background=light<CR>", desc = "ligth background" },
   { "<Space>vcd", "<cmd>set background=dark<CR>", desc = "dark background" },
@@ -889,10 +892,12 @@ wk.add({
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
   { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
+  { "<Space>vfw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
   { "<Space>vfn", "<cmd>Neoformat<CR>", desc = "neoformat" },
+  { "<Space>vfN", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent" },
   })
 
 -- }}}
