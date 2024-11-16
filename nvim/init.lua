@@ -521,7 +521,7 @@ function CopyToChunk()
     local lines = vim.fn.getline(start_line, end_line)
 
     -- Define o texto do chunk
-    local chunk_start = "```chunk"
+    local chunk_start = "```text"
     local chunk_end = "```"
 
     -- Cria uma tabela para armazenar as linhas formatadas
@@ -905,11 +905,18 @@ wk.add({
   { "<Space>mmw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
   -- Make 
   { "<Space>M", group = "[M]ake" },
+  { "<Space>Mm", "<cmd>!make<CR>", desc = "make" },
+  { "<Space>Md", "<cmd>!make docx<CR>", desc = "make docx" },
+  { "<Space>Mp", "<cmd>!make pdf<CR>", desc = "make pdf" },
+  { "<Space>MP", "<cmd>!make qppdf<CR>", desc = "make pdf preview" },
+  { "<Space>Mh", "<cmd>!make html<CR>", desc = "make html" },
+  { "<Space>MH", "<cmd>!make qphtml<CR>", desc = "make html preview" },
   { "<Space>Ml", group = "[l]atex" }, -- subgroup
   { "<Space>Mlp", "<cmd>!make pdf<CR>", desc = "make pdf" },
   { "<Space>Mlo", "<cmd>!make pdfopen<CR>", desc = "make pdfopen" },
-  { "<Space>Mq", group = "[q]uarto" }, -- subgroup
+  { "<Space>Mq", group = "[q]uarto _yml" }, -- subgroup
   { "<Space>Mqr", "<cmd>!make qr<CR>", desc = "quarto render" },
+  { "<Space>Mqp", "<cmd>!make qp<CR>", desc = "quarto preview" },
   { "<Space>Mqc", "<cmd>!make qrc<CR>", desc = "quarto render --cache-refresh" },
   { "<Space>Mqs", "<cmd>!make qs<CR>", desc = "quarto sync" },
   { "<Space>Mqa", "<cmd>!make all<CR>", desc = "quarto render sync" },
