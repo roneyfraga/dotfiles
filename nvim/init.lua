@@ -951,8 +951,8 @@ wk.add({
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
-  { "<Space>vfn", "<cmd>Neoformat<CR>", desc = "neoformat" },
-  { "<Space>vfN", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent" },
+  { "<Space>vfn", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
+  { "<Space>vfN", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent", mode = { "n", "v" } },
   })
 
 -- }}}

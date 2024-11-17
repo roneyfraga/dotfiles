@@ -121,7 +121,7 @@ mark s ~/Sync/
 mark a ~/AndroidShared/
 mark d ~/Pessoal/Documents/
 mark i ~/Pessoal/Documents/CLI/
-mark b ~/Pessoal/Documents/Biblioteca/
+mark b ~/Biblioteca/
 mark r ~/Pessoal/Documents/Rworkspace/
 mark p ~/Pessoal/Documents/Profissional/
 mark c ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao/
@@ -533,4 +533,15 @@ nmap ;h :FZFlocate<cr>
 "     vifm --server-name "$VIFM_SERVER_NAME" --remote +"cd '$PWD'"
 "
 " let $VIFM_SERVER_NAME = v:servername
-"
+
+" yank current directory path into the clipboard
+nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+
+" yank current file path into the clipboard
+nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
+
+" yank current filename without path into the clipboard
+nnoremap yn :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
+
+" yank root of current file's name into the clipboard
+nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
