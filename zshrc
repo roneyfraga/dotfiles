@@ -210,6 +210,7 @@ alias r0='cd /mnt/raid0'
 alias pes='cd /mnt/raid0/Pessoal'
 alias doc='cd /mnt/raid0/Pessoal/Documents/'
 alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
+alias rwd='cd /mnt/raid0/Pessoal/Documents/RworkspaceData'
 alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
 alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
 alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
@@ -222,6 +223,20 @@ then
   alias pes='cd ~/Pessoal'
   alias doc='cd ~/Pessoal/Documents/'
   # alias rw='cd ~/Pessoal/Documents/Rworkspace'
+  alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd ~/Pessoal/Documents/Profissional'
+  alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+  alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+  alias cli='cd ~/Pessoal/Documents/CLI'
+  alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
+fi
+
+if [ $nome_do_computador = 'x390' ]; 
+then
+  alias pes='cd ~/Pessoal'
+  alias doc='cd ~/Pessoal/Documents/'
+  alias rw='cd ~/Pessoal/Documents/Rworkspace'
+  alias rwd='cd ~/Pessoal/Documents/RworkspaceData'
   alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
   alias prof='cd ~/Pessoal/Documents/Profissional'
   alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'

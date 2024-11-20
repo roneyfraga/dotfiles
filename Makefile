@@ -11,7 +11,7 @@ configfolder=~/.config
 
 ln:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
-	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
+	ln -s $(dotfolder)/tmux/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/tmux/config.yaml ~/.tmux/config.yaml
 	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
 	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
@@ -47,6 +47,11 @@ ln_fusca:
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
+ln_x390:
+	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3status/config_x390 $(configfolder)/i3status/config
+
+
 ln_frank:
 	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
@@ -70,6 +75,7 @@ rm:
 	rm -f ~/.tmux.conf
 	rm -f ~/.tmux/config.yaml
 	rm -f ~/.config/nvim/init.vim
+	rm -f ~/.config/nvim/init.lua
 	rm -rf ~/.config/nvim/spell
 	rm -f ~/.vim/spell
 	rm -f ~/.Rprofile
@@ -78,7 +84,7 @@ rm:
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
 	rm -f $(configfolder)/nvim/coc-settins.json
-	rm -f $(configfolder)/vifm/colors
+	rm -rf $(configfolder)/vifm/colors
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f ~/.lintr
 	rm -f ~/.pydoro.ini
@@ -87,6 +93,7 @@ rm:
 	rm -f $(configfolder)/vifm/vifmrc
 	rm -f $(configfolder)/.Xresources
 	rm -f $(configfolder)/terminator/config
+	rm -f $(configfolder)/fzf-open/lopen.sh
 	# rm -f ~/.newsboat/config
 	# rm -f ~/.newsboat/urls
 
@@ -104,6 +111,10 @@ rm_fusca:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
+
+rm_x390:
+	rm -f $(configfolder)/i3/config
+	rm -f $(configfolder)/i3status/config
 
 rm_frank:
 	rm -f $(configfolder)/i3/config

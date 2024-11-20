@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
-suppressMessages(library(bibr))
+suppressMessages(library(pdftools)) # dependencia para bibr
+suppressMessages(library(bibr))     # https://github.com/edonnachie/bibr
 suppressMessages(library(bibtex))
 suppressMessages(library(rcrossref))
 suppressMessages(library(optparse))
@@ -15,7 +16,8 @@ option_list <- list(
   optparse::make_option(c("-d", "--doi"), type = "character", help = "search inserted doi code"),
   optparse::make_option(c("-k", "--key"), type = "character", help = "key, example [Bueno2021]"),
   optparse::make_option(c("-w", "--write"), action = "store_false", help = "write the bibtex code in the bib file"),
-  optparse::make_option(c("-r", "--rename"), action = "store_false", , help = "rename the pdf file")
+  optparse::make_option(c("-r", "--rename"), action = "store_false", help = "rename the pdf file"),
+  optparse::make_option(c("-l", "--length_title"), type = "integer", default = 90, help = "title length")
 )
 
 parser <- optparse::OptionParser(option_list = option_list)
@@ -114,7 +116,8 @@ bib_ris |>
   stringr::str_to_sentence() ->
   title
 
-title_lenght <- 90
+title_lenght <- as.numeric(args$length_title)
+# title_lenght <- 90
 
 if (nchar(title) > title_lenght) {
   words_to_keep <- cumsum(nchar(stringr::str_split(title, ' ')[[1]])) <= title_lenght
