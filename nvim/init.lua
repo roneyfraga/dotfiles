@@ -911,6 +911,8 @@ wk.add({
   { "<Space>MP", "<cmd>!make qppdf<CR>", desc = "make pdf preview" },
   { "<Space>Mh", "<cmd>!make html<CR>", desc = "make html" },
   { "<Space>MH", "<cmd>!make qphtml<CR>", desc = "make html preview" },
+  { "<Space>Ms", "<cmd>!make qs<CR>", desc = "make qs" },
+  { "<Space>Ma", "<cmd>!make all<CR>", desc = "make all" },
   { "<Space>Ml", group = "[l]atex" }, -- subgroup
   { "<Space>Mlp", "<cmd>!make pdf<CR>", desc = "make pdf" },
   { "<Space>Mlo", "<cmd>!make pdfopen<CR>", desc = "make pdfopen" },
