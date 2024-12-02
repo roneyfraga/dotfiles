@@ -201,6 +201,7 @@ alias i3c='nvim ~/.config/i3/config'
 # lisa and rambo use the same paths
 alias dk='cd ~/Desktop'
 alias dw='cd ~/Downloads'
+alias B='cd ~/Biblioteca'
 alias cfg='cd ~/.config'
 alias dot='cd ~/dotfiles'
 alias sy='cd ~/Sync'
