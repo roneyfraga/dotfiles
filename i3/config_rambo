@@ -341,7 +341,7 @@
     # exec --no-startup-id telegram-desktop
     exec_always unclutter
     exec --no-startup-id keynav
-    # exec --no-startup-id barrier
+    exec --no-startup-id synergy
     exec --no-startup-id insync start
 
 # }}}
