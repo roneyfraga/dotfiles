@@ -444,7 +444,7 @@ require("r").setup({
 -- qmd as rmd
 -- to allow snippets in quarto document
 -- but disable quarto chunks tags autocompletion
--- vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
 -- see which-key
 -- :Neoformat
@@ -877,7 +877,7 @@ wk.add({
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
   -- ChatGPT
   { "<Space>c", group = "[c]hat gpt" },
-  { "<Space>cc", "<cmd>ChatGPT<CR>", desc = "ChatGPT" },
+  { "<Space>cc", "<cmd>ChatGPT<CR>", desc = "ChatGPT", mode = { "n", "v" } },
   { "<Space>ce", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instruction", mode = { "n", "v" } },
   { "<Space>ck",  "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "n", "v" } },
   { "<Space>cd", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "n", "v" } },
