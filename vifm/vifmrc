@@ -546,3 +546,6 @@ nnoremap yr :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:
 
 " rename with [E]dit name
 nmap E :rename<cr>
+
+" show file attribures
+command! XAttr execute !getfattr -d %f
