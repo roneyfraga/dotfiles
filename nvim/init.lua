@@ -118,8 +118,8 @@ Plug('tpope/vim-commentary')
 Plug('tpope/vim-repeat')
 
 -- R  
+-- Plug('jalvesaq/Nvim-R')
 Plug('R-nvim/R.nvim')
--- Plug('quarto-dev/quarto-nvim')
 
 -- Auto complete
 Plug('neovim/nvim-lspconfig')
@@ -128,7 +128,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-cmdline')
-Plug('R-nvim/cmp-r')
+Plug('R-nvim/cmp-r')  -- autocompletion with 'R-nvim/R.nvim'
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
@@ -240,6 +240,9 @@ require'lualine'.setup {
 
 -- Auto complete and Beauty ------------------------------------{{{
 
+-- linux: pacman -S pyright
+-- R: install.packages("languageserver")
+
 -- TreeSitter 
 -- :TSInstall r
 -- :TSInstall python
@@ -254,6 +257,10 @@ require'lualine'.setup {
 -- :TSInstall latex
 -- :TSInstall make
 
+-- check installation
+-- :checkhealth nvim-treesitter
+-- :InspectTree
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
   sync_install = false,
@@ -262,24 +269,12 @@ require'nvim-treesitter.configs'.setup {
   indent = {enable = true}, 
 }
 
--- snippy
-require('snippy').setup({
-  mappings = {
-    is = {
-      ['<Tab>'] = 'expand_or_advance',
-      ['<S-Tab>'] = 'previous',
-    },
-    nx = {
-      ['<leader>x'] = 'cut_text',
-    },
-  },
-})
-
 -- Set up nvim-cmp.
+-- see: https://github.com/hrsh7th/nvim-cmp
 local cmp = require'cmp'
 
 cmp.setup({
-  snippet = {
+    snippet = {
     expand = function(args)
       require('snippy').expand_snippet(args.body) 
     end,
@@ -299,8 +294,8 @@ cmp.setup({
     ['<C-c>'] = cmp.mapping.abort(),
   }),
   sources = cmp.config.sources({
-    { name = 'snippy' }, 
-    { name = 'cmp_r' },
+    { name = 'snippy' }, -- R snippets
+    { name = 'cmp_r' }, -- R autocompletion
     { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
@@ -313,6 +308,21 @@ cmp.setup({
   }, {
       { name = 'buffer', keyword_lengh = 5 },
     })
+})
+
+-- snippy
+-- snippets configs
+-- see: https://github.com/dcampos/nvim-snippy
+require('snippy').setup({
+  mappings = {
+    is = {
+      ['<Tab>'] = 'expand_or_advance',
+      ['<S-Tab>'] = 'previous',
+    },
+    nx = {
+      ['<leader>x'] = 'cut_text',
+    },
+  },
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -396,6 +406,8 @@ require("noice").setup({
 -- :RConfigShow       -- list configurations 
 --
 
+-- require'lspconfig'.pyright.setup{}
+
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.r_language_server.setup {
@@ -425,18 +437,18 @@ require("r").setup({
   -- sources = {
     -- { name = 'cmp_r' },
   -- },
-  -- R_args = {"--quiet", "--no-save"}, 
+  -- R_args = {"--no-save"}, 
   min_editor_width = 72, 
   rconsole_width = 78, 
   disable_cmds = { 
     -- "RSPlot",
-    "RSaveClose",
+    -- "RSaveClose",
   },
   hook = {
     on_filetype = function()
       -- Mapeamentos de teclas específicos para arquivos R
       vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {}) 
     end,
   },
 })
@@ -446,12 +458,33 @@ require("r").setup({
 -- but disable quarto chunks tags autocompletion
 vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
--- see which-key
--- :Neoformat
--- formatar o código de R
--- seguido de
--- gg=G
+-- keybindings only inside R, Rmd, and Quarto filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "r", "rmd", "quarto" },  
+  callback = function()
+    local opts = { noremap = true, silent = true }
+    -- Define keybindings for the current buffer
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>t', "<cmd>lua require('r.run').action('tail')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>h', "<cmd>lua require('r.run').action('head')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>n', "<cmd>lua require('r.run').action('names')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.run').action('length')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>d', "<cmd>lua require('r.run').action('dim')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
+    -- function loaded from ~/.Rprofile 
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>L', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
+  end
+})
+
+-- :Neoformat + styler for R and Rmd
+vim.g.neoformat_enabled_r = { "styler" }
+
+vim.g.neoformat_r_styler = {
+  exe = "~/.styler.R",  -- allow first line empty
+  args = {},  -- No additional arguments needed
+  stdin = 1,  -- Read from stdin
+}
 -- }}}
 
 -- Markdown VimWiki + render + preview --------------------------------------{{{

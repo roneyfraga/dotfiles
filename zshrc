@@ -197,6 +197,7 @@ alias init.lua="nvim ~/.config/nvim/init.lua"
 alias zshrc="nvim ~/.zshrc"
 alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
+alias vifmrc='nvim ~/.config/vifm/vifmrc'
 
 # lisa and rambo use the same paths
 alias dk='cd ~/Desktop'
