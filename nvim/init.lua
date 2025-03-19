@@ -487,14 +487,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
--- :Neoformat + styler for R and Rmd
-vim.g.neoformat_enabled_r = { "styler" }
-
-vim.g.neoformat_r_styler = {
-  exe = "~/.styler.R",  -- allow first line empty
-  args = {},  -- No additional arguments needed
-  stdin = 1,  -- Read from stdin
-}
 -- }}}
 
 -- Markdown VimWiki + render + preview --------------------------------------{{{
@@ -996,8 +988,9 @@ wk.add({
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
-  { "<Space>vfn", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
-  { "<Space>vfN", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent", mode = { "n", "v" } },
+  { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
+  { "<Space>vfn", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent", mode = { "n", "v" } },
+  { "<Space>vfi", "gg=G", desc = "indent", mode = { "n", "v" } },
   })
 
 -- }}}
