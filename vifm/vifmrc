@@ -122,6 +122,7 @@ mark a ~/AndroidShared/
 mark d /mnt/raid0/Pessoal/Documents/
 mark i /mnt/raid0/Pessoal/Documents/CLI/
 mark b ~/Biblioteca/
+mark B ~/Biblioteca/
 mark r /mnt/raid0/Pessoal/Documents/Rworkspace/
 mark p /mnt/raid0/Pessoal/Documents/Profissional/
 mark c /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao/
@@ -494,12 +495,12 @@ nnoremap <c-u> <c-w>x
 
 " fzf fuzzy finder integration
 command! FZFlocate : set noquickview
-                  \| let $FZF_PICK = term('locate $HOME | fzf --height 10 2>/dev/tty')
+                  \| let $FZF_PICK = term('locate $HOME | fzf --height 30 2>/dev/tty')
                   \| if $FZF_PICK != ''
                   \|     execute 'goto' fnameescape($FZF_PICK)
                   \| endif
 command! FZFfind : set noquickview
-                \| let $FZF_PICK = term('find | fzf --height 10 2>/dev/tty')
+                \| let $FZF_PICK = term('find | fzf --height 30 2>/dev/tty')
                 \| if $FZF_PICK != ''
                 \|     execute 'goto' fnameescape($FZF_PICK)
                 \| endif
