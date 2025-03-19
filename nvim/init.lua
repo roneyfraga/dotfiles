@@ -989,8 +989,8 @@ wk.add({
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
-  { "<Space>vfn", "<cmd>Neoformat<CR>gg=G", desc = "neoformat + indent", mode = { "n", "v" } },
-  { "<Space>vfi", "gg=G", desc = "indent", mode = { "n", "v" } },
+  { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
+  { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
   })
 
 -- }}}
