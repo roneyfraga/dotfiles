@@ -22,6 +22,7 @@ ln:
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
 	ln -s $(dotfolder)/pydoro.ini ~/.pydoro.ini
 	ln -s $(dotfolder)/lintr ~/.lintr
+	ln -s $(dotfolder)/styler ~/.styler.R
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc

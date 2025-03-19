@@ -468,12 +468,33 @@ vim.api.nvim_set_keymap('n', '<LocalLeader>T', '<cmd>lua vim.fn.RAction("tail")<
 -- but disable quarto chunks tags autocompletion
 vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
 
--- see which-key
--- :Neoformat
--- formatar o código de R
--- seguido de
--- gg=G
+-- keybindings only inside R, Rmd, and Quarto filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "r", "rmd", "quarto" },  
+  callback = function()
+    local opts = { noremap = true, silent = true }
+    -- Define keybindings for the current buffer
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>t', "<cmd>lua require('r.run').action('tail')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>h', "<cmd>lua require('r.run').action('head')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>n', "<cmd>lua require('r.run').action('names')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.run').action('length')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>d', "<cmd>lua require('r.run').action('dim')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
+    -- function loaded from ~/.Rprofile 
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>L', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
+  end
+})
+
+-- :Neoformat + styler for R and Rmd
+vim.g.neoformat_enabled_r = { "styler" }
+
+vim.g.neoformat_r_styler = {
+  exe = "~/.styler.R",  -- allow first line empty
+  args = {},  -- No additional arguments needed
+  stdin = 1,  -- Read from stdin
+}
 -- }}}
 
 -- Markdown VimWiki + render + preview --------------------------------------{{{
