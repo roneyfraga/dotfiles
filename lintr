@@ -9,8 +9,7 @@ linters: linters_with_defaults(
     T_and_F_symbol_linter = NULL,
     object_name_linter = NULL,
     trailing_blank_lines_linter = NULL,
-    brace_linter(
-      allow_single_line = TRUE),
+    brace_linter = NULL,
     indentation_linter(
       indent = 2L,
       hanging_indent_style = "tidy",
