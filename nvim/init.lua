@@ -469,6 +469,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>n', "<cmd>lua require('r.run').action('names')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.run').action('length')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>d', "<cmd>lua require('r.run').action('dim')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>p', "<cmd>lua require('r.run').action('print')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
