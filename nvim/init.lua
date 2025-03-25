@@ -480,6 +480,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.run').action('length')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>d', "<cmd>lua require('r.run').action('dim')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>p', "<cmd>lua require('r.run').action('print')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>c', "<cmd>lua require('r.run').action('class')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
@@ -774,6 +775,19 @@ date_time_inserter.setup {
 
 -- }}}
 
+-- White Space  ------------------------------ {{{
+--
+
+function TrimTrailingWhitespace()
+  -- Save cursor position
+  local save = vim.fn.winsaveview()
+  -- Substitute trailing whitespace
+  vim.api.nvim_command([[%s/\s\+$//e]])
+  -- Restore cursor position
+  vim.fn.winrestview(save)
+end
+---
+
 -- Nerd Tree ------------------------------ {{{
 
 -- disable netrw at the very start of your init.lua
@@ -989,6 +1003,7 @@ wk.add({
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
   { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vfd", "<cmd>lua TrimTrailingWhitespace()<CR>", desc = 'delete space end of line' },
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
   { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
