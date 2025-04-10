@@ -19,8 +19,16 @@ if (as.character(Sys.info()["sysname"]) == "Linux") {
   options(browser = "/applications/firefox.app/contents/macos/firefox-bin")
 }
 
-options(usethis.full_name = "Roney Fraga Souza", usethis.description = list(`Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'), usethis.protocol = "ssh")
+# cran
+options(
+  usethis.full_name = "Roney Fraga Souza",
+  usethis.description = list(
+    `Authors@R` = 'person("Roney", "Souza", email = "roneyfraga@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "orcid.org/0000-0001-5750-489X"))'),
+  usethis.protocol = "ssh"
+)
 
 # Disable autocompletion from the language server, needed by Nvim-R
 options(languageserver.server_capabilities = list(completionProvider = FALSE, completionItemResolve = FALSE))
 
+# openalexR
+options(openalexR.mailto = "roneyfraga@gmail.com")
