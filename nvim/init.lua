@@ -477,7 +477,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>t', "<cmd>lua require('r.run').action('tail')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>h', "<cmd>lua require('r.run').action('head')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>n', "<cmd>lua require('r.run').action('names')<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.run').action('length')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>L', "<cmd>lua require('r.run').action('length')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>d', "<cmd>lua require('r.run').action('dim')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>p', "<cmd>lua require('r.run').action('print')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>c', "<cmd>lua require('r.run').action('class')<CR>", opts)
@@ -485,7 +485,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
     -- function loaded from ~/.Rprofile 
-    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>L', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
   end
 })
 
@@ -775,7 +775,7 @@ date_time_inserter.setup {
 
 -- }}}
 
--- White Space  ------------------------------ {{{
+-- White Space + Equations with $$ and $ ------------------------------ {{{
 --
 
 function TrimTrailingWhitespace()
@@ -786,7 +786,28 @@ function TrimTrailingWhitespace()
   -- Restore cursor position
   vim.fn.winrestview(save)
 end
----
+
+function replace_math_delimiters()
+  -- Get the current buffer
+  local buf = vim.api.nvim_get_current_buf()
+  -- Get all lines in the buffer
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  -- Apply replacements line by line
+  for i, line in ipairs(lines) do
+    -- Replace \[ and \] with $$
+    line = line:gsub("\\[%[%]]", "$$")
+    -- Replace \( and \) with $
+    line = line:gsub("\\[%(%)]", "$")
+    lines[i] = line
+  end
+
+  -- Apply changes back to the buffer
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+end
+
+
+--- }}}
 
 -- Nerd Tree ------------------------------ {{{
 
@@ -1007,6 +1028,8 @@ wk.add({
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
   { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
+  { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
+  { "<Space>vfe", "<cmd>lua replace_math_delimiters()<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
   })
 
 -- }}}
