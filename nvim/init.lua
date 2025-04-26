@@ -1,5 +1,5 @@
 
--- General ------------------------------{{{
+-- General {{{
 
 -- vim.opt options
 -- vim.g   geral
@@ -35,7 +35,7 @@ vim.cmd[[set nohlsearch]]
 
 -- }}}
 
--- Highlight Color  ------------------------------{{{
+-- Highlight Color {{{
 -- SideBar,StatusBar and Menus
 -- Cor da barra lateral quando marcas sao feitas
 vim.cmd("highlight SignColumn guibg=none")
@@ -52,7 +52,7 @@ vim.cmd("highlight PmenuSel ctermfg=0 ctermbg=7")
 
 -- }}}
 
--- Spell check ------------------------------{{{
+-- Spell check {{{
 --
 -- dicionario em dois idiomas
 vim.cmd("setlocal nospell spelllang=pt,en")
@@ -84,7 +84,7 @@ vim.cmd("set complete+=kspell")
 
 -- }}}
 
--- Plugins ------------------------------{{{
+-- Plugins {{{
 
 local vim = vim
 local Plug = vim.fn['plug#']
@@ -210,7 +210,7 @@ vim.call('plug#end')
 
 -- }}}
 
--- Colorschemes and Status Line --------------------------------------{{{
+-- Colorschemes and Status Line {{{
 
 vim.cmd("set background=dark") -- or light if you want light mode
 vim.cmd("colorscheme gruvbox") 
@@ -238,7 +238,7 @@ require'lualine'.setup {
 
 -- }}}
 
--- Auto complete and Beauty ------------------------------------{{{
+-- Auto complete and Beauty {{{
 
 -- linux: pacman -S pyright
 -- R: install.packages("languageserver")
@@ -398,9 +398,18 @@ require("noice").setup({
 -- \ca close all buffers except the current one
 -- vim.cmd[[nnoremap ;ca :w <bar> %bd <bar> e# <bar> bd# <CR>]]
 
+-- treesitter fold
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevelstart = 99
+vim.opt.foldlevel = 99
+vim.opt.foldcolumn = "0"
+vim.opt.foldtext = ""
+vim.opt.foldenable = true -- disable folding on startup
+
 -- }}}
 
--- R-nvim ------------------------------------{{{
+-- R-nvim {{{
  
 -- :RMapsDesc         -- list all commands
 -- :RConfigShow       -- list configurations 
@@ -491,7 +500,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- }}}
 
--- Markdown VimWiki + render + preview --------------------------------------{{{
+-- Markdown VimWiki + render + preview {{{
 
 vim.g.vimwiki_list = {
 	{
@@ -544,6 +553,25 @@ require('render-markdown').setup({
       'RenderMarkdownH6',
     },
   },
+  html = {
+    -- Turn on / off all HTML rendering.
+    enabled = true,
+    -- Additional modes to render HTML.
+    render_modes = false,
+    comment = {
+      -- Turn on / off HTML comment concealing.
+      conceal = false,
+      -- Optional text to inline before the concealed comment.
+      text = nil,
+      -- Highlight for the inlined text.
+      highlight = 'RenderMarkdownHtmlComment',
+    },
+    -- HTML tags whose start and end will be hidden and icon shown.
+    -- The key is matched against the tag name, value type below.
+    -- | icon      | gets inlined at the start |
+    -- | highlight | highlight for the icon    |
+    tag = {},
+  },
 })
 
 vim.treesitter.language.register('markdown', 'vimwiki', 'r', 'rmd', 'quarto')
@@ -587,7 +615,7 @@ end
 
 -- }}}
 
--- Fuzzy Finder - fzf-lua --------------------------------------{{{
+-- Fuzzy Finder - fzf-lua {{{
 
 -- all shortcuts in which-key
 
@@ -653,7 +681,7 @@ end
 
 -- }}}
 
--- fzf-bibtex ------------------------------{{{
+-- fzf-bibtex {{{
 -- inset mode
 
 vim.cmd([[
@@ -685,14 +713,14 @@ vim.cmd("call Bibtex_ls()")
 
 -- }}}
 
--- Maps to resizing a window split ------------------------------{{{
+-- Maps to resizing a window split {{{
 vim.cmd[[nnoremap <expr> <C-w>+ v:count1 * 10 . '<C-w>+']]
 vim.cmd[[nnoremap <expr> <C-w>- v:count1 * 10 . '<C-w>-']]
 vim.cmd[[nnoremap <expr> <C-w>< v:count1 * 10 . '<C-w><']]
 vim.cmd[[nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>']]
 -- }}}
 
--- Python, Julia and vimcmdline------------------------------ {{{
+-- Python, Julia and vimcmdline {{{
 --
 -- vimcmdline mappings
 
@@ -724,7 +752,7 @@ let cmdline_map_quit           = '<LocalLeader>q'
 
 -- }}}
 
--- HTML, XML, PHP ------------------------------{{{
+-- HTML, XML, PHP {{{
 
 -- vim.cmd[[autocmd FileType html set omnifunc=htmlcomplete#CompleteTags]]
 -- fold and syntax
@@ -735,7 +763,7 @@ let cmdline_map_quit           = '<LocalLeader>q'
 
 -- }}}
 
--- Zoom in buffer ------------------------------{{{
+-- Zoom in buffer {{{
 vim.cmd([[
 fu s:window_zoom_toggle() abort
     if winnr('$') == 1 | return | endif
@@ -756,7 +784,7 @@ endfu
 
 -- }}}
 
--- Date and Time  ------------------------------ {{{
+-- Date and Time {{{
 --
 local date_time_inserter_status_ok, date_time_inserter = pcall(require, "date-time-inserter")
 if not date_time_inserter_status_ok then
@@ -775,7 +803,7 @@ date_time_inserter.setup {
 
 -- }}}
 
--- White Space + Equations with $$ and $ ------------------------------ {{{
+-- White Space + Equations with $$ and $ {{{
 --
 
 function TrimTrailingWhitespace()
@@ -809,7 +837,7 @@ end
 
 --- }}}
 
--- Nerd Tree ------------------------------ {{{
+-- Nerd Tree {{{
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -839,7 +867,7 @@ require("nvim-tree").setup({
 
 --- }}}
 
--- ChatGPT ------------------------------ {{{
+-- ChatGPT {{{
 
 -- "gpt-3.5-turbo"
 -- "gpt-4"
@@ -878,7 +906,7 @@ require("chatgpt").setup({
 
 --- }}}
 
--- MarkMap ------------------------------ {{{
+-- MarkMap {{{
 
 require('markmap').setup({
   cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop"},
@@ -894,7 +922,7 @@ vim.cmd('autocmd BufNewFile,BufRead *.mm set filetype=markdown')
 
 --- }}}
 
--- WhichKey Menu ------------------------------ {{{
+-- WhichKey Menu {{{
 
 -- Configuração do which-key
 require("which-key").setup({
@@ -1017,6 +1045,7 @@ wk.add({
   { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
+  { "<Space>vic", "<cmd>PlugClean<CR>", desc = "clean plugins" },
   { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
   { "<Space>vfc", "<cmd>lua CopyToChunk()<CR>", desc = "copy to chunk", mode = { "v" } },
