@@ -815,25 +815,43 @@ function TrimTrailingWhitespace()
   vim.fn.winrestview(save)
 end
 
-function replace_math_delimiters()
-  -- Get the current buffer
-  local buf = vim.api.nvim_get_current_buf()
-  -- Get all lines in the buffer
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+-- Substitui \[...\] por $$...$$ e \(..\) por $..$ no buffer atual
+local function replace_math_delimiters()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
-  -- Apply replacements line by line
-  for i, line in ipairs(lines) do
-    -- Replace \[ and \] with $$
-    line = line:gsub("\\[%[%]]", "$$")
-    -- Replace \( and \) with $
-    line = line:gsub("\\[%(%)]", "$")
-    lines[i] = line
+  local new_lines = {}
+  local in_block = false
+
+  for _, line in ipairs(lines) do
+    if line:match("^%s*\\%[%s*$") then
+      -- Linha contendo apenas "\["
+      table.insert(new_lines, "$$")
+      in_block = true
+    elseif line:match("^%s*\\%]%s*$") then
+      -- Linha contendo apenas "\]"
+      table.insert(new_lines, "$$")
+      in_block = false
+    elseif in_block then
+      -- Linha dentro de \[...\]
+      table.insert(new_lines, line)
+    else
+      -- Fora de bloco: substitui \(...\) por $...$
+      local modified = line:gsub("\\%(%s*(.-)%s*\\%)", "$%1$")
+      table.insert(new_lines, modified)
+    end
   end
 
-  -- Apply changes back to the buffer
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, new_lines)
 end
 
+-- Comando Neovim: :ReplaceMathDelimiters
+vim.api.nvim_create_user_command("ReplaceMathDelimiters", 
+  function() replace_math_delimiters()
+  end, { desc = "Substitui delimitadores \\[\\]/\\(\\) por $$/$ no buffer atual" })
+
+-- Atalho: <leader>ld
+-- vim.keymap.set("n", "<leader>ld", replace_math_delimiters, { desc = "Swap LaTeX math delimiters" })
 
 --- }}}
 
@@ -1058,7 +1076,7 @@ wk.add({
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
   { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
-  { "<Space>vfe", "<cmd>lua replace_math_delimiters()<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
+  { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
   })
 
 -- }}}
