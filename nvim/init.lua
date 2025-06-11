@@ -537,12 +537,12 @@ require('render-markdown').setup({
     above = '▄',
     below = '▀',
     backgrounds = {
-      'RenderMarkdownH1Bg',
       'RenderMarkdownH2Bg',
-      'RenderMarkdownH2Bg',
-      'RenderMarkdownH2Bg',
-      'RenderMarkdownH2Bg',
-      'RenderMarkdownH2Bg',
+      'RenderMarkdownH3Bg',
+      'RenderMarkdownH3Bg',
+      'RenderMarkdownH3Bg',
+      'RenderMarkdownH3Bg',
+      'RenderMarkdownH3Bg',
     },
     foregrounds = {
       'RenderMarkdownH1',
