@@ -316,17 +316,18 @@
 # exec --no-startup-id minetime
 # exec --no-startup-id goldendict
 # exec --no-startup-id start_conky_maia
-        exec --no-startup-id xautolock -time 45 -locker blurlock
+        # exec --no-startup-id xautolock -time 45 -locker blurlock
         exec_always --no-startup-id ff-theme-util
         exec_always --no-startup-id fix_xcursor
-        exec --no-startup-id telegram-desktop
+        # exec --no-startup-id telegram-desktop
         exec_always unclutter
         exec --no-startup-id keynav
-        exec --no-startup-id barrier
+        # exec --no-startup-id barrier
 # exec --no-startup-id discord
 
 # Monitor
-        exec_always xrandr --output DVI-I-1 --off --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
+        exec_always xrandr --output VGA-1 --primary --mode 1920x1080 --pos 0x0 --rotate left --output HDMI-1 --off --output DP-1 --off
+        # exec_always xrandr --output DVI-I-1 --off --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
         # exec_always xrandr --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --off
         # exec_always xrandr --output HDMI-1 --primary --mode 1920x1080 --pos 1280x0 --rotate normal
         # exec_always xrandr --output DVI-I-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal
