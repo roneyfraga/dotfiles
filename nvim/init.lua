@@ -853,6 +853,92 @@ vim.api.nvim_create_user_command("ReplaceMathDelimiters",
 -- Atalho: <leader>ld
 -- vim.keymap.set("n", "<leader>ld", replace_math_delimiters, { desc = "Swap LaTeX math delimiters" })
 
+-- format text to be filename
+-- remove spaces, special characters, etc.
+local function linuxify_text()
+  -- Get mode and selection range
+  local mode = vim.api.nvim_get_mode().mode
+  local start_row, start_col, end_row, end_col
+
+  if mode:match('[vV]') then -- visual mode
+    local selection = vim.fn.getpos('v')
+    local cursor = vim.fn.getpos('.')
+    start_row, start_col = selection[2], selection[3]
+    end_row, end_col = cursor[2], cursor[3]
+    
+    -- Normalize selection direction
+    if start_row > end_row or (start_row == end_row and start_col > end_col) then
+      start_row, end_row = end_row, start_row
+      start_col, end_col = end_col, start_col
+    end
+  else -- normal mode
+    start_row = vim.fn.line('.')
+    start_col = 1
+    end_row = start_row
+    end_col = vim.fn.col('$')
+  end
+
+  -- Get and process text
+  local lines = vim.api.nvim_buf_get_lines(0, start_row - 1, end_row, false)
+  if #lines == 0 then return end
+
+  local text = mode == 'V' and table.concat(lines, '\n') or 
+              (mode == 'v' and string.sub(lines[1], start_col, end_col) or lines[1])
+
+  -- Special character conversion (Portuguese diacritics)
+  local char_map = {
+    -- Lowercase
+    ['à']='a', ['á']='a', ['â']='a', ['ã']='a', ['ä']='a', ['å']='a',
+    ['è']='e', ['é']='e', ['ê']='e', ['ë']='e',
+    ['ì']='i', ['í']='i', ['î']='i', ['ï']='i',
+    ['ò']='o', ['ó']='o', ['ô']='o', ['õ']='o', ['ö']='o', ['ø']='o',
+    ['ù']='u', ['ú']='u', ['û']='u', ['ü']='u',
+    ['ý']='y', ['ÿ']='y',
+    ['ñ']='n', ['ç']='c',
+    -- Uppercase
+    ['À']='A', ['Á']='A', ['Â']='A', ['Ã']='A', ['Ä']='A', ['Å']='A',
+    ['È']='E', ['É']='E', ['Ê']='E', ['Ë']='E',
+    ['Ì']='I', ['Í']='I', ['Î']='I', ['Ï']='I',
+    ['Ò']='O', ['Ó']='O', ['Ô']='O', ['Õ']='O', ['Ö']='O', ['Ø']='O',
+    ['Ù']='U', ['Ú']='U', ['Û']='U', ['Ü']='U',
+    ['Ý']='Y', ['Ÿ']='Y',
+    ['Ñ']='N', ['Ç']='C'
+  }
+
+  -- Convert special characters (preserve base letter)
+  text = text:gsub('[%z\1-\127\194-\244][\128-\191]*', function(c)
+    return char_map[c] or c
+  end)
+
+  -- Process filename and extension
+  local filename, extension = text:match('^(.*)(%..-)$')
+  if not filename then filename, extension = text, '' end
+
+  local new_text = filename:lower()
+    :gsub('%s+', '-')      -- Spaces to hyphens
+    :gsub('[%._]+', '-')   -- Periods/underscores to hyphens
+    :gsub('[^%w%-]', '')   -- Remove remaining non-alphanumeric
+    :gsub('%-+', '-')      -- Multiple hyphens to single
+    :gsub('^%-', '')       -- Remove leading hyphen
+    :gsub('%-$', '')       -- Remove trailing hyphen
+    .. extension:lower()   -- Preserve extension
+
+  -- Apply changes if different
+  if new_text ~= text then
+    if mode:match('[vV]') then
+      vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, end_row - 1, end_col, {new_text})
+    else
+      vim.api.nvim_buf_set_lines(0, start_row - 1, end_row, false, {new_text})
+    end
+    print('Converted to: ' .. new_text)
+  else
+    print('Text already formatted')
+  end
+end
+
+-- Register command
+vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true })
+
 --- }}}
 
 -- Nerd Tree {{{
@@ -1080,6 +1166,7 @@ wk.add({
   { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
   { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
+  { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
   })
 
 -- }}}
