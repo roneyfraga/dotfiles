@@ -245,9 +245,6 @@ then
   alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
   alias cli='cd ~/Pessoal/Documents/CLI'
   alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
-
-  # wake on lan
-  alias rambo_ligar='wol c8:7f:54:67:67:d5'
 fi
 
 if [ $nome_do_computador = 'fusca' ]; 
@@ -265,6 +262,11 @@ then
   alias cti='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
   alias cli='cd /mnt/hd4tb/roney/Pessoal/Documents/CLI'
   alias qualis='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar/Qualis'
+
+  # wake on lan
+  alias rambo_ligar='wol c8:7f:54:67:67:d5'
+  alias rambo_local='ssh -p 19250 roney@192.168.191.250'
+
 fi
 
 # ssh tailscale
