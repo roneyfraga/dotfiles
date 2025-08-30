@@ -24,7 +24,6 @@ ln:
 	ln -s $(dotfolder)/lintr ~/.lintr
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
-	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
 	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
 	# ln -s $(dotfolder)/newsbolt/config ~/.newsboat/config
@@ -35,12 +34,14 @@ ln_lisa:
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_rambo:
 	ln -s $(dotfolder)/i3/config_rambo $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_rambo $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_rambo.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_fusca:
 	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
@@ -50,6 +51,7 @@ ln_fusca:
 ln_x390:
 	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_x390 $(configfolder)/i3status/config
+	ln -s $(dotfolder)/vifm/vifmrc_x390 $(configfolder)/vifm/vifmrc
 
 
 ln_frank:
@@ -90,7 +92,6 @@ rm:
 	rm -f ~/.pydoro.ini
 	rm -f $(configfolder)/nvim/coc-settings.json
 	rm -f $(configfolder)/vifm/favicons.vifm
-	rm -f $(configfolder)/vifm/vifmrc
 	rm -f $(configfolder)/.Xresources
 	rm -f $(configfolder)/terminator/config
 	rm -f $(configfolder)/fzf-open/lopen.sh
@@ -101,11 +102,13 @@ rm_lisa:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f $(configfolder)/vifm/vifmrc
 
 rm_rambo:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
+	rm -f $(configfolder)/vifm/vifmrc
 
 rm_fusca:
 	rm -f $(configfolder)/i3/config
@@ -115,6 +118,7 @@ rm_fusca:
 rm_x390:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
+	rm -f $(configfolder)/vifm/vifmrc
 
 rm_frank:
 	rm -f $(configfolder)/i3/config
