@@ -247,6 +247,28 @@ then
   alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
 fi
 
+if [ $nome_do_computador = 'fusca' ]; 
+then
+  alias sy='cd /mnt/hd4tb/roney/Sync'
+  alias wk='cd /mnt/hd4tb/roney/Wiki'
+  alias zt='ce /mnt/hd4tb/roney/Wiki/Zet'
+  alias pes='cd /mnt/hd4tb/roney/Pessoal'
+  alias doc='cd /mnt/hd4tb/roney/Pessoal/Documents/'
+  alias rw='cd /mnt/hd4tb/roney/Pessoal/Documents/Rworkspace'
+  alias rwd='cd /mnt/hd4tb/roney/Pessoal/Documents/RworkspaceData'
+  alias pubpar='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar'
+  alias prof='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional'
+  alias ori='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+  alias cti='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+  alias cli='cd /mnt/hd4tb/roney/Pessoal/Documents/CLI'
+  alias qualis='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar/Qualis'
+
+  # wake on lan
+  alias rambo_ligar='wol c8:7f:54:67:67:d5'
+  alias rambo_local='ssh -p 19250 roney@192.168.191.250'
+
+fi
+
 # ssh tailscale
 if [ $nome_do_computador = 'mbp-m1.local' ]; 
 then
