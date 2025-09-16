@@ -117,6 +117,8 @@ options(
   usethis.protocol = "ssh"
 )
 
+options(editor = "nvim")
+
 # Disable autocompletion from the language server, needed by Nvim-R
 options(languageserver.server_capabilities = list(completionProvider = FALSE, completionItemResolve = FALSE))
 
