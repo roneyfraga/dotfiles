@@ -475,7 +475,8 @@ vim.api.nvim_set_keymap('n', '<LocalLeader>T', '<cmd>lua vim.fn.RAction("tail")<
 -- qmd as rmd
 -- to allow snippets in quarto document
 -- but disable quarto chunks tags autocompletion
-vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd, *.Rmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd, *.Rmd set ft=r]]
 
 -- keybindings only inside R, Rmd, and Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
