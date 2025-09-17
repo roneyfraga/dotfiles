@@ -105,7 +105,7 @@ options(repos = structure(c(CRAN = "https://cran.rstudio.com/")))
 if (as.character(Sys.info()["sysname"]) == "Linux") {
   options(browser = "/usr/bin/firefox")
 } else {
-  options(browser = "/applications/firefox.app/contents/macos/firefox-bin")
+  options(browser = "/Applications/Firefox.app/Contents/MacOS/firefox-bin")
 }
 
 # cran
@@ -117,7 +117,7 @@ options(
   usethis.protocol = "ssh"
 )
 
-options(editor = "nvim")
+options(editor = "vim")
 
 # Disable autocompletion from the language server, needed by Nvim-R
 options(languageserver.server_capabilities = list(completionProvider = FALSE, completionItemResolve = FALSE))

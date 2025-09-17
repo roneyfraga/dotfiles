@@ -2,7 +2,7 @@
 	name = Roney Fraga Souza
 	email = roneyfraga@gmail.com
 [credential]
-	helper = cache
+	helper = cache --timeout=3600
 [init]
 	defatultBranch = main
 	defaultBranch = main
