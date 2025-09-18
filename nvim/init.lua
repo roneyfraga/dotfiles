@@ -274,7 +274,7 @@ require'nvim-treesitter.configs'.setup {
 local cmp = require'cmp'
 
 cmp.setup({
-    snippet = {
+  snippet = {
     expand = function(args)
       require('snippy').expand_snippet(args.body) 
     end,
@@ -334,24 +334,24 @@ cmp.setup.cmdline({ '/', '?' }, {
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
       { name = 'cmdline' }
     }),
-    matching = { disallow_symbol_nonprefix_matching = false }
-  })
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
 
 -- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
 require("img-clip").setup({
-    default = {
-        dir_path = "./",  
-        extension = "png",  -- (opcional)
-        file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
-        use_absolute_path = false,  
-    },
+  default = {
+    dir_path = "./",  
+    extension = "png",  -- (opcional)
+    file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
+    use_absolute_path = false,  
+  },
 })
 
 -- see which-key
@@ -388,7 +388,7 @@ require("noice").setup({
       },
     },
   },
-  })
+})
 
 -- see which-key
 -- noice: desabilitar mensagens
@@ -410,7 +410,7 @@ vim.opt.foldenable = true -- disable folding on startup
 -- }}}
 
 -- R-nvim {{{
- 
+
 -- :RMapsDesc         -- list all commands
 -- :RConfigShow       -- list configurations 
 --
@@ -433,7 +433,7 @@ nvim_lsp.r_language_server.setup {
 -- LSP Enable 
 function LspEnable()
   require('lspconfig').r_language_server.setup{
-  cmd = { "R", "--slave", "-e", "languageserver::run()" },
+    cmd = { "R", "--slave", "-e", "languageserver::run()" },
   }
 end
 
@@ -444,7 +444,7 @@ end
 require("r").setup({
   -- filetypes = {"r", "rmd", 'rnoweb', 'rhelp', 'quarto'},
   -- sources = {
-    -- { name = 'cmp_r' },
+  -- { name = 'cmp_r' },
   -- },
   -- R_args = {"--no-save"}, 
   min_editor_width = 72, 
@@ -475,7 +475,8 @@ vim.api.nvim_set_keymap('n', '<LocalLeader>T', '<cmd>lua vim.fn.RAction("tail")<
 -- qmd as rmd
 -- to allow snippets in quarto document
 -- but disable quarto chunks tags autocompletion
-vim.cmd[[autocmd BufRead,BufNewFile *.qmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd, *.Rmd set ft=rmd.r]]
+-- vim.cmd[[autocmd BufRead,BufNewFile *.qmd, *.Rmd set ft=r]]
 
 -- keybindings only inside R, Rmd, and Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
@@ -503,11 +504,11 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Markdown VimWiki + render + preview {{{
 
 vim.g.vimwiki_list = {
-	{
-		path = '~/Wiki',
-		syntax = 'markdown',
-		ext = '.md',
-	}
+  {
+    path = '~/Wiki',
+    syntax = 'markdown',
+    ext = '.md',
+  }
 }
 
 vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
@@ -578,36 +579,36 @@ vim.treesitter.language.register('markdown', 'vimwiki', 'r', 'rmd', 'quarto')
 
 -- Função para copiar o texto selecionado e inseri-lo dentro de um chunk
 function CopyToChunk()
-    -- Obtém a seleção visual
-    local start_line = vim.fn.line("'<")
-    local end_line = vim.fn.line("'>")
+  -- Obtém a seleção visual
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
 
-    -- Obtém as linhas selecionadas
-    local lines = vim.fn.getline(start_line, end_line)
+  -- Obtém as linhas selecionadas
+  local lines = vim.fn.getline(start_line, end_line)
 
-    -- Define o texto do chunk
-    local chunk_start = "```text"
-    local chunk_end = "```"
+  -- Define o texto do chunk
+  local chunk_start = "```text"
+  local chunk_end = "```"
 
-    -- Cria uma tabela para armazenar as linhas formatadas
-    local formatted_lines = {}
+  -- Cria uma tabela para armazenar as linhas formatadas
+  local formatted_lines = {}
 
-    -- Adiciona o início do chunk
-    table.insert(formatted_lines, chunk_start)
+  -- Adiciona o início do chunk
+  table.insert(formatted_lines, chunk_start)
 
-    -- Adiciona as linhas selecionadas
-    for _, line in ipairs(lines) do
-        table.insert(formatted_lines, line)
-    end
+  -- Adiciona as linhas selecionadas
+  for _, line in ipairs(lines) do
+    table.insert(formatted_lines, line)
+  end
 
-    -- Adiciona o final do chunk
-    table.insert(formatted_lines, chunk_end)
+  -- Adiciona o final do chunk
+  table.insert(formatted_lines, chunk_end)
 
-    -- Insere o novo conteúdo abaixo da seleção
-    vim.fn.append(end_line, formatted_lines)
+  -- Insere o novo conteúdo abaixo da seleção
+  vim.fn.append(end_line, formatted_lines)
 
-    -- Opcional: Remove a seleção original (se desejado)
-    -- vim.fn.deletebufline('%', start_line, end_line)
+  -- Opcional: Remove a seleção original (se desejado)
+  -- vim.fn.deletebufline('%', start_line, end_line)
 end
 
 -- Mapeia a função a um atalho (exemplo: <leader>cck)
@@ -686,27 +687,27 @@ end
 
 vim.cmd([[
 function! Bibtex_ls()
-  let bibfiles = (
-      \ globpath('.', '*.bib', v:true, v:true) +
-      \ globpath('..', '*.bib', v:true, v:true) +
-      \ globpath('*/', '*.bib', v:true, v:true)
-      \ )
-  let bibfiles = join(bibfiles, ' ')
-  let source_cmd = 'bibtex-ls '.bibfiles
-  return source_cmd
+let bibfiles = (
+\ globpath('.', '*.bib', v:true, v:true) +
+\ globpath('..', '*.bib', v:true, v:true) +
+\ globpath('*/', '*.bib', v:true, v:true)
+\ )
+let bibfiles = join(bibfiles, ' ')
+let source_cmd = 'bibtex-ls '.bibfiles
+return source_cmd
 endfunction
 
 function! s:bibtex_cite_sink_insert(lines)
-    let r=system("bibtex-cite ", a:lines)
-    execute ':normal! a' . r
-    call feedkeys('a', 'n')
+let r=system("bibtex-cite ", a:lines)
+execute ':normal! a' . r
+call feedkeys('a', 'n')
 endfunction
 
 inoremap <silent> @@ <c-g>u<c-o>:call fzf#run({
-                        \ 'source': Bibtex_ls(),
-                        \ 'sink*': function('<sid>bibtex_cite_sink_insert'),
-                        \ 'up': '40%',
-                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
+\ 'source': Bibtex_ls(),
+\ 'sink*': function('<sid>bibtex_cite_sink_insert'),
+\ 'up': '40%',
+\ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
 ]])
 
 vim.cmd("call Bibtex_ls()")
@@ -729,14 +730,14 @@ vim.cmd[[let cmdline_app['python'] = 'ipython']]
 
 vim.cmd([[
  " vimcmdline mappings
-let cmdline_map_start          = '<LocalLeader>s'
-let cmdline_map_send           = '<Enter>'
-let cmdline_map_send_and_stay  = '<LocalLeader><Enter>'
-let cmdline_map_source_fun     = '<LocalLeader>f'
-let cmdline_map_send_paragraph = '<LocalLeader>p'
-let cmdline_map_send_block     = '<LocalLeader>b'
-let cmdline_map_send_motion    = '<LocalLeader>m'
-let cmdline_map_quit           = '<LocalLeader>q'
+ let cmdline_map_start          = '<LocalLeader>s'
+ let cmdline_map_send           = '<Enter>'
+ let cmdline_map_send_and_stay  = '<LocalLeader><Enter>'
+ let cmdline_map_source_fun     = '<LocalLeader>f'
+ let cmdline_map_send_paragraph = '<LocalLeader>p'
+ let cmdline_map_send_block     = '<LocalLeader>b'
+ let cmdline_map_send_motion    = '<LocalLeader>m'
+ let cmdline_map_quit           = '<LocalLeader>q'
 ]])
 
 -- <LocalLeader>s to start the interpreter.
@@ -766,15 +767,15 @@ let cmdline_map_quit           = '<LocalLeader>q'
 -- Zoom in buffer {{{
 vim.cmd([[
 fu s:window_zoom_toggle() abort
-    if winnr('$') == 1 | return | endif
-    if exists('t:zoom_restore') && win_getid() == t:zoom_restore.winid
-        exe get(t:zoom_restore, 'cmd', '')
-        unlet t:zoom_restore
-    else
-        let t:zoom_restore = {'cmd': winrestcmd(), 'winid': win_getid()}
-        wincmd |
-        wincmd _
-    endif
+if winnr('$') == 1 | return | endif
+if exists('t:zoom_restore') && win_getid() == t:zoom_restore.winid
+exe get(t:zoom_restore, 'cmd', '')
+unlet t:zoom_restore
+else
+let t:zoom_restore = {'cmd': winrestcmd(), 'winid': win_getid()}
+wincmd |
+wincmd _
+endif
 endfu
 
 ]])
@@ -788,17 +789,17 @@ endfu
 --
 local date_time_inserter_status_ok, date_time_inserter = pcall(require, "date-time-inserter")
 if not date_time_inserter_status_ok then
-    return
+  return
 end
 
 date_time_inserter.setup {
-    date_format = 'YYYYMMDD',
-    date_separator = '-',
-    time_format = 24,
-    show_seconds = false,
-    -- insert_date_map = '<leader>dt',
-    -- insert_time_map = '<leader>tt',
-    -- insert_date_time_map = '<leader>dtt',
+  date_format = 'YYYYMMDD',
+  date_separator = '-',
+  time_format = 24,
+  show_seconds = false,
+  -- insert_date_map = '<leader>dt',
+  -- insert_time_map = '<leader>tt',
+  -- insert_date_time_map = '<leader>dtt',
 }
 
 -- }}}
@@ -865,7 +866,7 @@ local function linuxify_text()
     local cursor = vim.fn.getpos('.')
     start_row, start_col = selection[2], selection[3]
     end_row, end_col = cursor[2], cursor[3]
-    
+
     -- Normalize selection direction
     if start_row > end_row or (start_row == end_row and start_col > end_col) then
       start_row, end_row = end_row, start_row
@@ -883,7 +884,7 @@ local function linuxify_text()
   if #lines == 0 then return end
 
   local text = mode == 'V' and table.concat(lines, '\n') or 
-              (mode == 'v' and string.sub(lines[1], start_col, end_col) or lines[1])
+  (mode == 'v' and string.sub(lines[1], start_col, end_col) or lines[1])
 
   -- Special character conversion (Portuguese diacritics)
   local char_map = {
@@ -921,7 +922,7 @@ local function linuxify_text()
     :gsub('%-+', '-')      -- Multiple hyphens to single
     :gsub('^%-', '')       -- Remove leading hyphen
     :gsub('%-$', '')       -- Remove trailing hyphen
-    .. extension:lower()   -- Preserve extension
+  .. extension:lower()   -- Preserve extension
 
   -- Apply changes if different
   if new_text ~= text then
@@ -985,28 +986,77 @@ require("chatgpt").setup({
   api_key_cmd = "secret-tool lookup openai neovim",
 
   openai_params = {
-    -- NOTE: model can be a function returning the model name
-    -- this is useful if you want to change the model on the fly
-    -- using commands
-    -- Example:
-    -- model = function()
-        -- if some_condition() then
-            -- return "gpt-4-1106-preview"
-        -- else
-            -- return "gpt-3.5-turbo"
-        -- end
-    -- end,
-    -- model = "gpt-4-1106-preview",
-    -- model = "gpt-4o-mini",
     model = "gpt-4",
-    frequency_penalty = 0,
-    presence_penalty = 0,
-    max_tokens = 4095,
+    max_tokens = 512,
     temperature = 0.2,
-    top_p = 0.1,
+    top_p = 0.9,
     n = 1,
-  }
+    presence_penalty = 0,
+    frequency_penalty = 0,
+  },
+
+  openai_edit_params = {
+    model = "gpt-4",
+    max_tokens = 512,
+    temperature = 0.2,
+    top_p = 0.9,
+    n = 1,
+  },
+
+  -- Algumas versões expõem params por ação. Se houver, force aqui:
+  actions = {
+    -- exemplos comuns; ajuste aos que você usa
+    code_edit = { params = { max_tokens = 512 } },
+    code_refactor = { params = { max_tokens = 512 } },
+    explain_code = { params = { max_tokens = 512 } },
+  },
 })
+
+-- history in: ~/.local/state/nvim/chatgpt/
+-- generate :ChatGPTHistoryCleaning
+vim.api.nvim_create_user_command("ChatGPTHistoryCleaning", function()
+  local history_path = vim.fn.stdpath("state") .. "/chatgpt"
+  if vim.fn.isdirectory(history_path) == 1 then
+    local files = vim.fn.glob(history_path .. "/*.json", false, true)
+    if #files == 0 then
+      print("ChatGPT.nvim: no JSON file found at: " .. history_path)
+      return
+    end
+    for _, f in ipairs(files) do
+      vim.fn.delete(f)
+    end
+    print("ChatGPT.nvim: " .. #files .. " files JSON deleted at: " .. history_path)
+  else
+    print("ChatGPT.nvim: no direcctory found (" .. history_path .. ")")
+  end
+end, {})
+
+-- require("chatgpt").setup({
+--   api_key_cmd = "secret-tool lookup openai neovim",
+
+--   openai_params = {
+--     -- NOTE: model can be a function returning the model name
+--     -- this is useful if you want to change the model on the fly
+--     -- using commands
+--     -- Example:
+--     -- model = function()
+--         -- if some_condition() then
+--             -- return "gpt-4-1106-preview"
+--         -- else
+--             -- return "gpt-3.5-turbo"
+--         -- end
+--     -- end,
+--     -- model = "gpt-4-1106-preview",
+--     -- model = "gpt-4o-mini",
+--     model = "gpt-4",
+--     frequency_penalty = 0,
+--     presence_penalty = 0,
+--     max_tokens = 1024,
+--     temperature = 0.2,
+--     top_p = 0.1,
+--     n = 1,
+--   }
+-- })
 
 --- }}}
 
@@ -1091,6 +1141,7 @@ wk.add({
   { "<Space>cx", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain Code", mode = { "n", "v" } },
   { "<Space>cr", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "n", "v" } },
   { "<Space>cl", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Code Readability Analysis", mode = { "n", "v" } },
+  { "<Space>ch", "<cmd>ChatGPTHistoryCleaning<CR>", desc = "History Cleaning", mode = { "n", "v" } },
   { "<Space>cg", group = "[g]rammar and translate" }, -- subgroup
   { "<Space>cgp", "<cmd>ChatGPTRun grammar_correction português brasileiro<CR>", desc = "Grammar Correction pt_br", mode = { "n", "v" } },
   { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
@@ -1167,7 +1218,7 @@ wk.add({
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
   { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
-  })
+})
 
 -- }}}
 
