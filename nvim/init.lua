@@ -39,6 +39,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 400
 
+vim.env.COLORTERM = "truecolor"
+vim.env.TERM = "xterm-256color"
+
 -- }}}
 
 -- Highlight Color {{{
@@ -98,7 +101,6 @@ function ToggleSpellPT()
   vim.notify("spell: pt_br (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
 end
 -- }}}
-
 
 -- Plugins {{{
 
@@ -423,6 +425,29 @@ vim.opt.foldcolumn = "0"
 vim.opt.foldtext = ""
 vim.opt.foldenable = true -- disable folding on startup
 
+-- rename file
+function RenameFile()
+  local old_name = vim.fn.expand('%:p')   -- caminho absoluto do arquivo aberto
+  local new_name = vim.fn.input('Novo nome: ', old_name, 'file')
+  if new_name == '' or new_name == old_name then
+    return
+  end
+
+  vim.fn.mkdir(vim.fn.fnamemodify(new_name, ":h"), "p")
+
+  local ok, err = os.rename(old_name, new_name)
+  if not ok then
+    vim.notify("Erro ao renomear: " .. err, vim.log.levels.ERROR)
+    return
+  end
+
+  vim.cmd('edit ' .. new_name)
+  vim.cmd('bdelete ' .. old_name) -- fecha o antigo
+  vim.notify("Arquivo renomeado para: " .. new_name, vim.log.levels.INFO)
+end
+
+vim.api.nvim_create_user_command('RenameFile', RenameFile, {})
+
 -- }}}
 
 -- R-nvim {{{
@@ -592,9 +617,6 @@ require('render-markdown').setup({
 })
 
 vim.treesitter.language.register('markdown', 'vimwiki')
-vim.treesitter.language.register('markdown', 'r')
-vim.treesitter.language.register('markdown', 'rmd')
-vim.treesitter.language.register('markdown', 'quarto')
 
 -- Função para copiar o texto selecionado e inseri-lo dentro de um chunk
 function CopyToChunk()
@@ -1105,6 +1127,7 @@ wk.add({
   { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
   { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
+  { "<Space>r", "<cmd>RenameFile<CR>", desc = "rename file" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   -- { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
