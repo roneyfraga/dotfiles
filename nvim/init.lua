@@ -1034,6 +1034,24 @@ require("chatgpt").setup({
     code_refactor = { params = { max_tokens = 512 } },
     explain_code = { params = { max_tokens = 512 } },
   },
+
+  chat = {
+    window = {
+      layout = {
+        relative = "editor",
+        position = "50%",
+        size = {
+          width = "90%",
+          height = "80%",
+        },
+      },
+    },
+  },
+  popup_input = {
+    submit = "<C-s>",
+    max_height = 10,
+  },
+
 })
 
 -- history in: ~/.local/state/nvim/chatgpt/
