@@ -6,10 +6,13 @@
 -- vim.api api
 -- vim.cmd command
 
+-- Leaders
+vim.g.mapleader = " "        -- Espaço = atalhos gerais (which-key)
+vim.g.maplocalleader = "\\"  -- Barra invertida = atalhos específicos (R.nvim, etc.)
+
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.wrap = true
-vim.opt.showmode = true
+vim.opt.showmode = false 
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.shiftwidth = 2
@@ -20,69 +23,82 @@ vim.opt.smartindent = true
 vim.opt.scrolloff = 8
 vim.opt.relativenumber = true
 vim.opt.showtabline = 1
-vim.opt.cursorline = true
 vim.opt.termguicolors = true
-vim.opt.showmode = false
 vim.opt.numberwidth = 1
 vim.cmd("set t_ZH=^[[3m")
-vim.cmd("set t_ZH=^[[23m")
-vim.cmd[[set clipboard+=unnamedplus]]
+vim.cmd("set t_ZR=^[[23m")
+vim.opt.clipboard:append("unnamedplus")
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 vim.cmd[[highlight Comment cterm=italic]]
-vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true })
+vim.keymap.set("i", "jj", "<Esc>", { noremap = true, desc = "leave insert mode" })
 vim.cmd[[set nohlsearch]]
+
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.signcolumn = "yes"
+vim.opt.updatetime = 200
+vim.opt.timeoutlen = 400
 
 -- }}}
 
 -- Highlight Color {{{
 -- SideBar,StatusBar and Menus
--- Cor da barra lateral quando marcas sao feitas
-vim.cmd("highlight SignColumn guibg=none")
-vim.cmd("highlight SignColumn ctermbg=none")
-vim.cmd("highlight SignatureMarkText ctermbg=none")
-
--- tabline
-vim.cmd("highlight TabLine gui=NONE guibg=NONE guifg=NONE cterm=NONE term=NONE ctermfg=NONE ctermbg=NONE")
-vim.cmd("highlight TabLineFill term=NONE cterm=NONE ctermbg=NONE")
-
--- menu de autocompletar
-vim.cmd("highlight Pmenu ctermfg=7 ctermbg=0")
-vim.cmd("highlight PmenuSel ctermfg=0 ctermbg=7")
+local hl = vim.api.nvim_set_hl
+hl(0, "SignColumn", { bg = "NONE" })
+hl(0, "SignatureMarkText", { ctermbg = 0, bg = "NONE" })
+hl(0, "TabLine", { bold = false, bg = "NONE", fg = "NONE" })
+hl(0, "TabLineFill", {})
+hl(0, "Pmenu", { ctermfg = 7, ctermbg = 0 })
+hl(0, "PmenuSel", { ctermfg = 0, ctermbg = 7 })
+hl(0, "SpellBad", { underline = true }) 
 
 -- }}}
 
 -- Spell check {{{
---
--- dicionario em dois idiomas
-vim.cmd("setlocal nospell spelllang=pt,en")
+-- Requisitos no Arch/Manjaro: sudo pacman -S vim-spell-pt vim-spell-en
 
--- alterando a forma como o vim sinaliza as palavras erradas
-vim.cmd("hi clear SpellBad")
-vim.cmd("hi SpellBad cterm=underline")
+local opt = vim.opt
 
--- nao corrigir palavras no inicio da linha em minusculo
-vim.cmd("set spellfile=~/Sync/.spell/lowercase.utf-8.add")
-vim.cmd("set spellfile=~/Sync/.spell/pt.utf-8.add")
-vim.cmd("set spellfile=~/Sync/.spell/en.utf-8.add")
-vim.cmd("set spellcapcheck=")
+-- desliga por padrão; você liga/desliga depois (F2/F3/F4 abaixo)
+opt.spell = false
+opt.spelllang = { "pt_br", "en_us" }
 
--- control + n
--- utilizar o dicionario como fonte das palavras sugeridas no autocompletar
-vim.cmd("set dictionary=/usr/share/dict/words")
-vim.cmd("set complete+=kspell")
+-- sinalização: sublinhado em palavras erradas (API moderna)
+vim.api.nvim_set_hl(0, "SpellBad", { underline = true })
 
--- não precisa do nospell, pois, 'spell!' é toggle
--- F2 pt_br
--- F3 en_us
--- F4 pt_br, en_us
---
--- see which-key configs
--- vim.cmd("nmap <F2> :set spell! spelllang=pt<CR>")
--- vim.cmd("nmap <F3> :set spell! spelllang=en<CR>")
--- vim.cmd("nmap <F4> :set spell! spelllang=pt,en<CR>")
+-- dicionários pessoais: use append (não sobrescreva o valor anterior)
+opt.spellfile = vim.empty_dict()  -- zera de forma explícita
+opt.spellfile:append(vim.fn.expand("~/Sync/.spell/lowercase.utf-8.add"))
+opt.spellfile:append(vim.fn.expand("~/Sync/.spell/pt.utf-8.add"))
+opt.spellfile:append(vim.fn.expand("~/Sync/.spell/en.utf-8.add"))
 
+-- não exigir maiúscula no começo de frase (desativa checagem de capitalização)
+opt.spellcapcheck = ""
+
+-- dicionário de palavras do sistema + completar usando kspell
+opt.dictionary = "/usr/share/dict/words"
+opt.complete:append("kspell")
+
+-- Funções centralizadas de toggle (adicionar junto ao bloco Spell check ou antes do which-key)
+function ToggleSpellBoth()
+  vim.opt.spell = not vim.opt.spell:get()
+  vim.opt.spelllang = { "pt_br", "en_us" }
+  vim.notify("spell: pt_br + en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+end
+
+function ToggleSpellEN()
+  vim.opt.spell = not vim.opt.spell:get()
+  vim.opt.spelllang = { "en_us" }
+  vim.notify("spell: en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+end
+
+function ToggleSpellPT()
+  vim.opt.spell = not vim.opt.spell:get()
+  vim.opt.spelllang = { "pt_br" }
+  vim.notify("spell: pt_br (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+end
 -- }}}
+
 
 -- Plugins {{{
 
@@ -193,7 +209,7 @@ Plug('michal-h21/vim-zettel')
 Plug('MeanderingProgrammer/render-markdown.nvim')
 
 -- nerd tree
-Plug('nvim-tree/nvim-tree.lua')
+-- Plug('nvim-tree/nvim-tree.lua')
 
 -- ChatGPT
 -- Plug("MunifTanjim/nui.nvim") -- already instaled
@@ -306,7 +322,7 @@ cmp.setup({
     { name = 'latex_symbols' }, 
     { name = 'yaml' }, 
   }, {
-      { name = 'buffer', keyword_lengh = 5 },
+      { name = 'buffer', keyword_length = 5 },
     })
 })
 
@@ -575,7 +591,10 @@ require('render-markdown').setup({
   },
 })
 
-vim.treesitter.language.register('markdown', 'vimwiki', 'r', 'rmd', 'quarto')
+vim.treesitter.language.register('markdown', 'vimwiki')
+vim.treesitter.language.register('markdown', 'r')
+vim.treesitter.language.register('markdown', 'rmd')
+vim.treesitter.language.register('markdown', 'quarto')
 
 -- Função para copiar o texto selecionado e inseri-lo dentro de um chunk
 function CopyToChunk()
@@ -715,10 +734,10 @@ vim.cmd("call Bibtex_ls()")
 -- }}}
 
 -- Maps to resizing a window split {{{
-vim.cmd[[nnoremap <expr> <C-w>+ v:count1 * 10 . '<C-w>+']]
-vim.cmd[[nnoremap <expr> <C-w>- v:count1 * 10 . '<C-w>-']]
-vim.cmd[[nnoremap <expr> <C-w>< v:count1 * 10 . '<C-w><']]
-vim.cmd[[nnoremap <expr> <C-w>> v:count1 * 10 . '<C-w>>']]
+vim.keymap.set("n", "<C-w>+", function() return (vim.v.count1 * 10).."<C-w>+" end, { expr = true, desc = "split + altura" })
+vim.keymap.set("n", "<C-w>-", function() return (vim.v.count1 * 10).."<C-w>-" end, { expr = true, desc = "split - altura" })
+vim.keymap.set("n", "<C-w><", function() return (vim.v.count1 * 10).."<C-w><" end, { expr = true, desc = "split - largura" })
+vim.keymap.set("n", "<C-w>>", function() return (vim.v.count1 * 10).."<C-w>>" end, { expr = true, desc = "split + largura" })
 -- }}}
 
 -- Python, Julia and vimcmdline {{{
@@ -787,21 +806,15 @@ endfu
 
 -- Date and Time {{{
 --
-local date_time_inserter_status_ok, date_time_inserter = pcall(require, "date-time-inserter")
-if not date_time_inserter_status_ok then
-  return
+local ok_dti, date_time_inserter = pcall(require, "date-time-inserter")
+if ok_dti then
+  date_time_inserter.setup({
+    date_format = 'YYYYMMDD',
+    date_separator = '-',
+    time_format = 24,
+    show_seconds = false,
+  })
 end
-
-date_time_inserter.setup {
-  date_format = 'YYYYMMDD',
-  date_separator = '-',
-  time_format = 24,
-  show_seconds = false,
-  -- insert_date_map = '<leader>dt',
-  -- insert_time_map = '<leader>tt',
-  -- insert_date_time_map = '<leader>dtt',
-}
-
 -- }}}
 
 -- White Space + Equations with $$ and $ {{{
@@ -945,30 +958,19 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 -- Nerd Tree {{{
 
 -- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+--vim.g.loaded_netrw = 1
+--vim.g.loaded_netrwPlugin = 1
 
 -- optionally enable 24-bit colour
-vim.opt.termguicolors = true
+--vim.opt.termguicolors = true
 
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
-require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
+-- setup nvim-tree with some options
+-- require("nvim-tree").setup({
+--   sort = { sorter = "case_sensitive" },
+--   view = { width = 30 },
+--   renderer = { group_empty = true },
+--   filters = { dotfiles = true },
+-- })
 
 --- }}}
 
@@ -1072,7 +1074,7 @@ require('markmap').setup({
   config = function(_, opts) require("markmap").setup(opts) end
 })
 
-vim.cmd('autocmd BufNewFile,BufRead *.mm set filetype=markdown')
+vim.filetype.add({ extension = { mm = "markdown" } })
 
 --- }}}
 
@@ -1105,7 +1107,7 @@ wk.add({
   { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
-  { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
+  -- { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
   { "<Space>f/", FilesHereOpen, desc = "/" },
   { "<Space>fh", FilesHomeOpen, desc = "~/" },
   { "<Space>fk", "<cmd>:w <bar> %bd <bar> e# <bar> bd# <CR>", desc = "keep only current buffer" },
@@ -1124,7 +1126,7 @@ wk.add({
   { "<Space>sh", HomeGrep, desc = "~/" },
   { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
   { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
-  { "<Space>sd", DownloadsGre, desc = "~/downloads" },
+  { "<Space>sD", DownloadsGrep, desc = "~/downloads" },
   { "<Space>ss", SyncGrep, desc = "~/sync" },
   { "<Space>sw", WikiGrep, desc = "~/wiki" },
   { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
@@ -1193,9 +1195,9 @@ wk.add({
   { "<Space>vdd", "<cmd>InsertDate<CR>", desc = "date" },
   { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
   { "<Space>vg", group = "[g]rammar check" }, -- subgroup
-  { "<Space>vgb", "<cmd>set spell! spelllang=pt,en<CR>", desc = "both", mode = { "n", "v" } },
-  { "<Space>vge", "<cmd>set spell! spelllang=en<CR>", desc = "english" , mode = { "n", "v" } },
-  { "<Space>vgp", "<cmd>set spell! spelllang=pt<CR>", desc = "português", mode = { "n", "v" } },
+  { "<Space>vgb", ToggleSpellBoth, desc = "both (pt+en)", mode = { "n", "v" } },
+  { "<Space>vge", ToggleSpellEN,   desc = "english",       mode = { "n", "v" } },
+  { "<Space>vgp", ToggleSpellPT,   desc = "português",     mode = { "n", "v" } },
   { "<Space>vl", group = "[l]sp" }, -- subgroup
   { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
   { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
