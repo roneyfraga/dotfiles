@@ -124,3 +124,12 @@ options(languageserver.server_capabilities = list(completionProvider = FALSE, co
 
 # openalexR
 options(openalexR.mailto = "roneyfraga@gmail.com")
+
+# openai api key
+key <- tryCatch(
+  system("secret-tool lookup openai neovim", intern = TRUE),
+  error = function(e) NULL
+)
+if (!is.null(key) && nzchar(key)) {
+  Sys.setenv(OPENAI_API_KEY = key)
+}
