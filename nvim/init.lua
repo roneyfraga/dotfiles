@@ -2,17 +2,17 @@
 -- General {{{
 
 -- vim.opt options
--- vim.g   geral
+-- vim.g geral
 -- vim.api api
 -- vim.cmd command
 
 -- Leaders
-vim.g.mapleader = " "        -- Espaço = atalhos gerais (which-key)
-vim.g.maplocalleader = "\\"  -- Barra invertida = atalhos específicos (R.nvim, etc.)
+vim.g.mapleader = " " -- Espaço = atalhos gerais (which-key)
+vim.g.maplocalleader = "\\" -- Barra invertida = atalhos específicos (R.nvim, etc.)
 
 vim.opt.number = true
 vim.opt.wrap = true
-vim.opt.showmode = false 
+vim.opt.showmode = false
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.shiftwidth = 2
@@ -53,7 +53,7 @@ hl(0, "TabLine", { bold = false, bg = "NONE", fg = "NONE" })
 hl(0, "TabLineFill", {})
 hl(0, "Pmenu", { ctermfg = 7, ctermbg = 0 })
 hl(0, "PmenuSel", { ctermfg = 0, ctermbg = 7 })
-hl(0, "SpellBad", { underline = true }) 
+hl(0, "SpellBad", { underline = true })
 
 -- }}}
 
@@ -70,7 +70,7 @@ opt.spelllang = { "pt_br", "en_us" }
 vim.api.nvim_set_hl(0, "SpellBad", { underline = true })
 
 -- dicionários pessoais: use append (não sobrescreva o valor anterior)
-opt.spellfile = vim.empty_dict()  -- zera de forma explícita
+opt.spellfile = vim.empty_dict() -- zera de forma explícita
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/lowercase.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/pt.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/en.utf-8.add"))
@@ -109,14 +109,14 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
--- marks in the side bar 
+-- marks in the side bar
 Plug('kshenoy/vim-signature')
 
 -- move between vim and tmux with control+hjkl
 Plug('christoomey/vim-tmux-navigator')
 
 -- FZF
-Plug('ibhagwan/fzf-lua') 
+Plug('ibhagwan/fzf-lua')
 Plug('nvim-tree/nvim-web-devicons')
 Plug('msprev/fzf-bibtex')
 
@@ -129,13 +129,13 @@ Plug('msprev/fzf-bibtex')
 -- Register on side bar: ou @ in normal mode; Control+R in normal mode
 Plug('junegunn/vim-peekaboo')
 
--- comment any file with motion gc[motion] 
+-- comment any file with motion gc[motion]
 Plug('tpope/vim-commentary')
 
 -- repeat vim and plugin commands with .
 Plug('tpope/vim-repeat')
 
--- R  
+-- R
 -- Plug('jalvesaq/Nvim-R')
 Plug('R-nvim/R.nvim')
 
@@ -146,7 +146,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-cmdline')
-Plug('R-nvim/cmp-r')  -- autocompletion with 'R-nvim/R.nvim'
+Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
@@ -155,7 +155,7 @@ Plug('micangl/cmp-vimtex')
 Plug('tamago324/cmp-zsh')
 Plug('Shougo/deol.nvim')
 
--- snippets 
+-- snippets
 Plug('roneyfraga/vim-snippets')
 
 -- equation preview in markdown
@@ -186,7 +186,7 @@ Plug('godlygeek/tabular')
 -- code formater
 Plug('sbdchd/neoformat')
 
---  Delete buffer withou messing the layout :Bd
+-- Delete buffer withou messing the layout :Bd
 Plug('moll/vim-bbye')
 
 -- distraction free :Goyo
@@ -198,16 +198,16 @@ Plug('jalvesaq/vimcmdline')
 -- bracket mappings - quickfix navigation
 Plug('tpope/vim-unimpaired')
 
--- surround a object with (`c` chance, `d` delete, `y` you surround) 
+-- surround a object with (`c` chance, `d` delete, `y` you surround)
 Plug('tpope/vim-surround')
 
--- wiki 
+-- wiki
 Plug('vimwiki/vimwiki')
 Plug('junegunn/fzf')
 Plug('junegunn/fzf.vim')
 Plug('michal-h21/vim-zettel')
 
--- markdown render 
+-- markdown render
 Plug('MeanderingProgrammer/render-markdown.nvim')
 
 -- nerd tree
@@ -247,20 +247,20 @@ vim.call('plug#end')
 -- Colorschemes and Status Line {{{
 
 vim.cmd("set background=dark") -- or light if you want light mode
-vim.cmd("colorscheme gruvbox") 
+vim.cmd("colorscheme gruvbox")
 
 function getWords()
   local wc = vim.fn.wordcount()
-  if wc["visual_words"] then 
+  if wc["visual_words"] then
     -- return wc["visual_words"] .. " words"
-    return wc["visual_words"] 
-  else 
+    return wc["visual_words"]
+  else
     -- return wc["words"] .. " words"
-    return wc["words"] 
+    return wc["words"]
   end
 end
 
-require'lualine'.setup { 
+require'lualine'.setup {
   options = { theme = 'gruvbox' },
   sections = {
     lualine_z = {
@@ -277,7 +277,7 @@ require'lualine'.setup {
 -- linux: pacman -S pyright
 -- R: install.packages("languageserver")
 
--- TreeSitter 
+-- TreeSitter
 -- :TSInstall r
 -- :TSInstall python
 -- :TSInstall lua
@@ -300,7 +300,7 @@ require'nvim-treesitter.configs'.setup {
   sync_install = false,
   auto_install = true,
   highlight = { enable = true, additional_vim_regex_highlighting = false},
-  indent = {enable = true}, 
+  indent = {enable = true},
 }
 
 -- Set up nvim-cmp.
@@ -310,7 +310,7 @@ local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      require('snippy').expand_snippet(args.body) 
+      require('snippy').expand_snippet(args.body)
     end,
   },
   window = {
@@ -318,10 +318,10 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-n>'] = cmp.mapping.select_next_item(), 
-    ['<C-p>'] = cmp.mapping.select_prev_item(), 
-    ['<C-Space>'] = cmp.mapping.complete(), 
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), 
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),
@@ -333,12 +333,12 @@ cmp.setup({
     { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
-    { name = 'cmdline' }, 
-    { name = 'zsh' }, 
-    { name = 'markdown' }, 
-    { name = 'markdown_inline' }, 
-    { name = 'latex_symbols' }, 
-    { name = 'yaml' }, 
+    { name = 'cmdline' },
+    { name = 'zsh' },
+    { name = 'markdown' },
+    { name = 'markdown_inline' },
+    { name = 'latex_symbols' },
+    { name = 'yaml' },
   }, {
       { name = 'buffer', keyword_length = 5 },
     })
@@ -378,13 +378,13 @@ cmp.setup.cmdline(':', {
   matching = { disallow_symbol_nonprefix_matching = false }
 })
 
--- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
+-- PasteImage image from clipboad, system or web to neovim with img-clip.nvim
 require("img-clip").setup({
   default = {
-    dir_path = "./",  
-    extension = "png",  -- (opcional)
-    file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
-    use_absolute_path = false,  
+    dir_path = "./",
+    extension = "png", -- (opcional)
+    file_name = "%Y-%m-%d-%H-%M-%S", -- (opcional)
+    use_absolute_path = false,
   },
 })
 
@@ -416,7 +416,7 @@ require("noice").setup({
   },
   cmdline = {
     opts = {
-      position = { 
+      position = {
         row = "50%", -- posição vertical (50% para centralizar)
         col = "50%", -- posição horizontal (50% para centralizar)
       },
@@ -443,7 +443,7 @@ vim.opt.foldenable = true -- disable folding on startup
 
 -- rename file
 function RenameFile()
-  local old_name = vim.fn.expand('%:p')   -- caminho absoluto do arquivo aberto
+  local old_name = vim.fn.expand('%:p') -- caminho absoluto do arquivo aberto
   local new_name = vim.fn.input('Novo nome: ', old_name, 'file')
   if new_name == '' or new_name == old_name then
     return
@@ -468,8 +468,8 @@ vim.api.nvim_create_user_command('RenameFile', RenameFile, {})
 
 -- R-nvim {{{
 
--- :RMapsDesc         -- list all commands
--- :RConfigShow       -- list configurations 
+-- :RMapsDesc -- list all commands
+-- :RConfigShow -- list configurations
 --
 
 -- require'lspconfig'.pyright.setup{}
@@ -487,7 +487,7 @@ nvim_lsp.r_language_server.setup {
   },
 }
 
--- LSP Enable 
+-- LSP Enable
 function LspEnable()
   require('lspconfig').r_language_server.setup{
     cmd = { "R", "--slave", "-e", "languageserver::run()" },
@@ -503,10 +503,10 @@ require("r").setup({
   -- sources = {
   -- { name = 'cmp_r' },
   -- },
-  -- R_args = {"--no-save"}, 
-  min_editor_width = 72, 
-  rconsole_width = 78, 
-  disable_cmds = { 
+  -- R_args = {"--no-save"},
+  min_editor_width = 72,
+  rconsole_width = 78,
+  disable_cmds = {
     -- "RSPlot",
     -- "RSaveClose",
   },
@@ -514,7 +514,7 @@ require("r").setup({
     on_filetype = function()
       -- Mapeamentos de teclas específicos para arquivos R
       vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {}) 
+      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
     end,
   },
 })
@@ -537,7 +537,7 @@ vim.api.nvim_set_keymap('n', '<LocalLeader>T', '<cmd>lua vim.fn.RAction("tail")<
 
 -- keybindings only inside R, Rmd, and Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "r", "rmd", "quarto" },  
+  pattern = { "r", "rmd", "quarto" },
   callback = function()
     local opts = { noremap = true, silent = true }
     -- Define keybindings for the current buffer
@@ -551,7 +551,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
-    -- function loaded from ~/.Rprofile 
+    -- function loaded from ~/.Rprofile
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
   end
 })
@@ -575,9 +575,9 @@ vim.api.nvim_create_autocmd("FileType", {
     -- Enter to follow link / open note
     map("n", "<CR>", "<Plug>VimwikiFollowLink")
     -- Optional niceties (uncomment if you want them)
-    map("n", "<BS>", "<Plug>VimwikiGoBackLink")   -- go back
-    map("n", "<Tab>", "<Plug>VimwikiNextLink")    -- next link
-    map("n", "<S-Tab>", "<Plug>VimwikiPrevLink")  -- prev link
+    map("n", "<BS>", "<Plug>VimwikiGoBackLink") -- go back
+    map("n", "<Tab>", "<Plug>VimwikiNextLink") -- next link
+    map("n", "<S-Tab>", "<Plug>VimwikiPrevLink") -- prev link
   end,
 })
 
@@ -591,7 +591,7 @@ vim.g.vimwiki_list = {
 }
 
 vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
--- vim.g.vimwiki_hl_headers = 1  -- use alternating colours for different heading levels
+-- vim.g.vimwiki_hl_headers = 1 -- use alternating colours for different heading levels
 -- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
 -- vim.g.taskwiki_markdown_syntax = "markdown"
 -- vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
@@ -636,7 +636,7 @@ require('render-markdown').setup({
       'RenderMarkdownH6',
     },
     custom = {},
-  },  
+  },
   html = {
     enabled = true,
     render_modes = false,
@@ -691,63 +691,63 @@ end
 -- all shortcuts in which-key
 
 function FilesHereOpen()
-  require('fzf-lua').files({ file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function FilesHomeOpen()
-  require('fzf-lua').files({ cwd = "~/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function WikiOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiZetOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/Zet/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function SyncOpen()
-  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", "%.spell" } }) 
+  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns = { "%._", "%.DS_Store", "%.spell" } })
 end
 
 function RworkspaceOpen()
-  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function ProfissionalOpen()
-  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function DownloadsOpen()
-  require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function HomeGrep()
-  require('fzf-lua').live_grep({ cwd = "~/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiZetGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function SyncGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", ".spell" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns = { "%._", "%.DS_Store", ".spell" } })
 end
 
 function RworkspaceGrep()
-  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function ProfissionalGrep()
-  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function DownloadsGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 -- }}}
@@ -800,14 +800,14 @@ vim.cmd[[let cmdline_app['python'] = 'ipython']]
 
 vim.cmd([[
  " vimcmdline mappings
- let cmdline_map_start          = '<LocalLeader>s'
- let cmdline_map_send           = '<Enter>'
- let cmdline_map_send_and_stay  = '<LocalLeader><Enter>'
- let cmdline_map_source_fun     = '<LocalLeader>f'
+ let cmdline_map_start = '<LocalLeader>s'
+ let cmdline_map_send = '<Enter>'
+ let cmdline_map_send_and_stay = '<LocalLeader><Enter>'
+ let cmdline_map_source_fun = '<LocalLeader>f'
  let cmdline_map_send_paragraph = '<LocalLeader>p'
- let cmdline_map_send_block     = '<LocalLeader>b'
- let cmdline_map_send_motion    = '<LocalLeader>m'
- let cmdline_map_quit           = '<LocalLeader>q'
+ let cmdline_map_send_block = '<LocalLeader>b'
+ let cmdline_map_send_motion = '<LocalLeader>m'
+ let cmdline_map_quit = '<LocalLeader>q'
 ]])
 
 -- <LocalLeader>s to start the interpreter.
@@ -818,7 +818,7 @@ vim.cmd([[
 -- <LocalLeader>p to send from the line to the end of paragraph.
 -- <LocalLeader>b to send block of code between the two closest marks.
 -- <LocalLeader>f to send the entire file to the interpreter.
--- <LocalLeader>m to send the text in the following motion to the interpreter. For example 
+-- <LocalLeader>m to send the text in the following motion to the interpreter. For example
 -- <LocalLeader>miw would send the selected word.
 
 -- }}}
@@ -911,7 +911,7 @@ local function replace_math_delimiters()
 end
 
 -- Comando Neovim: :ReplaceMathDelimiters
-vim.api.nvim_create_user_command("ReplaceMathDelimiters", 
+vim.api.nvim_create_user_command("ReplaceMathDelimiters",
   function() replace_math_delimiters()
   end, { desc = "Substitui delimitadores \\[\\]/\\(\\) por $$/$ no buffer atual" })
 
@@ -947,7 +947,7 @@ local function linuxify_text()
   local lines = vim.api.nvim_buf_get_lines(0, start_row - 1, end_row, false)
   if #lines == 0 then return end
 
-  local text = mode == 'V' and table.concat(lines, '\n') or 
+  local text = mode == 'V' and table.concat(lines, '\n') or
   (mode == 'v' and string.sub(lines[1], start_col, end_col) or lines[1])
 
   -- Special character conversion (Portuguese diacritics)
@@ -980,13 +980,13 @@ local function linuxify_text()
   if not filename then filename, extension = text, '' end
 
   local new_text = filename:lower()
-    :gsub('%s+', '-')      -- Spaces to hyphens
-    :gsub('[%._]+', '-')   -- Periods/underscores to hyphens
-    :gsub('[^%w%-]', '')   -- Remove remaining non-alphanumeric
-    :gsub('%-+', '-')      -- Multiple hyphens to single
-    :gsub('^%-', '')       -- Remove leading hyphen
-    :gsub('%-$', '')       -- Remove trailing hyphen
-  .. extension:lower()   -- Preserve extension
+    :gsub('%s+', '-') -- Spaces to hyphens
+    :gsub('[%._]+', '-') -- Periods/underscores to hyphens
+    :gsub('[^%w%-]', '') -- Remove remaining non-alphanumeric
+    :gsub('%-+', '-') -- Multiple hyphens to single
+    :gsub('^%-', '') -- Remove leading hyphen
+    :gsub('%-$', '') -- Remove trailing hyphen
+  .. extension:lower() -- Preserve extension
 
   -- Apply changes if different
   if new_text ~= text then
@@ -1011,8 +1011,8 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 -- Ensure Avante templates are installed into stdpath('data')
 do
   local data = vim.fn.stdpath("data")
-  local src  = data .. "/plugged/avante.nvim/lua/avante/templates"
-  local dst  = data .. "/avante_templates"
+  local src = data .. "/plugged/avante.nvim/lua/avante/templates"
+  local dst = data .. "/avante_templates"
 
   local function exists(p) return vim.loop.fs_stat(p) ~= nil end
   if exists(src) and not exists(dst) then
@@ -1040,7 +1040,7 @@ if ok_avante then
     providers = {
       openai = {
         endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o-mini",  -- pick your model here
+        model = "gpt-4o-mini", -- pick your model here
         timeout = 30000,
         extra_request_body = {
           temperature = 0.7,
@@ -1057,9 +1057,9 @@ if ok_clip then
   img_clip.setup({
     default = {
       embed_image_as_base64 = false,
-      prompt_for_file_name  = false,
-      drag_and_drop         = { insert_mode = true },
-      use_absolute_path     = true,
+      prompt_for_file_name = false,
+      drag_and_drop = { insert_mode = true },
+      use_absolute_path = true,
     },
   })
 end
@@ -1131,10 +1131,7 @@ wk.add({
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
   { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
-  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
-  -- { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
-  -- { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
-  { "<Space>r", "<cmd>RenameFile<CR>", desc = "rename file" },
+  { "<Space>R", "<cmd>RenameFile<CR>", desc = "rename file" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   -- { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
@@ -1160,9 +1157,9 @@ wk.add({
   { "<Space>cs", SyncGrep, desc = "~/sync" },
   { "<Space>cw", WikiGrep, desc = "~/wiki" },
   { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- Avante (AI assistant) 
+  -- Avante (AI assistant)
   { "<Space>a", group = "[a]vante" }, -- automatic detection
-    -- Markdown
+  -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
   { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
@@ -1172,7 +1169,7 @@ wk.add({
   { "<Space>mmo", "<cmd>MarkmapOpen<CR>", desc = "open" },
   { "<Space>mms", "<cmd>MarkmapSave<CR>", desc = "save" },
   { "<Space>mmw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
-  -- Make 
+  -- Make
   { "<Space>M", group = "[M]ake" },
   { "<Space>Mm", "<cmd>!make<CR>", desc = "make" },
   { "<Space>Md", "<cmd>!make docx<CR>", desc = "make docx" },
@@ -1209,8 +1206,8 @@ wk.add({
   { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
   { "<Space>vg", group = "[g]rammar check" }, -- subgroup
   { "<Space>vgb", ToggleSpellBoth, desc = "both (pt+en)", mode = { "n", "v" } },
-  { "<Space>vge", ToggleSpellEN,   desc = "english",       mode = { "n", "v" } },
-  { "<Space>vgp", ToggleSpellPT,   desc = "português",     mode = { "n", "v" } },
+  { "<Space>vge", ToggleSpellEN, desc = "english", mode = { "n", "v" } },
+  { "<Space>vgp", ToggleSpellPT, desc = "português", mode = { "n", "v" } },
   { "<Space>vl", group = "[l]sp" }, -- subgroup
   { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
   { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
@@ -1219,13 +1216,13 @@ wk.add({
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
   { "<Space>vic", "<cmd>PlugClean<CR>", desc = "clean plugins" },
-  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
+  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" },
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
   { "<Space>vfc", "<cmd>lua CopyToChunk()<CR>", desc = "copy to chunk", mode = { "v" } },
   { "<Space>vfw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
-  { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
-  { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
-  { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" },
+  { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" },
+  { "<Space>vfD", "<cmd>%s/\\([^ ]\\) */\\1 /g<CR>", desc = 'delete multiple spaces' },
   { "<Space>vfd", "<cmd>lua TrimTrailingWhitespace()<CR>", desc = 'delete space end of line' },
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
@@ -1235,20 +1232,20 @@ wk.add({
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
-  { "<Space>wm", function() require('winmove').start_mode('move')   end, desc = "move"   },
-  { "<Space>ws", function() require('winmove').start_mode('swap')   end, desc = "swap"   },
+  { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
+  { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
   { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
   -- vimwiki
   { "<Space>W", group = "[W]iki" },
-  { "<Space>Wi", "<cmd>VimwikiIndex<CR>",          desc = "index" },
-  { "<Space>Wt", "<cmd>VimwikiTOC<CR>",            desc = "table of contents" },
-  { "<Space>Wu", "<cmd>VimwikiUISelect<CR>",       desc = "select wiki" },
-  { "<Space>Wf", "<cmd>VimwikiFollowLink<CR>",     desc = "follow link" },
-  { "<Space>WB", "<cmd>VimwikiBacklinks<CR>",      desc = "backlinks" },
-  { "<Space>Wg", "<cmd>VimwikiGoto<CR>",           desc = "goto" },
-  { "<Space>WR", "<cmd>VimwikiRenameFile<CR>",     desc = "rename current file" },
-  { "<Space>WW", WikiOpen,     desc = "~/wiki (root)" },
-  { "<Space>Wz", WikiZetOpen,  desc = "~/wiki/zet" },
+  { "<Space>Wi", "<cmd>VimwikiIndex<CR>", desc = "index" },
+  { "<Space>Wt", "<cmd>VimwikiTOC<CR>", desc = "table of contents" },
+  { "<Space>Wu", "<cmd>VimwikiUISelect<CR>", desc = "select wiki" },
+  { "<Space>Wf", "<cmd>VimwikiFollowLink<CR>", desc = "follow link" },
+  { "<Space>WB", "<cmd>VimwikiBacklinks<CR>", desc = "backlinks" },
+  { "<Space>Wg", "<cmd>VimwikiGoto<CR>", desc = "goto" },
+  { "<Space>WR", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
+  { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
+  { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
 })
 
 --- }}}
