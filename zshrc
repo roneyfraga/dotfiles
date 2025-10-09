@@ -153,6 +153,13 @@ export FZF_DEFAULT_OPTS="\
   --bind=shift-tab:toggle+up\
   "
 
+# OLLAMA
+# case "$nome_do_computador" in
+#   "lisa"|"rambo")
+#     export OLLAMA_MODELS="/mnt/raid0/ollama/models"
+#     ;;
+# esac
+
 # CREDENTIALS
 source ~/.credentials/elsevier.sh
 
@@ -304,7 +311,7 @@ alias gds='git diff --stage '
 
 # small functions
 rsyncVolume(){
-  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@100.104.99.20:/var/www/roneyfraga.com/public_html/volume/"$2"
+  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
 }
 
 # translate-shell

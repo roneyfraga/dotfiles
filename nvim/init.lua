@@ -2,17 +2,17 @@
 -- General {{{
 
 -- vim.opt options
--- vim.g   geral
+-- vim.g geral
 -- vim.api api
 -- vim.cmd command
 
 -- Leaders
-vim.g.mapleader = " "        -- Espaço = atalhos gerais (which-key)
-vim.g.maplocalleader = "\\"  -- Barra invertida = atalhos específicos (R.nvim, etc.)
+vim.g.mapleader = " " -- Espaço = atalhos gerais (which-key)
+vim.g.maplocalleader = "\\" -- Barra invertida = atalhos específicos (R.nvim, etc.)
 
 vim.opt.number = true
 vim.opt.wrap = true
-vim.opt.showmode = false 
+vim.opt.showmode = false
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.shiftwidth = 2
@@ -53,7 +53,7 @@ hl(0, "TabLine", { bold = false, bg = "NONE", fg = "NONE" })
 hl(0, "TabLineFill", {})
 hl(0, "Pmenu", { ctermfg = 7, ctermbg = 0 })
 hl(0, "PmenuSel", { ctermfg = 0, ctermbg = 7 })
-hl(0, "SpellBad", { underline = true }) 
+hl(0, "SpellBad", { underline = true })
 
 -- }}}
 
@@ -70,7 +70,7 @@ opt.spelllang = { "pt_br", "en_us" }
 vim.api.nvim_set_hl(0, "SpellBad", { underline = true })
 
 -- dicionários pessoais: use append (não sobrescreva o valor anterior)
-opt.spellfile = vim.empty_dict()  -- zera de forma explícita
+opt.spellfile = vim.empty_dict() -- zera de forma explícita
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/lowercase.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/pt.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/en.utf-8.add"))
@@ -109,14 +109,14 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
--- marks in the side bar 
+-- marks in the side bar
 Plug('kshenoy/vim-signature')
 
 -- move between vim and tmux with control+hjkl
 Plug('christoomey/vim-tmux-navigator')
 
 -- FZF
-Plug('ibhagwan/fzf-lua') 
+Plug('ibhagwan/fzf-lua')
 Plug('nvim-tree/nvim-web-devicons')
 Plug('msprev/fzf-bibtex')
 
@@ -129,13 +129,13 @@ Plug('msprev/fzf-bibtex')
 -- Register on side bar: ou @ in normal mode; Control+R in normal mode
 Plug('junegunn/vim-peekaboo')
 
--- comment any file with motion gc[motion] 
+-- comment any file with motion gc[motion]
 Plug('tpope/vim-commentary')
 
 -- repeat vim and plugin commands with .
 Plug('tpope/vim-repeat')
 
--- R  
+-- R
 -- Plug('jalvesaq/Nvim-R')
 Plug('R-nvim/R.nvim')
 
@@ -146,7 +146,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-cmdline')
-Plug('R-nvim/cmp-r')  -- autocompletion with 'R-nvim/R.nvim'
+Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
@@ -155,11 +155,8 @@ Plug('micangl/cmp-vimtex')
 Plug('tamago324/cmp-zsh')
 Plug('Shougo/deol.nvim')
 
--- snippets 
+-- snippets
 Plug('roneyfraga/vim-snippets')
-
--- equation preview in markdown
-Plug('jbyuki/nabla.nvim')
 
 -- image from clipboad, web or file to neovim
 Plug('HakonHarnes/img-clip.nvim')
@@ -186,39 +183,53 @@ Plug('godlygeek/tabular')
 -- code formater
 Plug('sbdchd/neoformat')
 
---  Delete buffer withou messing the layout :Bd
+-- Delete buffer withou messing the layout :Bd
 Plug('moll/vim-bbye')
 
 -- distraction free :Goyo
 Plug('junegunn/goyo.vim')
 
 -- Python, Julia, Go
-Plug('jalvesaq/vimcmdline')
+Plug('jalvesaq/hlterm')
 
 -- bracket mappings - quickfix navigation
 Plug('tpope/vim-unimpaired')
 
--- surround a object with (`c` chance, `d` delete, `y` you surround) 
+-- surround a object with (`c` chance, `d` delete, `y` you surround)
 Plug('tpope/vim-surround')
 
--- wiki 
+-- wiki
 Plug('vimwiki/vimwiki')
 Plug('junegunn/fzf')
 Plug('junegunn/fzf.vim')
 Plug('michal-h21/vim-zettel')
 
--- markdown render 
+-- markdown render
 Plug('MeanderingProgrammer/render-markdown.nvim')
 
 -- nerd tree
 -- Plug('nvim-tree/nvim-tree.lua')
 
--- ChatGPT
--- Plug("MunifTanjim/nui.nvim") -- already instaled
-Plug("nvim-lua/plenary.nvim")
-Plug("folke/trouble.nvim")
-Plug("nvim-telescope/telescope.nvim")
-Plug("jackMort/ChatGPT.nvim")
+-- Avante
+Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
+
+-- required dependencies
+Plug('nvim-lua/plenary.nvim')
+-- Plug('MunifTanjim/nui.nvim') -- already instaled
+-- Plug('MeanderingProgrammer/render-markdown.nvim') -- already instaled
+Plug('stevearc/dressing.nvim') -- " for enhanced input UI
+Plug('folke/snacks.nvim') -- " for modern input UI
+
+-- optional dependecies
+Plug('nvim-tree/nvim-web-devicons')
+Plug('nvim-telescope/telescope.nvim')
+-- Plug('ibhagwan/fzf-lua') -- already instaled
+-- Plug('hrsh7th/nvim-cmp') -- already instaled
+Plug('stevearc/dressing.nvim')
+Plug('folke/snacks.nvim')
+
+-- windows movements
+Plug('MisanthropicBit/winmove.nvim')
 
 -- markmap
 -- also do: yarn global add markmap-cli
@@ -231,20 +242,20 @@ vim.call('plug#end')
 -- Colorschemes and Status Line {{{
 
 vim.cmd("set background=dark") -- or light if you want light mode
-vim.cmd("colorscheme gruvbox") 
+vim.cmd("colorscheme gruvbox")
 
 function getWords()
   local wc = vim.fn.wordcount()
-  if wc["visual_words"] then 
+  if wc["visual_words"] then
     -- return wc["visual_words"] .. " words"
-    return wc["visual_words"] 
-  else 
+    return wc["visual_words"]
+  else
     -- return wc["words"] .. " words"
-    return wc["words"] 
+    return wc["words"]
   end
 end
 
-require'lualine'.setup { 
+require'lualine'.setup {
   options = { theme = 'gruvbox' },
   sections = {
     lualine_z = {
@@ -256,12 +267,45 @@ require'lualine'.setup {
 
 -- }}}
 
+-- nvim-lspconfig {{{
+
+-- LSP (Neovim 0.11+ API)
+pcall(require, "lspconfig")
+
+-- Capabilities for nvim-cmp
+local caps = require("cmp_nvim_lsp").default_capabilities()
+
+-- Basic per-buffer keymaps
+local on_attach = function(_, bufnr)
+  local k = function(lhs, rhs) vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true }) end
+  k("gd", vim.lsp.buf.definition)
+  k("K",  vim.lsp.buf.hover)
+  k("gr", vim.lsp.buf.references)
+end
+
+-- Configure one or two servers explicitly (only if you need custom opts)
+vim.lsp.config("lua_ls", {
+  on_attach = on_attach,
+  capabilities = caps,
+  settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+})
+
+-- Enable all desired servers at once (defaults + any configs above)
+vim.lsp.enable({
+  "lua_ls",
+  "pyright",
+  "bashls",
+  "r_language_server",
+})
+
+-- }}}
+
 -- Auto complete and Beauty {{{
 
 -- linux: pacman -S pyright
 -- R: install.packages("languageserver")
 
--- TreeSitter 
+-- TreeSitter
 -- :TSInstall r
 -- :TSInstall python
 -- :TSInstall lua
@@ -283,8 +327,13 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
   sync_install = false,
   auto_install = true,
-  highlight = { enable = true, additional_vim_regex_highlighting = false},
-  indent = {enable = true}, 
+  highlight = {
+    enable = true,
+    disable = function(lang)
+      return lang == "markdown" or lang == "markdown_inline"
+    end,
+  },
+  indent = {enable = true},
 }
 
 -- Set up nvim-cmp.
@@ -294,7 +343,7 @@ local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      require('snippy').expand_snippet(args.body) 
+      require('snippy').expand_snippet(args.body)
     end,
   },
   window = {
@@ -302,10 +351,10 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-n>'] = cmp.mapping.select_next_item(), 
-    ['<C-p>'] = cmp.mapping.select_prev_item(), 
-    ['<C-Space>'] = cmp.mapping.complete(), 
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), 
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),
@@ -317,12 +366,12 @@ cmp.setup({
     { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
-    { name = 'cmdline' }, 
-    { name = 'zsh' }, 
-    { name = 'markdown' }, 
-    { name = 'markdown_inline' }, 
-    { name = 'latex_symbols' }, 
-    { name = 'yaml' }, 
+    { name = 'cmdline' },
+    { name = 'zsh' },
+    { name = 'markdown' },
+    { name = 'markdown_inline' },
+    { name = 'latex_symbols' },
+    { name = 'yaml' },
   }, {
       { name = 'buffer', keyword_length = 5 },
     })
@@ -362,13 +411,13 @@ cmp.setup.cmdline(':', {
   matching = { disallow_symbol_nonprefix_matching = false }
 })
 
--- PasteImage image from clipboad, system or web to neovim with img-clip.nvim 
+-- PasteImage image from clipboad, system or web to neovim with img-clip.nvim
 require("img-clip").setup({
   default = {
-    dir_path = "./",  
-    extension = "png",  -- (opcional)
-    file_name = "%Y-%m-%d-%H-%M-%S",  -- (opcional)
-    use_absolute_path = false,  
+    dir_path = "./",
+    extension = "png", -- (opcional)
+    file_name = "%Y-%m-%d-%H-%M-%S", -- (opcional)
+    use_absolute_path = false,
   },
 })
 
@@ -376,9 +425,6 @@ require("img-clip").setup({
 -- vim.cmd[[nnoremap ;p :PasteImage<CR>]]
 
 -- see which-key
--- preview equations with nabla.nvim
--- ;e
--- vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 
 -- noice: command line on center
 require("noice").setup({
@@ -400,7 +446,7 @@ require("noice").setup({
   },
   cmdline = {
     opts = {
-      position = { 
+      position = {
         row = "50%", -- posição vertical (50% para centralizar)
         col = "50%", -- posição horizontal (50% para centralizar)
       },
@@ -427,7 +473,7 @@ vim.opt.foldenable = true -- disable folding on startup
 
 -- rename file
 function RenameFile()
-  local old_name = vim.fn.expand('%:p')   -- caminho absoluto do arquivo aberto
+  local old_name = vim.fn.expand('%:p') -- caminho absoluto do arquivo aberto
   local new_name = vim.fn.input('Novo nome: ', old_name, 'file')
   if new_name == '' or new_name == old_name then
     return
@@ -452,34 +498,8 @@ vim.api.nvim_create_user_command('RenameFile', RenameFile, {})
 
 -- R-nvim {{{
 
--- :RMapsDesc         -- list all commands
--- :RConfigShow       -- list configurations 
---
-
--- require'lspconfig'.pyright.setup{}
-
-local nvim_lsp = require('lspconfig')
-
-nvim_lsp.r_language_server.setup {
-  cmd = { "R", "--slave", "-e", "languageserver::run()" },
-  settings = {
-    languageserver = {
-      diagnostics = {
-        globals = { "nvim" }, -- Inclui nvim como global para diagnósticos
-      },
-    },
-  },
-}
-
--- LSP Enable 
-function LspEnable()
-  require('lspconfig').r_language_server.setup{
-    cmd = { "R", "--slave", "-e", "languageserver::run()" },
-  }
-end
-
--- LSP Disable
--- vim.lsp.stop_client(vim.lsp.get_active_clients())
+-- :RMapsDesc -- list all commands
+-- :RConfigShow -- list configurations
 
 -- R.nvim: configurações gerais
 require("r").setup({
@@ -487,10 +507,10 @@ require("r").setup({
   -- sources = {
   -- { name = 'cmp_r' },
   -- },
-  -- R_args = {"--no-save"}, 
-  min_editor_width = 72, 
-  rconsole_width = 78, 
-  disable_cmds = { 
+  -- R_args = {"--no-save"},
+  min_editor_width = 72,
+  rconsole_width = 78,
+  disable_cmds = {
     -- "RSPlot",
     -- "RSaveClose",
   },
@@ -498,7 +518,7 @@ require("r").setup({
     on_filetype = function()
       -- Mapeamentos de teclas específicos para arquivos R
       vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
-      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {}) 
+      vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
     end,
   },
 })
@@ -521,7 +541,7 @@ vim.api.nvim_set_keymap('n', '<LocalLeader>T', '<cmd>lua vim.fn.RAction("tail")<
 
 -- keybindings only inside R, Rmd, and Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "r", "rmd", "quarto" },  
+  pattern = { "r", "rmd", "quarto" },
   callback = function()
     local opts = { noremap = true, silent = true }
     -- Define keybindings for the current buffer
@@ -535,7 +555,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>g', "<cmd>lua require('r.run').action('glimpse')<CR>", opts)
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>v', "<cmd>lua require('r.run').action('viewobj', 'h')<CR>", opts)
 
-    -- function loaded from ~/.Rprofile 
+    -- function loaded from ~/.Rprofile
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
   end
 })
@@ -543,6 +563,28 @@ vim.api.nvim_create_autocmd("FileType", {
 -- }}}
 
 -- Markdown VimWiki + render + preview {{{
+
+-- disable default mappings
+vim.g.vimwiki_key_mappings = { all_maps = 0, global = 0 }
+
+-- Re-enable *just* the link navigation you want inside Vimwiki buffers
+local grp = vim.api.nvim_create_augroup("MyVimwikiMaps", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = grp,
+  pattern = "vimwiki",
+  callback = function()
+    local map = function(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+    end
+    -- Enter to follow link / open note
+    map("n", "<CR>", "<Plug>VimwikiFollowLink")
+    -- Optional niceties (uncomment if you want them)
+    map("n", "<BS>", "<Plug>VimwikiGoBackLink") -- go back
+    map("n", "<Tab>", "<Plug>VimwikiNextLink") -- next link
+    map("n", "<S-Tab>", "<Plug>VimwikiPrevLink") -- prev link
+  end,
+})
+
 
 vim.g.vimwiki_list = {
   {
@@ -553,20 +595,36 @@ vim.g.vimwiki_list = {
 }
 
 vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
--- vim.g.vimwiki_hl_headers = 1  -- use alternating colours for different heading levels
+-- vim.g.vimwiki_hl_headers = 1 -- use alternating colours for different heading levels
 -- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
 -- vim.g.taskwiki_markdown_syntax = "markdown"
 -- vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
 
+-- ---------------------------------------
+-- First define the highlights
+
+-- fix color bug in render-markdown.nvim
+vim.cmd([[
+  highlight RenderMarkdownH1Bg guibg=#5b474e guifg=#f38ba8
+  highlight RenderMarkdownH2Bg guibg=#514046 guifg=#f5c2e7
+  highlight RenderMarkdownH3Bg guibg=#47393e guifg=#bea9a2
+  highlight RenderMarkdownH4Bg guibg=#3d3236 guifg=#cbb6b0
+  highlight RenderMarkdownH5Bg guibg=#332b2e guifg=#d8c3be
+  highlight RenderMarkdownH6Bg guibg=#2a2426 guifg=#e5d0cc
+]])
+
 require('render-markdown').setup({
   file_types = { 'markdown', 'vimwiki', 'quarto' },
-  render_modes = true, -- preview em todos os modos
+  render_modes = true,
   anti_conceal = { enabled = true },
   heading = {
     enabled = true,
+    render_modes = false,
+    atx = true,
+    setext = true,
     sign = true,
-    position = 'overlay',
     icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+    position = 'overlay',
     signs = { '󰫎 ' },
     width = 'full',
     left_margin = 0,
@@ -579,12 +637,12 @@ require('render-markdown').setup({
     above = '▄',
     below = '▀',
     backgrounds = {
+      'RenderMarkdownH1Bg',
       'RenderMarkdownH2Bg',
       'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
+      'RenderMarkdownH4Bg',
+      'RenderMarkdownH5Bg',
+      'RenderMarkdownH6Bg',
     },
     foregrounds = {
       'RenderMarkdownH1',
@@ -594,24 +652,12 @@ require('render-markdown').setup({
       'RenderMarkdownH5',
       'RenderMarkdownH6',
     },
+    custom = {},
   },
   html = {
-    -- Turn on / off all HTML rendering.
     enabled = true,
-    -- Additional modes to render HTML.
     render_modes = false,
-    comment = {
-      -- Turn on / off HTML comment concealing.
-      conceal = false,
-      -- Optional text to inline before the concealed comment.
-      text = nil,
-      -- Highlight for the inlined text.
-      highlight = 'RenderMarkdownHtmlComment',
-    },
-    -- HTML tags whose start and end will be hidden and icon shown.
-    -- The key is matched against the tag name, value type below.
-    -- | icon      | gets inlined at the start |
-    -- | highlight | highlight for the icon    |
+    comment = { conceal = false, text = nil, highlight = 'RenderMarkdownHtmlComment' },
     tag = {},
   },
 })
@@ -662,63 +708,63 @@ end
 -- all shortcuts in which-key
 
 function FilesHereOpen()
-  require('fzf-lua').files({ file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function FilesHomeOpen()
-  require('fzf-lua').files({ cwd = "~/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function WikiOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiZetOpen()
-  require('fzf-lua').files({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Wiki/Zet/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function SyncOpen()
-  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", "%.spell" } }) 
+  require('fzf-lua').files({ cwd = "~/Sync/", file_ignore_patterns = { "%._", "%.DS_Store", "%.spell" } })
 end
 
 function RworkspaceOpen()
-  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function ProfissionalOpen()
-  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function DownloadsOpen()
-  require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').files({ cwd = "~/Downloads/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function HomeGrep()
-  require('fzf-lua').live_grep({ cwd = "~/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function WikiZetGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet/", file_ignore_patterns  = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Wiki/Zet/", file_ignore_patterns = { "%.html", "%.css", "%.js", "%.woff", "%._", "%.DS_Store" } })
 end
 
 function SyncGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns  = { "%._", "%.DS_Store", ".spell" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Sync/", file_ignore_patterns = { "%._", "%.DS_Store", ".spell" } })
 end
 
 function RworkspaceGrep()
-  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Rworkspace/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function ProfissionalGrep()
-  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "/mnt/raid0/Pessoal/Documents/Profissional/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 function DownloadsGrep()
-  require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns  = { "%._", "%.DS_Store" } }) 
+  require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
 
 -- }}}
@@ -762,24 +808,10 @@ vim.keymap.set("n", "<C-w><", function() return (vim.v.count1 * 10).."<C-w><" en
 vim.keymap.set("n", "<C-w>>", function() return (vim.v.count1 * 10).."<C-w>>" end, { expr = true, desc = "split + largura" })
 -- }}}
 
--- Python, Julia and vimcmdline {{{
+-- Python, Julia with hlterm {{{
 --
--- vimcmdline mappings
+-- hlterm mappings
 
-vim.cmd[[let cmdline_app = {}]]
-vim.cmd[[let cmdline_app['python'] = 'ipython']]
-
-vim.cmd([[
- " vimcmdline mappings
- let cmdline_map_start          = '<LocalLeader>s'
- let cmdline_map_send           = '<Enter>'
- let cmdline_map_send_and_stay  = '<LocalLeader><Enter>'
- let cmdline_map_source_fun     = '<LocalLeader>f'
- let cmdline_map_send_paragraph = '<LocalLeader>p'
- let cmdline_map_send_block     = '<LocalLeader>b'
- let cmdline_map_send_motion    = '<LocalLeader>m'
- let cmdline_map_quit           = '<LocalLeader>q'
-]])
 
 -- <LocalLeader>s to start the interpreter.
 -- <Enter> to send the current line to the interpreter.
@@ -789,7 +821,7 @@ vim.cmd([[
 -- <LocalLeader>p to send from the line to the end of paragraph.
 -- <LocalLeader>b to send block of code between the two closest marks.
 -- <LocalLeader>f to send the entire file to the interpreter.
--- <LocalLeader>m to send the text in the following motion to the interpreter. For example 
+-- <LocalLeader>m to send the text in the following motion to the interpreter. For example
 -- <LocalLeader>miw would send the selected word.
 
 -- }}}
@@ -882,7 +914,7 @@ local function replace_math_delimiters()
 end
 
 -- Comando Neovim: :ReplaceMathDelimiters
-vim.api.nvim_create_user_command("ReplaceMathDelimiters", 
+vim.api.nvim_create_user_command("ReplaceMathDelimiters",
   function() replace_math_delimiters()
   end, { desc = "Substitui delimitadores \\[\\]/\\(\\) por $$/$ no buffer atual" })
 
@@ -918,7 +950,7 @@ local function linuxify_text()
   local lines = vim.api.nvim_buf_get_lines(0, start_row - 1, end_row, false)
   if #lines == 0 then return end
 
-  local text = mode == 'V' and table.concat(lines, '\n') or 
+  local text = mode == 'V' and table.concat(lines, '\n') or
   (mode == 'v' and string.sub(lines[1], start_col, end_col) or lines[1])
 
   -- Special character conversion (Portuguese diacritics)
@@ -951,13 +983,13 @@ local function linuxify_text()
   if not filename then filename, extension = text, '' end
 
   local new_text = filename:lower()
-    :gsub('%s+', '-')      -- Spaces to hyphens
-    :gsub('[%._]+', '-')   -- Periods/underscores to hyphens
-    :gsub('[^%w%-]', '')   -- Remove remaining non-alphanumeric
-    :gsub('%-+', '-')      -- Multiple hyphens to single
-    :gsub('^%-', '')       -- Remove leading hyphen
-    :gsub('%-$', '')       -- Remove trailing hyphen
-  .. extension:lower()   -- Preserve extension
+    :gsub('%s+', '-') -- Spaces to hyphens
+    :gsub('[%._]+', '-') -- Periods/underscores to hyphens
+    :gsub('[^%w%-]', '') -- Remove remaining non-alphanumeric
+    :gsub('%-+', '-') -- Multiple hyphens to single
+    :gsub('^%-', '') -- Remove leading hyphen
+    :gsub('%-$', '') -- Remove trailing hyphen
+  .. extension:lower() -- Preserve extension
 
   -- Apply changes if different
   if new_text ~= text then
@@ -977,130 +1009,77 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 
 --- }}}
 
--- Nerd Tree {{{
+-- Avante {{{
 
--- disable netrw at the very start of your init.lua
---vim.g.loaded_netrw = 1
---vim.g.loaded_netrwPlugin = 1
+-- -- Ensure Avante templates are installed into stdpath('data')
+-- do
+--   local data = vim.fn.stdpath("data")
+--   local src = data .. "/plugged/avante.nvim/lua/avante/templates"
+--   local dst = data .. "/avante_templates"
 
--- optionally enable 24-bit colour
---vim.opt.termguicolors = true
+--   local function exists(p) return vim.loop.fs_stat(p) ~= nil end
+--   if exists(src) and not exists(dst) then
+--     vim.fn.mkdir(dst, "p")
+--     vim.fn.system({ "cp", "-r", src .. "/.", dst })
+--   end
+-- end
 
--- setup nvim-tree with some options
--- require("nvim-tree").setup({
---   sort = { sorter = "case_sensitive" },
---   view = { width = 30 },
---   renderer = { group_empty = true },
---   filters = { dotfiles = true },
--- })
+-- Securely fetch API key from system keyring
+local handle = io.popen("secret-tool lookup openai neovim")
+local api_key = handle:read("*a"):gsub("%s+", "")
+handle:close()
 
---- }}}
+-- Inject into environment so Avante sees it
+vim.env.OPENAI_API_KEY = api_key
 
--- ChatGPT {{{
-
--- "gpt-3.5-turbo"
--- "gpt-4"
--- "gpt-4.0-turbo"
--- "gpt-4o-mini"
--- "gpt-4o"
--- "o1-preview"
--- "o1-mini"
-
-require("chatgpt").setup({
-  api_key_cmd = "secret-tool lookup openai neovim",
-
-  openai_params = {
-    model = "gpt-4",
-    max_tokens = 512,
-    temperature = 0.2,
-    top_p = 0.9,
-    n = 1,
-    presence_penalty = 0,
-    frequency_penalty = 0,
-  },
-
-  openai_edit_params = {
-    model = "gpt-4",
-    max_tokens = 512,
-    temperature = 0.2,
-    top_p = 0.9,
-    n = 1,
-  },
-
-  -- Algumas versões expõem params por ação. Se houver, force aqui:
-  actions = {
-    -- exemplos comuns; ajuste aos que você usa
-    code_edit = { params = { max_tokens = 512 } },
-    code_refactor = { params = { max_tokens = 512 } },
-    explain_code = { params = { max_tokens = 512 } },
-  },
-
-  chat = {
-    window = {
-      layout = {
-        relative = "editor",
-        position = "50%",
-        size = {
-          width = "90%",
-          height = "80%",
+-- Load Avante
+local ok_avante, avante = pcall(require, 'avante')
+if ok_avante then
+  avante.setup({
+    instructions_file = "avante.md",
+    provider = "openai",
+    providers = {
+      openai = {
+        endpoint = "https://api.openai.com/v1",
+        model = "gpt-4o-mini", -- pick your model here
+        timeout = 30000,
+        extra_request_body = {
+          temperature = 0.7,
+          max_tokens = 4096,
         },
       },
     },
-  },
-  popup_input = {
-    submit = "<C-s>",
-    max_height = 10,
-  },
+    windows = { 
+      edit = { -- float
+        border = "rounded",
+        start_insert = true,
+        width = 60,  -- width in columns
+        height = 3, -- height in rows
+      },
+    },
+  })
+end
 
-})
+-- Image clipboard integration
+local ok_clip, img_clip = pcall(require, 'img-clip')
+if ok_clip then
+  img_clip.setup({
+    default = {
+      embed_image_as_base64 = false,
+      prompt_for_file_name = false,
+      drag_and_drop = { insert_mode = true },
+      use_absolute_path = true,
+    },
+  })
+end
 
--- history in: ~/.local/state/nvim/chatgpt/
--- generate :ChatGPTHistoryCleaning
-vim.api.nvim_create_user_command("ChatGPTHistoryCleaning", function()
-  local history_path = vim.fn.stdpath("state") .. "/chatgpt"
-  if vim.fn.isdirectory(history_path) == 1 then
-    local files = vim.fn.glob(history_path .. "/*.json", false, true)
-    if #files == 0 then
-      print("ChatGPT.nvim: no JSON file found at: " .. history_path)
-      return
-    end
-    for _, f in ipairs(files) do
-      vim.fn.delete(f)
-    end
-    print("ChatGPT.nvim: " .. #files .. " files JSON deleted at: " .. history_path)
-  else
-    print("ChatGPT.nvim: no direcctory found (" .. history_path .. ")")
-  end
-end, {})
+-- Render Markdown inside Avante buffers
+local ok_rmd, rmd = pcall(require, 'render-markdown')
+if ok_rmd then
+  rmd.setup({ file_types = { "markdown", "Avante" } })
+end
 
--- require("chatgpt").setup({
---   api_key_cmd = "secret-tool lookup openai neovim",
-
---   openai_params = {
---     -- NOTE: model can be a function returning the model name
---     -- this is useful if you want to change the model on the fly
---     -- using commands
---     -- Example:
---     -- model = function()
---         -- if some_condition() then
---             -- return "gpt-4-1106-preview"
---         -- else
---             -- return "gpt-3.5-turbo"
---         -- end
---     -- end,
---     -- model = "gpt-4-1106-preview",
---     -- model = "gpt-4o-mini",
---     model = "gpt-4",
---     frequency_penalty = 0,
---     presence_penalty = 0,
---     max_tokens = 1024,
---     temperature = 0.2,
---     top_p = 0.1,
---     n = 1,
---   }
--- })
-
---- }}}
+-- }}}
 
 -- MarkMap {{{
 
@@ -1115,6 +1094,21 @@ require('markmap').setup({
 })
 
 vim.filetype.add({ extension = { mm = "markdown" } })
+
+--- }}}
+
+-- Windows {{{
+
+local ok_wm, wm = pcall(require, 'winmove')
+if ok_wm then
+  wm.configure({
+    modes = {
+      resize = { default_resize_count = 3 },
+    },
+  })
+end
+
+local function curwin() return vim.api.nvim_get_current_win() end
 
 --- }}}
 
@@ -1134,18 +1128,24 @@ require("which-key").setup({
   sort = { "order", "local", "group", "alphanum", "mod" }, -- Define a ordem dos mapeamentos
 })
 
+-- make key resolution reliable
+vim.o.timeout = true
+vim.o.timeoutlen = 500
+
+-- replace default search in /
+vim.keymap.set('n', '/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', { noremap = true, silent = true })
+-- delete snipp-cut-text) from wich-key
+vim.keymap.del('n', '<leader>x')
+
 local wk = require("which-key")
 
 wk.add({
   -- main group
-  { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
+  -- { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
-  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
-  { "<Space>w", "<cmd>w<CR>", desc = "write" },
-  { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
+  { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
-  { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
-  { "<Space>r", "<cmd>RenameFile<CR>", desc = "rename file" },
+  { "<Space>R", "<cmd>RenameFile<CR>", desc = "rename file" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   -- { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },
@@ -1159,37 +1159,20 @@ wk.add({
   { "<Space>fs", SyncOpen, desc = "~/sync" },
   { "<Space>fw", WikiOpen, desc = "~/wiki" },
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
-  -- search content
-  { "<Space>s", group = "[s]earch content" },
-  { "<Space>sb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
-  { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
-  { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
-  { "<Space>sh", HomeGrep, desc = "~/" },
-  { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
-  { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
-  { "<Space>sD", DownloadsGrep, desc = "~/downloads" },
-  { "<Space>ss", SyncGrep, desc = "~/sync" },
-  { "<Space>sw", WikiGrep, desc = "~/wiki" },
-  { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- ChatGPT
-  { "<Space>c", group = "[c]hat gpt" },
-  { "<Space>cc", "<cmd>ChatGPT<CR>", desc = "ChatGPT", mode = { "n", "v" } },
-  { "<Space>ce", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instruction", mode = { "n", "v" } },
-  { "<Space>ck",  "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "n", "v" } },
-  { "<Space>cd", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "n", "v" } },
-  { "<Space>ca", "<cmd>ChatGPTRun add_tests<CR>", desc = "Add Tests", mode = { "n", "v" } },
-  { "<Space>co", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize Code", mode = { "n", "v" } },
-  { "<Space>cs", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "n", "v" } },
-  { "<Space>cf", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "n", "v" } },
-  { "<Space>cx", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain Code", mode = { "n", "v" } },
-  { "<Space>cr", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "n", "v" } },
-  { "<Space>cl", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Code Readability Analysis", mode = { "n", "v" } },
-  { "<Space>ch", "<cmd>ChatGPTHistoryCleaning<CR>", desc = "History Cleaning", mode = { "n", "v" } },
-  { "<Space>cg", group = "[g]rammar and translate" }, -- subgroup
-  { "<Space>cgp", "<cmd>ChatGPTRun grammar_correction português brasileiro<CR>", desc = "Grammar Correction pt_br", mode = { "n", "v" } },
-  { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
-  { "<Space>cgP", "<cmd>ChatGPTRun translate to brazilian porgutuese<CR>", desc = "Translate en_pt", mode = { "n", "v" } },
-  { "<Space>cgE", "<cmd>ChatGPTRun translate to american english<CR>", desc = "Translate pt_en", mode = { "n", "v" } },
+  -- content search
+  { "<Space>c", group = "[c]ontent search" },
+  { "<Space>cb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
+  { "<Space>cd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
+  { "<Space>cq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>ch", HomeGrep, desc = "~/" },
+  { "<Space>cp", ProfissionalGrep, desc = "/mnt/.../profissional" },
+  { "<Space>cr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
+  { "<Space>cD", DownloadsGrep, desc = "~/downloads" },
+  { "<Space>cs", SyncGrep, desc = "~/sync" },
+  { "<Space>cw", WikiGrep, desc = "~/wiki" },
+  { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
+  -- Avante (AI assistant)
+  { "<Space>a", group = "[a]vante" }, -- automatic detection
   -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
@@ -1200,7 +1183,7 @@ wk.add({
   { "<Space>mmo", "<cmd>MarkmapOpen<CR>", desc = "open" },
   { "<Space>mms", "<cmd>MarkmapSave<CR>", desc = "save" },
   { "<Space>mmw", "<cmd>MarkmapWatch<CR>", desc = "watch" },
-  -- Make 
+  -- Make
   { "<Space>M", group = "[M]ake" },
   { "<Space>Mm", "<cmd>!make<CR>", desc = "make" },
   { "<Space>Md", "<cmd>!make docx<CR>", desc = "make docx" },
@@ -1225,7 +1208,6 @@ wk.add({
   { "<Space>MqA", "<cmd>!make qrcs<CR>", desc = "quarto render --cache-refresh sync" },
   -- vim
   { "<Space>v", group = "[v]im" },
-  { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
   { "<Space>vc", group = "[c]olor" }, -- subgroup
@@ -1237,8 +1219,8 @@ wk.add({
   { "<Space>vdt", "<cmd>InsertTime<CR>", desc = "time" },
   { "<Space>vg", group = "[g]rammar check" }, -- subgroup
   { "<Space>vgb", ToggleSpellBoth, desc = "both (pt+en)", mode = { "n", "v" } },
-  { "<Space>vge", ToggleSpellEN,   desc = "english",       mode = { "n", "v" } },
-  { "<Space>vgp", ToggleSpellPT,   desc = "português",     mode = { "n", "v" } },
+  { "<Space>vge", ToggleSpellEN, desc = "english", mode = { "n", "v" } },
+  { "<Space>vgp", ToggleSpellPT, desc = "português", mode = { "n", "v" } },
   { "<Space>vl", group = "[l]sp" }, -- subgroup
   { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
   { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
@@ -1247,13 +1229,13 @@ wk.add({
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
   { "<Space>vic", "<cmd>PlugClean<CR>", desc = "clean plugins" },
-  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" }, 
+  { "<Space>vis", "<cmd>source ~/.config/nvim/init.lua<CR>", desc = "source init.lua" },
   { "<Space>vf", group = "[f]ormat" }, -- subgroup
   { "<Space>vfc", "<cmd>lua CopyToChunk()<CR>", desc = "copy to chunk", mode = { "v" } },
   { "<Space>vfw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
-  { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" }, 
-  { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" }, 
-  { "<Space>vfD", "<cmd>%s/\\([^ ]\\)  */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" },
+  { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" },
+  { "<Space>vfD", "<cmd>%s/\\([^ ]\\) */\\1 /g<CR>", desc = 'delete multiple spaces' },
   { "<Space>vfd", "<cmd>lua TrimTrailingWhitespace()<CR>", desc = 'delete space end of line' },
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
@@ -1261,8 +1243,24 @@ wk.add({
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
   { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
+  -- windows {move, swap, resize}
+  { "<Space>w", group = "[w]indows" },
+  { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
+  { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
+  { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
+  -- vimwiki
+  { "<Space>W", group = "[W]iki" },
+  { "<Space>Wi", "<cmd>VimwikiIndex<CR>", desc = "index" },
+  { "<Space>Wt", "<cmd>VimwikiTOC<CR>", desc = "table of contents" },
+  { "<Space>Wu", "<cmd>VimwikiUISelect<CR>", desc = "select wiki" },
+  { "<Space>Wf", "<cmd>VimwikiFollowLink<CR>", desc = "follow link" },
+  { "<Space>WB", "<cmd>VimwikiBacklinks<CR>", desc = "backlinks" },
+  { "<Space>Wg", "<cmd>VimwikiGoto<CR>", desc = "goto" },
+  { "<Space>WR", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
+  { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
+  { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
 })
 
--- }}}
+--- }}}
 
 -- vim: fdm=marker nowrap
