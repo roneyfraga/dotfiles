@@ -213,12 +213,28 @@ Plug('MeanderingProgrammer/render-markdown.nvim')
 -- nerd tree
 -- Plug('nvim-tree/nvim-tree.lua')
 
--- ChatGPT
--- Plug("MunifTanjim/nui.nvim") -- already instaled
-Plug("nvim-lua/plenary.nvim")
-Plug("folke/trouble.nvim")
-Plug("nvim-telescope/telescope.nvim")
-Plug("jackMort/ChatGPT.nvim")
+-- Avante
+-- Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
+Plug('yetone/avante.nvim', { ['do'] = 'make' })
+
+-- required dependencies
+Plug('nvim-lua/plenary.nvim')
+-- Plug('MunifTanjim/nui.nvim') -- already instaled
+-- Plug('MeanderingProgrammer/render-markdown.nvim') -- already instaled
+Plug('stevearc/dressing.nvim') -- " for enhanced input UI
+Plug('folke/snacks.nvim') -- " for modern input UI
+
+-- optional dependecies
+Plug('nvim-tree/nvim-web-devicons')
+Plug('nvim-telescope/telescope.nvim')
+-- Plug('ibhagwan/fzf-lua') -- already instaled
+-- Plug('hrsh7th/nvim-cmp') -- already instaled
+Plug('stevearc/dressing.nvim')
+Plug('folke/snacks.nvim')
+-- Plug('zbirenbaum/copilot.lua')
+
+-- windows movements
+Plug('MisanthropicBit/winmove.nvim')
 
 -- markmap
 -- also do: yarn global add markmap-cli
@@ -544,6 +560,28 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Markdown VimWiki + render + preview {{{
 
+-- disable default mappings
+vim.g.vimwiki_key_mappings = { all_maps = 0, global = 0 }
+
+-- Re-enable *just* the link navigation you want inside Vimwiki buffers
+local grp = vim.api.nvim_create_augroup("MyVimwikiMaps", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = grp,
+  pattern = "vimwiki",
+  callback = function()
+    local map = function(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+    end
+    -- Enter to follow link / open note
+    map("n", "<CR>", "<Plug>VimwikiFollowLink")
+    -- Optional niceties (uncomment if you want them)
+    map("n", "<BS>", "<Plug>VimwikiGoBackLink")   -- go back
+    map("n", "<Tab>", "<Plug>VimwikiNextLink")    -- next link
+    map("n", "<S-Tab>", "<Plug>VimwikiPrevLink")  -- prev link
+  end,
+})
+
+
 vim.g.vimwiki_list = {
   {
     path = '~/Wiki',
@@ -560,13 +598,16 @@ vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
 
 require('render-markdown').setup({
   file_types = { 'markdown', 'vimwiki', 'quarto' },
-  render_modes = true, -- preview em todos os modos
+  render_modes = true,
   anti_conceal = { enabled = true },
   heading = {
     enabled = true,
+    render_modes = false,
+    atx = true,
+    setext = true,
     sign = true,
-    position = 'overlay',
     icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+    position = 'overlay',
     signs = { '󰫎 ' },
     width = 'full',
     left_margin = 0,
@@ -579,12 +620,12 @@ require('render-markdown').setup({
     above = '▄',
     below = '▀',
     backgrounds = {
+      'RenderMarkdownH1Bg',
       'RenderMarkdownH2Bg',
       'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
-      'RenderMarkdownH3Bg',
+      'RenderMarkdownH4Bg',
+      'RenderMarkdownH5Bg',
+      'RenderMarkdownH6Bg',
     },
     foregrounds = {
       'RenderMarkdownH1',
@@ -594,24 +635,12 @@ require('render-markdown').setup({
       'RenderMarkdownH5',
       'RenderMarkdownH6',
     },
-  },
+    custom = {},
+  },  
   html = {
-    -- Turn on / off all HTML rendering.
     enabled = true,
-    -- Additional modes to render HTML.
     render_modes = false,
-    comment = {
-      -- Turn on / off HTML comment concealing.
-      conceal = false,
-      -- Optional text to inline before the concealed comment.
-      text = nil,
-      -- Highlight for the inlined text.
-      highlight = 'RenderMarkdownHtmlComment',
-    },
-    -- HTML tags whose start and end will be hidden and icon shown.
-    -- The key is matched against the tag name, value type below.
-    -- | icon      | gets inlined at the start |
-    -- | highlight | highlight for the icon    |
+    comment = { conceal = false, text = nil, highlight = 'RenderMarkdownHtmlComment' },
     tag = {},
   },
 })
@@ -977,130 +1006,71 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 
 --- }}}
 
--- Nerd Tree {{{
+-- Avante {{{
 
--- disable netrw at the very start of your init.lua
---vim.g.loaded_netrw = 1
---vim.g.loaded_netrwPlugin = 1
+-- Ensure Avante templates are installed into stdpath('data')
+do
+  local data = vim.fn.stdpath("data")
+  local src  = data .. "/plugged/avante.nvim/lua/avante/templates"
+  local dst  = data .. "/avante_templates"
 
--- optionally enable 24-bit colour
---vim.opt.termguicolors = true
+  local function exists(p) return vim.loop.fs_stat(p) ~= nil end
+  if exists(src) and not exists(dst) then
+    vim.fn.mkdir(dst, "p")
+    vim.fn.system({ "cp", "-r", src .. "/.", dst })
+  end
+end
 
--- setup nvim-tree with some options
--- require("nvim-tree").setup({
---   sort = { sorter = "case_sensitive" },
---   view = { width = 30 },
---   renderer = { group_empty = true },
---   filters = { dotfiles = true },
--- })
 
---- }}}
+-- Securely fetch API key from system keyring
+local handle = io.popen("secret-tool lookup openai neovim")
+local api_key = handle:read("*a"):gsub("%s+", "")
+handle:close()
 
--- ChatGPT {{{
+-- Inject into environment so Avante sees it
+vim.env.OPENAI_API_KEY = api_key
 
--- "gpt-3.5-turbo"
--- "gpt-4"
--- "gpt-4.0-turbo"
--- "gpt-4o-mini"
--- "gpt-4o"
--- "o1-preview"
--- "o1-mini"
+-- Load Avante
+local ok_avante, avante = pcall(require, 'avante')
+if ok_avante then
+  avante.setup({
+    instructions_file = "avante.md",
+    provider = "openai",
 
-require("chatgpt").setup({
-  api_key_cmd = "secret-tool lookup openai neovim",
-
-  openai_params = {
-    model = "gpt-4",
-    max_tokens = 512,
-    temperature = 0.2,
-    top_p = 0.9,
-    n = 1,
-    presence_penalty = 0,
-    frequency_penalty = 0,
-  },
-
-  openai_edit_params = {
-    model = "gpt-4",
-    max_tokens = 512,
-    temperature = 0.2,
-    top_p = 0.9,
-    n = 1,
-  },
-
-  -- Algumas versões expõem params por ação. Se houver, force aqui:
-  actions = {
-    -- exemplos comuns; ajuste aos que você usa
-    code_edit = { params = { max_tokens = 512 } },
-    code_refactor = { params = { max_tokens = 512 } },
-    explain_code = { params = { max_tokens = 512 } },
-  },
-
-  chat = {
-    window = {
-      layout = {
-        relative = "editor",
-        position = "50%",
-        size = {
-          width = "90%",
-          height = "80%",
+    providers = {
+      openai = {
+        endpoint = "https://api.openai.com/v1",
+        model = "gpt-4o-mini",  -- pick your model here
+        timeout = 30000,
+        extra_request_body = {
+          temperature = 0.7,
+          max_tokens = 4096,
         },
       },
     },
-  },
-  popup_input = {
-    submit = "<C-s>",
-    max_height = 10,
-  },
+  })
+end
 
-})
+-- Image clipboard integration
+local ok_clip, img_clip = pcall(require, 'img-clip')
+if ok_clip then
+  img_clip.setup({
+    default = {
+      embed_image_as_base64 = false,
+      prompt_for_file_name  = false,
+      drag_and_drop         = { insert_mode = true },
+      use_absolute_path     = true,
+    },
+  })
+end
 
--- history in: ~/.local/state/nvim/chatgpt/
--- generate :ChatGPTHistoryCleaning
-vim.api.nvim_create_user_command("ChatGPTHistoryCleaning", function()
-  local history_path = vim.fn.stdpath("state") .. "/chatgpt"
-  if vim.fn.isdirectory(history_path) == 1 then
-    local files = vim.fn.glob(history_path .. "/*.json", false, true)
-    if #files == 0 then
-      print("ChatGPT.nvim: no JSON file found at: " .. history_path)
-      return
-    end
-    for _, f in ipairs(files) do
-      vim.fn.delete(f)
-    end
-    print("ChatGPT.nvim: " .. #files .. " files JSON deleted at: " .. history_path)
-  else
-    print("ChatGPT.nvim: no direcctory found (" .. history_path .. ")")
-  end
-end, {})
+-- Render Markdown inside Avante buffers
+local ok_rmd, rmd = pcall(require, 'render-markdown')
+if ok_rmd then
+  rmd.setup({ file_types = { "markdown", "Avante" } })
+end
 
--- require("chatgpt").setup({
---   api_key_cmd = "secret-tool lookup openai neovim",
-
---   openai_params = {
---     -- NOTE: model can be a function returning the model name
---     -- this is useful if you want to change the model on the fly
---     -- using commands
---     -- Example:
---     -- model = function()
---         -- if some_condition() then
---             -- return "gpt-4-1106-preview"
---         -- else
---             -- return "gpt-3.5-turbo"
---         -- end
---     -- end,
---     -- model = "gpt-4-1106-preview",
---     -- model = "gpt-4o-mini",
---     model = "gpt-4",
---     frequency_penalty = 0,
---     presence_penalty = 0,
---     max_tokens = 1024,
---     temperature = 0.2,
---     top_p = 0.1,
---     n = 1,
---   }
--- })
-
---- }}}
+-- }}}
 
 -- MarkMap {{{
 
@@ -1115,6 +1085,21 @@ require('markmap').setup({
 })
 
 vim.filetype.add({ extension = { mm = "markdown" } })
+
+--- }}}
+
+-- Windows {{{
+
+local ok_wm, wm = pcall(require, 'winmove')
+if ok_wm then
+  wm.configure({
+    modes = {
+      resize = { default_resize_count = 3 },
+    },
+  })
+end
+
+local function curwin() return vim.api.nvim_get_current_win() end
 
 --- }}}
 
@@ -1134,17 +1119,21 @@ require("which-key").setup({
   sort = { "order", "local", "group", "alphanum", "mod" }, -- Define a ordem dos mapeamentos
 })
 
+-- make key resolution reliable
+vim.o.timeout = true
+vim.o.timeoutlen = 500
+
 local wk = require("which-key")
 
 wk.add({
   -- main group
   { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
-  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
-  { "<Space>w", "<cmd>w<CR>", desc = "write" },
-  { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
+  { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
-  { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
+  -- { "<Space>a", "<cmd>lua require('fzf-lua').lines()<CR>", desc = "all buffers" },
+  -- { "<Space>W", "<cmd>wa!<CR>", desc = "write all" },
+  -- { "<Space>Q", "<cmd>qa!<CR>", desc = "quite all" },
   { "<Space>r", "<cmd>RenameFile<CR>", desc = "rename file" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
@@ -1159,38 +1148,21 @@ wk.add({
   { "<Space>fs", SyncOpen, desc = "~/sync" },
   { "<Space>fw", WikiOpen, desc = "~/wiki" },
   { "<Space>fz", WikiZetOpen, desc = "~/wiki/zet" },
-  -- search content
-  { "<Space>s", group = "[s]earch content" },
-  { "<Space>sb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
-  { "<Space>sd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
-  { "<Space>sq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
-  { "<Space>sh", HomeGrep, desc = "~/" },
-  { "<Space>sp", ProfissionalGrep, desc = "/mnt/.../profissional" },
-  { "<Space>sr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
-  { "<Space>sD", DownloadsGrep, desc = "~/downloads" },
-  { "<Space>ss", SyncGrep, desc = "~/sync" },
-  { "<Space>sw", WikiGrep, desc = "~/wiki" },
-  { "<Space>sz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- ChatGPT
-  { "<Space>c", group = "[c]hat gpt" },
-  { "<Space>cc", "<cmd>ChatGPT<CR>", desc = "ChatGPT", mode = { "n", "v" } },
-  { "<Space>ce", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instruction", mode = { "n", "v" } },
-  { "<Space>ck",  "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "n", "v" } },
-  { "<Space>cd", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "n", "v" } },
-  { "<Space>ca", "<cmd>ChatGPTRun add_tests<CR>", desc = "Add Tests", mode = { "n", "v" } },
-  { "<Space>co", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize Code", mode = { "n", "v" } },
-  { "<Space>cs", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "n", "v" } },
-  { "<Space>cf", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "n", "v" } },
-  { "<Space>cx", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain Code", mode = { "n", "v" } },
-  { "<Space>cr", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "n", "v" } },
-  { "<Space>cl", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Code Readability Analysis", mode = { "n", "v" } },
-  { "<Space>ch", "<cmd>ChatGPTHistoryCleaning<CR>", desc = "History Cleaning", mode = { "n", "v" } },
-  { "<Space>cg", group = "[g]rammar and translate" }, -- subgroup
-  { "<Space>cgp", "<cmd>ChatGPTRun grammar_correction português brasileiro<CR>", desc = "Grammar Correction pt_br", mode = { "n", "v" } },
-  { "<Space>cge", "<cmd>ChatGPTRun grammar_correction american english<CR>", desc = "Grammar Correction en_us", mode = { "n", "v" } },
-  { "<Space>cgP", "<cmd>ChatGPTRun translate to brazilian porgutuese<CR>", desc = "Translate en_pt", mode = { "n", "v" } },
-  { "<Space>cgE", "<cmd>ChatGPTRun translate to american english<CR>", desc = "Translate pt_en", mode = { "n", "v" } },
-  -- Markdown
+  -- content search
+  { "<Space>c", group = "[c]ontent search" },
+  { "<Space>cb", "<cmd>lua require('fzf-lua').grep()<CR>", desc = "buffers" },
+  { "<Space>cd", "<cmd>lua require('fzf-lua').live_grep()<CR>", desc = "directory" },
+  { "<Space>cq", "<cmd>lua require('fzf-lua').lgrep_quickfix()<CR>", desc = "quickfix" },
+  { "<Space>ch", HomeGrep, desc = "~/" },
+  { "<Space>cp", ProfissionalGrep, desc = "/mnt/.../profissional" },
+  { "<Space>cr", RworkspaceGrep, desc = "/mnt/.../rworkspace" },
+  { "<Space>cD", DownloadsGrep, desc = "~/downloads" },
+  { "<Space>cs", SyncGrep, desc = "~/sync" },
+  { "<Space>cw", WikiGrep, desc = "~/wiki" },
+  { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
+  -- Avante (AI assistant) 
+  { "<Space>a", group = "[a]vante" }, -- automatic detection
+    -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
   { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
@@ -1261,8 +1233,24 @@ wk.add({
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
   { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
+  -- windows {move, swap, resize}
+  { "<Space>w", group = "[w]indows" },
+  { "<Space>wm", function() require('winmove').start_mode('move')   end, desc = "move"   },
+  { "<Space>ws", function() require('winmove').start_mode('swap')   end, desc = "swap"   },
+  { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
+  -- vimwiki
+  { "<Space>W", group = "[W]iki" },
+  { "<Space>Wi", "<cmd>VimwikiIndex<CR>",          desc = "index" },
+  { "<Space>Wt", "<cmd>VimwikiTOC<CR>",            desc = "table of contents" },
+  { "<Space>Wu", "<cmd>VimwikiUISelect<CR>",       desc = "select wiki" },
+  { "<Space>Wf", "<cmd>VimwikiFollowLink<CR>",     desc = "follow link" },
+  { "<Space>WB", "<cmd>VimwikiBacklinks<CR>",      desc = "backlinks" },
+  { "<Space>Wg", "<cmd>VimwikiGoto<CR>",           desc = "goto" },
+  { "<Space>WR", "<cmd>VimwikiRenameFile<CR>",     desc = "rename current file" },
+  { "<Space>WW", WikiOpen,     desc = "~/wiki (root)" },
+  { "<Space>Wz", WikiZetOpen,  desc = "~/wiki/zet" },
 })
 
--- }}}
+--- }}}
 
 -- vim: fdm=marker nowrap

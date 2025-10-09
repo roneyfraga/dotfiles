@@ -23,11 +23,9 @@ map \# feedkeys ":set recolor-lightcolor \#073642<Return>:set recolor-darkcolor 
 map $ feedkeys ":set recolor-lightcolor \#1e1e1e<Return>:set recolor-darkcolor \#d9e6e6<Return>:set default-bg \#1e1e1e<Return>:set notification-error-bg \#1e1e1e<Return>:set notification-error-fg \#d9e6e6<Return>:set notification-warning-bg \#1e1e1e<Return>:set notification-warning-fg \#d9e6e6<Return>:set notification-bg \#1e1e1e<Return>:set notification-fg \#d9e6e6<Return>"          
 
 # black and white (night mode)
-map % feedkeys ":set recolor-lightcolor \#000000<Return>:set recolor-darkcolor \#d9e6e6<Return>:set default-bg \#000000<Return>:set notification-error-bg \#000000<Return>:set notification-error-fg \#d9e6e6<Return>:set notification-warning-bg \#000000<Return>:set notification-warning-fg \#d9e6e6<Return>:set notification-bg \#000000<Return>:set notification-fg \#d9e6e6<Return>"          
+map % feedkeys ":set recolor-lightcolor \#000000<Return>:set recolor-darkcolor \#d9e6e6<Return>:set default-bg \#000000<Return>:set notification-error-bg \#000000<Return>:set notification-error-fg \#d9e6e6<Return>:set notification-warning-bg \#000000<Return>:set notification-warning-fg \#d9e6e6<Return>:set notification-bg \#000000<Return>:set notification-fg \#d9e6e6<Return>"
 
-
-
-
+# ------------------------------
 # set font "anonymous pro 9"             # status line font
 
 # zathurarc-dark
