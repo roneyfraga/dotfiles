@@ -158,9 +158,6 @@ Plug('Shougo/deol.nvim')
 -- snippets
 Plug('roneyfraga/vim-snippets')
 
--- equation preview in markdown
-Plug('jbyuki/nabla.nvim')
-
 -- image from clipboad, web or file to neovim
 Plug('HakonHarnes/img-clip.nvim')
 
@@ -193,7 +190,7 @@ Plug('moll/vim-bbye')
 Plug('junegunn/goyo.vim')
 
 -- Python, Julia, Go
-Plug('jalvesaq/vimcmdline')
+Plug('jalvesaq/hlterm')
 
 -- bracket mappings - quickfix navigation
 Plug('tpope/vim-unimpaired')
@@ -214,8 +211,7 @@ Plug('MeanderingProgrammer/render-markdown.nvim')
 -- Plug('nvim-tree/nvim-tree.lua')
 
 -- Avante
--- Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
-Plug('yetone/avante.nvim', { ['do'] = 'make' })
+Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
 
 -- required dependencies
 Plug('nvim-lua/plenary.nvim')
@@ -231,7 +227,6 @@ Plug('nvim-telescope/telescope.nvim')
 -- Plug('hrsh7th/nvim-cmp') -- already instaled
 Plug('stevearc/dressing.nvim')
 Plug('folke/snacks.nvim')
--- Plug('zbirenbaum/copilot.lua')
 
 -- windows movements
 Plug('MisanthropicBit/winmove.nvim')
@@ -272,6 +267,39 @@ require'lualine'.setup {
 
 -- }}}
 
+-- nvim-lspconfig {{{
+
+-- LSP (Neovim 0.11+ API)
+pcall(require, "lspconfig")
+
+-- Capabilities for nvim-cmp
+local caps = require("cmp_nvim_lsp").default_capabilities()
+
+-- Basic per-buffer keymaps
+local on_attach = function(_, bufnr)
+  local k = function(lhs, rhs) vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true }) end
+  k("gd", vim.lsp.buf.definition)
+  k("K",  vim.lsp.buf.hover)
+  k("gr", vim.lsp.buf.references)
+end
+
+-- Configure one or two servers explicitly (only if you need custom opts)
+vim.lsp.config("lua_ls", {
+  on_attach = on_attach,
+  capabilities = caps,
+  settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+})
+
+-- Enable all desired servers at once (defaults + any configs above)
+vim.lsp.enable({
+  "lua_ls",
+  "pyright",
+  "bashls",
+  "r_language_server",
+})
+
+-- }}}
+
 -- Auto complete and Beauty {{{
 
 -- linux: pacman -S pyright
@@ -299,7 +327,12 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
   sync_install = false,
   auto_install = true,
-  highlight = { enable = true, additional_vim_regex_highlighting = false},
+  highlight = {
+    enable = true,
+    disable = function(lang)
+      return lang == "markdown" or lang == "markdown_inline"
+    end,
+  },
   indent = {enable = true},
 }
 
@@ -392,9 +425,6 @@ require("img-clip").setup({
 -- vim.cmd[[nnoremap ;p :PasteImage<CR>]]
 
 -- see which-key
--- preview equations with nabla.nvim
--- ;e
--- vim.cmd[[nnoremap ;e :lua require"nabla".toggle_virt()<CR>]]
 
 -- noice: command line on center
 require("noice").setup({
@@ -470,32 +500,6 @@ vim.api.nvim_create_user_command('RenameFile', RenameFile, {})
 
 -- :RMapsDesc -- list all commands
 -- :RConfigShow -- list configurations
---
-
--- require'lspconfig'.pyright.setup{}
-
-local nvim_lsp = require('lspconfig')
-
-nvim_lsp.r_language_server.setup {
-  cmd = { "R", "--slave", "-e", "languageserver::run()" },
-  settings = {
-    languageserver = {
-      diagnostics = {
-        globals = { "nvim" }, -- Inclui nvim como global para diagnósticos
-      },
-    },
-  },
-}
-
--- LSP Enable
-function LspEnable()
-  require('lspconfig').r_language_server.setup{
-    cmd = { "R", "--slave", "-e", "languageserver::run()" },
-  }
-end
-
--- LSP Disable
--- vim.lsp.stop_client(vim.lsp.get_active_clients())
 
 -- R.nvim: configurações gerais
 require("r").setup({
@@ -595,6 +599,19 @@ vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
 -- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
 -- vim.g.taskwiki_markdown_syntax = "markdown"
 -- vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
+
+-- ---------------------------------------
+-- First define the highlights
+
+-- fix color bug in render-markdown.nvim
+vim.cmd([[
+  highlight RenderMarkdownH1Bg guibg=#5b474e guifg=#f38ba8
+  highlight RenderMarkdownH2Bg guibg=#514046 guifg=#f5c2e7
+  highlight RenderMarkdownH3Bg guibg=#47393e guifg=#bea9a2
+  highlight RenderMarkdownH4Bg guibg=#3d3236 guifg=#cbb6b0
+  highlight RenderMarkdownH5Bg guibg=#332b2e guifg=#d8c3be
+  highlight RenderMarkdownH6Bg guibg=#2a2426 guifg=#e5d0cc
+]])
 
 require('render-markdown').setup({
   file_types = { 'markdown', 'vimwiki', 'quarto' },
@@ -791,24 +808,10 @@ vim.keymap.set("n", "<C-w><", function() return (vim.v.count1 * 10).."<C-w><" en
 vim.keymap.set("n", "<C-w>>", function() return (vim.v.count1 * 10).."<C-w>>" end, { expr = true, desc = "split + largura" })
 -- }}}
 
--- Python, Julia and vimcmdline {{{
+-- Python, Julia with hlterm {{{
 --
--- vimcmdline mappings
+-- hlterm mappings
 
-vim.cmd[[let cmdline_app = {}]]
-vim.cmd[[let cmdline_app['python'] = 'ipython']]
-
-vim.cmd([[
- " vimcmdline mappings
- let cmdline_map_start = '<LocalLeader>s'
- let cmdline_map_send = '<Enter>'
- let cmdline_map_send_and_stay = '<LocalLeader><Enter>'
- let cmdline_map_source_fun = '<LocalLeader>f'
- let cmdline_map_send_paragraph = '<LocalLeader>p'
- let cmdline_map_send_block = '<LocalLeader>b'
- let cmdline_map_send_motion = '<LocalLeader>m'
- let cmdline_map_quit = '<LocalLeader>q'
-]])
 
 -- <LocalLeader>s to start the interpreter.
 -- <Enter> to send the current line to the interpreter.
@@ -1008,19 +1011,18 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 
 -- Avante {{{
 
--- Ensure Avante templates are installed into stdpath('data')
-do
-  local data = vim.fn.stdpath("data")
-  local src = data .. "/plugged/avante.nvim/lua/avante/templates"
-  local dst = data .. "/avante_templates"
+-- -- Ensure Avante templates are installed into stdpath('data')
+-- do
+--   local data = vim.fn.stdpath("data")
+--   local src = data .. "/plugged/avante.nvim/lua/avante/templates"
+--   local dst = data .. "/avante_templates"
 
-  local function exists(p) return vim.loop.fs_stat(p) ~= nil end
-  if exists(src) and not exists(dst) then
-    vim.fn.mkdir(dst, "p")
-    vim.fn.system({ "cp", "-r", src .. "/.", dst })
-  end
-end
-
+--   local function exists(p) return vim.loop.fs_stat(p) ~= nil end
+--   if exists(src) and not exists(dst) then
+--     vim.fn.mkdir(dst, "p")
+--     vim.fn.system({ "cp", "-r", src .. "/.", dst })
+--   end
+-- end
 
 -- Securely fetch API key from system keyring
 local handle = io.popen("secret-tool lookup openai neovim")
@@ -1036,7 +1038,6 @@ if ok_avante then
   avante.setup({
     instructions_file = "avante.md",
     provider = "openai",
-
     providers = {
       openai = {
         endpoint = "https://api.openai.com/v1",
@@ -1046,6 +1047,14 @@ if ok_avante then
           temperature = 0.7,
           max_tokens = 4096,
         },
+      },
+    },
+    windows = { 
+      edit = { -- float
+        border = "rounded",
+        start_insert = true,
+        width = 60,  -- width in columns
+        height = 3, -- height in rows
       },
     },
   })
@@ -1123,11 +1132,16 @@ require("which-key").setup({
 vim.o.timeout = true
 vim.o.timeoutlen = 500
 
+-- replace default search in /
+vim.keymap.set('n', '/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', { noremap = true, silent = true })
+-- delete snipp-cut-text) from wich-key
+vim.keymap.del('n', '<leader>x')
+
 local wk = require("which-key")
 
 wk.add({
   -- main group
-  { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
+  -- { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
   { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
@@ -1194,7 +1208,6 @@ wk.add({
   { "<Space>MqA", "<cmd>!make qrcs<CR>", desc = "quarto render --cache-refresh sync" },
   -- vim
   { "<Space>v", group = "[v]im" },
-  { "<Space>ve", "<cmd>lua require'nabla'.toggle_virt()<CR>", desc = "equations preview toggle" },
   { "<Space>vm", "<cmd>NoiceDismiss<CR>", desc = "messages dismiss toggle" },
   { "<Space>vp", "<cmd>lua PasteImage<CR>", desc = "paste image" },
   { "<Space>vc", group = "[c]olor" }, -- subgroup
