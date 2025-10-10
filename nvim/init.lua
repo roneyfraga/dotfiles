@@ -390,6 +390,15 @@ require('snippy').setup({
       ['<leader>x'] = 'cut_text',
     },
   },
+  -- Make markdown snippets available in vimwiki and quarto files
+  scopes = {
+    vimwiki = function()
+      return { "vimwiki", "markdown" }
+    end,
+    quarto = function()
+      return { "quarto", "markdown" }
+    end,
+  },
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -577,14 +586,12 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
     end
     -- Enter to follow link / open note
-    map("n", "<CR>", "<Plug>VimwikiFollowLink")
-    -- Optional niceties (uncomment if you want them)
+    map("n", "<CR>", "<Plug>VimwikiFollowLink") -- enter no creat note
     map("n", "<BS>", "<Plug>VimwikiGoBackLink") -- go back
     map("n", "<Tab>", "<Plug>VimwikiNextLink") -- next link
     map("n", "<S-Tab>", "<Plug>VimwikiPrevLink") -- prev link
   end,
 })
-
 
 vim.g.vimwiki_list = {
   {
@@ -700,6 +707,49 @@ end
 
 -- Mapeia a função a um atalho (exemplo: <leader>cck)
 -- vim.api.nvim_set_keymap('v', '<leader>cck', ':lua CopyToChunk()<CR>', { noremap = true, silent = true })
+
+-- Function to convert selected text to markdown link
+local function create_markdown_link()
+  -- Check if we're in a markdown, quarto, or vimwiki file
+  local ft = vim.bo.filetype
+  if ft ~= "markdown" and ft ~= "quarto" and ft ~= "vimwiki" then
+    vim.notify("This function only works in markdown, quarto, and vimwiki files", vim.log.levels.WARN)
+    return
+  end
+
+  -- Save the current register content
+  local save_reg = vim.fn.getreg('"')
+  local save_regtype = vim.fn.getregtype('"')
+
+  -- Yank the visual selection
+  vim.cmd('normal! "zy')
+  local selected_text = vim.fn.getreg('z')
+
+  -- Restore the register
+  vim.fn.setreg('"', save_reg, save_regtype)
+
+  -- Check if we got any text
+  if selected_text == "" or selected_text == nil then
+    vim.notify("No text selected", vim.log.levels.WARN)
+    return
+  end
+
+  -- Remove trailing newlines
+  selected_text = selected_text:gsub("\n$", ""):gsub("\n", " ")
+
+  -- Create the slug version (lowercase, replace spaces with hyphens)
+  local slug = selected_text:lower():gsub("%s+", "-"):gsub("[^%w%-]", "")
+
+  -- Create the markdown link format
+  local link = string.format("[%s](%s)", selected_text, slug)
+
+  -- Replace the selected text with the link
+  vim.cmd('normal! gv"_c' .. link)
+  vim.cmd('normal! l')
+end
+
+-- Make the function available globally
+_G.create_markdown_link = create_markdown_link
 
 -- }}}
 
@@ -1259,6 +1309,7 @@ wk.add({
   { "<Space>WR", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
   { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
   { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
+  { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
 })
 
 --- }}}
