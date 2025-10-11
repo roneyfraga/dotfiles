@@ -210,8 +210,8 @@ Plug('MeanderingProgrammer/render-markdown.nvim')
 -- nerd tree
 -- Plug('nvim-tree/nvim-tree.lua')
 
--- Avante
-Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
+-- opencode AI
+Plug('NickvanDyke/opencode.nvim')
 
 -- required dependencies
 Plug('nvim-lua/plenary.nvim')
@@ -1059,75 +1059,41 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 
 --- }}}
 
--- Avante {{{
+-- opencode {{{
 
--- -- Ensure Avante templates are installed into stdpath('data')
--- do
---   local data = vim.fn.stdpath("data")
---   local src = data .. "/plugged/avante.nvim/lua/avante/templates"
---   local dst = data .. "/avante_templates"
+-- Required for `vim.g.opencode_opts.auto_reload`
+vim.opt.autoread = true
 
---   local function exists(p) return vim.loop.fs_stat(p) ~= nil end
---   if exists(src) and not exists(dst) then
---     vim.fn.mkdir(dst, "p")
---     vim.fn.system({ "cp", "-r", src .. "/.", dst })
---   end
--- end
+-- Recommended/example keymaps
+vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
+vim.keymap.set({ "n", "x" }, "<leader>o+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
+vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select prompt" })
+vim.keymap.set("n", "<leader>ot", function() require("opencode").toggle() end, { desc = "Toggle embedded" })
+vim.keymap.set("n", "<leader>oc", function() require("opencode").command() end, { desc = "Select command" })
+vim.keymap.set("n", "<leader>on", function() require("opencode").command("session_new") end, { desc = "New session" })
+vim.keymap.set("n", "<leader>oi", function() require("opencode").command("session_interrupt") end, { desc = "Interrupt session" })
+vim.keymap.set("n", "<leader>oA", function() require("opencode").command("agent_cycle") end, { desc = "Cycle selected agent" })
+vim.keymap.set("n", "<S-C-u>",    function() require("opencode").command("messages_half_page_up") end, { desc = "Messages half page up" })
+vim.keymap.set("n", "<S-C-d>",    function() require("opencode").command("messages_half_page_down") end, { desc = "Messages half page down" })
 
--- Securely fetch API key from system keyring
-local handle = io.popen("secret-tool lookup openai neovim")
-local api_key = handle:read("*a"):gsub("%s+", "")
-handle:close()
-
--- Inject into environment so Avante sees it
-vim.env.OPENAI_API_KEY = api_key
-
--- Load Avante
-local ok_avante, avante = pcall(require, 'avante')
-if ok_avante then
-  avante.setup({
-    instructions_file = "avante.md",
-    provider = "openai",
-    providers = {
-      openai = {
-        endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o-mini", -- pick your model here
-        timeout = 30000,
-        extra_request_body = {
-          temperature = 0.7,
-          max_tokens = 4096,
-        },
-      },
-    },
-    windows = { 
-      edit = { -- float
-        border = "rounded",
-        start_insert = true,
-        width = 60,  -- width in columns
-        height = 3, -- height in rows
-      },
-    },
-  })
+-- opencode terminal leave: Esc Esc
+-- if I forget, allow to use vim-tmux-navigator on opencode
+-- 
+-- Reusable function to register keymaps in different contexts
+local function set_tmux_navigator_keymaps()
+  vim.keymap.set({ "n", "t" }, "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-j>", "<cmd>TmuxNavigateDown<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-l>", "<cmd>TmuxNavigateRight<cr>")
 end
 
--- Image clipboard integration
-local ok_clip, img_clip = pcall(require, 'img-clip')
-if ok_clip then
-  img_clip.setup({
-    default = {
-      embed_image_as_base64 = false,
-      prompt_for_file_name = false,
-      drag_and_drop = { insert_mode = true },
-      use_absolute_path = true,
-    },
-  })
-end
+-- Register once globally
+set_tmux_navigator_keymaps()
 
--- Render Markdown inside Avante buffers
-local ok_rmd, rmd = pcall(require, 'render-markdown')
-if ok_rmd then
-  rmd.setup({ file_types = { "markdown", "Avante" } })
-end
+-- Re-register for terminal buffers to prevent literal command injection
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = set_tmux_navigator_keymaps,
+})
 
 -- }}}
 
@@ -1192,7 +1158,7 @@ local wk = require("which-key")
 wk.add({
   -- main group
   -- { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
-  { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
+  { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers find" },
   { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
   { "<Space>R", "<cmd>RenameFile<CR>", desc = "rename file" },
@@ -1221,8 +1187,8 @@ wk.add({
   { "<Space>cs", SyncGrep, desc = "~/sync" },
   { "<Space>cw", WikiGrep, desc = "~/wiki" },
   { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- Avante (AI assistant)
-  { "<Space>a", group = "[a]vante" }, -- automatic detection
+  -- opencode (AI assistant)
+  { "<Space>o", group = "[o]pencode" }, -- automatic detection
   -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
