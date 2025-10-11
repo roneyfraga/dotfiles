@@ -171,6 +171,7 @@ bindkey '^p' autosuggest-toggle
 alias fm='vifm .'
 alias v='nvim'
 alias vw='cd ~/Wiki; nvim index.md'
+alias oc='opencode'
 alias rrsync='rsync -lhr --info=progress2'
 alias x='clear'
 alias l='ls -l'
