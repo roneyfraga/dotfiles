@@ -10,7 +10,7 @@
 # Default applications
     set $filer    nautilus
     set $browser  firefox
-    set $terminal st
+    set $terminal terminator
     set $player   mpv
 # General bindings
     bindsym $super+Tab              workspace back_and_forth
