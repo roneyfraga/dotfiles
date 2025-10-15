@@ -290,6 +290,8 @@ vim.lsp.config("lua_ls", {
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
+-- yay -S ltex-ls-bin
+-- LanguageTool
 vim.lsp.config("ltex", {
   autostart = false,
   on_attach = on_attach,
@@ -301,7 +303,7 @@ vim.lsp.config("ltex", {
         username = os.getenv("LANGUAGETOOL_USERNAME"),
         apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
       },
-      language = "auto",
+      language = "en-US",
       additionalRules = {
         enablePickyRules = true,
       },
@@ -321,7 +323,7 @@ vim.lsp.enable({
 -- LSP Toggle function (handles ALL LSP servers for current buffer)
 function LspToggle()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
-  
+
   if #clients > 0 then
     -- LSP is active, disable ALL clients in current buffer
     for _, client in ipairs(clients) do
@@ -334,6 +336,35 @@ function LspToggle()
     print("LSP enabled")
   end
 end
+
+-- Change ltex language
+function LtexSetLanguage(lang)
+  local clients = vim.lsp.get_clients({ name = "ltex", bufnr = 0 })
+
+  if #clients > 0 then
+    for _, client in ipairs(clients) do
+      client.config.settings.ltex.language = lang
+      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+      print("ltex language changed to: " .. lang)
+    end
+  else
+    print("ltex is not running. Start it first with <Space>lt")
+  end
+end
+
+-- Language shortcuts
+function LtexAuto()
+  LtexSetLanguage("auto")
+end
+
+function LtexEnglish()
+  LtexSetLanguage("en-US")
+end
+
+function LtexPortuguese()
+  LtexSetLanguage("pt-BR")
+end
+
 -- }}}
 
 -- Auto complete and Beauty {{{
@@ -802,17 +833,6 @@ end
 
 -- Make the function available globally
 _G.create_markdown_link = create_markdown_link
-
--- yay -S ltex-ls-bin
--- LanguageTool
--- require('lspconfig').ltex.setup({
---   settings = {
---     ltex = {
---       language = { "en-US", "pt-BR" }
---       enabled = { "latex", "tex", "bib", "markdown", "quarto", "text" },
---     }
---   }
--- })
 
 -- }}}
 
@@ -1515,16 +1535,20 @@ wk.add({
   { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
+  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
+  { "<Space>lg", group = "[g]rammar language" }, -- subgroup
+  { "<Space>lga", LtexAuto, desc = "auto detect" },
+  { "<Space>lge", LtexEnglish, desc = "english (en-US)" },
+  { "<Space>lgp", LtexPortuguese, desc = "português (pt-BR)" },
   { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
   { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
-  { "<Space>lg", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
   { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
   { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
   { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
-  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
   { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
 })
 
