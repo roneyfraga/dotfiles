@@ -283,14 +283,34 @@ local on_attach = function(_, bufnr)
   k("gr", vim.lsp.buf.references)
 end
 
--- Configure one or two servers explicitly (only if you need custom opts)
+-- Configure servers with custom options
 vim.lsp.config("lua_ls", {
   on_attach = on_attach,
   capabilities = caps,
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
--- Enable all desired servers at once (defaults + any configs above)
+vim.lsp.config("ltex", {
+  autostart = false,
+  on_attach = on_attach,
+  capabilities = caps,
+  settings = {
+    ltex = {
+      languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      languageToolOrg = {
+        username = os.getenv("LANGUAGETOOL_USERNAME"),
+        apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
+      },
+      language = "auto",
+      additionalRules = {
+        enablePickyRules = true,
+      },
+    },
+  },
+  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki" },
+})
+
+-- Enable all desired servers (ltex excluded because autostart=false)
 vim.lsp.enable({
   "lua_ls",
   "pyright",
@@ -298,6 +318,22 @@ vim.lsp.enable({
   "r_language_server",
 })
 
+-- LSP Toggle function (handles ALL LSP servers for current buffer)
+function LspToggle()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  
+  if #clients > 0 then
+    -- LSP is active, disable ALL clients in current buffer
+    for _, client in ipairs(clients) do
+      vim.lsp.stop_client(client.id)
+    end
+    print("LSP disabled")
+  else
+    -- LSP is inactive, start appropriate server based on filetype
+    vim.cmd('LspStart')
+    print("LSP enabled")
+  end
+end
 -- }}}
 
 -- Auto complete and Beauty {{{
@@ -767,6 +803,17 @@ end
 -- Make the function available globally
 _G.create_markdown_link = create_markdown_link
 
+-- yay -S ltex-ls-bin
+-- LanguageTool
+-- require('lspconfig').ltex.setup({
+--   settings = {
+--     ltex = {
+--       language = { "en-US", "pt-BR" }
+--       enabled = { "latex", "tex", "bib", "markdown", "quarto", "text" },
+--     }
+--   }
+-- })
+
 -- }}}
 
 -- Fuzzy Finder - fzf-lua {{{
@@ -1154,7 +1201,7 @@ local function apply_diff_ui()
       vim.wo[win].conceallevel = 0
       vim.wo[win].signcolumn   = "yes"
       vim.wo[win].winhighlight =
-        "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
+      "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
     end
   end
 end
@@ -1187,7 +1234,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
   callback = function()
     if vim.wo.diff then
       vim.wo.winhighlight =
-        "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
+      "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
       vim.opt_local.conceallevel = 0
       vim.opt_local.signcolumn = "yes"
     end
@@ -1200,13 +1247,13 @@ vim.api.nvim_create_user_command('DiffChatList', function()
   local filename = vim.fn.expand('%:t:r')
   local ext = vim.fn.expand('%:e')
   local pattern = 'chat/' .. filename .. '-v*.' .. ext
-  
+
   local files = vim.fn.glob(pattern, false, true)
   if #files == 0 then
     vim.notify('No versions found in chat/', vim.log.levels.WARN)
     return
   end
-  
+
   table.sort(files)
   print('📁 Available versions for ' .. filename .. ':')
   for i, file in ipairs(files) do
@@ -1219,12 +1266,12 @@ vim.api.nvim_create_user_command('DiffAccept', function()
   local filename = vim.fn.expand('%:t:r')
   local ext = vim.fn.expand('%:e')
   local latest = vim.fn.glob('chat/' .. filename .. '-v*.' .. ext, false, true)
-  
+
   if #latest == 0 then
     vim.notify('No versions found', vim.log.levels.WARN)
     return
   end
-  
+
   table.sort(latest)
   vim.cmd('!cp ' .. latest[#latest] .. ' ' .. current)
   vim.cmd('e!')
@@ -1383,7 +1430,7 @@ wk.add({
   { "<leader>ds", ":diffset<CR>", desc = "Set diff manually" },
   { "<leader>dA", ":windo diffthis<CR>", desc = "Enable diff for all windows" },
   { "<leader>dO", ":windo diffoff | set noscrollbind nocursorbind<CR>", desc = "Turn off diff in all windows" },
-    -- Markdown
+  -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
   { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
@@ -1431,10 +1478,6 @@ wk.add({
   { "<Space>vgb", ToggleSpellBoth, desc = "both (pt+en)", mode = { "n", "v" } },
   { "<Space>vge", ToggleSpellEN, desc = "english", mode = { "n", "v" } },
   { "<Space>vgp", ToggleSpellPT, desc = "português", mode = { "n", "v" } },
-  { "<Space>vl", group = "[l]sp" }, -- subgroup
-  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
-  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
-  { "<Space>vle", LspEnable, desc = "lsp enable", mode = { "n", "v" } },
   { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
@@ -1470,6 +1513,19 @@ wk.add({
   { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
   { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
   { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
+  -- LSP / LanguageTool
+  { "<Space>l", group = "[l]sp" }, 
+  { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
+  { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
+  { "<Space>lr", vim.lsp.buf.references, desc = "references" },
+  { "<Space>lg", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>lf", vim.lsp.buf.format, desc = "format" },
+  { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
+  { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
+  { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
+  { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
+  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
+  { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
 })
 
 --- }}}
