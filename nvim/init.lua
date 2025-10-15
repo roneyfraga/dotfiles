@@ -1230,11 +1230,11 @@ vim.api.nvim_create_user_command('DiffChat', function(opts)
   local filename = vim.fn.expand('%:t:r')
   local ext      = vim.fn.expand('%:e')
   local version  = opts.args ~= '' and opts.args or '*'
-  local pattern  = 'chat/' .. filename .. '-v' .. version .. '.' .. ext
+  local pattern  = '.chat/' .. filename .. '-v' .. version .. '.' .. ext
 
   local files = vim.fn.glob(pattern, false, true)
   if #files == 0 then
-    vim.notify('No versions found in chat/', vim.log.levels.WARN)
+    vim.notify('No versions found in .chat/', vim.log.levels.WARN)
     return
   end
   table.sort(files)
@@ -1247,7 +1247,7 @@ vim.api.nvim_create_user_command('DiffChat', function(opts)
   apply_diff_ui()
 
   vim.notify('📊 Comparing with: ' .. vim.fn.fnamemodify(target, ':t'), vim.log.levels.INFO)
-end, { nargs = '?', desc = 'Diff with chat/ version' })
+end, { nargs = '?', desc = 'Diff with .chat/ version' })
 
 -- safety net: re-apply on focus
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
@@ -1266,11 +1266,11 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
 vim.api.nvim_create_user_command('DiffChatList', function()
   local filename = vim.fn.expand('%:t:r')
   local ext = vim.fn.expand('%:e')
-  local pattern = 'chat/' .. filename .. '-v*.' .. ext
+  local pattern = '.chat/' .. filename .. '-v*.' .. ext
 
   local files = vim.fn.glob(pattern, false, true)
   if #files == 0 then
-    vim.notify('No versions found in chat/', vim.log.levels.WARN)
+    vim.notify('No versions found in .chat/', vim.log.levels.WARN)
     return
   end
 
@@ -1279,13 +1279,13 @@ vim.api.nvim_create_user_command('DiffChatList', function()
   for i, file in ipairs(files) do
     print(string.format('  %d. %s', i, vim.fn.fnamemodify(file, ':t')))
   end
-end, { desc = 'List all chat/ versions' })
+end, { desc = 'List all .chat/ versions' })
 
 vim.api.nvim_create_user_command('DiffAccept', function()
   local current = vim.fn.expand('%:p')
   local filename = vim.fn.expand('%:t:r')
   local ext = vim.fn.expand('%:e')
-  local latest = vim.fn.glob('chat/' .. filename .. '-v*.' .. ext, false, true)
+  local latest = vim.fn.glob('.chat/' .. filename .. '-v*.' .. ext, false, true)
 
   if #latest == 0 then
     vim.notify('No versions found', vim.log.levels.WARN)
@@ -1296,7 +1296,7 @@ vim.api.nvim_create_user_command('DiffAccept', function()
   vim.cmd('!cp ' .. latest[#latest] .. ' ' .. current)
   vim.cmd('e!')
   vim.notify('✅ Accepted changes from: ' .. vim.fn.fnamemodify(latest[#latest], ':t'), vim.log.levels.INFO)
-end, { desc = 'Accept latest chat/ version' })
+end, { desc = 'Accept latest .chat/ version' })
 
 -- For dark themes - Balanced subtle with syntax control
 vim.api.nvim_create_autocmd("ColorScheme", {
@@ -1448,9 +1448,11 @@ wk.add({
   { "<leader>dg", ":diffget<CR>", desc = "Get change from other window" },
   { "<leader>dp", ":diffput<CR>", desc = "Put change to other window" },
   { "<leader>ds", ":diffset<CR>", desc = "Set diff manually" },
+  { "<leader>d]", "]c", desc = "next diff change ]c" },
+  { "<leader>d[", "[c", desc = "previous diff change [c" },
   { "<leader>dA", ":windo diffthis<CR>", desc = "Enable diff for all windows" },
   { "<leader>dO", ":windo diffoff | set noscrollbind nocursorbind<CR>", desc = "Turn off diff in all windows" },
-  -- Markdown
+  -- markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
   { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
@@ -1546,10 +1548,12 @@ wk.add({
   { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
-  { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
+  { "<Space>lp", vim.diagnostic.goto_prev, desc = "previous diagnostic" },
   { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
   { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
   { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
+  { "<Space>l]", vim.diagnostic.goto_next, desc = "next [d" },
+  { "<Space>l[", vim.diagnostic.goto_prev, desc = "previous ]d" },
 })
 
 --- }}}
