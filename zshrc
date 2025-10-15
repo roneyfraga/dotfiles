@@ -161,7 +161,13 @@ export FZF_DEFAULT_OPTS="\
 # esac
 
 # CREDENTIALS
-source ~/.credentials/elsevier.sh
+if [ -f ~/.credentials/elsevier.sh ]; then
+    source ~/.credentials/elsevier.sh
+fi
+
+if [ -f ~/.credentials/language_tool.sh ]; then
+    source ~/.credentials/language_tool.sh
+fi
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
@@ -171,6 +177,7 @@ bindkey '^p' autosuggest-toggle
 alias fm='vifm .'
 alias v='nvim'
 alias vw='cd ~/Wiki; nvim index.md'
+alias oc='opencode'
 alias rrsync='rsync -lhr --info=progress2'
 alias x='clear'
 alias l='ls -l'

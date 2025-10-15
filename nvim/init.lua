@@ -210,8 +210,8 @@ Plug('MeanderingProgrammer/render-markdown.nvim')
 -- nerd tree
 -- Plug('nvim-tree/nvim-tree.lua')
 
--- Avante
-Plug('yetone/avante.nvim', { branch = 'main', ['do'] = 'make' })
+-- opencode AI
+Plug('NickvanDyke/opencode.nvim')
 
 -- required dependencies
 Plug('nvim-lua/plenary.nvim')
@@ -283,14 +283,34 @@ local on_attach = function(_, bufnr)
   k("gr", vim.lsp.buf.references)
 end
 
--- Configure one or two servers explicitly (only if you need custom opts)
+-- Configure servers with custom options
 vim.lsp.config("lua_ls", {
   on_attach = on_attach,
   capabilities = caps,
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
--- Enable all desired servers at once (defaults + any configs above)
+vim.lsp.config("ltex", {
+  autostart = false,
+  on_attach = on_attach,
+  capabilities = caps,
+  settings = {
+    ltex = {
+      languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      languageToolOrg = {
+        username = os.getenv("LANGUAGETOOL_USERNAME"),
+        apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
+      },
+      language = "auto",
+      additionalRules = {
+        enablePickyRules = true,
+      },
+    },
+  },
+  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki" },
+})
+
+-- Enable all desired servers (ltex excluded because autostart=false)
 vim.lsp.enable({
   "lua_ls",
   "pyright",
@@ -298,6 +318,22 @@ vim.lsp.enable({
   "r_language_server",
 })
 
+-- LSP Toggle function (handles ALL LSP servers for current buffer)
+function LspToggle()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  
+  if #clients > 0 then
+    -- LSP is active, disable ALL clients in current buffer
+    for _, client in ipairs(clients) do
+      vim.lsp.stop_client(client.id)
+    end
+    print("LSP disabled")
+  else
+    -- LSP is inactive, start appropriate server based on filetype
+    vim.cmd('LspStart')
+    print("LSP enabled")
+  end
+end
 -- }}}
 
 -- Auto complete and Beauty {{{
@@ -566,6 +602,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
     -- function loaded from ~/.Rprofile
     vim.api.nvim_buf_set_keymap(0, 'n', '<LocalLeader><LocalLeader>l', "<cmd>lua require('r.send').cmd('largura()')<CR>", opts)
+
   end
 })
 
@@ -578,6 +615,7 @@ vim.g.vimwiki_key_mappings = { all_maps = 0, global = 0 }
 
 -- Re-enable *just* the link navigation you want inside Vimwiki buffers
 local grp = vim.api.nvim_create_augroup("MyVimwikiMaps", { clear = true })
+
 vim.api.nvim_create_autocmd("FileType", {
   group = grp,
   pattern = "vimwiki",
@@ -606,6 +644,20 @@ vim.g.vimwiki_global_ext = 0 -- don't treat all md files as vimwiki (0)
 -- vim.g.vimwiki_markdown_link_ext = 1 -- add markdown file extension when generating links
 -- vim.g.taskwiki_markdown_syntax = "markdown"
 -- vim.g.indentLine_conceallevel = 2 -- indentline controlls concel
+
+-- Show real characters (emoji/symbols) in Markdown-like buffers
+local grp_show = vim.api.nvim_create_augroup("MarkdownVisibleSymbols", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = grp_show,
+  pattern = { "markdown", "vimwiki", "quarto" },
+  callback = function()
+    -- Ensure emojis/special glyphs like 🔐 🧭 👤 are not hidden by conceal
+    vim.opt_local.conceallevel = 0
+    -- Optional: show invisibles while you tune fonts
+    -- vim.opt_local.list = true
+    -- vim.opt_local.listchars = { eol = '↴', space = '·', tab = '→ ' }
+  end,
+})
 
 -- ---------------------------------------
 -- First define the highlights
@@ -750,6 +802,17 @@ end
 
 -- Make the function available globally
 _G.create_markdown_link = create_markdown_link
+
+-- yay -S ltex-ls-bin
+-- LanguageTool
+-- require('lspconfig').ltex.setup({
+--   settings = {
+--     ltex = {
+--       language = { "en-US", "pt-BR" }
+--       enabled = { "latex", "tex", "bib", "markdown", "quarto", "text" },
+--     }
+--   }
+-- })
 
 -- }}}
 
@@ -1059,75 +1122,204 @@ vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true }
 
 --- }}}
 
--- Avante {{{
+-- opencode {{{
 
--- -- Ensure Avante templates are installed into stdpath('data')
--- do
---   local data = vim.fn.stdpath("data")
---   local src = data .. "/plugged/avante.nvim/lua/avante/templates"
---   local dst = data .. "/avante_templates"
+-- Required for `vim.g.opencode_opts.auto_reload`
+vim.opt.autoread = true
 
---   local function exists(p) return vim.loop.fs_stat(p) ~= nil end
---   if exists(src) and not exists(dst) then
---     vim.fn.mkdir(dst, "p")
---     vim.fn.system({ "cp", "-r", src .. "/.", dst })
---   end
--- end
+-- Recommended/example keymaps
+vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
+vim.keymap.set({ "n", "x" }, "<leader>o+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
+vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select prompt" })
+vim.keymap.set("n", "<leader>ot", function() require("opencode").toggle() end, { desc = "Toggle embedded" })
+vim.keymap.set("n", "<leader>oc", function() require("opencode").command() end, { desc = "Select command" })
+vim.keymap.set("n", "<leader>on", function() require("opencode").command("session_new") end, { desc = "New session" })
+vim.keymap.set("n", "<leader>oi", function() require("opencode").command("session_interrupt") end, { desc = "Interrupt session" })
+vim.keymap.set("n", "<leader>oA", function() require("opencode").command("agent_cycle") end, { desc = "Cycle selected agent" })
+vim.keymap.set("n", "<S-C-u>",    function() require("opencode").command("messages_half_page_up") end, { desc = "Messages half page up" })
+vim.keymap.set("n", "<S-C-d>",    function() require("opencode").command("messages_half_page_down") end, { desc = "Messages half page down" })
 
--- Securely fetch API key from system keyring
-local handle = io.popen("secret-tool lookup openai neovim")
-local api_key = handle:read("*a"):gsub("%s+", "")
-handle:close()
+-- opencode terminal leave: Esc Esc
+-- if I forget, allow to use vim-tmux-navigator on opencode
+-- 
+-- Reusable function to register keymaps in different contexts
+local function set_tmux_navigator_keymaps()
+  vim.keymap.set({ "n", "t" }, "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-j>", "<cmd>TmuxNavigateDown<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+  vim.keymap.set({ "n", "t" }, "<C-l>", "<cmd>TmuxNavigateRight<cr>")
+end
 
--- Inject into environment so Avante sees it
-vim.env.OPENAI_API_KEY = api_key
+-- Register once globally
+set_tmux_navigator_keymaps()
 
--- Load Avante
-local ok_avante, avante = pcall(require, 'avante')
-if ok_avante then
-  avante.setup({
-    instructions_file = "avante.md",
-    provider = "openai",
-    providers = {
-      openai = {
-        endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o-mini", -- pick your model here
-        timeout = 30000,
-        extra_request_body = {
-          temperature = 0.7,
-          max_tokens = 4096,
-        },
-      },
-    },
-    windows = { 
-      edit = { -- float
-        border = "rounded",
-        start_insert = true,
-        width = 60,  -- width in columns
-        height = 3, -- height in rows
-      },
-    },
+-- Re-register for terminal buffers to prevent literal command injection
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = set_tmux_navigator_keymaps,
+})
+
+-- DiffChat Command with Better Colors
+-- colors
+vim.opt.termguicolors = true
+
+local function define_vivid_diff_hl()
+  -- Additions → calm emerald
+  vim.api.nvim_set_hl(0, "DiffAddVivid", {
+    bg = "#103820", fg = "#a6d8b0", bold = false,
+  })
+
+  -- Changes → balanced denim blue
+  vim.api.nvim_set_hl(0, "DiffChangeVivid", {
+    bg = "#182d45", fg = "#94b3e3", bold = false,
+  })
+
+  -- Deletions → deep muted crimson
+  vim.api.nvim_set_hl(0, "DiffDeleteVivid", {
+    bg = "#3a1a1a", fg = "#e5a1a1", bold = false,
+  })
+
+  -- Focused changed text (less bright, subtle blue-gray tone)
+  vim.api.nvim_set_hl(0, "DiffTextVivid", {
+    bg = "#222e3f",  -- darker, less saturated blue-gray
+    fg = "#c0cad9",  -- soft neutral foreground
+    bold = false,
   })
 end
 
--- Image clipboard integration
-local ok_clip, img_clip = pcall(require, 'img-clip')
-if ok_clip then
-  img_clip.setup({
-    default = {
-      embed_image_as_base64 = false,
-      prompt_for_file_name = false,
-      drag_and_drop = { insert_mode = true },
-      use_absolute_path = true,
-    },
-  })
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = define_vivid_diff_hl,
+})
+define_vivid_diff_hl()
+
+local function apply_diff_ui()
+  local wins = vim.api.nvim_list_wins()
+  for _, win in ipairs(wins) do
+    local ok, isdiff = pcall(vim.api.nvim_win_get_option, win, "diff")
+    if ok and isdiff then
+      vim.wo[win].scrollbind   = true
+      vim.wo[win].cursorbind   = true
+      vim.wo[win].conceallevel = 0
+      vim.wo[win].signcolumn   = "yes"
+      vim.wo[win].winhighlight =
+      "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
+    end
+  end
 end
 
--- Render Markdown inside Avante buffers
-local ok_rmd, rmd = pcall(require, 'render-markdown')
-if ok_rmd then
-  rmd.setup({ file_types = { "markdown", "Avante" } })
+vim.api.nvim_create_user_command('DiffChat', function(opts)
+  local filename = vim.fn.expand('%:t:r')
+  local ext      = vim.fn.expand('%:e')
+  local version  = opts.args ~= '' and opts.args or '*'
+  local pattern  = 'chat/' .. filename .. '-v' .. version .. '.' .. ext
+
+  local files = vim.fn.glob(pattern, false, true)
+  if #files == 0 then
+    vim.notify('No versions found in chat/', vim.log.levels.WARN)
+    return
+  end
+  table.sort(files)
+  local target = files[#files]
+
+  vim.cmd('vs ' .. target)
+  vim.cmd('windo diffthis')
+
+  -- ✅ Apply UI safely (no Vimscript if/endif)
+  apply_diff_ui()
+
+  vim.notify('📊 Comparing with: ' .. vim.fn.fnamemodify(target, ':t'), vim.log.levels.INFO)
+end, { nargs = '?', desc = 'Diff with chat/ version' })
+
+-- safety net: re-apply on focus
+vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter" }, {
+  callback = function()
+    if vim.wo.diff then
+      vim.wo.winhighlight =
+      "DiffAdd:DiffAddVivid,DiffChange:DiffChangeVivid,DiffDelete:DiffDeleteVivid,DiffText:DiffTextVivid"
+      vim.opt_local.conceallevel = 0
+      vim.opt_local.signcolumn = "yes"
+    end
+  end,
+})
+
+-- DiffChatList Command
+-- 
+vim.api.nvim_create_user_command('DiffChatList', function()
+  local filename = vim.fn.expand('%:t:r')
+  local ext = vim.fn.expand('%:e')
+  local pattern = 'chat/' .. filename .. '-v*.' .. ext
+
+  local files = vim.fn.glob(pattern, false, true)
+  if #files == 0 then
+    vim.notify('No versions found in chat/', vim.log.levels.WARN)
+    return
+  end
+
+  table.sort(files)
+  print('📁 Available versions for ' .. filename .. ':')
+  for i, file in ipairs(files) do
+    print(string.format('  %d. %s', i, vim.fn.fnamemodify(file, ':t')))
+  end
+end, { desc = 'List all chat/ versions' })
+
+vim.api.nvim_create_user_command('DiffAccept', function()
+  local current = vim.fn.expand('%:p')
+  local filename = vim.fn.expand('%:t:r')
+  local ext = vim.fn.expand('%:e')
+  local latest = vim.fn.glob('chat/' .. filename .. '-v*.' .. ext, false, true)
+
+  if #latest == 0 then
+    vim.notify('No versions found', vim.log.levels.WARN)
+    return
+  end
+
+  table.sort(latest)
+  vim.cmd('!cp ' .. latest[#latest] .. ' ' .. current)
+  vim.cmd('e!')
+  vim.notify('✅ Accepted changes from: ' .. vim.fn.fnamemodify(latest[#latest], ':t'), vim.log.levels.INFO)
+end, { desc = 'Accept latest chat/ version' })
+
+-- For dark themes - Balanced subtle with syntax control
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    -- Diff backgrounds (subtle)
+    vim.api.nvim_set_hl(0, 'DiffAdd', { bg = '#0f1f0f', fg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'DiffChange', { bg = '#0f1520', fg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { bg = '#1f0f0f', fg = '#404040', bold = false })
+    vim.api.nvim_set_hl(0, 'DiffText', { bg = '#1a2535', fg = 'NONE', bold = false })
+  end,
+})
+
+
+
+define_vivid_diff_hl() -- run once at startup too
+
+-- Apply only to diff windows so normal buffers stay clean
+local function set_diff_winhighlight()
+  if vim.wo.diff then
+    vim.wo.winhighlight = table.concat({
+      "DiffAdd:DiffAddVivid",
+      "DiffChange:DiffChangeVivid",
+      "DiffDelete:DiffDeleteVivid",
+      "DiffText:DiffTextVivid",
+    }, ",")
+  end
 end
+
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
+  callback = set_diff_winhighlight,
+})
+
+-- Keep your optimized diff options
+vim.opt.diffopt = {
+  "internal",
+  "filler",
+  "closeoff",
+  "algorithm:histogram",
+  "indent-heuristic",
+  "linematch:60",
+}
+
 
 -- }}}
 
@@ -1183,7 +1375,8 @@ vim.o.timeout = true
 vim.o.timeoutlen = 500
 
 -- replace default search in /
-vim.keymap.set('n', '/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', { noremap = true, silent = true })
+
 -- delete snipp-cut-text) from wich-key
 vim.keymap.del('n', '<leader>x')
 
@@ -1191,8 +1384,8 @@ local wk = require("which-key")
 
 wk.add({
   -- main group
-  -- { "<Space>/", "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", desc = "search here" },
-  { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "find buffers" },
+  { "<Space>/", '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', desc = "content search here" },
+  { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers find" },
   { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
   { "<Space>R", "<cmd>RenameFile<CR>", desc = "rename file" },
@@ -1221,8 +1414,22 @@ wk.add({
   { "<Space>cs", SyncGrep, desc = "~/sync" },
   { "<Space>cw", WikiGrep, desc = "~/wiki" },
   { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- Avante (AI assistant)
-  { "<Space>a", group = "[a]vante" }, -- automatic detection
+  -- opencode (AI assistant)
+  { "<Space>o", group = "[o]pencode" }, -- automatic detection
+  -- diff
+  { "<leader>d",  group = "󰈙 [d]iff / revisions" },
+  { "<leader>dc", ":DiffChat<CR>", desc = "Compare latest revision" },
+  { "<leader>dv", ":DiffChat ", desc = "Compare specific version" },
+  { "<leader>dl", ":DiffChatList<CR>", desc = "List all versions" },
+  { "<leader>da", ":DiffAccept<CR>", desc = "Accept latest revision" },
+  { "<leader>do", ":diffoff | set noscrollbind nocursorbind<CR>", desc = "Turn off diff mode" },
+  { "<leader>dq", ":diffoff | set noscrollbind nocursorbind | q<CR>", desc = "Close diff window" },
+  { "<leader>du", ":diffupdate<CR>", desc = "Update diff view" },
+  { "<leader>dg", ":diffget<CR>", desc = "Get change from other window" },
+  { "<leader>dp", ":diffput<CR>", desc = "Put change to other window" },
+  { "<leader>ds", ":diffset<CR>", desc = "Set diff manually" },
+  { "<leader>dA", ":windo diffthis<CR>", desc = "Enable diff for all windows" },
+  { "<leader>dO", ":windo diffoff | set noscrollbind nocursorbind<CR>", desc = "Turn off diff in all windows" },
   -- Markdown
   { "<Space>m", group = "[m]arkdown" },
   { "<Space>mt", "<cmd>RenderMarkdown toggle<CR>", desc = "toggle render" },
@@ -1271,10 +1478,6 @@ wk.add({
   { "<Space>vgb", ToggleSpellBoth, desc = "both (pt+en)", mode = { "n", "v" } },
   { "<Space>vge", ToggleSpellEN, desc = "english", mode = { "n", "v" } },
   { "<Space>vgp", ToggleSpellPT, desc = "português", mode = { "n", "v" } },
-  { "<Space>vl", group = "[l]sp" }, -- subgroup
-  { "<Space>vld", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable", mode = { "n", "v" } },
-  { "<Space>vlD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", desc = "lsp disable buffers", mode = { "n", "v" } },
-  { "<Space>vle", LspEnable, desc = "lsp enable", mode = { "n", "v" } },
   { "<Space>vi", group = "[i]nit.lua" }, -- subgroup
   { "<Space>vii", "<cmd>PlugInstall<CR>", desc = "install plugins" },
   { "<Space>viu", "<cmd>PlugUpdate<CR>", desc = "update plugins" },
@@ -1310,6 +1513,19 @@ wk.add({
   { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
   { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
   { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
+  -- LSP / LanguageTool
+  { "<Space>l", group = "[l]sp" }, 
+  { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
+  { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
+  { "<Space>lr", vim.lsp.buf.references, desc = "references" },
+  { "<Space>lg", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>lf", vim.lsp.buf.format, desc = "format" },
+  { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
+  { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
+  { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
+  { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
+  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
+  { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
 })
 
 --- }}}
