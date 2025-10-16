@@ -307,9 +307,42 @@ vim.lsp.config("ltex", {
       additionalRules = {
         enablePickyRules = true,
       },
+      -- Ignore code blocks and math in markdown/quarto files
+      markdown = {
+        ignoreCodeBlocks = true,
+        ignoreMath = true,
+      },
+      -- Ignore LaTeX equations and environments
+      latex = {
+        commands = {
+          ignore = { "cite", "ref", "label" },
+        },
+        environments = {
+          ignore = { 
+            "equation", "equation*",
+            "align", "align*",
+            "gather", "gather*",
+            "multline", "multline*",
+            "eqnarray", "eqnarray*",
+            "math", "displaymath",
+            "lstlisting", "verbatim",
+          },
+        },
+      },
+      disabledRules = { 
+        ["en-US"] = { 
+          "MORFOLOGIK_RULE_EN_US",
+          "COMMA_PARENTHESIS_WHITESPACE",
+        },
+        ["pt-BR"] = { 
+          "MORFOLOGIK_RULE_PT_BR",
+          "COMMA_PARENTHESIS_WHITESPACE",
+        },
+      },
+      enabledRules = {},
     },
   },
-  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki" },
+  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki", "rmd" },
 })
 
 -- Enable all desired servers (ltex excluded because autostart=false)
@@ -396,9 +429,7 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
   highlight = {
     enable = true,
-    disable = function(lang)
-      return lang == "markdown" or lang == "markdown_inline"
-    end,
+    disable = {}
   },
   indent = {enable = true},
 }
@@ -693,14 +724,19 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ---------------------------------------
 -- First define the highlights
 
--- fix color bug in render-markdown.nvim
+-- fix H1 title color bug in render-markdown.nvim
 vim.cmd([[
   highlight RenderMarkdownH1Bg guibg=#5b474e guifg=#f38ba8
   highlight RenderMarkdownH2Bg guibg=#514046 guifg=#f5c2e7
   highlight RenderMarkdownH3Bg guibg=#47393e guifg=#bea9a2
   highlight RenderMarkdownH4Bg guibg=#3d3236 guifg=#cbb6b0
   highlight RenderMarkdownH5Bg guibg=#332b2e guifg=#d8c3be
-  highlight RenderMarkdownH6Bg guibg=#2a2426 guifg=#e5d0cc
+  highlight RenderMarkdownH6Bg guibg=#2a2426 guifg=#e5d0cc 
+
+  " LaTeX/Math highlighting via TreeSitter
+  highlight @markup.math guifg=#89b4fa gui=italic
+  highlight @text.math guifg=#89b4fa gui=italic
+  highlight @math guifg=#89b4fa gui=italic
 ]])
 
 require('render-markdown').setup({
@@ -1516,7 +1552,7 @@ wk.add({
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
   { "<Space>vfi", "gg=G``", desc = "indent", mode = { "n", "v" } },
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
-  { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations $$ or $", mode = { "n", "v" } },
+  { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations to $$ or $", mode = { "n", "v" } },
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
@@ -1537,6 +1573,8 @@ wk.add({
   { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
+  { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },
+  { "<Space>ld", "<cmd>LspStop ltex<CR>", desc = "disable ltex", mode = { "n", "v" } },
   { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
   { "<Space>lg", group = "[g]rammar language" }, -- subgroup
   { "<Space>lga", LtexAuto, desc = "auto detect" },
@@ -1545,7 +1583,7 @@ wk.add({
   { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
   { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
-  { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
+  -- { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
   { "<Space>lp", vim.diagnostic.goto_prev, desc = "previous diagnostic" },
