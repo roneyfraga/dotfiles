@@ -169,6 +169,10 @@ if [ -f ~/.credentials/language_tool.sh ]; then
     source ~/.credentials/language_tool.sh
 fi
 
+if [ -f ~/.credentials/openai.sh ]; then
+    source ~/.credentials/openai.sh
+fi
+
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
@@ -190,6 +194,7 @@ alias def='goldendict'
 alias syn='Rscript ~/dotfiles/bin/dicsyn.R'
 alias bib='Rscript ~/dotfiles/bin/getbib.R'
 alias reference='Rscript ~/dotfiles/bin/reference.R'
+alias reference_preper_rag='Rscript ~/dotfiles/bin/reference_preper_rag.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='neofetch'
