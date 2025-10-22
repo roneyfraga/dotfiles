@@ -46,6 +46,12 @@ option_list <- list(
     help = "Rename PDF to 'Author - Year - Title.pdf'"
   ),
   optparse::make_option(
+    c("-B", "--local_bibtex"),
+    action = "store_true",
+    default = FALSE,
+    help = "Write BibTeX to local hidden file (.filename.bib)"
+  ),
+  optparse::make_option(
     c("-l", "--length_title"),
     type = "integer",
     default = 90,
@@ -279,6 +285,31 @@ if (!is.null(args$rename)) {
   file.rename(args$pdf_file, name_with_path_v2)
   
   cat("\n✅ PDF renamed to:", filename, "\n")
+  
+  # Update pdf_file path for local bibtex writing
+  args$pdf_file <- name_with_path_v2
+}
+
+# Write Local BibTeX -----------------------------------------------------------
+
+if (args$local_bibtex) {
+  if (is.null(args$pdf_file)) {
+    stop("ERROR: PDF file required for local BibTeX. Use -p/--pdf_file")
+  }
+  
+  # Get directory of PDF file
+  pdf_dir <- dirname(args$pdf_file)
+  
+  # Create hidden .bib filename based on PDF filename
+  pdf_basename <- basename(args$pdf_file) |>
+    stringr::str_remove("\\.pdf$")
+  
+  local_bib_file <- file.path(pdf_dir, paste0(".", pdf_basename, ".bib"))
+  
+  # Write BibTeX to local file
+  cat(bib2, file = local_bib_file)
+  
+  cat("\n✅ Local BibTeX written to:", local_bib_file, "\n")
 }
 
 cat("\n")

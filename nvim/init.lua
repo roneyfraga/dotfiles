@@ -1176,7 +1176,73 @@ end
 -- Register command
 vim.api.nvim_create_user_command('LinuxifyText', linuxify_text, { range = true })
 
---- }}}
+-- LaTeX/BibTeX accents -> UTF-8 (for use inside Neovim)
+-- Core converter: handles {\'a}, \'{a}, \'a, {\c{c}}, \c{c}, etc.
+local function latex_to_unicode(text)
+  if not text or text == "" then return text end
+
+  -- quick specials first
+  text = text:gsub("\\i", "i")   -- \i -> i
+  text = text:gsub("\\ss", "ß")  -- \ss -> ß
+
+  -- accent maps
+  local maps = {
+    ["'"] = { a="á", e="é", i="í", o="ó", u="ú", A="Á", E="É", I="Í", O="Ó", U="Ú" },
+    ["`"] = { a="à", e="è", i="ì", o="ò", u="ù", A="À", E="È", I="Ì", O="Ò", U="Ù" },
+    ["~"] = { a="ã", o="õ", n="ñ", A="Ã", O="Õ", N="Ñ" },
+    ["^"] = { a="â", e="ê", i="î", o="ô", u="û", A="Â", E="Ê", I="Î", O="Ô", U="Û" },
+    ['"'] = { a="ä", e="ë", i="ï", o="ö", u="ü", A="Ä", E="Ë", I="Ï", O="Ö", U="Ü" },
+  }
+
+  local function apply_accent_pattern(txt, pat, cmap)
+    return (txt:gsub(pat, function(ch)
+      return cmap[ch] or ch
+    end))
+  end
+
+  -- 1) Braced single: {\'a}, {\"o}, {^e}, {~n}, {`u}
+  for mark, cmap in pairs(maps) do
+    text = apply_accent_pattern(text, "{\\" .. mark .. "([A-Za-z])}", cmap)
+  end
+
+  -- 2) Braced-around-letter: \'{a}, \"{o}, \^{e}, \~{n}, \`{u}
+  for mark, cmap in pairs(maps) do
+    text = apply_accent_pattern(text, "\\" .. mark .. "{([A-Za-z])}", cmap)
+  end
+
+  -- 3) Simple: \'a, \"o, \^e, \~n, \`u
+  for mark, cmap in pairs(maps) do
+    text = apply_accent_pattern(text, "\\" .. mark .. "([A-Za-z])", cmap)
+  end
+
+  -- Cedilla forms: {\c{c}}, \c{c}
+  text = text:gsub("{\\c{([Cc])}}", function(c) return (c == "C") and "Ç" or "ç" end)
+  text = text:gsub("\\c{([Cc])}",   function(c) return (c == "C") and "Ç" or "ç" end)
+
+  -- IMPORTANT: do NOT strip braces globally; keep BibTeX structure intact.
+  return text
+end
+
+-- :LatexClean command
+-- - Visual mode: cleans only selected lines
+-- - Normal mode: cleans the whole buffer
+vim.api.nvim_create_user_command("LatexClean", function(opts)
+  local bufnr = 0
+  local start_line, end_line
+  if opts.range == 0 then
+    start_line = 0
+    end_line = vim.api.nvim_buf_line_count(bufnr)
+  else
+    start_line = opts.line1 - 1  -- 0-based
+    end_line   = opts.line2      -- exclusive
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(bufnr, start_line, end_line, false)
+  for i, l in ipairs(lines) do
+    lines[i] = latex_to_unicode(l)
+  end
+  vim.api.nvim_buf_set_lines(bufnr, start_line, end_line, false, lines)
+end, { range = true, desc = "Convert LaTeX accent codes to UTF-8 (preserve braces)" })--- }}}
 
 -- opencode {{{
 
@@ -1554,6 +1620,7 @@ wk.add({
   { "<Space>vfp", "<cmd>%s#%>%#|>#g<CR>", desc = "pipe to |>", mode = { "n", "v" } },
   { "<Space>vfe", "<cmd>ReplaceMathDelimiters<CR>", desc = "equations to $$ or $", mode = { "n", "v" } },
   { "<Space>vff", "<cmd>LinuxifyText<CR>", desc = "filename normalization", mode = { "n", "v" } },
+  { "<Space>vfl", "<cmd>LatexClean<CR>", desc = "latex accents → utf-8", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
   { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
