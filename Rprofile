@@ -127,9 +127,9 @@ options(openalexR.mailto = "roneyfraga@gmail.com")
 
 # openai api key
 key <- tryCatch(
-  system("secret-tool lookup openai neovim", intern = TRUE),
+  suppressWarnings(system("secret-tool lookup openai neovim 2>/dev/null", intern = TRUE)),
   error = function(e) NULL
 )
-if (!is.null(key) && nzchar(key)) {
+if (!is.null(key) && length(key) > 0 && nzchar(key)) {
   Sys.setenv(OPENAI_API_KEY = key)
 }
