@@ -173,6 +173,10 @@ if [ -f ~/.credentials/openai.sh ]; then
     source ~/.credentials/openai.sh
 fi
 
+if [ -f ~/.credentials/z_ai.sh ]; then
+    source ~/.credentials/z_ai.sh
+fi
+
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
@@ -193,7 +197,7 @@ alias def='goldendict'
 alias syn='Rscript ~/dotfiles/bin/dicsyn.R'
 alias bib='Rscript ~/dotfiles/bin/getbib.R'
 alias refman='Rscript ~/dotfiles/bin/reference_manager.R'
-alias librarian='Rscript ~/Biblioteca/rag/librarian.R'
+alias librarian='Rscript ~/Biblioteca/rag-graph/librarian.R'
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 alias timer='termdown'
 alias info2='neofetch'
@@ -361,3 +365,6 @@ fdh() {
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/.local/npm/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
+if [ $nome_do_computador = 'mbp-m1.local' ]; then
+  export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
+fi
