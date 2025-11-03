@@ -721,6 +721,10 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+function ZettelIndexOpen()
+  vim.cmd('edit ~/Wiki/Zet/index.md')
+end
+
 -- ---------------------------------------
 -- First define the highlights
 
@@ -1670,16 +1674,18 @@ wk.add({
   { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
   -- vimWiki
   { "<Space>W", group = "[W]iki" },
-  { "<Space>Wi", "<cmd>VimwikiIndex<CR>", desc = "index" },
   { "<Space>Wt", "<cmd>VimwikiTOC<CR>", desc = "table of contents" },
   { "<Space>Wu", "<cmd>VimwikiUISelect<CR>", desc = "select wiki" },
   { "<Space>Wf", "<cmd>VimwikiFollowLink<CR>", desc = "follow link" },
-  { "<Space>WB", "<cmd>VimwikiBacklinks<CR>", desc = "backlinks" },
+  { "<Space>Wb", "<cmd>VimwikiBacklinks<CR>", desc = "backlinks" },
   { "<Space>Wg", "<cmd>VimwikiGoto<CR>", desc = "goto" },
-  { "<Space>WR", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
-  { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
-  { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
-  { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = { "n", "v" } },
+  { "<Space>Wr", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
+  { "<Space>Ww", "<cmd>VimwikiIndex<CR>", desc = "wiki index open" },
+  { "<Space>Wz", "<cmd>lua ZettelIndexOpen()<CR>", desc = "zettel index open" },
+  { "<Space>WW", WikiOpen, desc = "~/wiki file finder" },
+  { "<Space>WZ", WikiZetOpen, desc = "~/wiki/zet file finder" },
+  { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "link creator", mode = { "n", "v" } },
+  { "<Space>Wy", "<cmd>ZettelYankName<CR>", desc = "yank current filename" },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
   { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },
