@@ -836,35 +836,77 @@ local function create_markdown_link()
     return
   end
 
-  -- Save the current register content
-  local save_reg = vim.fn.getreg('"')
-  local save_regtype = vim.fn.getregtype('"')
+  local mode = vim.api.nvim_get_mode().mode
+  local selected_text = ""
+  local is_visual_mode = mode:match('[vV]')
 
-  -- Yank the visual selection
-  vim.cmd('normal! "zy')
-  local selected_text = vim.fn.getreg('z')
+  if is_visual_mode then
+    -- Visual mode: get selected text
+    -- Save the current register content
+    local save_reg = vim.fn.getreg('"')
+    local save_regtype = vim.fn.getregtype('"')
 
-  -- Restore the register
-  vim.fn.setreg('"', save_reg, save_regtype)
+    -- Yank the visual selection
+    vim.cmd('normal! "zy')
+    selected_text = vim.fn.getreg('z')
+
+    -- Restore the register
+    vim.fn.setreg('"', save_reg, save_regtype)
+  else
+    -- Normal mode: get current line
+    selected_text = vim.api.nvim_get_current_line()
+  end
 
   -- Check if we got any text
   if selected_text == "" or selected_text == nil then
-    vim.notify("No text selected", vim.log.levels.WARN)
+    vim.notify("No text found", vim.log.levels.WARN)
     return
   end
 
   -- Remove trailing newlines
   selected_text = selected_text:gsub("\n$", ""):gsub("\n", " ")
 
+  -- Convert special characters to ASCII equivalents (same as linuxify_text)
+  local char_map = {
+    -- Lowercase
+    ['à']='a', ['á']='a', ['â']='a', ['ã']='a', ['ä']='a', ['å']='a',
+    ['è']='e', ['é']='e', ['ê']='e', ['ë']='e',
+    ['ì']='i', ['í']='i', ['î']='i', ['ï']='i',
+    ['ò']='o', ['ó']='o', ['ô']='o', ['õ']='o', ['ö']='o', ['ø']='o',
+    ['ù']='u', ['ú']='u', ['û']='u', ['ü']='u',
+    ['ý']='y', ['ÿ']='y',
+    ['ñ']='n', ['ç']='c',
+    -- Uppercase
+    ['À']='A', ['Á']='A', ['Â']='A', ['Ã']='A', ['Ä']='A', ['Å']='A',
+    ['È']='E', ['É']='E', ['Ê']='E', ['Ë']='E',
+    ['Ì']='I', ['Í']='I', ['Î']='I', ['Ï']='I',
+    ['Ò']='O', ['Ó']='O', ['Ô']='O', ['Õ']='O', ['Ö']='O', ['Ø']='O',
+    ['Ù']='U', ['Ú']='U', ['Û']='U', ['Ü']='U',
+    ['Ý']='Y', ['Ÿ']='Y',
+    ['Ñ']='N', ['Ç']='C'
+  }
+
+  -- Convert special characters to ASCII equivalents
+  local normalized_text = selected_text:gsub('[%z\1-\127\194-\244][\128-\191]*', function(c)
+    return char_map[c] or c
+  end)
+
   -- Create the slug version (lowercase, replace spaces with hyphens)
-  local slug = selected_text:lower():gsub("%s+", "-"):gsub("[^%w%-]", "")
+  local slug = normalized_text:lower():gsub("%s+", "-"):gsub("[^%w%-]", "")
 
   -- Create the markdown link format
   local link = string.format("[%s](%s)", selected_text, slug)
 
-  -- Replace the selected text with the link
-  vim.cmd('normal! gv"_c' .. link)
-  vim.cmd('normal! l')
+  -- Replace the text with the link
+  if is_visual_mode then
+    -- Visual mode: replace selection
+    vim.cmd('normal! gv"_c' .. link)
+    vim.cmd('normal! l')
+  else
+    -- Normal mode: replace current line
+    local current_line = vim.api.nvim_get_current_line()
+    vim.api.nvim_set_current_line(link)
+  end
 end
 
 -- Make the function available globally
@@ -1626,7 +1668,7 @@ wk.add({
   { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
   { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
   { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
-  -- vimwiki
+  -- vimWiki
   { "<Space>W", group = "[W]iki" },
   { "<Space>Wi", "<cmd>VimwikiIndex<CR>", desc = "index" },
   { "<Space>Wt", "<cmd>VimwikiTOC<CR>", desc = "table of contents" },
@@ -1637,7 +1679,7 @@ wk.add({
   { "<Space>WR", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
   { "<Space>WW", WikiOpen, desc = "~/wiki (root)" },
   { "<Space>Wz", WikiZetOpen, desc = "~/wiki/zet" },
-  { "<Space>ml", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = "v" },
+  { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "create link", mode = { "n", "v" } },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
   { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },

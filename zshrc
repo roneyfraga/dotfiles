@@ -13,7 +13,7 @@ else
 fi
 
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
-export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+# export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 
 # npm permissions for user
 # mkdir ~/.npm-global
