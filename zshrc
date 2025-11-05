@@ -1,16 +1,70 @@
 #rg --files --hidden --follow --no-ignore-vcs If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export nome_do_computador=$(hostname)
-# conferir nome_do_computador com:
-# print $nome_do_computador 
+# OS Detection
+case "$OSTYPE" in
+  darwin*)
+    export OS="macos"
+    export ZSH="/Users/roney/.oh-my-zsh"
+    ;;
+  linux*)
+    export OS="linux"
+    export ZSH="/home/roney/.oh-my-zsh"
+    ;;
+  *)
+    export OS="unknown"
+    ;;
+esac
 
-if [ $nome_do_computador = 'mbp-m1.local' ]; 
-then
-  export ZSH="/Users/roney/.oh-my-zsh"
-else 
-  export ZSH="/home/roney/.oh-my-zsh"
-fi
+# Machine Detection (simple and reliable)
+detect_machine_type() {
+  local hostname=$(hostname)
+
+  # macOS detection
+  if [[ "$OS" == "macos" ]]; then
+    echo "laptop"
+    return
+  fi
+
+  # Linux hostname detection
+  case "$hostname" in
+    rambo|lisa)
+      echo "production"
+      ;;
+    fusca)
+      echo "data-server"
+      ;;
+    x390)
+      echo "laptop"
+      ;;
+    *)
+      echo "unknown"
+      ;;
+  esac
+}
+
+detect_setup_type() {
+  local machine=$(detect_machine_type)
+
+  case "$machine" in
+    laptop) echo "laptop" ;;
+    production|data-server) echo "desktop" ;;
+    *) echo "unknown" ;;
+  esac
+}
+
+# Helper function to identify current machine
+show_machine() {
+  echo "OS: $OS"
+  echo "Machine: $MACHINE_TYPE"
+  echo "Setup: $SETUP_TYPE"
+}
+
+export MACHINE_TYPE=$(detect_machine_type)
+export SETUP_TYPE=$(detect_setup_type)
+
+# Add Homebrew GCC to PATH for priority over system clang (macOS only)
+[[ "$OS" == "macos" ]] && export PATH="/opt/homebrew/bin:$PATH"
 
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
@@ -86,19 +140,21 @@ ZSH_THEME="afowler"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-if [ $nome_do_computador = 'mbp-m1.local' ]; 
-then
-  plugins=(git z fzf)
-else 
-  plugins=(git z fzf zsh-autosuggestions)
-fi
+# Common plugins for all machines
+plugins=(git z fzf)
 
 source $ZSH/oh-my-zsh.sh
+
+# Source zsh-autosuggestions for all machines
+# Manual install, see: 
+# https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+[[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
+# export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -154,32 +210,38 @@ export FZF_DEFAULT_OPTS="\
   "
 
 # OLLAMA
-# case "$nome_do_computador" in
-#   "lisa"|"rambo")
+# case "$MACHINE_TYPE" in
+#   "production")  # rambo or lisa
 #     export OLLAMA_MODELS="/mnt/raid0/ollama/models"
 #     ;;
 # esac
 
 # CREDENTIALS
 if [ -f ~/.credentials/elsevier.sh ]; then
-    source ~/.credentials/elsevier.sh
+  source ~/.credentials/elsevier.sh
 fi
 
 if [ -f ~/.credentials/language_tool.sh ]; then
-    source ~/.credentials/language_tool.sh
+  source ~/.credentials/language_tool.sh
 fi
 
 if [ -f ~/.credentials/openai.sh ]; then
-    source ~/.credentials/openai.sh
+  source ~/.credentials/openai.sh
 fi
 
 if [ -f ~/.credentials/z_ai.sh ]; then
-    source ~/.credentials/z_ai.sh
+  source ~/.credentials/z_ai.sh
 fi
 
 # zsh-autosuggestions
 bindkey '^]' autosuggest-accept
 bindkey '^p' autosuggest-toggle
+
+# GCC alias to use Homebrew GCC by default (macOS only)
+[[ "$OS" == "macos" ]] && {
+  alias gcc='gcc-14'
+  alias g++='g++-14'
+}
 
 # softwares
 alias fm='vifm .'
@@ -198,7 +260,9 @@ alias syn='Rscript ~/dotfiles/bin/dicsyn.R'
 alias bib='Rscript ~/dotfiles/bin/getbib.R'
 alias refman='Rscript ~/dotfiles/bin/reference_manager.R'
 alias librarian='Rscript ~/Biblioteca/rag-graph/librarian.R'
-alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
+alias yta=''
+alias yts=''
+alias ytw=''
 alias timer='termdown'
 alias info2='neofetch'
 alias lg='lazygit'
@@ -210,10 +274,6 @@ alias tml='tmux ls'
 alias tma='tmux attach-session -t'
 alias tmk='tmux kill-session -t'
 
-# quarto
-alias qr='quarto render'
-alias qp='quarto preview'
-
 # files
 alias init.lua="nvim ~/.config/nvim/init.lua"
 alias zshrc="nvim ~/.zshrc"
@@ -221,7 +281,7 @@ alias tmux.conf='nvim ~/.tmux.conf'
 alias i3c='nvim ~/.config/i3/config'
 alias vifmrc='nvim ~/.config/vifm/vifmrc'
 
-# lisa and rambo use the same paths
+# Common aliases (all machines)
 alias dk='cd ~/Desktop'
 alias dw='cd ~/Downloads'
 alias B='cd ~/Biblioteca'
@@ -230,72 +290,62 @@ alias dot='cd ~/dotfiles'
 alias sy='cd ~/Sync'
 alias wk='cd ~/Wiki'
 alias zet='cd ~/Wiki/Zet'
-alias r0='cd /mnt/raid0'
-alias pes='cd /mnt/raid0/Pessoal'
-alias doc='cd /mnt/raid0/Pessoal/Documents/'
-alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
-alias rwd='cd /mnt/raid0/Pessoal/Documents/RworkspaceData'
-alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
-alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
-alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
-alias cti='cd /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
 
-if [ $nome_do_computador = 'mbp-m1.local' ]; 
-then
-  alias pes='cd ~/Pessoal'
-  alias doc='cd ~/Pessoal/Documents/'
-  # alias rw='cd ~/Pessoal/Documents/Rworkspace'
-  alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
-  alias prof='cd ~/Pessoal/Documents/Profissional'
-  alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
-  alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-  alias cli='cd ~/Pessoal/Documents/CLI'
-  alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
-fi
+# Machine-specific configurations
+case "$MACHINE_TYPE" in
+  laptop)
+    # Laptops (local storage)
+    alias pes='cd ~/Pessoal'
+    alias doc='cd ~/Pessoal/Documents/'
+    alias rw='cd ~/Pessoal/Documents/Rworkspace'
+    alias rwd='cd ~/Pessoal/Documents/RworkspaceData'
+    alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd ~/Pessoal/Documents/Profissional'
+    alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+    alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+    alias cli='cd ~/Pessoal/Documents/CLI'
+    alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
+    ;;
+  production)
+    # Production desktops (rambo or lisa - raid setup)
+    alias r0='cd /mnt/raid0'
+    alias pes='cd /mnt/raid0/Pessoal'
+    alias doc='cd /mnt/raid0/Pessoal/Documents/'
+    alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
+    alias rwd='cd /mnt/raid0/Pessoal/Documents/RworkspaceData'
+    alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
+    alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
+    alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
+    alias cti='cd /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+    alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
+    ;;
+  data-server)
+    # Data server (external storage)
+    alias sy='cd /mnt/hd4tb/roney/Sync'
+    alias wk='cd /mnt/hd4tb/roney/Wiki'
+    alias zt='ce /mnt/hd4tb/roney/Wiki/Zet'
+    alias pes='cd /mnt/hd4tb/roney/Pessoal'
+    alias doc='cd /mnt/hd4tb/roney/Pessoal/Documents/'
+    alias rw='cd '/mnt/hd4tb/roney/Pessoal/Documents/Rworkspace'
+    alias rwd='cd /mnt/hd4tb/roney/Pessoal/Documents/RworkspaceData'
+    alias pubpar='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar'
+    alias prof='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional'
+    alias ori='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+    alias cti='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+    alias cli='cd /mnt/hd4tb/roney/Pessoal/Documents/CLI'
+    alias qualis='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar/Qualis'
 
-if [ $nome_do_computador = 'x390' ]; 
-then
-  alias pes='cd ~/Pessoal'
-  alias doc='cd ~/Pessoal/Documents/'
-  alias rw='cd ~/Pessoal/Documents/Rworkspace'
-  alias rwd='cd ~/Pessoal/Documents/RworkspaceData'
-  alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
-  alias prof='cd ~/Pessoal/Documents/Profissional'
-  alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
-  alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-  alias cli='cd ~/Pessoal/Documents/CLI'
-  alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
-fi
+    # wake on lan
+    alias rambo_ligar='wol c8:7f:54:67:67:d5'
+    alias rambo_local='ssh -p 19250 roney@192.168.191.250'
+    ;;
+esac
 
-if [ $nome_do_computador = 'fusca' ]; 
-then
-  alias sy='cd /mnt/hd4tb/roney/Sync'
-  alias wk='cd /mnt/hd4tb/roney/Wiki'
-  alias zt='ce /mnt/hd4tb/roney/Wiki/Zet'
-  alias pes='cd /mnt/hd4tb/roney/Pessoal'
-  alias doc='cd /mnt/hd4tb/roney/Pessoal/Documents/'
-  alias rw='cd /mnt/hd4tb/roney/Pessoal/Documents/Rworkspace'
-  alias rwd='cd /mnt/hd4tb/roney/Pessoal/Documents/RworkspaceData'
-  alias pubpar='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar'
-  alias prof='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional'
-  alias ori='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
-  alias cti='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-  alias cli='cd /mnt/hd4tb/roney/Pessoal/Documents/CLI'
-  alias qualis='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar/Qualis'
+# Machine-specific configurations handled above in main case statement
 
-  # wake on lan
-  alias rambo_ligar='wol c8:7f:54:67:67:d5'
-  alias rambo_local='ssh -p 19250 roney@192.168.191.250'
-
-fi
-
-# ssh tailscale
-if [ $nome_do_computador = 'mbp-m1.local' ]; 
-then
-  alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-fi
+# ssh tailscale (macOS only)
+[[ "$OS" == "macos" ]] && alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 #
 alias rambo='ssh -p 19250 roney@100.77.82.122'
 alias lisa='ssh -p 13000 roney@100.77.23.115'
@@ -303,46 +353,238 @@ alias fusca='ssh -p 19131 roney@100.83.148.110'
 alias ubuntu_nyc='ssh bibr@100.104.99.20' # 159.89.36.185
 alias caipora='ssh -D 5555 caipora@100.104.99.20'
 
-# git
-alias g='git '
-alias gi='git init '
-alias gs='git status -sb '
-alias ga='git add '
-alias gac='git add -A && git commit' 
-alias gacn="git add -A && git commit -am 'save' " 
-alias gc='git commit '
-alias gcm='git commit -m '
-alias gp='git push '
-alias gpo='git push origin '
-alias gpom='git push origin main'
-alias gr='git rm -r '
-alias grc='git rm --cached'
-alias gk='git checkout'
-alias gb='git branch '
-alias gba='git branch -a'
-alias gbd='git branch -d'
-alias gd='git diff '
-alias gds='git diff --stage '
-
 # small functions
-rsyncVolume(){
-  rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"$2"
+rsync_volume() {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "rsync_volume - Sync local files to web server volume directory"
+        echo ""
+        echo "Usage: rsync_volume <local_path>"
+        echo ""
+        echo "Arguments:"
+        echo "  local_path    Local file or directory to sync"
+        echo ""
+        echo "Features:"
+        echo "  - Recursive sync (-r)"
+        echo "  - Preserves permissions and timestamps (-a)"
+        echo "  - Shows progress information (--info=progress2)"
+        echo "  - Uses SSH for secure transfer (-e ssh)"
+        echo "  - Syncs to: bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/"
+        echo ""
+        echo "Examples:"
+        echo "  rsync_volume file.txt"
+        echo "  rsync_volume /path/to/files"
+        echo "  rsync_volume folder-to-send"
+        echo ""
+        echo "Note: Files are placed directly in the volume directory (no subfolders)"
+        return 0
+    fi
+    
+    rsync -r -a -v --info=progress2 -e ssh "$1" bibr@159.89.36.185:/var/www/roneyfraga.com/public_html/volume/
 }
 
-# translate-shell
-# tenpt -argumento 'texto para traduzir'
-# argumento é opcional
-tenpt(){
-  trans en:pt $1 $2  
+# Play YouTube video in mpv
+yt_play() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "yt_play - Play YouTube video in mpv"
+    echo ""
+    echo "Usage: yt_play <youtube_url>"
+    echo ""
+    echo "Examples:"
+    echo "  yt_play 'https://youtube.com/watch?v=VIDEO_ID'"
+    echo ""
+    return 0
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Error: YouTube URL required"
+    echo "Use 'yt_play --help' for usage information"
+    return 1
+  fi
+  mpv "$1"
 }
 
-tpten(){
-  trans pt:en $1 $2
+# Download audio as MP3
+yt_audio() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "yt_audio - Download audio from YouTube"
+    echo ""
+    echo "Usage: yt_audio <youtube_url> [output_format]"
+    echo ""
+    echo "Arguments:"
+    echo "  youtube_url    YouTube video URL"
+    echo "  output_format Audio format (default: mp3)"
+    echo ""
+    echo "Examples:"
+    echo "  yt_audio 'https://youtube.com/watch?v=VIDEO_ID'"
+    echo "  yt_audio 'https://youtube.com/watch?v=VIDEO_ID' wav"
+    echo ""
+    echo "Supported formats: mp3, wav, flac, m4a, opus, etc."
+    return 0
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Error: YouTube URL required"
+    echo "Use 'yt_audio --help' for usage information"
+    return 1
+  fi
+  local format="${2:-mp3}"
+  yt-dlp -x --audio-format "$format" "$1"
 }
 
-# play audio of youtube videos
-ytp(){
-  mpv $1 --no-video --shuffle
+# Download best quality video
+yt_video() {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "yt_video - Download video from YouTube with specified quality"
+        echo ""
+        echo "Usage: yt_video <youtube_url> [quality]"
+        echo ""
+        echo "Arguments:"
+        echo "  youtube_url    YouTube video URL"
+        echo "  quality        Video quality (default: 1440)"
+        echo ""
+        echo "Quality options:"
+        echo "  2160   - 4K Ultra HD"
+        echo "  1440   - 2K/QHD (default)"
+        echo "  1080   - Full HD"
+        echo "  720    - HD"
+        echo "  480    - SD"
+        echo "  360    - Low quality"
+        echo ""
+        echo "Features:"
+        echo "  - Downloads best quality up to specified resolution"
+        echo "  - Optimized for file size vs quality"
+        echo ""
+        echo "Examples:"
+        echo "  yt_video 'https://youtube.com/watch?v=VIDEO_ID'"
+        echo "  yt_video 'https://youtube.com/watch?v=VIDEO_ID' 1080"
+        echo "  yt_video 'https://youtube.com/watch?v=VIDEO_ID' 720"
+        echo ""
+        return 0
+    fi
+    
+    if [[ -z "$1" ]]; then
+        echo "Error: YouTube URL required"
+        echo "Use 'yt_video --help' for usage information"
+        return 1
+    fi
+    local quality="${2:-1440}"
+    yt-dlp -f "best[height<=${quality}]" "$1"
+}
+
+# Download subtitles only
+yt_subs() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "yt_subs - Download manual subtitles from YouTube"
+    echo ""
+    echo "Usage: yt_subs <youtube_url> [language_code]"
+    echo ""
+    echo "Arguments:"
+    echo "  youtube_url     YouTube video URL"
+    echo "  language_code   Language code (default: en)"
+    echo ""
+    echo "Language codes:"
+    echo "  en  - English    pt  - Portuguese"
+    echo "  es  - Spanish    fr  - French"
+    echo "  de  - German    it  - Italian"
+    echo "  ja  - Japanese   ru  - Russian"
+    echo "  zh  - Chinese    ko  - Korean"
+    echo ""
+    echo "Features:"
+    echo "  - Downloads manual subtitles"
+    echo "  - Falls back to all available languages"
+    echo "  - Converts to SRT format"
+    echo ""
+    echo "Examples:"
+    echo "  yt_subs 'https://youtube.com/watch?v=VIDEO_ID'"
+    echo "  yt_subs 'https://youtube.com/watch?v=VIDEO_ID' pt"
+    echo ""
+    return 0
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Error: YouTube URL required"
+    echo "Use 'yt_subs --help' for usage information"
+    return 1
+  fi
+  local lang="${2:-en}"
+  yt-dlp --write-subs --sub-langs "$lang,all" --convert-subs srt --skip-download "$1"
+}
+
+# Download auto-generated subtitles
+yt_subs_auto() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "yt_subs_auto - Download auto-generated subtitles from YouTube"
+    echo ""
+    echo "Usage: yt_subs_auto <youtube_url> [language_code]"
+    echo ""
+    echo "Arguments:"
+    echo "  youtube_url     YouTube video URL"
+    echo "  language_code   Language code (default: en)"
+    echo ""
+    echo "Features:"
+    echo "  - Downloads auto-generated subtitles"
+    echo "  - Falls back to all available languages"
+    echo "  - Converts to SRT format"
+    echo "  - Works even when manual subtitles unavailable"
+    echo ""
+    echo "Examples:"
+    echo "  yt_subs_auto 'https://youtube.com/watch?v=VIDEO_ID'"
+    echo "  yt_subs_auto 'https://youtube.com/watch?v=VIDEO_ID' pt"
+    echo ""
+    return 0
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Error: YouTube URL required"
+    echo "Use 'yt_subs_auto --help' for usage information"
+    return 1
+  fi
+  local lang="${2:-en}"
+  yt-dlp --write-auto-subs --sub-langs "$lang,all" --convert-subs srt --skip-download "$1"
+}
+
+# Download video with subtitles
+yt_video_with_subs() {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "yt_video_with_subs - Download video with subtitles from YouTube"
+        echo ""
+        echo "Usage: yt_video_with_subs <youtube_url> [language_code] [quality]"
+        echo ""
+        echo "Arguments:"
+        echo "  youtube_url     YouTube video URL"
+        echo "  language_code   Language code (default: en)"
+        echo "  quality        Video quality (default: 1440)"
+        echo ""
+        echo "Quality options:"
+        echo "  2160   - 4K Ultra HD"
+        echo "  1440   - 2K/QHD (default)"
+        echo "  1080   - Full HD"
+        echo "  720    - HD"
+        echo "  480    - SD"
+        echo "  360    - Low quality"
+        echo ""
+        echo "Features:"
+        echo "  - Downloads video with specified quality"
+        echo "  - Downloads subtitles in SRT format"
+        echo "  - Falls back to all available languages"
+        echo ""
+        echo "Examples:"
+        echo "  yt_video_with_subs 'https://youtube.com/watch?v=VIDEO_ID'"
+        echo "  yt_video_with_subs 'https://youtube.com/watch?v=VIDEO_ID' pt"
+        echo "  yt_video_with_subs 'https://youtube.com/watch?v=VIDEO_ID' pt 1080"
+        echo "  yt_video_with_subs 'https://youtube.com/watch?v=VIDEO_ID' '' 720"
+        echo ""
+        return 0
+    fi
+    
+    if [[ -z "$1" ]]; then
+        echo "Error: YouTube URL required"
+        echo "Use 'yt_video_with_subs --help' for usage information"
+        return 1
+    fi
+    local lang="${2:-en}"
+    local quality="${3:-1440}"
+    yt-dlp -f "best[height<=${quality}]" --write-subs --sub-langs "$lang,all" --convert-subs srt "$1"
 }
 
 # any format to pdf
@@ -352,12 +594,16 @@ topdf(){
 
 # fzf folder (directory), from current directory
 fd.() {
-cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
-}
-
-# fzf folder (directory), from ~/
-fdh() {
-  cd $HOME && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "fd. - Fuzzy find and change to directory"
+        echo ""
+        echo "Usage: fd."
+        echo ""
+        echo "Fuzzy find directories from current location and cd to selected one"
+        return 0
+    fi
+    
+    cd . && cd "$(fd -t d --hidden --follow --exclude ".git" | fzf --preview="tree -L 1 {}" )"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -365,6 +611,5 @@ fdh() {
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/.local/npm/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
-if [ $nome_do_computador = 'mbp-m1.local' ]; then
-  export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
-fi
+# TinyTeX path (macOS only)
+[[ "$OS" == "macos" ]] && export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
