@@ -1556,7 +1556,8 @@ wk.add({
   { "<Space>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "buffers find" },
   { "<Space>s", "<cmd>w<CR>", desc = "save" },
   { "<Space>q", "<cmd>q!<CR>", desc = "quite" },
-  { "<Space>R", "<cmd>RenameFile<CR>", desc = "rename file" },
+  { "<Space>e", "<cmd>e<CR>", desc = "edit" },
+  { "<Space>r", "<cmd>RenameFile<CR>", desc = "rename" },
   -- file peak
   { "<Space>f", group = "[f]ile peak" },
   -- { "<Space>ft", "<cmd>NvimTreeOpen<CR>", desc = "tree open" },

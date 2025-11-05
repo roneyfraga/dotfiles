@@ -1,2059 +1,2145 @@
-a52dec
-aalib
-abseil-cpp
-accountsservice
-acl
-acpi
-acpid
-ada
-adapta-maia-theme
-adobe-source-code-pro-fonts
-adwaita-cursors
-adwaita-icon-theme
-adwaita-icon-theme-legacy
-alsa-card-profiles
-alsa-firmware
-alsa-lib
-alsa-oss
-alsa-plugins
-alsa-topology-conf
-alsa-ucm-conf
-alsa-utils
-amd-ucode
-ant
-aom
-apache
-apache-orc
-apparmor
-appstream
-appstream-glib
-apr
-apr-util
-arandr
-archlinux-appstream-data
-archlinux-keyring
-ardour
-argon2
-aribb24
-arrow
-artwork-i3
-asciiquarium
-at-spi2-core
-atkmm
-attr
-aubio
-audiofile
-audit
-autoconf
-automake
-avahi
-ayatana-ido
-b43-fwcutter
-babl
-barrier
-barrier-headless
-base
-bash
-bash-completion
-bc
-bcprov
-bibtool
-binutils
-bison
-blas
-blas64-openblas
-blosc
-blueman
-bluez
-bluez-libs
-bluez-utils
-bmenu
-boost
-boost-libs
-box2d
-brltty
-brotli
-btop
-btrfs-progs
-bubblewrap
-bzip2
-c-ares
-ca-certificates
-ca-certificates-mozilla
-ca-certificates-utils
-cairo
-cairomm
-cantarell-fonts
-capstone
-cblas
-cdparanoia
-chafa
-chromaprint
-chrpath
-cifs-utils
-ckbcomp
-clang
-clipit
-clucene
-cmake
-cmus
-colord
-compiler-rt
-confuse
-conky
-conky-i3
-coreutils
-cpio
-cppdap
-cpupower
-cronie
-crypto++
-cryptsetup
-cups
-cups-filters
-cups-pdf
-curl
-cython
-dart-sass
-dav1d
-db
-db5.3
-dbus
-dbus-broker
-dbus-broker-units
-dbus-glib
-dconf
-default-cursors
-deluge
-deno
-desktop-file-utils
-device-mapper
-dfc
-dhclient
-dhcpcd
-dialog
-diffutils
-ding-libs
-discord
-djvulibre
-dma
-dmenu-manjaro
-dmidecode
-dmraid
-dnsmasq
-dnssec-anchors
-docbook-xml
-docbook-xsl
-dosfstools
-dotnet-host
-dotnet-runtime-6.0
-double-conversion
-downgrade
-dtc
-duktape
-dunst
-dust
-dvisvgm
-e2fsprogs
-ecryptfs-utils
-edk2-aarch64
-edk2-arm
-edk2-ovmf
-efibootmgr
-efivar
-electron
-electron28
-electron30
-electron31
-elementary-icon-theme
-enchant
-engrampa
-epdfview
-esbuild
-ethtool
-exempi
-exfatprogs
-exiv2
-exo
-expac
-expat
-f2fs-tools
-faac
-faad2
-fakeroot
-fd
-feh
-ffcall
-ffmpeg
-ffmpeg4.4
-ffmpegthumbnailer
-fftw
-file
-filesystem
-findutils
-firefox
-firefox-tridactyl
-flac
-flex
-fluidsynth
-fmt
-fontconfig
-foomatic-db
-foomatic-db-gutenprint-ppds
-foomatic-db-nonfree
-foomatic-db-nonfree-ppds
-foomatic-db-ppds
-foxitreader
-freefilesync-bin
-freeglut
-freemind
-freetype2
-fribidi
-fuse-common
-fuse2
-fuse3
-fzf
-fzf-open
-garcon
-gawk
-gc
-gcab
-gcc
-gcc-fortran
-gcc-libs
-gcolor3
-gcr
-gcr-4
-gd
-gdal
-gdbm
-gdk-pixbuf-xlib
-gdk-pixbuf2
-gegl
-geoclue
-geoip
-geoip-database
-geos
-gettext
-gflags
-ghc-libs
-ghostscript
-giflib
-gimp
-girara
-git
-gitflow-avh
-glew
-glib-networking
-glib2
-glib2-docs
-glibc
-glibc-locales
-glibmm
-glibmm-2.68
-glpk
-glslang
-glu
-glusterfs
-gmp
-gnome-autoar
-gnome-desktop-4
-gnome-desktop-common
-gnome-keyring
-gnome-themes-extra
-gnu-netcat
-gnupg
-gnutls
-go
-gobject-introspection
-gobject-introspection-runtime
-goldendict-ng
-google-chrome
-google-glog
-gparted
-gperf
-gperftools
-gpgme
-gpm
-gptfdisk
-granite
-graphene
-graphite
-graphviz
-grep
-groff
-grpc
-grub
-grub-theme-manjaro-dev
-gsettings-desktop-schemas
-gsettings-system-schemas
-gsfonts
-gsl
-gsm
-gssdp
-gssproxy
-gst-libav
-gst-plugin-pipewire
-gst-plugins-bad
-gst-plugins-bad-libs
-gst-plugins-base
-gst-plugins-base-libs
-gst-plugins-good
-gst-plugins-ugly
-gstreamer
-gstreamer0.10
-gstreamer0.10-base
-gtest
-gtk-doc
-gtk-layer-shell
-gtk-update-icon-cache
-gtk-vnc
-gtk2
-gtk3
-gtk4
-gtkmm
-gtkmm3
-gtksourceview-pkgbuild
-gtksourceview3
-gtksourceview4
-gtksourceview5
-gts
-gufw
-guile
-gumbo-parser
-gupnp
-gupnp-dlna
-gupnp-igd
-gutenprint
-guvcview
-guvcview-common
-gvfs
-gvfs-afc
-gvfs-gphoto2
-gvfs-mtp
-gvfs-smb
-gzip
-harfbuzz
-harfbuzz-icu
-haskell-aeson
-haskell-aeson-pretty
-haskell-ansi-terminal
-haskell-ansi-wl-pprint
-haskell-appar
-haskell-asn1-encoding
-haskell-asn1-parse
-haskell-asn1-types
-haskell-assoc
-haskell-async
-haskell-attoparsec
-haskell-attoparsec-aeson
-haskell-attoparsec-iso8601
-haskell-auto-update
-haskell-base-compat
-haskell-base-compat-batteries
-haskell-base-orphans
-haskell-base-unicode-symbols
-haskell-base16-bytestring
-haskell-base64
-haskell-base64-bytestring
-haskell-basement
-haskell-bifunctors
-haskell-bitvec
-haskell-blaze-builder
-haskell-blaze-html
-haskell-blaze-markup
-haskell-boring
-haskell-bsb-http-chunked
-haskell-byteable
-haskell-byteorder
-haskell-call-stack
-haskell-case-insensitive
-haskell-cassava
-haskell-cereal
-haskell-citeproc
-haskell-cmdargs
-haskell-colour
-haskell-commonmark
-haskell-commonmark-extensions
-haskell-commonmark-pandoc
-haskell-comonad
-haskell-conduit
-haskell-conduit-extra
-haskell-constraints
-haskell-contravariant
-haskell-cookie
-haskell-crypton
-haskell-crypton-connection
-haskell-crypton-x509
-haskell-crypton-x509-store
-haskell-crypton-x509-system
-haskell-crypton-x509-validation
-haskell-cryptonite
-haskell-data-array-byte
-haskell-data-default
-haskell-data-default-class
-haskell-data-default-instances-containers
-haskell-data-default-instances-dlist
-haskell-data-default-instances-old-locale
-haskell-data-fix
-haskell-dec
-haskell-digest
-haskell-digits
-haskell-distributive
-haskell-dlist
-haskell-doclayout
-haskell-doctemplates
-haskell-easy-file
-haskell-emojis
-haskell-erf
-haskell-fast-logger
-haskell-file-embed
-haskell-foldable1-classes-compat
-haskell-generically
-haskell-ghc-bignum-orphans
-haskell-glob
-haskell-gridtables
-haskell-haddock-library
-haskell-hashable
-haskell-hourglass
-haskell-hslua
-haskell-hslua-aeson
-haskell-hslua-classes
-haskell-hslua-core
-haskell-hslua-list
-haskell-hslua-marshalling
-haskell-hslua-module-doclayout
-haskell-hslua-module-path
-haskell-hslua-module-system
-haskell-hslua-module-text
-haskell-hslua-module-version
-haskell-hslua-module-zip
-haskell-hslua-objectorientation
-haskell-hslua-packaging
-haskell-hslua-repl
-haskell-hslua-typing
-haskell-http-api-data
-haskell-http-client
-haskell-http-client-tls
-haskell-http-date
-haskell-http-media
-haskell-http-types
-haskell-http2
-haskell-hunit
-haskell-indexed-traversable
-haskell-indexed-traversable-instances
-haskell-integer-logarithms
-haskell-iproute
-haskell-ipynb
-haskell-isocline
-haskell-jira-wiki-markup
-haskell-juicypixels
-haskell-lexer
-haskell-libyaml
-haskell-lpeg
-haskell-lua
-haskell-memory
-haskell-mime-types
-haskell-mmorph
-haskell-monad-control
-haskell-mono-traversable
-haskell-network
-haskell-network-byte-order
-haskell-network-uri
-haskell-old-locale
-haskell-old-time
-haskell-onetuple
-haskell-only
-haskell-optparse-applicative
-haskell-ordered-containers
-haskell-pandoc
-haskell-pandoc-lua-engine
-haskell-pandoc-lua-marshal
-haskell-pandoc-server
-haskell-pandoc-types
-haskell-pem
-haskell-pretty-show
-haskell-prettyprinter
-haskell-primitive
-haskell-psqueues
-haskell-quickcheck
-haskell-random
-haskell-recv
-haskell-regex-base
-haskell-regex-tdfa
-haskell-resourcet
-haskell-safe
-haskell-safe-exceptions
-haskell-scientific
-haskell-semialign
-haskell-semigroupoids
-haskell-servant
-haskell-servant-server
-haskell-sha
-haskell-simple-sendfile
-haskell-singleton-bool
-haskell-skylighting
-haskell-skylighting-core
-haskell-skylighting-format-ansi
-haskell-skylighting-format-blaze-html
-haskell-skylighting-format-context
-haskell-skylighting-format-latex
-haskell-socks
-haskell-some
-haskell-sop-core
-haskell-split
-haskell-splitmix
-haskell-statevar
-haskell-streaming-commons
-haskell-strict
-haskell-string-conversions
-haskell-syb
-haskell-tagged
-haskell-tagsoup
-haskell-temporary
-haskell-texmath
-haskell-text-conversions
-haskell-text-icu
-haskell-text-short
-haskell-th-abstraction
-haskell-th-compat
-haskell-th-lift
-haskell-th-lift-instances
-haskell-these
-haskell-time-compat
-haskell-time-manager
-haskell-tls
-haskell-toml-parser
-haskell-transformers-base
-haskell-transformers-compat
-haskell-type-equality
-haskell-typed-process
-haskell-typst
-haskell-typst-symbols
-haskell-unicode-collation
-haskell-unicode-data
-haskell-unicode-transforms
-haskell-uniplate
-haskell-unix-compat
-haskell-unix-time
-haskell-unliftio
-haskell-unliftio-core
-haskell-unordered-containers
-haskell-utf8-string
-haskell-uuid-types
-haskell-vault
-haskell-vector
-haskell-vector-algorithms
-haskell-vector-stream
-haskell-wai
-haskell-wai-app-static
-haskell-wai-cors
-haskell-wai-extra
-haskell-wai-logger
-haskell-warp
-haskell-witherable
-haskell-word8
-haskell-x509
-haskell-xml
-haskell-xml-conduit
-haskell-xml-types
-haskell-yaml
-haskell-zip-archive
-haskell-zlib
-haveged
-hexchat
-hicolor-icon-theme
-hidapi
-highlight
-highway
-hslua-cli
-htop
-http-parser
-hunspell
-hunspell-en_us
-hwdata
-hwinfo
-hwloc
-hyphen
-i3-default-artwork
-i3-help
-i3-scripts
-i3-scrot
-i3-wm
-i3exit
-i3lock
-i3status-manjaro
-iana-etc
-icu
-ijs
-imagemagick
-imath
-imlib2
-inetutils
-iniparser
-insync
-intltool
-inxi
-iproute2
-iptables
-iputils
-ipython
-iso-codes
-iw
-jansson
-jasper
-java-commons-lang
-java-environment-common
-java-runtime-common
-jbig2dec
-jbigkit
-jdk-openjdk
-jdk8-openjdk
-jemalloc
-jfsutils
-jq
-jre8-openjdk
-jre8-openjdk-headless
-json-c
-json-glib
-jsoncpp
-julia
-kauth5
-kbd
-kcolorpicker-qt5
-kcoreaddons
-kcoreaddons5
-keynav
-keyutils
-kimageannotator-qt5
-kitemmodels5
-kmod
-krb5
-ksnip
-kvantum
-kvantum-manjaro
-kvantum-qt5
-kwindowsystem
-kwindowsystem5
-l-smash
-lame
-languagetool
-lapack
-lazygit
-lcms2
-ldb
-ldns
-lensfun
-leptonica
-less
-lib32-alsa-lib
-lib32-at-spi2-core
-lib32-brotli
-lib32-bzip2
-lib32-cairo
-lib32-colord
-lib32-curl
-lib32-dbus
-lib32-e2fsprogs
-lib32-expat
-lib32-flac
-lib32-flex
-lib32-fontconfig
-lib32-freeglut
-lib32-freetype2
-lib32-fribidi
-lib32-gcc-libs
-lib32-gdk-pixbuf2
-lib32-glew
-lib32-glib2
-lib32-glibc
-lib32-glu
-lib32-gmp
-lib32-gnutls
-lib32-gtk3
-lib32-harfbuzz
-lib32-icu
-lib32-keyutils
-lib32-krb5
-lib32-lcms2
-lib32-libasyncns
-lib32-libcanberra
-lib32-libcap
-lib32-libcups
-lib32-libdatrie
-lib32-libdecor
-lib32-libdrm
-lib32-libelf
-lib32-libepoxy
-lib32-libffi
-lib32-libgcrypt
-lib32-libglvnd
-lib32-libgpg-error
-lib32-libice
-lib32-libidn2
-lib32-libjpeg-turbo
-lib32-libldap
-lib32-libltdl
-lib32-libnghttp2
-lib32-libnghttp3
-lib32-libnsl
-lib32-libogg
-lib32-libpciaccess
-lib32-libpng
-lib32-libpsl
-lib32-libpulse
-lib32-librsvg
-lib32-libsm
-lib32-libsndfile
-lib32-libssh2
-lib32-libtasn1
-lib32-libthai
-lib32-libtiff
-lib32-libtirpc
-lib32-libunistring
-lib32-libunwind
-lib32-libva
-lib32-libva-vdpau-driver
-lib32-libvdpau
-lib32-libvorbis
-lib32-libx11
-lib32-libxau
-lib32-libxcb
-lib32-libxcomposite
-lib32-libxcrypt
-lib32-libxcursor
-lib32-libxdamage
-lib32-libxdmcp
-lib32-libxext
-lib32-libxfixes
-lib32-libxft
-lib32-libxi
-lib32-libxinerama
-lib32-libxkbcommon
-lib32-libxkbcommon-x11
-lib32-libxml2
-lib32-libxmu
-lib32-libxrandr
-lib32-libxrender
-lib32-libxshmfence
-lib32-libxt
-lib32-libxtst
-lib32-libxxf86vm
-lib32-llvm-libs
-lib32-lm_sensors
-lib32-mesa
-lib32-mesa-demos
-lib32-mesa-vdpau
-lib32-ncurses
-lib32-nettle
-lib32-openssl
-lib32-opus
-lib32-p11-kit
-lib32-pam
-lib32-pango
-lib32-pcre2
-lib32-pixman
-lib32-systemd
-lib32-tdb
-lib32-util-linux
-lib32-vulkan-icd-loader
-lib32-vulkan-intel
-lib32-vulkan-radeon
-lib32-wayland
-lib32-xcb-util-keysyms
-lib32-xz
-lib32-zlib
-lib32-zstd
-libabw
-libadwaita
-libaec
-libaio
-libao
-libappindicator-gtk3
-libarchive
-libass
-libassuan
-libasyncns
-libatasmart
-libatomic_ops
-libavc1394
-libavif
-libavtp
-libayatana-appindicator
-libayatana-indicator
-libb2
-libblastrampoline
-libblockdev
-libblockdev-crypto
-libblockdev-fs
-libblockdev-loop
-libblockdev-mdraid
-libblockdev-nvme
-libblockdev-part
-libblockdev-swap
-libbluray
-libbpf
-libbs2b
-libbsd
-libburn
-libbytesize
-libcaca
-libcacard
-libcamera
-libcamera-ipa
-libcanberra
-libcap
-libcap-ng
-libcdio
-libcdio-paranoia
-libcdr
-libcloudproviders
-libcmis
-libcolord
-libconfig
-libcue
-libcups
-libcupsfilters
-libdaemon
-libdatachannel
-libdatrie
-libdbusmenu-glib
-libdbusmenu-gtk3
-libdc1394
-libdca
-libde265
-libdecor
-libdeflate
-libdiscid
-libdispatch
-libdovi
-libdrm
-libdv
-libdvbpsi
-libdvdcss
-libdvdnav
-libdvdread
-libe-book
-libeb
-libebml
-libedit
-libei
-libelf
-libepoxy
-libepubgen
-libetonyek
-libev
-libevdev
-libevent
-libexif
-libexttextcat
-libfabric
-libfdk-aac
-libffi
-libfm
-libfm-extra
-libfm-gtk2
-libfontenc
-libfreeaptx
-libfreehand
-libfreexl
-libgcrypt
-libgee
-libgeotiff
-libgexiv2
-libgirepository
-libgit2
-libglvnd
-libgme
-libgnomekbd
-libgpg-error
-libgphoto2
-libgpod
-libgrss
-libgsf
-libgtop
-libgudev
-libgusb
-libgxps
-libhandy
-libheif
-libical
-libice
-libicns
-libid3tag
-libidn
-libidn2
-libiec61883
-libimagequant
-libimobiledevice
-libimobiledevice-glue
-libindicator-gtk3
-libinih
-libinput
-libinstpatch
-libiptcdata
-libiscsi
-libisl
-libisoburn
-libisofs
-libixion
-libjpeg-turbo
-libjuice
-libjxl
-libkate
-libkeybinder3
-libksba
-liblangtag
-liblc3
-libldac
-libldap
-liblo
-liblouis
-liblqr
-liblrdf
-libltc
-libluv
-liblzf
-libmad
-libmanette
-libmatroska
-libmbim
-libmd
-libmediainfo
-libmfx
-libmicrodns
-libmikmod
-libmm-glib
-libmms
-libmng
-libmnl
-libmodplug
-libmpc
-libmpcdec
-libmpd
-libmpdclient
-libmpeg2
-libmspub
-libmtp
-libmupdf
-libmwaw
-libmypaint
-libmysofa
-libnautilus-extension
-libnbd
-libndp
-libnet
-libnetfilter_conntrack
-libnewt
-libnfnetlink
-libnfs
-libnftnl
-libnghttp2
-libnghttp3
-libngtcp2
-libnice
-libnl
-libnm
-libnma
-libnma-common
-libnotify
-libnsl
-libnumbertext
-libnvme
-libodfgen
-libogg
-libomxil-bellagio
-libopenmpt
-liborcus
-libosinfo
-libp11-kit
-libpagemaker
-libpamac
-libpaper
-libpcap
-libpciaccess
-libpgm
-libpipeline
-libpipewire
-libplacebo
-libplist
-libpng
-libportal
-libportal-gtk3
-libportal-gtk4
-libppd
-libproxy
-libpsl
-libptytty
-libpulse
-libqalculate
-libqmi
-libqrtr-glib
-libqxp
-libraqm
-libraw
-libraw1394
-libreoffice-still
-librevenge
-librsvg
-librttopo
-libsamplerate
-libsasl
-libseccomp
-libsecret
-libshout
-libsidplay
-libsidplayfp
-libsigc++
-libsigc++-3.0
-libsigsegv
-libsixel
-libslirp
-libsm
-libsndfile
-libsodium
-libsoup
-libsoup3
-libsoxr
-libspatialite
-libspectre
-libspeechd
-libspiro
-libsrtp
-libssh
-libssh2
-libstaroffice
-libstemmer
-libsynctex
-libsysprof-capture
-libtar
-libtasn1
-libteam
-libtermkey
-libthai
-libtheora
-libtiff
-libtirpc
-libtommath
-libtool
-libtorrent-rasterbar
-libtraceevent
-libtracefs
-libunibreak
-libunistring
-libunwind
-libupnp
-liburcu
-liburing
-libusb
-libusbmuxd
-libutempter
-libutf8proc
-libuv
-libva
-libva-mesa-driver
-libva-vdpau-driver
-libvdpau
-libverto
-libvirt
-libvirt-glib
-libvirt-python
-libvisio
-libvisual
-libvorbis
-libvpl
-libvpx
-libvterm
-libwacom
-libwbclient
-libwebp
-libwebsockets
-libwireplumber
-libwmf
-libwnck3
-libwpd
-libwpe
-libwpg
-libwps
-libx11
-libx86emu
-libxau
-libxaw
-libxcb
-libxcomposite
-libxcrypt
-libxcrypt-compat
-libxcursor
-libxcvt
-libxdamage
-libxdg-basedir
-libxdmcp
-libxdp
-libxext
-libxfce4ui
-libxfce4util
-libxfixes
-libxfont2
-libxft
-libxi
-libxinerama
-libxkbcommon
-libxkbcommon-x11
-libxkbfile
-libxklavier
-libxml2
-libxmlb
-libxmu
-libxnvctrl
-libxpm
-libxpresent
-libxrandr
-libxrender
-libxres
-libxshmfence
-libxslt
-libxss
-libxt
-libxtst
-libxv
-libxvmc
-libxxf86vm
-libyaml
-libyuv
-libzen
-libzim
-libzip
-libzmf
-licenses
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
-lightdm-settings
-lightdm-slick-greeter
-lilv
-linux-api-headers
-linux-firmware
-linux-firmware-whence
-linux61
-lld
-llvm
-llvm-julia-libs
-llvm-libs
-llvm14-libs
-llvm15-libs
-lm_sensors
-lmdb
-logrotate
-lpsolve
-lsb-release
-lshw
-lua
-lua-lpeg
-lua51-lpeg
-lua52
-luajit
-luit
-lv2
-lvm2
-lxappearance
-lxinput
-lxmenu-data
-lz4
-lzo
-m4
-maia-console
-mailcap
-make
-man-db
-man-pages
-manjaro-alsa
-manjaro-application-utility
-manjaro-base-skel
-manjaro-browser-settings
-manjaro-hello
-manjaro-hotfixes
-manjaro-i3-settings
-manjaro-icons
-manjaro-keyring
-manjaro-printer
-manjaro-ranger-settings
-manjaro-release
-manjaro-settings-manager
-manjaro-settings-manager-notifier
-manjaro-system
-manjaro-zsh-config
-marisa
-matcha-gtk-theme
-mathjax2
-mbedtls
-mbedtls2
-md4c
-mdadm
-mediainfo
-memtest86+
-memtest86+-efi
-menu-cache
-mesa
-mesa-demos
-mesa-vdpau
-meson
-mhwd
-mhwd-amdgpu
-mhwd-ati
-mhwd-db
-mhwd-nvidia
-mhwd-nvidia-390xx
-mhwd-nvidia-470xx
-minizip
-mjpegtools
-mkinitcpio
-mkinitcpio-busybox
-mkinitcpio-openswap
-mlocate
-mobile-broadband-provider-info
-moc
-modemmanager
-morc_menu
-mousepad
-mpd
-mpdecimal
-mpfr
-mpg123
-mpv
-msgpack-c
-mtdev
-mujs
-multipath-tools
-mypaint-brushes1
-nano
-nano-syntax-highlighting
-nautilus
-ncdu
-ncurses
-ndctl
-neofetch
-neon
-neovim
-nerd-fonts-noto-sans-mono
-net-snmp
-netctl
-netpbm
-netstat-nat
-nettle
-network-manager-applet
-networkmanager
-networkmanager-openconnect
-networkmanager-openvpn
-networkmanager-pptp
-networkmanager-vpnc
-newsboat
-nfs-utils
-nfsidmap
-nftables
-ninja
-nitrogen
-nm-connection-editor
-node-gyp
-nodejs
-nodejs-nopt
-noto-fonts
-npm
-npth
-nspr
-nss
-nss-mdns
-ntfs-3g
-ntp
-numactl
-oath-toolkit
-obs-studio
-obsidian
-ocl-icd
-oh-my-zsh-git
-oniguruma
-openal
-openblas64
-opencc
-openconnect
-opencore-amr
-openexr
-openh264
-openjpeg2
-openlibm
-openmpi
-openpmix
-openresolv
-openssh
-openssl
-openssl-1.0
-openssl-1.1
-openucx
-openvpn
-opus
-orc
-os-prober
-osinfo-db
-overgrive
-p11-kit
-p7zip
-pa-applet
-pacman
-pacman-contrib
-pacman-mirrors
-pacui
-pam
-pamac-cli
-pamac-gtk
-pambase
-pandoc-cli
-pango
-pangomm
-papirus-icon-theme
-papirus-maia-icon-theme
-parole
-parted
-patch
-patchelf
-patchutils
-pciutils
-pcmanfm
-pcre
-pcre2
-pcsclite
-pdftk
-perl
-perl-clone
-perl-curses
-perl-encode-locale
-perl-error
-perl-file-basedir
-perl-file-desktopentry
-perl-file-listing
-perl-file-mimeinfo
-perl-file-which
-perl-html-parser
-perl-html-tagset
-perl-http-cookiejar
-perl-http-cookies
-perl-http-daemon
-perl-http-date
-perl-http-message
-perl-http-negotiate
-perl-image-exiftool
-perl-io-html
-perl-ipc-system-simple
-perl-libwww
-perl-lwp-mediatypes
-perl-mailtools
-perl-net-http
-perl-term-animation
-perl-timedate
-perl-try-tiny
-perl-uri
-perl-www-robotrules
-perl-xml-parser
-perl-xml-writer
-phodav
-php
-php-apache
-php-cgi
-php-embed
-php-fpm
-php-gd
-php-igbinary
-php-redis
-php-snmp
-picom
-pinentry
-pinta
-pipewire
-pipewire-alsa
-pipewire-audio
-pipewire-jack
-pipewire-media-session
-pixman
-pkcs11-helper
-pkgconf
-pkgfile
-podofo
-polkit
-polkit-gnome
-polkit-qt5
-poppler
-poppler-data
-poppler-glib
-popt
-portaudio
-postgresql-libs
-potrace
-powertop
-ppp
-pptpclient
-procps-ng
-proj
-protobuf
-prrte
-psmisc
-pulseaudio
-pulseaudio-bluetooth
-pyside6
-python
-python-annotated-types
-python-appdirs
-python-argcomplete
-python-asttokens
-python-attrs
-python-autocommand
-python-automat
-python-backcall
-python-build
-python-cachetools
-python-cairo
-python-certifi
-python-cffi
-python-chardet
-python-charset-normalizer
-python-click
-python-colorama
-python-configobj
-python-constantly
-python-cryptography
-python-dateutil
-python-dbus
-python-decorator
-python-distro
-python-docopt
-python-executing
-python-fastjsonschema
-python-filelock
-python-geoip
-python-gobject
-python-google-api-core
-python-google-api-python-client
-python-google-auth
-python-google-auth-httplib2
-python-google-auth-oauthlib
-python-googleapis-common-protos
-python-greenlet
-python-gssapi
-python-h11
-python-html2text
-python-httplib2
-python-hyperlink
-python-idna
-python-ifaddr
-python-incremental
-python-inflect
-python-iniconfig
-python-installer
-python-jaraco.context
-python-jaraco.functools
-python-jaraco.text
-python-jedi
-python-jinja
-python-lxml
-python-mako
-python-manjaro-sdk
-python-markdown
-python-markupsafe
-python-matplotlib-inline
-python-more-itertools
-python-msgpack
-python-nautilus
-python-npyscreen
-python-numpy
-python-oauth2client
-python-oauthlib
-python-ordered-set
-python-outcome
-python-packaging
-python-pandas
-python-parso
-python-pexpect
-python-pickleshare
-python-pillow
-python-pip
-python-pipx
-python-platformdirs
-python-pluggy
-python-ply
-python-prompt_toolkit
-python-protobuf
-python-psutil
-python-ptyprocess
-python-pure-eval
-python-pyasn1
-python-pyasn1-modules
-python-pycparser
-python-pydantic
-python-pydantic-core
-python-pyfiglet
-python-pygments
-python-pyinotify
-python-pynvim
-python-pyopenssl
-python-pyparsing
-python-pyproject-hooks
-python-pyqt5
-python-pyqt5-sip
-python-pyqt5-webengine
-python-pyqt6
-python-pyqt6-sip
-python-pyqt6-webengine
-python-pytest
-python-pytz
-python-pyxdg
-python-rencode
-python-requests
-python-requests-oauthlib
-python-rsa
-python-selenium
-python-semantic-version
-python-service-identity
-python-setproctitle
-python-setuptools
-python-setuptools-rust
-python-setuptools-scm
-python-shtab
-python-six
-python-sniffio
-python-sortedcontainers
-python-stack-data
-python-systemd
-python-termcolor
-python-tomli
-python-tqdm
-python-traitlets
-python-trio
-python-trio-websocket
-python-trove-classifiers
-python-twisted
-python-typeguard
-python-typing_extensions
-python-uritemplate
-python-urllib3
-python-userpath
-python-validate-pyproject
-python-wcwidth
-python-websocket-client
-python-wheel
-python-wsproto
-python-xapp
-python-xlib
-python-xyzservices
-python-yaml
-python-zope-interface
-qemu-audio-alsa
-qemu-audio-dbus
-qemu-audio-jack
-qemu-audio-oss
-qemu-audio-pa
-qemu-audio-pipewire
-qemu-audio-sdl
-qemu-audio-spice
-qemu-base
-qemu-block-curl
-qemu-block-dmg
-qemu-block-gluster
-qemu-block-iscsi
-qemu-block-nfs
-qemu-block-ssh
-qemu-chardev-baum
-qemu-chardev-spice
-qemu-common
-qemu-desktop
-qemu-docs
-qemu-emulators-full
-qemu-full
-qemu-hw-display-qxl
-qemu-hw-display-virtio-gpu
-qemu-hw-display-virtio-gpu-gl
-qemu-hw-display-virtio-gpu-pci
-qemu-hw-display-virtio-gpu-pci-gl
-qemu-hw-display-virtio-vga
-qemu-hw-display-virtio-vga-gl
-qemu-hw-s390x-virtio-gpu-ccw
-qemu-hw-usb-host
-qemu-hw-usb-redirect
-qemu-hw-usb-smartcard
-qemu-img
-qemu-pr-helper
-qemu-system-aarch64
-qemu-system-alpha
-qemu-system-alpha-firmware
-qemu-system-arm
-qemu-system-arm-firmware
-qemu-system-avr
-qemu-system-cris
-qemu-system-hppa
-qemu-system-hppa-firmware
-qemu-system-loongarch64
-qemu-system-m68k
-qemu-system-microblaze
-qemu-system-microblaze-firmware
-qemu-system-mips
-qemu-system-nios2
-qemu-system-or1k
-qemu-system-ppc
-qemu-system-ppc-firmware
-qemu-system-riscv
-qemu-system-riscv-firmware
-qemu-system-rx
-qemu-system-s390x
-qemu-system-s390x-firmware
-qemu-system-sh4
-qemu-system-sparc
-qemu-system-sparc-firmware
-qemu-system-tricore
-qemu-system-x86
-qemu-system-x86-firmware
-qemu-system-xtensa
-qemu-tests
-qemu-tools
-qemu-ui-curses
-qemu-ui-dbus
-qemu-ui-egl-headless
-qemu-ui-gtk
-qemu-ui-opengl
-qemu-ui-sdl
-qemu-ui-spice-app
-qemu-ui-spice-core
-qemu-user
-qemu-vhost-user-gpu
-qhull
-qpdf
-qrencode
-qt5-base
-qt5-declarative
-qt5-doc
-qt5-location
-qt5-multimedia
-qt5-quickcontrols
-qt5-sensors
-qt5-svg
-qt5-tools
-qt5-translations
-qt5-virtualkeyboard-bigscreen
-qt5-webchannel
-qt5-webengine
-qt5-webkit
-qt5-x11extras
-qt5-xmlpatterns
-qt5ct
-qt6-5compat
-qt6-base
-qt6-declarative
-qt6-imageformats
-qt6-multimedia
-qt6-multimedia-ffmpeg
-qt6-positioning
-qt6-shadertools
-qt6-speech
-qt6-svg
-qt6-tools
-qt6-translations
-qt6-wayland
-qt6-webchannel
-qt6-webengine
-quarto-cli-bin
-qutebrowser
-r
-r-sp
-r-tcltk2
-ranger
-raptor
-rasqal
-rav1e
-re2
-readline
-redland
-reiserfsprogs
-rhash
-ripgrep
-ristretto
-rnnoise
-rofi
-rofi-calc
-rpcbind
-rstudio-desktop
-rsync
-rtkit
-rtmpdump
-rubberband
-ruby
-ruby-bundled-gems
-ruby-bundler
-ruby-debug
-ruby-default-gems
-ruby-erb
-ruby-irb
-ruby-matrix
-ruby-minitest
-ruby-net-ftp
-ruby-net-imap
-ruby-net-pop
-ruby-net-smtp
-ruby-power_assert
-ruby-prime
-ruby-racc
-ruby-rake
-ruby-rbs
-ruby-rdoc
-ruby-rexml
-ruby-rss
-ruby-stdlib
-ruby-test-unit
-ruby-typeprof
-rubygems
-run-parts
-rust
-rxvt-unicode
-rxvt-unicode-terminfo
-s-nail
-sbc
-sbxkb
-screenfetch
-scrot
-sdl12-compat
-sdl2
-sdl2_image
-seabios
-sed
-semver
-serd
-serf
-sg3_utils
-shaderc
-shadow
-shared-mime-info
-shiboken6
-slang
-smbclient
-snapd
-snappy
-soci
-sof-firmware
-sord
-sound-theme-freedesktop
-soundtouch
-spandsp
-spectre-meltdown-checker
-speedtest-cli
-speex
-speexdsp
-spice
-spice-gtk
-spice-protocol
-spirv-tools
-sqlite
-squashfs-tools
-sratom
-srt
-st
-startup-notification
-stfl
-stoken
-subversion
-sudo
-suil
-suitesparse
-svt-av1
-svt-hevc
-swh-plugins
-syncthing
-sysfsutils
-syslog-ng
-systemd
-systemd-fsck-silent
-systemd-libs
-systemd-sysvcompat
-t1lib
-taglib
-tailscale
-talloc
-tar
-tcl
-tdb
-teams-for-linux
-telegram-desktop
-termdown
-terminator
-terminus-font
-tesseract
-tesseract-data-afr
-tesseract-data-osd
-tevent
-texinfo
-texlive-basic
-texlive-bibtexextra
-texlive-bin
-texlive-binextra
-texlive-context
-texlive-fontsextra
-texlive-fontsrecommended
-texlive-fontutils
-texlive-formatsextra
-texlive-games
-texlive-humanities
-texlive-latex
-texlive-latexextra
-texlive-latexrecommended
-texlive-luatex
-texlive-mathscience
-texlive-metapost
-texlive-music
-texlive-pictures
-texlive-plaingeneric
-texlive-pstricks
-texlive-publishers
-texlive-xetex
-tgpt
-the_silver_searcher
-thin-provisioning-tools
-thinlinc-server
-thrift
-thunar
-thunar-archive-plugin
-thunar-media-tags-plugin
-thunar-volman
-tinycompress
-tinyxml2
-tk
-tldr
-tmux
-tomlplusplus
-totem-pl-parser
-tpm2-tss
-tracker3
-tracker3-miners
-translate-shell
-tree
-tree-sitter
-tree-sitter-c
-tree-sitter-lua
-tree-sitter-markdown
-tree-sitter-query
-tree-sitter-vim
-tree-sitter-vimdoc
-tslib
-ttf-bitstream-vera
-ttf-dejavu
-ttf-droid
-ttf-font-icons
-ttf-inconsolata
-ttf-indic-otf
-ttf-liberation
-ttf-meslo-nerd-font-powerlevel10k
-ttf-noto-nerd
-ttf-opensans
-ttf-terminus-nerd
-tumbler
-twolame
-tzdata
-uchardet
-udisks2
-udunits
-ueberzug
-ufw
-unclutter
-unibilium
-unixodbc
-unoconv
-unzip
-upower
-urxvt-perls
-usbmuxd
-usbredir
-usbutils
-uthash
-util-linux
-util-linux-libs
-v4l-utils
-v8-r
-v86d
-vala
-vamp-plugin-sdk
-vapoursynth
-vde2
-vi
-vibrancy-icons-teal
-vid.stab
-viewnior
-vifm
-vim
-vim-runtime
-virglrenderer
-virt-install
-virt-manager
-virtiofsd
-viu
-vlc
-vmaf
-volume_key
-volumeicon
-vosviewer
-vpnc
-vte-common
-vte3
-vulkan-headers
-vulkan-icd-loader
-vulkan-intel
-vulkan-radeon
-w3m
-wallpapers-juhraya
-wavpack
-wayland
-wayland-protocols
-web-installer-url-handler
-webkit2gtk
-webp-pixbuf-loader
-webrtc-audio-processing
-webrtc-audio-processing-1
-wget
-which
-wildmidi
-wireless-regdb
-wireless_tools
-wmutils
-woff2
-wol
-wol-systemd
-wolfssl
-wpa_supplicant
-wpebackend-fdo
-x264
-x265
-xapian-core
-xapp
-xarchiver
-xautolock
-xbitmaps
-xcb-proto
-xcb-util
-xcb-util-cursor
-xcb-util-image
-xcb-util-keysyms
-xcb-util-renderutil
-xcb-util-wm
-xcb-util-xrm
-xclip
-xcursor-breeze
-xcursor-chameleon-pearl
-xcursor-maia
-xdg-dbus-proxy
-xdg-desktop-portal
-xdg-desktop-portal-gnome
-xdg-desktop-portal-gtk
-xdg-user-dirs
-xdg-utils
-xdotool
-xerces-c
-xf86-input-elographics
-xf86-input-evdev
-xf86-input-libinput
-xf86-input-void
-xf86-video-amdgpu
-xf86-video-ati
-xf86-video-intel
-xf86-video-nouveau
-xfburn
-xfce4-appfinder
-xfce4-artwork
-xfce4-battery-plugin
-xfce4-clipman-plugin
-xfce4-cpufreq-plugin
-xfce4-cpugraph-plugin
-xfce4-dict
-xfce4-diskperf-plugin
-xfce4-eyes-plugin
-xfce4-fsguard-plugin
-xfce4-genmon-plugin
-xfce4-mailwatch-plugin
-xfce4-mount-plugin
-xfce4-mpc-plugin
-xfce4-netload-plugin
-xfce4-notes-plugin
-xfce4-notifyd
-xfce4-panel
-xfce4-power-manager
-xfce4-pulseaudio-plugin
-xfce4-screensaver
-xfce4-screenshooter
-xfce4-sensors-plugin
-xfce4-session
-xfce4-settings
-xfce4-smartbookmark-plugin
-xfce4-systemload-plugin
-xfce4-taskmanager
-xfce4-terminal
-xfce4-time-out-plugin
-xfce4-timer-plugin
-xfce4-verve-plugin
-xfce4-wavelan-plugin
-xfce4-weather-plugin
-xfce4-whiskermenu-plugin
-xfce4-xkb-plugin
-xfconf
-xfdesktop
-xfsprogs
-xfwm4
-xfwm4-themes
-xkeyboard-config
-xmlsec
-xorg-fonts-alias-misc
-xorg-fonts-encodings
-xorg-fonts-misc
-xorg-iceauth
-xorg-mkfontscale
-xorg-server
-xorg-server-common
-xorg-setxkbmap
-xorg-twm
-xorg-xauth
-xorg-xdpyinfo
-xorg-xev
-xorg-xhost
-xorg-xinit
-xorg-xinput
-xorg-xkbcomp
-xorg-xkill
-xorg-xmodmap
-xorg-xprop
-xorg-xrandr
-xorg-xrdb
-xorg-xset
-xorgproto
-xsel
-xterm
-xvidcore
-xxhash
-xz
-yajl
-yaml-cpp
-yarn
-yay
-youtube-dl
-zathura
-zathura-cb
-zathura-djvu
-zathura-pdf-mupdf
-zathura-ps
-zbar
-zenity
-zensu
-zeromq
-zimg
-zip
-zix
-zlib
-zoom
-zsh
-zsh-autosuggestions
-zsh-completions
-zsh-history-substring-search
-zsh-syntax-highlighting
-zsh-theme-powerlevel10k
-zstd
-zvbi
-zxing-cpp
-zziplib
+7zip [official]
+a52dec [official]
+aalib [official]
+abseil-cpp [official]
+accountsservice [official]
+acl [official]
+acpid [official]
+acpi [official]
+ada [official]
+adapta-maia-theme [official]
+adobe-source-code-pro-fonts [official]
+adwaita-cursors [official]
+adwaita-fonts [official]
+adwaita-icon-theme-legacy [official]
+adwaita-icon-theme [official]
+adwaita-qt5-git [aur]
+adwaita-qt6-git [aur]
+alsa-card-profiles [official]
+alsa-firmware [official]
+alsa-lib [official]
+alsa-oss [official]
+alsa-plugins [official]
+alsa-topology-conf [official]
+alsa-ucm-conf [official]
+alsa-utils [official]
+amd-ucode [official]
+antiword [official]
+aom [official]
+apache [official]
+apache-orc [official]
+apparmor [official]
+appstream-glib [official]
+appstream [official]
+apr [official]
+apr-util [official]
+arandr [official]
+archlinux-appstream-data [official]
+archlinux-keyring [official]
+ardour [official]
+argon2 [official]
+arrow [official]
+artwork-i3 [official]
+asciiquarium [official]
+asio [official]
+atkmm [official]
+at-spi2-core [official]
+attr [official]
+aubio [official]
+audit [official]
+autoconf [official]
+automake [official]
+avahi [official]
+aws-c-auth [official]
+aws-c-cal [official]
+aws-c-common [official]
+aws-c-compression [official]
+aws-c-event-stream [official]
+aws-checksums [official]
+aws-c-http [official]
+aws-c-io [official]
+aws-c-mqtt [official]
+aws-crt-cpp [official]
+aws-c-s3 [official]
+aws-c-sdkutils [official]
+aws-sdk-cpp-core [official]
+aws-sdk-cpp-iam [official]
+aws-sdk-cpp-s3 [official]
+ayatana-ido [official]
+b43-fwcutter [official]
+babl [official]
+barrier [aur]
+barrier-headless [aur]
+base [official]
+bash-completion [official]
+bash [official]
+bc [official]
+bcprov [official]
+binutils [official]
+bison [official]
+blas64-openblas [official]
+blas [official]
+blosc [official]
+blueman [official]
+bluez-libs [official]
+bluez [official]
+bluez-utils [official]
+bmenu [official]
+boost-libs [official]
+boost [official]
+brltty [official]
+brotli [official]
+btop [official]
+btrfs-progs [official]
+bubblewrap [official]
+bzip2 [official]
+ca-certificates-mozilla [official]
+ca-certificates [official]
+ca-certificates-utils [official]
+cairomm [official]
+cairo [official]
+cantarell-fonts [official]
+capstone [official]
+c-ares [official]
+catdoc [official]
+cblas [official]
+cdparanoia [official]
+chafa [official]
+chromaprint [official]
+chrpath [official]
+cifs-utils [official]
+ckbcomp [official]
+clipit [official]
+clucene [official]
+cmus [official]
+colord [official]
+confuse [official]
+conky-i3 [official]
+conky [official]
+coreutils [official]
+cpio [official]
+cpupower [official]
+cronie [official]
+crypto++ [official]
+cryptsetup [official]
+cups-filters [official]
+cups [official]
+cups-pdf [official]
+curl [official]
+cursor-bin [aur]
+dav1d [official]
+db5.3 [official]
+db [official]
+dbus-broker [official]
+dbus-broker-units [official]
+dbus-glib [official]
+dbus [official]
+dconf [official]
+default-cursors [official]
+deluge [official]
+desktop-file-utils [official]
+device-mapper [official]
+dfc [official]
+dhclient [official]
+dhcpcd [official]
+dialog [official]
+diffutils [official]
+ding-libs [official]
+discord [official]
+djvulibre [official]
+dma [official]
+dmenu-manjaro [official]
+dmidecode [official]
+dmraid [official]
+dnsmasq [official]
+docx2txt [official]
+dosfstools [official]
+dotnet-host [official]
+dotnet-runtime-6.0 [official]
+double-conversion [official]
+downgrade [official]
+dtc [official]
+duktape [official]
+dunst [official]
+dust [official]
+dvisvgm [official]
+dysk [official]
+e2fsprogs [official]
+ecryptfs-utils [official]
+edk2-aarch64 [official]
+edk2-arm [official]
+edk2-ovmf [official]
+efibootmgr [official]
+efivar [official]
+electron34 [official]
+electron38 [official]
+electron [official]
+elementary-icon-theme [official]
+enchant [official]
+engrampa [official]
+epdfview [aur]
+ethtool [official]
+exempi [official]
+exfatprogs [official]
+exiv2 [official]
+exo [official]
+expac [official]
+expat [official]
+f2fs-tools [official]
+faac [official]
+faad2 [official]
+fakeroot [official]
+fd [official]
+feh [official]
+ffcall [official]
+ffmpeg4.4 [official]
+ffmpeg [official]
+ffmpegthumbnailer [official]
+fftw [official]
+file [official]
+filesystem [official]
+findutils [official]
+firefox [official]
+firefox-tridactyl [official]
+flac [official]
+flex [official]
+fluidsynth [official]
+fmt [official]
+fontconfig [official]
+foomatic-db-engine [official]
+foomatic-db-gutenprint-ppds [official]
+foomatic-db-nonfree [official]
+foomatic-db-nonfree-ppds [official]
+foomatic-db [official]
+foomatic-db-ppds [official]
+foxitreader [aur]
+freefilesync-bin [aur]
+freeglut [official]
+freemind [aur]
+freetype2 [official]
+fribidi [official]
+fuse2 [official]
+fuse3 [official]
+fuse-common [official]
+fzf [official]
+fzf-open [aur]
+garcon [official]
+gawk [official]
+gcc-fortran [official]
+gcc-libs [official]
+gcc [official]
+gc [official]
+gcolor3 [official]
+gcr-4 [official]
+gcr [official]
+gdal [official]
+gdbm [official]
+gdk-pixbuf2 [official]
+gdk-pixbuf-xlib [official]
+gd [official]
+gegl [official]
+geoclue [official]
+geoip-database [official]
+geoip [official]
+geos [official]
+gettext [official]
+gflags [official]
+gfxstream [official]
+ghc-libs [official]
+ghostscript [official]
+giflib [official]
+gimp [official]
+girara [official]
+git [official]
+glew [official]
+glib2 [official]
+glibc-locales [official]
+glibc [official]
+glibmm-2.68 [official]
+glibmm [official]
+glib-networking [official]
+glm [official]
+glpk [official]
+glslang [official]
+glu [official]
+glusterfs [official]
+gmp [official]
+gnome-autoar [official]
+gnome-desktop-4 [official]
+gnome-desktop-common [official]
+gnome-keyring [official]
+gnome-themes-extra [official]
+gnulib-l10n [official]
+gnu-netcat [aur]
+gnupg [official]
+gnutls [official]
+gobject-introspection [official]
+gobject-introspection-runtime [official]
+goldendict-ng [aur]
+google-chrome [aur]
+google-glog [official]
+gophertube-bin [aur]
+gparted [official]
+gperftools [official]
+gpgme [official]
+gpgmepp [official]
+gpm [official]
+graphene [official]
+graphite [official]
+graphviz [official]
+grep [official]
+groff [official]
+grpc [official]
+grub [official]
+grub-theme-manjaro-dev [aur]
+gsettings-desktop-schemas [official]
+gsettings-system-schemas [official]
+gsfonts [official]
+gsl [official]
+gsm [official]
+gssdp [official]
+gssproxy [official]
+gst-libav [official]
+gst-plugin-pipewire [official]
+gst-plugins-bad-libs [official]
+gst-plugins-bad [official]
+gst-plugins-base-libs [official]
+gst-plugins-base [official]
+gst-plugins-good [official]
+gst-plugins-ugly [official]
+gstreamer0.10 [aur]
+gstreamer0.10-base [aur]
+gstreamer [official]
+gtest [official]
+gtk2 [official]
+gtk3 [official]
+gtk4 [official]
+gtk-layer-shell [official]
+gtkmm3 [official]
+gtkmm [official]
+gtksourceview4 [official]
+gtksourceview-pkgbuild [official]
+gtk-update-icon-cache [official]
+gtk-vnc [official]
+gts [official]
+gufw [official]
+guile [official]
+gumbo-parser [official]
+gupnp-dlna [official]
+gupnp-igd [official]
+gupnp [official]
+gutenprint [official]
+guvcview-common [official]
+guvcview [official]
+gvfs-afc [official]
+gvfs-gphoto2 [official]
+gvfs-mtp [official]
+gvfs [official]
+gvfs-smb [official]
+gzip [official]
+harfbuzz-icu [official]
+harfbuzz [official]
+haskell-aeson [official]
+haskell-aeson-pretty [official]
+haskell-ansi-terminal [official]
+haskell-ansi-terminal-types [official]
+haskell-appar [official]
+haskell-asn1-encoding [official]
+haskell-asn1-parse [official]
+haskell-asn1-types [official]
+haskell-assoc [official]
+haskell-async [official]
+haskell-attoparsec-aeson [official]
+haskell-attoparsec [official]
+haskell-auto-update [official]
+haskell-base16-bytestring [official]
+haskell-base64-bytestring [official]
+haskell-base-compat-batteries [official]
+haskell-base-compat [official]
+haskell-basement [official]
+haskell-base-orphans [official]
+haskell-base-unicode-symbols [official]
+haskell-bifunctors [official]
+haskell-bitvec [official]
+haskell-blaze-builder [official]
+haskell-blaze-html [official]
+haskell-blaze-markup [official]
+haskell-boring [official]
+haskell-bsb-http-chunked [official]
+haskell-byteable [official]
+haskell-byteorder [official]
+haskell-call-stack [official]
+haskell-case-insensitive [official]
+haskell-cassava [official]
+haskell-cborg [official]
+haskell-cereal [official]
+haskell-citeproc [official]
+haskell-cmdargs [official]
+haskell-colour [official]
+haskell-commonmark-extensions [official]
+haskell-commonmark [official]
+haskell-commonmark-pandoc [official]
+haskell-comonad [official]
+haskell-conduit-extra [official]
+haskell-conduit [official]
+haskell-constraints [official]
+haskell-contravariant [official]
+haskell-cookie [official]
+haskell-crypton-connection [official]
+haskell-cryptonite [official]
+haskell-crypton [official]
+haskell-crypton-x509 [official]
+haskell-crypton-x509-store [official]
+haskell-crypton-x509-system [official]
+haskell-crypton-x509-validation [official]
+haskell-data-default-class [official]
+haskell-data-default-instances-containers [official]
+haskell-data-default-instances-dlist [official]
+haskell-data-default-instances-old-locale [official]
+haskell-data-default [official]
+haskell-data-fix [official]
+haskell-dec [official]
+haskell-digest [official]
+haskell-distributive [official]
+haskell-djot [official]
+haskell-dlist [official]
+haskell-doclayout [official]
+haskell-doctemplates [official]
+haskell-easy-file [official]
+haskell-emojis [official]
+haskell-erf [official]
+haskell-fast-logger [official]
+haskell-file-embed [official]
+haskell-foldable1-classes-compat [official]
+haskell-generically [official]
+haskell-generics-sop [official]
+haskell-glob [official]
+haskell-gridtables [official]
+haskell-haddock-library [official]
+haskell-half [official]
+haskell-hashable [official]
+haskell-hourglass [official]
+haskell-hslua-aeson [official]
+haskell-hslua-classes [official]
+haskell-hslua-core [official]
+haskell-hslua-list [official]
+haskell-hslua-marshalling [official]
+haskell-hslua-module-doclayout [official]
+haskell-hslua-module-path [official]
+haskell-hslua-module-system [official]
+haskell-hslua-module-text [official]
+haskell-hslua-module-version [official]
+haskell-hslua-module-zip [official]
+haskell-hslua-objectorientation [official]
+haskell-hslua [official]
+haskell-hslua-packaging [official]
+haskell-hslua-repl [official]
+haskell-hslua-typing [official]
+haskell-http2 [official]
+haskell-http-api-data [official]
+haskell-http-client [official]
+haskell-http-client-tls [official]
+haskell-http-date [official]
+haskell-http-media [official]
+haskell-http-types [official]
+haskell-hunit [official]
+haskell-indexed-traversable-instances [official]
+haskell-indexed-traversable [official]
+haskell-integer-conversion [official]
+haskell-integer-logarithms [official]
+haskell-iproute [official]
+haskell-ipynb [official]
+haskell-isocline [official]
+haskell-jira-wiki-markup [official]
+haskell-juicypixels [official]
+haskell-lexer [official]
+haskell-libyaml [official]
+haskell-lpeg [official]
+haskell-lua [official]
+haskell-memory [official]
+haskell-mime-types [official]
+haskell-mmorph [official]
+haskell-monad-control [official]
+haskell-mono-traversable [official]
+haskell-network-byte-order [official]
+haskell-network-control [official]
+haskell-network [official]
+haskell-network-uri [official]
+haskell-old-locale [official]
+haskell-old-time [official]
+haskell-onetuple [official]
+haskell-only [official]
+haskell-optparse-applicative [official]
+haskell-ordered-containers [official]
+haskell-os-string [official]
+haskell-pandoc-lua-engine [official]
+haskell-pandoc-lua-marshal [official]
+haskell-pandoc [official]
+haskell-pandoc-server [official]
+haskell-pandoc-types [official]
+haskell-pem [official]
+haskell-prettyprinter-ansi-terminal [official]
+haskell-prettyprinter [official]
+haskell-pretty-show [official]
+haskell-primitive [official]
+haskell-psqueues [official]
+haskell-quickcheck [official]
+haskell-random [official]
+haskell-recv [official]
+haskell-regex-base [official]
+haskell-regex-tdfa [official]
+haskell-resourcet [official]
+haskell-safe-exceptions [official]
+haskell-safe [official]
+haskell-scientific [official]
+haskell-semialign [official]
+haskell-semigroupoids [official]
+haskell-serialise [official]
+haskell-servant [official]
+haskell-servant-server [official]
+haskell-sha [official]
+haskell-simple-sendfile [official]
+haskell-singleton-bool [official]
+haskell-skylighting-core [official]
+haskell-skylighting-format-ansi [official]
+haskell-skylighting-format-blaze-html [official]
+haskell-skylighting-format-context [official]
+haskell-skylighting-format-latex [official]
+haskell-skylighting [official]
+haskell-socks [official]
+haskell-some [official]
+haskell-sop-core [official]
+haskell-splitmix [official]
+haskell-split [official]
+haskell-statevar [official]
+haskell-streaming-commons [official]
+haskell-strict [official]
+haskell-syb [official]
+haskell-tagged [official]
+haskell-tagsoup [official]
+haskell-tasty [official]
+haskell-temporary [official]
+haskell-texmath [official]
+haskell-text-conversions [official]
+haskell-text-icu [official]
+haskell-text-iso8601 [official]
+haskell-text-short [official]
+haskell-th-abstraction [official]
+haskell-th-compat [official]
+haskell-these [official]
+haskell-th-lift-instances [official]
+haskell-th-lift [official]
+haskell-time-compat [official]
+haskell-time-manager [official]
+haskell-tls [official]
+haskell-toml-parser [official]
+haskell-transformers-base [official]
+haskell-transformers-compat [official]
+haskell-typed-process [official]
+haskell-typst [official]
+haskell-typst-symbols [official]
+haskell-unicode-collation [official]
+haskell-unicode-data [official]
+haskell-unicode-transforms [official]
+haskell-uniplate [official]
+haskell-unix-compat [official]
+haskell-unix-time [official]
+haskell-unliftio-core [official]
+haskell-unliftio [official]
+haskell-unordered-containers [official]
+haskell-utf8-string [official]
+haskell-uuid-types [official]
+haskell-vault [official]
+haskell-vector-algorithms [official]
+haskell-vector [official]
+haskell-vector-stream [official]
+haskell-wai-app-static [official]
+haskell-wai-cors [official]
+haskell-wai-extra [official]
+haskell-wai-logger [official]
+haskell-wai [official]
+haskell-warp [official]
+haskell-witherable [official]
+haskell-word8 [official]
+haskell-x509 [official]
+haskell-xml-conduit [official]
+haskell-xml [official]
+haskell-xml-types [official]
+haskell-yaml [official]
+haskell-zip-archive [official]
+haskell-zlib [official]
+haveged [official]
+hexchat [official]
+hicolor-icon-theme [official]
+hidapi [official]
+highlight [official]
+highway [official]
+hslua-cli [official]
+htop [official]
+hunspell-en_us [official]
+hunspell [official]
+hwdata [official]
+hwinfo [official]
+hwloc [official]
+hyphen [official]
+i3-default-artwork [official]
+i3exit [official]
+i3-help [official]
+i3lock [official]
+i3-scripts [official]
+i3-scrot [official]
+i3status-manjaro [aur]
+i3-wm [official]
+iana-etc [official]
+icu [official]
+ijs [official]
+imagemagick [official]
+imath [official]
+imlib2 [official]
+inetutils [official]
+iniparser [official]
+insync [aur]
+inxi [official]
+iproute2 [official]
+iptables [official]
+iputils [official]
+ipython [official]
+iso-codes [official]
+iw [official]
+jansson [official]
+jasper [official]
+java-commons-lang [official]
+java-environment-common [official]
+java-runtime-common [official]
+jbig2dec [official]
+jbigkit [official]
+jdk-openjdk [official]
+jfsutils [official]
+jq [official]
+jre17-openjdk [official]
+jre8-openjdk-headless [official]
+jre8-openjdk [official]
+json-c [official]
+json-glib [official]
+julia [official]
+jupyter-nbclient [official]
+jupyter-nbformat [official]
+kauth5 [official]
+kbd [official]
+kcolorpicker-qt5 [official]
+kcoreaddons5 [official]
+kcoreaddons [official]
+kew [aur]
+keynav [aur]
+keyutils [official]
+kimageannotator-qt5 [official]
+kitemmodels5 [official]
+kmod [official]
+krb5 [official]
+ksnip [official]
+kvantum-manjaro [official]
+kvantum [official]
+kvantum-qt5 [official]
+kwindowsystem [official]
+lame [official]
+languagetool [official]
+lapack [official]
+lazygit [official]
+lcms2 [official]
+ldb [official]
+leancrypto [official]
+lensfun [official]
+leptonica [official]
+less [official]
+lib32-at-spi2-core [official]
+lib32-audit [official]
+lib32-brotli [official]
+lib32-bzip2 [official]
+lib32-cairo [official]
+lib32-colord [official]
+lib32-curl [official]
+lib32-dbus [official]
+lib32-e2fsprogs [official]
+lib32-expat [official]
+lib32-flex [official]
+lib32-fontconfig [official]
+lib32-freeglut [official]
+lib32-freetype2 [official]
+lib32-fribidi [official]
+lib32-gcc-libs [official]
+lib32-gdk-pixbuf2 [official]
+lib32-glew [official]
+lib32-glib2 [official]
+lib32-glibc [official]
+lib32-glu [official]
+lib32-gmp [official]
+lib32-gnutls [official]
+lib32-gtk3 [official]
+lib32-harfbuzz [official]
+lib32-icu [official]
+lib32-json-c [official]
+lib32-keyutils [official]
+lib32-krb5 [official]
+lib32-lcms2 [official]
+lib32-libcap [official]
+lib32-libcups [official]
+lib32-libdatrie [official]
+lib32-libdecor [official]
+lib32-libdrm [official]
+lib32-libelf [official]
+lib32-libepoxy [official]
+lib32-libffi [official]
+lib32-libgcrypt [official]
+lib32-libglvnd [official]
+lib32-libgpg-error [official]
+lib32-libice [official]
+lib32-libidn2 [official]
+lib32-libjpeg-turbo [official]
+lib32-libldap [official]
+lib32-libnghttp2 [official]
+lib32-libnghttp3 [official]
+lib32-libnsl [official]
+lib32-libpciaccess [official]
+lib32-libpng [official]
+lib32-libpsl [official]
+lib32-librsvg [official]
+lib32-libsm [official]
+lib32-libssh2 [official]
+lib32-libtasn1 [official]
+lib32-libthai [official]
+lib32-libtiff [official]
+lib32-libtirpc [official]
+lib32-libunistring [official]
+lib32-libva [official]
+lib32-libva-vdpau-driver [aur]
+lib32-libvdpau [official]
+lib32-libx11 [official]
+lib32-libxau [official]
+lib32-libxcb [official]
+lib32-libxcomposite [official]
+lib32-libxcrypt [official]
+lib32-libxcursor [official]
+lib32-libxdamage [official]
+lib32-libxdmcp [official]
+lib32-libxext [official]
+lib32-libxfixes [official]
+lib32-libxft [official]
+lib32-libxinerama [official]
+lib32-libxi [official]
+lib32-libxkbcommon [official]
+lib32-libxkbcommon-x11 [official]
+lib32-libxml2 [official]
+lib32-libxmu [official]
+lib32-libxrandr [official]
+lib32-libxrender [official]
+lib32-libxshmfence [official]
+lib32-libxt [official]
+lib32-libxtst [official]
+lib32-libxxf86vm [official]
+lib32-llvm-libs [official]
+lib32-lm_sensors [official]
+lib32-mesa-demos [official]
+lib32-mesa [official]
+lib32-ncurses [official]
+lib32-nettle [official]
+lib32-openssl [official]
+lib32-p11-kit [official]
+lib32-pam [official]
+lib32-pango [official]
+lib32-pcre2 [official]
+lib32-pixman [official]
+lib32-spirv-tools [official]
+lib32-systemd [official]
+lib32-util-linux [official]
+lib32-vulkan-icd-loader [official]
+lib32-vulkan-intel [official]
+lib32-vulkan-mesa-device-select [official]
+lib32-vulkan-radeon [official]
+lib32-wayland [official]
+lib32-xcb-util-keysyms [official]
+lib32-xz [official]
+lib32-zlib [official]
+lib32-zstd [official]
+libabw [official]
+libadwaita [official]
+libaec [official]
+libaemu [official]
+libaio [official]
+libao [official]
+libappindicator-gtk3 [official]
+libarchive [official]
+libass [official]
+libassuan [official]
+libasyncns [official]
+libatasmart [official]
+libatomic_ops [official]
+libavc1394 [official]
+libavif [official]
+libavtp [official]
+libayatana-appindicator [official]
+libayatana-indicator [official]
+libb2 [official]
+libblastrampoline [official]
+libblockdev-crypto [official]
+libblockdev-fs [official]
+libblockdev-loop [official]
+libblockdev-mdraid [official]
+libblockdev-nvme [official]
+libblockdev [official]
+libblockdev-part [official]
+libblockdev-swap [official]
+libbluray [official]
+libbpf [official]
+libbs2b [official]
+libbsd [official]
+libburn [official]
+libbytesize [official]
+libcaca [official]
+libcacard [official]
+libcamera-ipa [official]
+libcamera [official]
+libcanberra [official]
+libcap-ng [official]
+libcap [official]
+libcbor [official]
+libcdio [official]
+libcdio-paranoia [official]
+libcdr [official]
+libcloudproviders [official]
+libcmis [official]
+libcolord [official]
+libconfig [official]
+libcue [official]
+libcupsfilters [official]
+libcups [official]
+libdaemon [official]
+libdatachannel [official]
+libdatrie [official]
+libdbusmenu-glib [official]
+libdbusmenu-gtk3 [official]
+libdc1394 [official]
+libdca [official]
+libde265 [official]
+libdecor [official]
+libdeflate [official]
+libdiscid [official]
+libdispatch [official]
+libdisplay-info [official]
+libdovi [official]
+libdrm [official]
+libdvdcss [official]
+libdvdnav [official]
+libdvdread [official]
+libdv [official]
+libeb [aur]
+libe-book [official]
+libebur128 [official]
+libedit [official]
+libei [official]
+libelf [official]
+libepoxy [official]
+libepubgen [official]
+libetonyek [official]
+libevdev [official]
+libevent [official]
+libev [official]
+libexif [official]
+libexttextcat [official]
+libfabric [official]
+libfdk-aac [official]
+libffi [official]
+libfm-extra [official]
+libfm-gtk2 [official]
+libfm [official]
+libfontenc [official]
+libfreeaptx [official]
+libfreehand [official]
+libfreexl [official]
+libfyaml [official]
+libgcrypt [official]
+libgeotiff [official]
+libgexiv2 [official]
+libgirepository [official]
+libgit2 [official]
+libglvnd [official]
+libgme [official]
+libgnomekbd [official]
+libgpg-error [official]
+libgphoto2 [official]
+libgpod [official]
+libgrss [aur]
+libgsf [official]
+libgtop [official]
+libgudev [official]
+libgusb [official]
+libgxps [official]
+libhandy [official]
+libheif [official]
+libice [official]
+libid3tag [official]
+libidn2 [official]
+libidn [official]
+libiec61883 [official]
+libimagequant [official]
+libimobiledevice-glue [official]
+libimobiledevice [official]
+libinih [official]
+libinput [official]
+libinstpatch [official]
+libiptcdata [official]
+libiscsi [official]
+libisl [official]
+libisoburn [official]
+libisofs [official]
+libixion [official]
+libjpeg-turbo [official]
+libjuice [official]
+libjxl [official]
+libkeybinder3 [official]
+libksba [official]
+liblangtag [official]
+liblc3 [official]
+libldac [official]
+libldap [official]
+liblo [official]
+liblouis [official]
+liblqr [official]
+liblrdf [official]
+libltc [official]
+libluv [official]
+liblzf [official]
+libmad [official]
+libmanette [official]
+libmbim [official]
+libmd [official]
+libmediainfo [official]
+libmfx [official]
+libmicrodns [official]
+libmikmod [official]
+libmm-glib [official]
+libmms [official]
+libmng [official]
+libmnl [official]
+libmodplug [official]
+libmpcdec [official]
+libmpc [official]
+libmpdclient [official]
+libmpd [official]
+libmpeg2 [official]
+libmspub [official]
+libmtp [official]
+libmupdf [official]
+libmwaw [official]
+libmypaint [official]
+libmysofa [official]
+libnautilus-extension [official]
+libnbd [official]
+libndp [official]
+libnetfilter_conntrack [official]
+libnet [official]
+libnewt [official]
+libnfnetlink [official]
+libnfs [official]
+libnftnl [official]
+libnghttp2 [official]
+libnghttp3 [official]
+libngtcp2 [official]
+libnice [official]
+libnl [official]
+libnma-common [official]
+libnma-gtk4 [official]
+libnma [official]
+libnm [official]
+libnotify [official]
+libnsl [official]
+libnumbertext [official]
+libnvme [official]
+libodfgen [official]
+libogg [official]
+libopenmpt [official]
+liborcus [official]
+libosinfo [official]
+libp11-kit [official]
+libpagemaker [official]
+libpamac [official]
+libpaper [official]
+libpcap [official]
+libpciaccess [official]
+libpgm [official]
+libpipeline [official]
+libpipewire [official]
+libplacebo [official]
+libplist [official]
+libpng [official]
+libportal-gtk3 [official]
+libportal-gtk4 [official]
+libportal [official]
+libppd [official]
+libproxy [official]
+libpsl [official]
+libptytty [official]
+libpulse [official]
+libqalculate [official]
+libqmi [official]
+libqrtr-glib [official]
+libqxp [official]
+libraqm [official]
+libraw1394 [official]
+libraw [official]
+libreoffice-still [official]
+librevenge [official]
+librsvg [official]
+librttopo [official]
+libsamplerate [official]
+libsasl [official]
+libseccomp [official]
+libsecret [official]
+libshout [official]
+libsidplayfp [official]
+libsigc++-3.0 [official]
+libsigc++ [official]
+libsigsegv [official]
+libsixel [official]
+libslirp [official]
+libsm [official]
+libsndfile [official]
+libsodium [official]
+libsoup3 [official]
+libsoup [official]
+libsoxr [official]
+libspatialite [official]
+libspectre [official]
+libspeechd [official]
+libspiro [official]
+libsrtp [official]
+libssh2 [official]
+libssh [official]
+libstaroffice [official]
+libstemmer [official]
+libsynctex [official]
+libsysprof-capture [official]
+libtasn1 [official]
+libteam [official]
+libthai [official]
+libtheora [official]
+libtiff [official]
+libtirpc [official]
+libtommath [official]
+libtool [official]
+libtorrent-rasterbar [official]
+libtraceevent [official]
+libtracefs [official]
+libunibreak [official]
+libunistring [official]
+libunwind [official]
+libupnp [official]
+liburcu [official]
+liburing [official]
+libusbmuxd [official]
+libusb [official]
+libutempter [official]
+libutf8proc [official]
+libuv [official]
+libva [official]
+libva-vdpau-driver [aur]
+libvdpau [official]
+libverto [official]
+libvirt-glib [official]
+libvirt [official]
+libvirt-python [official]
+libvisio [official]
+libvlc [official]
+libvorbis [official]
+libvpl [official]
+libvpx [official]
+libvterm [official]
+libwacom [official]
+libwbclient [official]
+libwebp [official]
+libwebsockets [official]
+libwireplumber [official]
+libwmf [official]
+libwnck3 [official]
+libwpd [official]
+libwpg [official]
+libwps [official]
+libx11 [official]
+libx86emu [official]
+libxau [official]
+libxaw [official]
+libxcb [official]
+libxcomposite [official]
+libxcrypt-compat [official]
+libxcrypt [official]
+libxcursor [official]
+libxcvt [official]
+libxdamage [official]
+libxdmcp [official]
+libxdp [official]
+libxext [official]
+libxfce4ui [official]
+libxfce4util [official]
+libxfce4windowing [official]
+libxfixes [official]
+libxfont2 [official]
+libxft [official]
+libxinerama [official]
+libxi [official]
+libxkbcommon [official]
+libxkbcommon-x11 [official]
+libxkbfile [official]
+libxklavier [official]
+libxml2 [official]
+libxmlb [official]
+libxmu [official]
+libxnvctrl [official]
+libxpm [official]
+libxpresent [official]
+libxrandr [official]
+libxrender [official]
+libxres [official]
+libxshmfence [official]
+libxslt [official]
+libxss [official]
+libxt [official]
+libxtst [official]
+libxvmc [official]
+libxv [official]
+libxxf86vm [official]
+libyaml [official]
+libyuv [official]
+libzen [official]
+libzim [official]
+libzip [official]
+libzmf [official]
+licenses [official]
+lightdm-gtk-greeter [official]
+lightdm-gtk-greeter-settings [official]
+lightdm [official]
+lightdm-settings [official]
+lightdm-slick-greeter [official]
+lilv [official]
+linux61 [official]
+linux-api-headers [official]
+linux-firmware-amdgpu [official]
+linux-firmware-atheros [official]
+linux-firmware-broadcom [official]
+linux-firmware-cirrus [official]
+linux-firmware-intel [official]
+linux-firmware-mediatek [official]
+linux-firmware-meta [official]
+linux-firmware-nvidia [official]
+linux-firmware-other [official]
+linux-firmware-radeon [official]
+linux-firmware-realtek [official]
+linux-firmware-whence [official]
+lld [official]
+llhttp [official]
+llvm14-libs [aur]
+llvm-julia-libs [official]
+llvm-libs [official]
+lmdb [official]
+lm_sensors [official]
+localsearch [official]
+logrotate [official]
+lpsolve [official]
+lsb-release [official]
+lshw [official]
+l-smash [official]
+ltex-ls-bin [aur]
+lua51-lpeg [official]
+luajit [official]
+lua-lpeg [official]
+lua [official]
+luit [official]
+lv2 [official]
+lvm2 [official]
+lxappearance [official]
+lxinput [official]
+lxmenu-data [official]
+lz4 [official]
+lzo [official]
+m4 [official]
+maia-console [official]
+mailcap [official]
+make [official]
+man-db [official]
+manjaro-alsa [official]
+manjaro-application-utility [official]
+manjaro-base-skel [official]
+manjaro-browser-settings [official]
+manjaro-hello [official]
+manjaro-hotfixes [aur]
+manjaro-i3-settings [official]
+manjaro-icons [official]
+manjaro-keyring [official]
+manjaro-printer [official]
+manjaro-ranger-settings [official]
+manjaro-release [official]
+manjaro-settings-manager-notifier [official]
+manjaro-settings-manager [official]
+manjaro-system [official]
+manjaro-zsh-config [official]
+man-pages [official]
+marisa [official]
+matcha-gtk-theme [official]
+mbedtls2 [official]
+mbedtls [official]
+md4c [official]
+mdadm [official]
+mediainfo [official]
+memtest86+-efi [official]
+memtest86+ [official]
+menu-cache [official]
+mesa-demos [official]
+mesa [official]
+mhwd-amdgpu [official]
+mhwd-ati [official]
+mhwd-db [official]
+mhwd-nvidia-390xx [official]
+mhwd-nvidia-470xx [official]
+mhwd-nvidia-570xx [official]
+mhwd-nvidia-575xx [official]
+mhwd-nvidia [official]
+mhwd [official]
+minizip [official]
+mjpegtools [official]
+mkinitcpio-busybox [official]
+mkinitcpio [official]
+mkinitcpio-openswap [official]
+mobile-broadband-provider-info [official]
+moc [aur]
+modemmanager [official]
+morc_menu [official]
+mousepad [official]
+mpdecimal [official]
+mpd [official]
+mpfr [official]
+mpg123 [official]
+mpv [official]
+msgpack-c [official]
+mtdev [official]
+mujs [official]
+multipath-tools [official]
+muparser [official]
+mypaint-brushes1 [official]
+nano [official]
+nano-syntax-highlighting [official]
+nautilus [official]
+nautilus-python [official]
+ncdu [official]
+ncurses [official]
+ndctl [official]
+neofetch [aur]
+neon [official]
+neovim [official]
+netctl [official]
+netpbm [official]
+net-snmp [official]
+netstat-nat [official]
+nettle [official]
+network-manager-applet [official]
+networkmanager [official]
+networkmanager-openconnect [official]
+networkmanager-openvpn [official]
+networkmanager-pptp [official]
+networkmanager-vpnc [official]
+networkmanager-vpn-plugin-openconnect [official]
+networkmanager-vpn-plugin-openvpn [official]
+networkmanager-vpn-plugin-pptp [official]
+networkmanager-vpn-plugin-vpnc [official]
+newsboat [official]
+nfsidmap [official]
+nfs-utils [official]
+nftables [official]
+nitrogen [official]
+nm-connection-editor [official]
+node-gyp [official]
+nodejs-nopt [official]
+nodejs [official]
+noto-fonts-emoji [official]
+noto-fonts [official]
+npm [official]
+npth [official]
+nspr [official]
+nss-mdns [official]
+nss [official]
+ntfs-3g [official]
+ntp [official]
+numactl [official]
+nvidia-driver-assistant [official]
+oath-toolkit [official]
+obs-studio [official]
+ocl-icd [official]
+oh-my-zsh-git [aur]
+oniguruma [official]
+openal [official]
+openblas64 [official]
+opencc [official]
+opencode-bin [aur]
+openconnect [official]
+opencore-amr [official]
+openexr [official]
+openh264 [official]
+openjpeg2 [official]
+openlibm [official]
+openmpi [official]
+openpmix [official]
+openresolv [official]
+openssh [official]
+openssl-1.0 [aur]
+openssl-1.1 [official]
+openssl [official]
+openucx [official]
+openvpn [official]
+opusfile [official]
+opus [official]
+orc [official]
+osinfo-db [official]
+os-prober [official]
+overgrive [aur]
+p11-kit [official]
+pa-applet [aur]
+pacman-contrib [official]
+pacman-mirrors [official]
+pacman [official]
+pacui [official]
+pamac-cli [official]
+pamac-gtk [official]
+pambase [official]
+pam [official]
+pandoc-cli [official]
+pangomm [official]
+pango [official]
+papirus-icon-theme [official]
+papirus-maia-icon-theme [official]
+parole [official]
+parted [official]
+patch [official]
+patchutils [official]
+pciutils [official]
+pcmanfm [official]
+pcre2 [official]
+pcre [official]
+pcsclite [official]
+pdftk [official]
+perl-alien-build [official]
+perl-alien-libxml2 [official]
+perl-capture-tiny [official]
+perl-clone [official]
+perl-curses [official]
+perl-dbi [official]
+perl-encode-locale [official]
+perl-error [official]
+perl-ffi-checklib [official]
+perl-file-basedir [official]
+perl-file-chdir [official]
+perl-file-desktopentry [official]
+perl-file-homedir [official]
+perl-file-listing [official]
+perl-file-mimeinfo [official]
+perl-file-which [official]
+perl-html-parser [official]
+perl-html-tagset [official]
+perl-http-cookiejar [official]
+perl-http-cookies [official]
+perl-http-daemon [official]
+perl-http-date [official]
+perl-http-message [official]
+perl-http-negotiate [official]
+perl-image-exiftool [official]
+perl-io-html [official]
+perl-ipc-system-simple [official]
+perl-libwww [official]
+perl-log-log4perl [official]
+perl-lwp-mediatypes [official]
+perl-mailtools [official]
+perl-mime-charset [official]
+perl-net-http [official]
+perl [official]
+perl-path-tiny [official]
+perl-term-animation [official]
+perl-timedate [official]
+perl-try-tiny [official]
+perl-unicode-linebreak [official]
+perl-uri [official]
+perl-www-robotrules [official]
+perl-xml-libxml [official]
+perl-xml-namespacesupport [official]
+perl-xml-parser [official]
+perl-xml-sax-base [official]
+perl-xml-sax [official]
+perl-xml-writer [official]
+perl-yaml-tiny [official]
+phodav [official]
+php-apache [official]
+php-cgi [official]
+php-embed [official]
+php-fpm [official]
+php-gd [official]
+php-igbinary [official]
+php [official]
+php-redis [official]
+php-snmp [official]
+picom [official]
+pinentry [official]
+pinta [aur]
+pipewire-alsa [official]
+pipewire-audio [official]
+pipewire-jack [official]
+pipewire-media-session [official]
+pipewire [official]
+pixman [official]
+pkcs11-helper [official]
+pkgconf [official]
+plocate [official]
+podofo [official]
+polkit-gnome [official]
+polkit [official]
+polkit-qt5 [official]
+poppler-data [official]
+poppler-glib [official]
+poppler [official]
+popt [official]
+portaudio [official]
+positron-ide-devel-bin [aur]
+postgresql-libs [official]
+potrace [official]
+powertop [official]
+ppp [official]
+pptpclient [official]
+procps-ng [official]
+proj [official]
+protobuf [official]
+prrte [official]
+psmisc [official]
+pulseaudio-bluetooth [official]
+pulseaudio [official]
+pulsemixer [official]
+pyright [official]
+python-appdirs [official]
+python-argcomplete [official]
+python-asgiref [official]
+python-asttokens [official]
+python-attrs [official]
+python-autocommand [official]
+python-automat [official]
+python-babel [official]
+python-backcall [aur]
+python-cachetools [official]
+python-cairo [official]
+python-certifi [official]
+python-cffi [official]
+python-chardet [official]
+python-charset-normalizer [official]
+python-click [official]
+python-colorama [official]
+python-comm [official]
+python-configobj [official]
+python-constantly [official]
+python-cryptography [official]
+python-dateutil [official]
+python-dbus [official]
+python-decorator [official]
+python-distro [official]
+python-docopt [official]
+python-docutils [official]
+python-et-xmlfile [official]
+python-executing [official]
+python-fastjsonschema [official]
+python-filelock [official]
+python-geoip [official]
+python-gobject [official]
+python-google-api-core [official]
+python-google-api-python-client [official]
+python-googleapis-common-protos [official]
+python-google-auth-httplib2 [official]
+python-google-auth-oauthlib [official]
+python-google-auth [official]
+python-greenlet [official]
+python-gssapi [official]
+python-h11 [official]
+python-html2text [official]
+python-httplib2 [official]
+python-httptools [official]
+python-hyperlink [official]
+python-idna [official]
+python-ifaddr [official]
+python-imagesize [official]
+python-importlib-metadata [official]
+python-incremental [official]
+python-inflect [official]
+python-iniconfig [official]
+python-ipykernel [official]
+python-ipython-pygments-lexers [official]
+python-jaraco.collections [official]
+python-jaraco.context [official]
+python-jaraco.functools [official]
+python-jaraco.text [official]
+python-jedi [official]
+python-jinja [official]
+python-jsonschema [official]
+python-jsonschema-specifications [official]
+python-jupyter-client [official]
+python-jupyter-core [official]
+python-legacy-cgi [official]
+python-mako [official]
+python-markdown-it-py [official]
+python-markdown [official]
+python-markupsafe [official]
+python-matplotlib-inline [official]
+python-mdurl [official]
+python-more-itertools [official]
+python-msgpack [official]
+python-nest-asyncio [official]
+python-npyscreen [official]
+python-numpy [official]
+python-oauth2client [official]
+python-oauthlib [official]
+python [official]
+python-openpyxl [official]
+python-outcome [official]
+python-packaging [official]
+python-pandas [official]
+python-parso [official]
+python-pexpect [official]
+python-pickleshare [official]
+python-pillow [official]
+python-pip [official]
+python-pipx [official]
+python-platformdirs [official]
+python-pluggy [official]
+python-ply [official]
+python-prompt_toolkit [official]
+python-protobuf [official]
+python-psutil [official]
+python-ptyprocess [official]
+python-pure-eval [official]
+python-pyasn1-modules [official]
+python-pyasn1 [official]
+python-pycparser [official]
+python-pyfiglet [official]
+python-pygments [official]
+python-pyinotify [official]
+python-pynvim [official]
+python-pyopenssl [official]
+python-pyparsing [official]
+python-pyqt5 [official]
+python-pyqt5-sip [official]
+python-pyqt5-webengine [official]
+python-pyqt6 [official]
+python-pyqt6-sip [official]
+python-pyqt6-webengine [official]
+python-pytest [official]
+python-pytz [official]
+python-pyxdg [official]
+python-pyzmq [official]
+python-referencing [official]
+python-rencode [official]
+python-requests-oauthlib [official]
+python-requests [official]
+python-roman-numerals-py [official]
+python-rpds-py [official]
+python-rsa [official]
+python-selenium [aur]
+python-service-identity [official]
+python-setproctitle [official]
+python-setuptools [official]
+python-shtab [official]
+python-six [official]
+python-sniffio [official]
+python-snowballstemmer [official]
+python-sortedcontainers [official]
+python-sphinx-alabaster-theme [official]
+python-sphinxcontrib-applehelp [official]
+python-sphinxcontrib-devhelp [official]
+python-sphinxcontrib-htmlhelp [official]
+python-sphinxcontrib-jsmath [official]
+python-sphinxcontrib-qthelp [official]
+python-sphinxcontrib-serializinghtml [official]
+python-sphinx [official]
+python-stack-data [official]
+python-standard-cgi [official]
+python-termcolor [official]
+python-tomlkit [official]
+python-tornado [official]
+python-traitlets [official]
+python-trio [official]
+python-trio-websocket [official]
+python-twisted [official]
+python-typeguard [official]
+python-typing_extensions [official]
+python-uritemplate [official]
+python-urllib3 [official]
+python-userpath [official]
+python-uvloop [official]
+python-wcwidth [official]
+python-websocket-client [official]
+python-websockets [official]
+python-wheel [official]
+python-wsproto [official]
+python-xyzservices [aur]
+python-yaml [official]
+python-zipp [official]
+python-zope-interface [official]
+qemu-audio-alsa [official]
+qemu-audio-dbus [official]
+qemu-audio-jack [official]
+qemu-audio-oss [official]
+qemu-audio-pa [official]
+qemu-audio-pipewire [official]
+qemu-audio-sdl [official]
+qemu-audio-spice [official]
+qemu-base [official]
+qemu-block-curl [official]
+qemu-block-dmg [official]
+qemu-block-gluster [official]
+qemu-block-iscsi [official]
+qemu-block-nfs [official]
+qemu-block-ssh [official]
+qemu-chardev-baum [official]
+qemu-chardev-spice [official]
+qemu-common [official]
+qemu-desktop [official]
+qemu-docs [official]
+qemu-emulators-full [official]
+qemu-full [official]
+qemu-hw-display-qxl [official]
+qemu-hw-display-virtio-gpu-gl [official]
+qemu-hw-display-virtio-gpu [official]
+qemu-hw-display-virtio-gpu-pci-gl [official]
+qemu-hw-display-virtio-gpu-pci [official]
+qemu-hw-display-virtio-gpu-pci-rutabaga [official]
+qemu-hw-display-virtio-gpu-rutabaga [official]
+qemu-hw-display-virtio-vga-gl [official]
+qemu-hw-display-virtio-vga [official]
+qemu-hw-display-virtio-vga-rutabaga [official]
+qemu-hw-s390x-virtio-gpu-ccw [official]
+qemu-hw-uefi-vars [official]
+qemu-hw-usb-host [official]
+qemu-hw-usb-redirect [official]
+qemu-hw-usb-smartcard [official]
+qemu-img [official]
+qemu-pr-helper [official]
+qemu-system-aarch64 [official]
+qemu-system-alpha-firmware [official]
+qemu-system-alpha [official]
+qemu-system-arm-firmware [official]
+qemu-system-arm [official]
+qemu-system-avr [official]
+qemu-system-hppa-firmware [official]
+qemu-system-hppa [official]
+qemu-system-loongarch64 [official]
+qemu-system-m68k [official]
+qemu-system-microblaze-firmware [official]
+qemu-system-microblaze [official]
+qemu-system-mips [official]
+qemu-system-or1k [official]
+qemu-system-ppc-firmware [official]
+qemu-system-ppc [official]
+qemu-system-riscv-firmware [official]
+qemu-system-riscv [official]
+qemu-system-rx [official]
+qemu-system-s390x-firmware [official]
+qemu-system-s390x [official]
+qemu-system-sh4 [official]
+qemu-system-sparc-firmware [official]
+qemu-system-sparc [official]
+qemu-system-tricore [official]
+qemu-system-x86-firmware [official]
+qemu-system-x86 [official]
+qemu-system-xtensa [official]
+qemu-tests [official]
+qemu-tools [official]
+qemu-ui-curses [official]
+qemu-ui-dbus [official]
+qemu-ui-egl-headless [official]
+qemu-ui-gtk [official]
+qemu-ui-opengl [official]
+qemu-ui-sdl [official]
+qemu-ui-spice-app [official]
+qemu-ui-spice-core [official]
+qemu-user [official]
+qemu-vhost-user-gpu [official]
+qemu-vmsr-helper [official]
+qhull [official]
+qpdf [official]
+qrencode [official]
+qt5-base [official]
+qt5ct [official]
+qt5-declarative [official]
+qt5-location [official]
+qt5-multimedia [official]
+qt5-quickcontrols [official]
+qt5-svg [official]
+qt5-tools [official]
+qt5-translations [official]
+qt5-virtualkeyboard-bigscreen [aur]
+qt5-wayland [official]
+qt5-webchannel [official]
+qt5-webengine [official]
+qt5-x11extras [official]
+qt5-xmlpatterns [official]
+qt6-5compat [official]
+qt6-base [official]
+qt6-declarative [official]
+qt6-imageformats [official]
+qt6-multimedia-ffmpeg [official]
+qt6-multimedia [official]
+qt6-positioning [official]
+qt6-shadertools [official]
+qt6-speech [official]
+qt6-svg [official]
+qt6-tools [official]
+qt6-translations [official]
+qt6-wayland [official]
+qt6-webchannel [official]
+qt6-webengine [official]
+quarto-cli-bin [aur]
+qutebrowser [official]
+ranger [official]
+raptor [official]
+rasqal [official]
+rav1e [official]
+rdma-core [official]
+re2 [official]
+readline [official]
+redland [official]
+reiserfsprogs [aur]
+ripgrep [official]
+ristretto [official]
+rnnoise [official]
+r [official]
+rofi-calc [official]
+rofi [official]
+rpcbind [official]
+rstudio-desktop-bin [aur]
+rstudio-server-bin [aur]
+rsync [official]
+r-tcltk2 [aur]
+rtkit [official]
+rtmpdump [official]
+rubberband [official]
+ruby-abbrev [official]
+ruby-base64 [official]
+ruby-bigdecimal [official]
+ruby-bundled-gems [official]
+ruby-bundler [official]
+ruby-csv [official]
+ruby-debug [official]
+ruby-default-gems [official]
+ruby-drb [official]
+ruby-erb [official]
+rubygems [official]
+ruby-getoptlong [official]
+ruby-irb [official]
+ruby-matrix [official]
+ruby-minitest [official]
+ruby-mutex_m [official]
+ruby-net-ftp [official]
+ruby-net-imap [official]
+ruby-net-pop [official]
+ruby-net-smtp [official]
+ruby-nkf [official]
+ruby-observer [official]
+ruby [official]
+ruby-power_assert [official]
+ruby-prime [official]
+ruby-racc [official]
+ruby-rake [official]
+ruby-rbs [official]
+ruby-rdoc [official]
+ruby-repl_type_completor [official]
+ruby-resolv-replace [official]
+ruby-rexml [official]
+ruby-rinda [official]
+ruby-rss [official]
+ruby-stdlib [official]
+ruby-syslog [official]
+ruby-test-unit [official]
+ruby-typeprof [official]
+run-parts [official]
+rutabaga-ffi [official]
+rxvt-unicode [official]
+rxvt-unicode-terminfo [official]
+s2n-tls [official]
+sbc [official]
+sbxkb [official]
+screenfetch [official]
+scrot [official]
+sdl2-compat [official]
+sdl2_image [official]
+sdl3 [official]
+seabios [official]
+sed [official]
+semver [official]
+serd [official]
+serf [official]
+sg3_utils [official]
+shaderc [official]
+shadow [official]
+shared-mime-info [official]
+simdjson [official]
+slang [official]
+slides [aur]
+smbclient [official]
+s-nail [official]
+snapd [official]
+snappy [official]
+sof-firmware [official]
+sord [official]
+sound-theme-freedesktop [official]
+soundtouch [official]
+spandsp [official]
+spectre-meltdown-checker [aur]
+speedtest-cli [official]
+speexdsp [official]
+speex [official]
+spice-gtk [official]
+spice [official]
+spice-protocol [official]
+spirv-tools [official]
+sqlite [official]
+squashfs-tools [official]
+sratom [official]
+srt [official]
+startup-notification [official]
+stfl [official]
+st [official]
+stoken [official]
+subversion [official]
+sudo [official]
+suil [official]
+suitesparse [official]
+svt-av1 [official]
+svt-hevc [official]
+swh-plugins [official]
+syncthing [official]
+synergy3-bin [aur]
+sysfsutils [official]
+syslog-ng [official]
+systemd-fsck-silent [aur]
+systemd-libs [official]
+systemd [official]
+systemd-sysvcompat [official]
+taglib [official]
+tailscale [official]
+talloc [official]
+tar [official]
+tcl [official]
+tdb [official]
+teams-for-linux [aur]
+telegram-desktop [official]
+tenere [aur]
+termdown [official]
+terminator [official]
+terminus-font [official]
+tesseract-data-afr [official]
+tesseract-data-osd [official]
+tesseract [official]
+tevent [official]
+texinfo [official]
+texlive-basic [official]
+texlive-bibtexextra [official]
+texlive-binextra [official]
+texlive-bin [official]
+texlive-context [official]
+texlive-fontsextra [official]
+texlive-fontsrecommended [official]
+texlive-fontutils [official]
+texlive-formatsextra [official]
+texlive-games [official]
+texlive-humanities [official]
+texlive-latexextra [official]
+texlive-latex [official]
+texlive-latexrecommended [official]
+texlive-luatex [official]
+texlive-mathscience [official]
+texlive-metapost [official]
+texlive-music [official]
+texlive-pictures [official]
+texlive-plaingeneric [official]
+texlive-pstricks [official]
+texlive-publishers [official]
+texlive-xetex [official]
+tgpt [official]
+the_silver_searcher [official]
+thinlinc-server [aur]
+thin-provisioning-tools [official]
+thrift [official]
+thunar-archive-plugin [official]
+thunar-media-tags-plugin [official]
+thunar [official]
+thunar-volman [official]
+tinycompress [official]
+tinysparql [official]
+tinyxml2 [official]
+tk [official]
+tldr [official]
+tmux [official]
+tomlplusplus [official]
+totem-pl-parser [official]
+tpm2-tss [official]
+translate-shell [official]
+tree [official]
+tree-sitter-c [official]
+tree-sitter-lua [official]
+tree-sitter-markdown [official]
+tree-sitter [official]
+tree-sitter-query [official]
+tree-sitter-vimdoc [official]
+tree-sitter-vim [official]
+tslib [official]
+ttf-bitstream-vera [official]
+ttf-dejavu [official]
+ttf-droid [official]
+ttf-font-icons [aur]
+ttf-inconsolata [official]
+ttf-indic-otf [official]
+ttf-jetbrains-mono-nerd [official]
+ttf-liberation [official]
+ttf-meslo-nerd-font-powerlevel10k [official]
+ttf-noto-nerd [official]
+ttf-terminus-nerd [official]
+tumbler [official]
+twolame [official]
+tzdata [official]
+uchardet [official]
+udisks2 [official]
+udunits [aur]
+ueberzug [official]
+ufw [official]
+unclutter [official]
+unibilium [official]
+unixodbc [official]
+unoconv [official]
+unzip [official]
+upower [official]
+urxvt-perls [official]
+usbmuxd [official]
+usbredir [official]
+usbutils [official]
+uthash [official]
+util-linux-libs [official]
+util-linux [official]
+uvicorn [official]
+v4l-utils [official]
+v8-r [aur]
+vamp-plugin-sdk [official]
+vapoursynth [official]
+vde2 [official]
+vibrancy-icons-teal [official]
+vid.stab [official]
+viewnior [official]
+vifm [official]
+vim [official]
+vim-runtime [official]
+vim-spell-en [official]
+vim-spell-pt [official]
+vi [official]
+virglrenderer [official]
+virt-install [official]
+virtiofsd [official]
+virt-manager [official]
+visidata [official]
+viu [official]
+vlc-cli [official]
+vlc-gui-qt [official]
+vlc [official]
+vlc-plugin-a52dec [official]
+vlc-plugin-alsa [official]
+vlc-plugin-archive [official]
+vlc-plugin-dav1d [official]
+vlc-plugin-dbus [official]
+vlc-plugin-dbus-screensaver [official]
+vlc-plugin-faad2 [official]
+vlc-plugin-flac [official]
+vlc-plugin-gnutls [official]
+vlc-plugin-inflate [official]
+vlc-plugin-journal [official]
+vlc-plugin-jpeg [official]
+vlc-plugin-lua [official]
+vlc-plugin-mpg123 [official]
+vlc-plugin-ogg [official]
+vlc-plugin-opus [official]
+vlc-plugin-png [official]
+vlc-plugin-pulse [official]
+vlc-plugins-base [official]
+vlc-plugin-shout [official]
+vlc-plugin-speex [official]
+vlc-plugins-video-output [official]
+vlc-plugin-tag [official]
+vlc-plugin-theora [official]
+vlc-plugin-twolame [official]
+vlc-plugin-vorbis [official]
+vlc-plugin-vpx [official]
+vlc-plugin-xml [official]
+vmaf [official]
+volumeicon [official]
+volume_key [official]
+vosviewer [aur]
+vpnc [official]
+vte3 [official]
+vte-common [official]
+vulkan-icd-loader [official]
+vulkan-intel [official]
+vulkan-mesa-device-select [official]
+vulkan-radeon [official]
+w3m [official]
+wallpapers-juhraya [official]
+wavpack [official]
+wayland [official]
+wayland-protocols [official]
+webkit2gtk-4.1 [official]
+webkit2gtk [official]
+webp-pixbuf-loader [official]
+webrtc-audio-processing-1 [official]
+wget [official]
+which [official]
+wildmidi [official]
+wireless-regdb [official]
+wireless_tools [official]
+wmutils [official]
+woff2 [official]
+wolfssl [official]
+wol [official]
+wol-systemd [aur]
+wpa_supplicant [official]
+x264 [official]
+x265 [official]
+xapian-core [official]
+xapp [official]
+xarchiver [official]
+xautolock [aur]
+xbitmaps [official]
+xcb-imdkit [official]
+xcb-proto [official]
+xcb-util-cursor [official]
+xcb-util-image [official]
+xcb-util-keysyms [official]
+xcb-util [official]
+xcb-util-renderutil [official]
+xcb-util-wm [official]
+xcb-util-xrm [official]
+xclip [official]
+xcursor-breeze [official]
+xcursor-chameleon-pearl [aur]
+xcursor-maia [official]
+xdg-dbus-proxy [official]
+xdg-desktop-portal-gnome [official]
+xdg-desktop-portal-gtk [official]
+xdg-desktop-portal [official]
+xdg-user-dirs-gtk [official]
+xdg-user-dirs [official]
+xdg-utils [official]
+xdotool [official]
+xerces-c [official]
+xf86-input-elographics [official]
+xf86-input-evdev [official]
+xf86-input-libinput [official]
+xf86-input-void [official]
+xf86-video-amdgpu [official]
+xf86-video-ati [official]
+xf86-video-intel [official]
+xf86-video-nouveau [official]
+xfburn [official]
+xfce4-appfinder [official]
+xfce4-artwork [official]
+xfce4-battery-plugin [official]
+xfce4-clipman-plugin [official]
+xfce4-cpufreq-plugin [official]
+xfce4-cpugraph-plugin [official]
+xfce4-dict [official]
+xfce4-diskperf-plugin [official]
+xfce4-eyes-plugin [official]
+xfce4-fsguard-plugin [official]
+xfce4-genmon-plugin [official]
+xfce4-mailwatch-plugin [official]
+xfce4-mount-plugin [official]
+xfce4-mpc-plugin [official]
+xfce4-netload-plugin [official]
+xfce4-notes-plugin [official]
+xfce4-notifyd [official]
+xfce4-panel [official]
+xfce4-power-manager [official]
+xfce4-pulseaudio-plugin [official]
+xfce4-screenshooter [official]
+xfce4-sensors-plugin [official]
+xfce4-session [official]
+xfce4-settings [official]
+xfce4-smartbookmark-plugin [official]
+xfce4-systemload-plugin [official]
+xfce4-taskmanager [official]
+xfce4-terminal [official]
+xfce4-time-out-plugin [official]
+xfce4-timer-plugin [official]
+xfce4-verve-plugin [official]
+xfce4-wavelan-plugin [official]
+xfce4-weather-plugin [official]
+xfce4-whiskermenu-plugin [official]
+xfce4-xkb-plugin [official]
+xfconf [official]
+xfdesktop [official]
+xfsprogs [official]
+xfwm4 [official]
+xfwm4-themes [official]
+xkeyboard-config [official]
+xmlsec [official]
+xorg-fonts-alias-misc [official]
+xorg-fonts-encodings [official]
+xorg-fonts-misc [official]
+xorg-iceauth [official]
+xorg-mkfontscale [official]
+xorgproto [official]
+xorg-server-common [official]
+xorg-server [official]
+xorg-setxkbmap [official]
+xorg-twm [official]
+xorg-xauth [official]
+xorg-xdpyinfo [official]
+xorg-xev [official]
+xorg-xhost [official]
+xorg-xinit [official]
+xorg-xinput [official]
+xorg-xkbcomp [official]
+xorg-xkill [official]
+xorg-xmodmap [official]
+xorg-xprop [official]
+xorg-xrandr [official]
+xorg-xrdb [official]
+xorg-xset [official]
+xsel [official]
+xterm [official]
+xvidcore [official]
+xxhash [official]
+xz [official]
+yajl [official]
+yarn [official]
+yay [official]
+youtube-dl [aur]
+yt-dlp [official]
+zathura-cb [official]
+zathura-djvu [official]
+zathura [official]
+zathura-pdf-mupdf [official]
+zathura-ps [official]
+zbar [official]
+zenity [official]
+zensu [official]
+zeromq [official]
+zimg [official]
+zip [official]
+zix [official]
+zlib-ng [official]
+zlib [official]
+zoom [aur]
+zsh-autosuggestions [official]
+zsh-completions [official]
+zsh-history-substring-search [official]
+zsh [official]
+zsh-syntax-highlighting [official]
+zsh-theme-powerlevel10k [official]
+zstd [official]
+zvbi [official]
+zxing-cpp [official]
+zziplib [official]

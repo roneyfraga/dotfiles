@@ -1,2 +1,128 @@
+# Security and sensitive files
 credentials
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.gpg
+.secrets/
+.private/
+
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor and IDE files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+.*.swp
+.*.swo
+.netrwhist
+.viminfo
+.vscode/
+.idea/
+*.sublime-*
+
+# Shell and terminal history
+.history
+.bash_history
+.zsh_history
+.fzf-history
+.python_history
+
+# Cache and temporary directories
+.cache/
+AGENTS.md
+tmp/
+temp/
+*.cache
+*.log
+*.pid
+*.lock
+
+# Application specific data
+.chat/
+newsboat/cache/
+qutebrowser/history.sqlite*
+qutebrowser/bookmarks/bookmarks-*
+vifm/vifminfo-*
+vifm/Trash/
+nvim/.netrwhist
+nvim/plugged/
+nvim/pack/
+nvim/cache/
+nvim/undo/
+nvim/backup/
+nvim/swap/
+nvim/spell/en.*-*.add
+tmux/resurrect-*
+tmux/session-*
+
+# Package manager files
+node_modules/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.Rhistory
+.RData
+.Ruserdata
+
+# Build and compilation files
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+build/
+dist/
+target/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# Local configuration overrides
+*.local
+*.custom
+.localrc
+.local.*
+
+# Syncthing and sync files
+.stfolder/
+.stignore
+.sync/
+
+# Large binary files that shouldn't be in dotfiles
+*.iso
+*.dmg
+*.img
+*.tar.gz
+*.zip
+*.rar
+
+# Documentation build artifacts
+docs/_build/
+site/
+
+# Personal notes and journals (if you keep them separate)
+notes/
+journal/
+diary/
+
+# Machine-specific hardware configs that shouldn't be shared
+*.machine
+*.host-specific

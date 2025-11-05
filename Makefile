@@ -54,10 +54,7 @@ ln_x390:
 	ln -s $(dotfolder)/vifm/vifmrc_x390 $(configfolder)/vifm/vifmrc
 
 
-ln_frank:
-	ln -s $(dotfolder)/i3/config_frank $(configfolder)/i3/config
-	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
-	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
+
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
@@ -120,10 +117,7 @@ rm_x390:
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/vifm/vifmrc
 
-rm_frank:
-	rm -f $(configfolder)/i3/config
-	rm -f $(configfolder)/i3status/config
-	rm -f $(configfolder)/qutebrowser/config.py
+
 
 rm_macos:
 	rm -r ~/.zshrc
