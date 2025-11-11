@@ -916,6 +916,73 @@ end
 -- Make the function available globally
 _G.create_markdown_link = create_markdown_link
 
+-- Function to insert manual fold structure
+local function insert_manual_fold()
+  -- Check if we're in a markdown, quarto, or vimwiki file
+  local ft = vim.bo.filetype
+  if ft ~= "markdown" and ft ~= "quarto" and ft ~= "vimwiki" then
+    vim.notify("This function only works in markdown, quarto, and vimwiki files", vim.log.levels.WARN)
+    return
+  end
+
+  -- Get current cursor position
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  
+  -- Create fold structure
+  local fold_lines = {
+    "<!-- Description  {{{ -->",
+    "",
+    "",
+    " <!-- }}} -->",
+  }
+  
+  -- Insert the fold structure at current position
+  vim.api.nvim_buf_set_lines(0, row, row, false, fold_lines)
+  
+  -- Move cursor to the empty line inside the fold (2 lines down, at the beginning)
+  vim.api.nvim_win_set_cursor(0, {row + 2, 0})
+end
+
+-- Function to insert vim fold marker at end of file
+local function insert_fold_marker()
+  -- Check if we're in a markdown, quarto, or vimwiki file
+  local ft = vim.bo.filetype
+  if ft ~= "markdown" and ft ~= "quarto" and ft ~= "vimwiki" then
+    vim.notify("This function only works in markdown, quarto, and vimwiki files", vim.log.levels.WARN)
+    return
+  end
+
+  local marker = "<!-- vim: fdm=marker foldlevel=0 -->"
+  
+  -- Get total number of lines in buffer
+  local line_count = vim.api.nvim_buf_line_count(0)
+  
+  -- Get last line content
+  local last_line = vim.api.nvim_buf_get_lines(0, line_count - 1, line_count, false)[1]
+  
+  -- Check if marker already exists in last line
+  if last_line and last_line:match("vim:%s*fdm=marker") then
+    vim.notify("Fold marker already exists at end of file", vim.log.levels.INFO)
+    return
+  end
+  
+  -- Check if last line is empty, if not add a blank line first
+  local lines_to_add = {}
+  if last_line and last_line ~= "" then
+    table.insert(lines_to_add, "")
+  end
+  table.insert(lines_to_add, marker)
+  
+  -- Insert marker at end of file
+  vim.api.nvim_buf_set_lines(0, line_count, line_count, false, lines_to_add)
+  
+  vim.notify("Fold marker added at end of file", vim.log.levels.INFO)
+end
+
+-- Make functions available globally
+_G.insert_manual_fold = insert_manual_fold
+_G.insert_fold_marker = insert_fold_marker
+
 -- }}}
 
 -- Fuzzy Finder - fzf-lua {{{
@@ -1078,9 +1145,7 @@ endfu
 local ok_dti, date_time_inserter = pcall(require, "date-time-inserter")
 if ok_dti then
   date_time_inserter.setup({
-    date_format = 'YYYYMMDD',
-    date_separator = '-',
-    time_format = 24,
+    date_format = '%Y-%m-%d',
     show_seconds = false,
   })
 end
@@ -1586,7 +1651,7 @@ wk.add({
   -- opencode (AI assistant)
   { "<Space>o", group = "[o]pencode" }, -- automatic detection
   -- diff
-  { "<leader>d",  group = "󰈙 [d]iff / revisions" },
+  { "<leader>d",  group = "󰈙 [d]iff" },
   { "<leader>dc", ":DiffChat<CR>", desc = "Compare latest revision" },
   { "<leader>dv", ":DiffChat ", desc = "Compare specific version" },
   { "<leader>dl", ":DiffChatList<CR>", desc = "List all versions" },
@@ -1607,6 +1672,8 @@ wk.add({
   { "<Space>md", "<cmd>RenderMarkdown disable<CR>", desc = "disable render" },
   { "<Space>me", "<cmd>RenderMarkdown enable<CR>", desc = "enable render" },
   { "<Space>mg", "<cmd>Goyo<CR>", desc = "goyo" },
+  { "<Space>mf", "<cmd>lua insert_manual_fold()<CR>", desc = "insert fold" },
+  { "<Space>mF", "<cmd>lua insert_fold_marker()<CR>", desc = "insert fold at end" },
   { "<Space>mm", group = "[m]arkmap" }, -- subgroup
   { "<Space>mmo", "<cmd>MarkmapOpen<CR>", desc = "open" },
   { "<Space>mms", "<cmd>MarkmapSave<CR>", desc = "save" },
@@ -1712,4 +1779,40 @@ wk.add({
 
 --- }}}
 
--- vim: fdm=marker nowrap
+-- vim: fdm=marker foldlevel=0 nowrap
+
+-- HTML Comment Modeline Processor {{{
+
+-- Process modelines in HTML comments (<!-- vim: ... -->)
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.qmd", "*.md", "*.html", "*.vimwiki"},
+  callback = function()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    for i, line in ipairs(lines) do
+      -- Search for <!-- vim: ... -->
+      local modeline = line:match("<!%-%-%s*vim:%s*(.-)%s*%-%->")
+      if modeline then
+        -- Process each option
+        for opt in modeline:gmatch("([^%s]+)") do
+          local key, value = opt:match("([^=]+)=(.*)")
+          if key and value then
+            -- Convert string values to appropriate types
+            local final_value = value
+            if value == "true" then
+              final_value = true
+            elseif value == "false" then
+              final_value = false
+            elseif tonumber(value) then
+              final_value = tonumber(value)
+            end
+            
+            -- Set the option safely
+            pcall(vim.api.nvim_set_option_value, key, final_value, {scope = "local"})
+          end
+        end
+      end
+    end
+  end,
+})
+
+-- }}}
