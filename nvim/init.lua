@@ -24,7 +24,6 @@ vim.opt.scrolloff = 8
 vim.opt.relativenumber = true
 vim.opt.showtabline = 1
 vim.opt.termguicolors = true
-vim.opt.numberwidth = 1
 vim.cmd("set t_ZH=^[[3m")
 vim.cmd("set t_ZR=^[[23m")
 vim.opt.clipboard:append("unnamedplus")
@@ -35,7 +34,12 @@ vim.keymap.set("i", "jj", "<Esc>", { noremap = true, desc = "leave insert mode" 
 vim.cmd[[set nohlsearch]]
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.signcolumn = "yes"
+
+vim.opt.signcolumn = "no"
+vim.opt.number = true                                                                                      
+vim.opt.relativenumber = true                                                                              
+vim.opt.numberwidth = 4
+
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 400
 
@@ -1356,6 +1360,9 @@ vim.api.nvim_create_user_command("LatexClean", function(opts)
 end, { range = true, desc = "Convert LaTeX accent codes to UTF-8 (preserve braces)" })--- }}}
 
 -- opencode {{{
+
+-- dependencies
+-- sudo pacman -S lsof
 
 -- Required for `vim.g.opencode_opts.auto_reload`
 vim.opt.autoread = true
