@@ -1360,6 +1360,35 @@ end, { range = true, desc = "Convert LaTeX accent codes to UTF-8 (preserve brace
 -- Required for `vim.g.opencode_opts.auto_reload`
 vim.opt.autoread = true
 
+-- Configure opencode options
+vim.g.opencode_opts = {
+  -- Set a specific port since lsof is not available
+  port = 8080,
+  
+  -- Enable auto-reload when files change externally
+  auto_reload = true,
+  
+  -- Other useful options
+  auto_save = true,
+  session_restore = true,
+}
+
+-- Configure snacks.nvim for enhanced opencode functionality
+require("snacks").setup({
+  bigfile = { enabled = true },
+  notifier = { enabled = true },
+  quickfile = { enabled = true },
+  statuscolumn = { enabled = true },
+  words = { enabled = true },
+  styles = {
+    notification = { wo = { wrap = false } },
+  },
+  -- Enable the modules that opencode needs
+  input = { enabled = true },
+  picker = { enabled = true },
+  terminal = { enabled = true },
+})
+
 -- Recommended/example keymaps
 vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
 vim.keymap.set({ "n", "x" }, "<leader>o+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
