@@ -1370,7 +1370,7 @@ vim.opt.autoread = true
 -- Configure opencode options
 vim.g.opencode_opts = {
   -- Set a specific port since lsof is not available
-  port = 8080,
+  -- port = 8080,
   
   -- Enable auto-reload when files change externally
   auto_reload = true,
