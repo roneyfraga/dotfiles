@@ -1762,7 +1762,7 @@ wk.add({
   { "<Space>vfw", "<cmd>set nowrap!<CR>", desc = "wrap toogle" },
   { "<Space>vfx", "<cmd>%!xmllint --format %<CR>", desc = "xml indent" },
   { "<Space>vfR", "<cmd>%s/\r//g <CR>", desc = "remove ^m" },
-  { "<Space>vfD", "<cmd>%s/\\([^ ]\\) */\\1 /g<CR>", desc = 'delete multiple spaces' },
+  { "<Space>vfD", "<cmd>%s/ \\+/ /g<CR>", desc = 'delete multiple spaces' },
   { "<Space>vfd", "<cmd>lua TrimTrailingWhitespace()<CR>", desc = 'delete space end of line' },
   { "<Space>vfN", "<cmd>Neoformat<CR>", desc = "neoformat", mode = { "n", "v" } },
   { "<Space>vfn", "<cmd>Neoformat<CR>gg=G``", desc = "neoformat + indent", mode = { "n", "v" } },
