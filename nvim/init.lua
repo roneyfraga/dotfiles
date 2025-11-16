@@ -208,6 +208,9 @@ Plug('junegunn/fzf')
 Plug('junegunn/fzf.vim')
 Plug('michal-h21/vim-zettel')
 
+-- Configure vim-zettel to use ripgrep instead of silver searcher
+vim.g.zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always"
+
 -- markdown render
 Plug('MeanderingProgrammer/render-markdown.nvim')
 
@@ -702,6 +705,11 @@ vim.g.vimwiki_list = {
     path = '~/Wiki',
     syntax = 'markdown',
     ext = '.md',
+  },
+  {
+    path = '~/Wiki/Zet',
+    syntax = 'markdown',
+    ext = '.md',
   }
 }
 
@@ -728,6 +736,9 @@ vim.api.nvim_create_autocmd("FileType", {
 function ZettelIndexOpen()
   vim.cmd('edit ~/Wiki/Zet/index.md')
 end
+
+-- -- Search only markdown files in the current wiki directory
+vim.g.zettel_fzf_command = "rg --pcre2 --column --line-number --ignore-case --color=always -g '*.md'"
 
 -- ---------------------------------------
 -- First define the highlights
@@ -902,8 +913,8 @@ local function create_markdown_link()
   -- Create the slug version (lowercase, replace spaces with hyphens)
   local slug = normalized_text:lower():gsub("%s+", "-"):gsub("[^%w%-]", "")
 
-  -- Create the markdown link format
-  local link = string.format("[%s](%s)", selected_text, slug)
+  -- Create the markdown link format with parentheses inside brackets
+  local link = string.format("[\"%s\"](%s)", selected_text, slug)
 
   -- Replace the text with the link
   if is_visual_mode then
@@ -1790,6 +1801,7 @@ wk.add({
   { "<Space>WZ", WikiZetOpen, desc = "~/wiki/zet file finder" },
   { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "link creator", mode = { "n", "v" } },
   { "<Space>Wy", "<cmd>ZettelYankName<CR>", desc = "yank current filename" },
+  { "<Space>W[", "<cmd>ZettelSearch<CR>", desc = "zettel search [[", mode = { "n", "v", "i" } },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
   { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },
@@ -1814,8 +1826,6 @@ wk.add({
 })
 
 --- }}}
-
--- vim: fdm=marker foldlevel=0 nowrap
 
 -- HTML Comment Modeline Processor {{{
 
@@ -1852,3 +1862,5 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 })
 
 -- }}}
+
+-- vim: fdm=marker foldlevel=0 nowrap
