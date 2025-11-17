@@ -122,7 +122,6 @@ Plug('christoomey/vim-tmux-navigator')
 -- FZF
 Plug('ibhagwan/fzf-lua')
 Plug('nvim-tree/nvim-web-devicons')
-Plug('msprev/fzf-bibtex')
 
 -- Git
 -- Plug('tpope/vim-fugitive')
@@ -1063,38 +1062,6 @@ end
 function DownloadsGrep()
   require('fzf-lua').live_grep({ cwd = "~/Downloads/", file_ignore_patterns = { "%._", "%.DS_Store" } })
 end
-
--- }}}
-
--- fzf-bibtex {{{
--- inset mode
-
-vim.cmd([[
-function! Bibtex_ls()
-let bibfiles = (
-\ globpath('.', '*.bib', v:true, v:true) +
-\ globpath('..', '*.bib', v:true, v:true) +
-\ globpath('*/', '*.bib', v:true, v:true)
-\ )
-let bibfiles = join(bibfiles, ' ')
-let source_cmd = 'bibtex-ls '.bibfiles
-return source_cmd
-endfunction
-
-function! s:bibtex_cite_sink_insert(lines)
-let r=system("bibtex-cite ", a:lines)
-execute ':normal! a' . r
-call feedkeys('a', 'n')
-endfunction
-
-inoremap <silent> @@ <c-g>u<c-o>:call fzf#run({
-\ 'source': Bibtex_ls(),
-\ 'sink*': function('<sid>bibtex_cite_sink_insert'),
-\ 'up': '40%',
-\ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
-]])
-
-vim.cmd("call Bibtex_ls()")
 
 -- }}}
 
