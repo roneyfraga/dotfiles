@@ -1,6 +1,4 @@
-#rg --files --hidden --follow --no-ignore-vcs If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+#
 # OS Detection
 case "$OSTYPE" in
   darwin*)
@@ -273,6 +271,7 @@ alias tmr='tmux new -s `basename $PWD`'
 alias tml='tmux ls'
 alias tma='tmux attach-session -t'
 alias tmk='tmux kill-session -t'
+alias rm='echo "This is not the command you are looking for. See: tldr trash"; false'
 
 # files
 alias init.lua="nvim ~/.config/nvim/init.lua"
@@ -611,5 +610,6 @@ fd.() {
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/.local/npm/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
 # TinyTeX path (macOS only)
 [[ "$OS" == "macos" ]] && export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
