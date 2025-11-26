@@ -944,10 +944,10 @@ local function insert_manual_fold()
   
   -- Create fold structure
   local fold_lines = {
-    "<!-- Description  {{{ -->",
+    "<!-- Description {{{ -->",
     "",
     "",
-    " <!-- }}} -->",
+    "<!-- }}} -->",
   }
   
   -- Insert the fold structure at current position
