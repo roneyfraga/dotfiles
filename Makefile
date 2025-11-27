@@ -1,10 +1,10 @@
 # como utilizar
 #
 # make ln 					## para links gerais, e depois
-# make ln _[máquina] 		## para máquina de desejo
+# make ln _[maquina] 		## para máquina de desejo
 # 
 # make rm					## remover links
-# make rm_[máquina]			## remover links para máquina específica
+# make rm_[maquina]			## remover links para máquina específica
 
 dotfolder=~/dotfiles
 configfolder=~/.config
@@ -25,7 +25,7 @@ ln:
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
-	ln -s $(dotfolder)/terminator/config $(configfolder)/terminator/config
+	ln -s $(dotfolder)/wezterm/wezterm.lua $(configfolder)/wezterm/wezterm.lua
 	# ln -s $(dotfolder)/newsbolt/config ~/.newsboat/config
 	# ln -s $(dotfolder)/newsbolt/urls ~/.newsboat/urls
 
@@ -52,9 +52,6 @@ ln_x390:
 	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_x390 $(configfolder)/i3status/config
 	ln -s $(dotfolder)/vifm/vifmrc_x390 $(configfolder)/vifm/vifmrc
-
-
-
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
@@ -90,7 +87,7 @@ rm:
 	rm -f $(configfolder)/nvim/coc-settings.json
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f $(configfolder)/.Xresources
-	rm -f $(configfolder)/terminator/config
+	rm -f $(configfolder)/wezterm/wezterm.lua
 	rm -f $(configfolder)/fzf-open/lopen.sh
 	# rm -f ~/.newsboat/config
 	# rm -f ~/.newsboat/urls
@@ -116,8 +113,6 @@ rm_x390:
 	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/vifm/vifmrc
-
-
 
 rm_macos:
 	rm -r ~/.zshrc

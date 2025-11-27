@@ -31,8 +31,7 @@ dotfiles/
 ├── i3status/              # i3status bar configs
 ├── newsboat/              # RSS feed reader configs
 ├── nvim/                  # Neovim configuration
-├── qutebrowser/           # Qutebrowser browser configs
-├── terminator/            # Terminal emulator configs
+├── wezterm/               # Terminal emulator configs
 ├── tmux/                  # Terminal multiplexer configs
 ├── vifm/                  # File manager configs and themes
 ├── xresources/            # X11 resources
@@ -46,16 +45,16 @@ dotfiles/
 
 ### Production Machines
 
-- **lisa**: Production desktop workstation with full [i3](https://i3wm.org/), qutebrowser, [vifm](https://github.com/vifm/vifm) 
-- **rambo**: Production desktop workstation with [i3](https://i3wm.org/), qutebrowser, [vifm](https://github.com/vifm/vifm) 
+- **lisa**: Production desktop workstation
+- **rambo**: Production desktop workstation
 
 ### Server
 
-- **fusca**: Data server with lightweight [i3](https://i3wm.org/) setup for server management [syncthing](https://syncthing.net/)
+- **fusca**: Data server, setup for server management [syncthing](https://syncthing.net/)
 
 ### Laptops
 
-- **x390**: ThinkPad X390 laptop with specific keyboard settings and vifm configuration
+- **x390**: ThinkPad X390 laptop 
 - **macos**: MacBook Pro M1 (mbp-m1) with macOS-compatible subset of configurations
 
 ## ⚙️ Configuration Details
@@ -64,12 +63,12 @@ dotfiles/
 
 - **Shell**: Zsh with [Oh My Zsh](https://ohmyz.sh/)
 - **Editor**: [Neovim](https://neovim.io/) with Lua configuration
-- **Terminal Multiplexer**: [tmux](https://github.com/tmux/tmux) with TPM plugin manager
+- **Terminal Multiplexer**: [Tmux](https://github.com/tmux/tmux) with TPM plugin manager
 - **Window Manager**: [i3wm](https://i3wm.org/) (Linux machines)
-- **File Manager**: [vifm](https://github.com/vifm/vifm) 
-- **Browser**: qutebrowser/firefox 
-- **PDF Viewer**: [zathura](https://github.com/pwmt/zathura)
-- **Terminal**: [terminator](https://github.com/gnome-terminator/terminator)
+- **File Manager**: [Vifm](https://github.com/vifm/vifm) 
+- **Browser**: [Firefox](https://www.firefox.com)
+- **PDF Viewer**: [Zathura](https://github.com/pwmt/zathura)
+- **Terminal**: [WezTerm](https://wezterm.org)
 
 ### Custom Scripts
 
