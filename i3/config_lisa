@@ -34,7 +34,8 @@
 
 # start a terminal
 # bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
-    bindsym $super+Return exec "terminator -l roney"
+# bindsym $super+Return exec "terminator -l roney"
+    bindsym $super+Return exec "wezterm"
 
 # Set shut down, restart and locking features
     bindsym $super+0 mode "$mode_system"
@@ -302,7 +303,7 @@
 # Mode
     set $mode_screen Screens: [h]orizontal-for-all [v]ertical-on-right
     bindsym $super+x mode "$mode_screen"
- 
+
     mode "$mode_screen"{
 # Get back from inception
       bindsym $super+x mode "default"
@@ -330,10 +331,10 @@
     exec_always --no-startup-id xautolock -time 30 -locker blurlock
     exec_always --no-startup-id ff-theme-util
     exec_always --no-startup-id fix_xcursor
-    # exec --no-startup-id telegram-desktop
+# exec --no-startup-id telegram-desktop
     exec_always unclutter
     exec --no-startup-id keynav
-    # exec --no-startup-id barrier
+# exec --no-startup-id barrier
     exec --no-startup-id insync start
 
 # }}}

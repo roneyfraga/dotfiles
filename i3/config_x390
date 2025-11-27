@@ -34,7 +34,8 @@
 
 # start a terminal
 # bindsym $super+Return exec "st -t 'Simple Terminal' -f 'Source Code Pro:style=Semibold:size=11'"
-    bindsym $super+Return exec "terminator -l roney"
+# bindsym $super+Return exec "terminator -l roney"
+    bindsym $super+Return exec "wezterm"
 
 # Set shut down, restart and locking features
     bindsym $super+0 mode "$mode_system"
@@ -276,7 +277,7 @@
 # KEYBOARD {{{
 
 # any english US keyboard
-  # exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
+# exec_always setxkbmap -layout us -variant intl -option caps:ctrl_modifier -option shift:both_capslock_cancel 
   exec_always setxkbmap -layout us -variant intl -option caps:escape -option shift:both_capslock_cancel -option altwin:swap_alt_win
 
 # Mode
@@ -299,22 +300,22 @@
 # SCREENS {{{
 
 # Perseus Pro 27" 2k horizontal + Benq 27" 2k horizontal (primary) + Samsung 24" fullHD vertical
-  # exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate right --output HDMI-A-0 --mode 2560x1440 --pos 0x480 --rotate normal --output DVI-D-0 --off
+# exec_always xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate right --output HDMI-A-0 --mode 2560x1440 --pos 0x480 --rotate normal --output DVI-D-0 --off
 
 # Mode
-    # set $mode_screen Screens: [h]orizontal-for-all [v]ertical-on-right
-    # bindsym $super+x mode "$mode_screen"
- 
-    # mode "$mode_screen"{
+# set $mode_screen Screens: [h]orizontal-for-all [v]ertical-on-right
+# bindsym $super+x mode "$mode_screen"
+
+# mode "$mode_screen"{
 # Get back from inception
-      # bindsym $super+x mode "default"
-        # bindsym BackSpace mode "default"
-        # bindsym Return mode "default"
-        # bindsym Escape mode "default"
-        # bindsym Control+c mode "default"
+# bindsym $super+x mode "default"
+# bindsym BackSpace mode "default"
+# bindsym Return mode "default"
+# bindsym Escape mode "default"
+# bindsym Control+c mode "default"
 # Action
-        # bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off
-        # bindsym v exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate right --output HDMI-A-0 --mode 2560x1440 --pos 0x480 --rotate normal --output DVI-D-0 --off, mode "default"
+# bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate normal --output HDMI-A-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DVI-D-0 --off
+# bindsym v exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 2560x480 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --mode 1920x1080 --pos 5120x0 --rotate right --output HDMI-A-0 --mode 2560x1440 --pos 0x480 --rotate normal --output DVI-D-0 --off, mode "default"
 #    }
 # }}}
 
@@ -332,10 +333,10 @@
     exec_always --no-startup-id xautolock -time 30 -locker blurlock
     exec_always --no-startup-id ff-theme-util
     exec_always --no-startup-id fix_xcursor
-    # exec --no-startup-id telegram-desktop
+# exec --no-startup-id telegram-desktop
     exec_always unclutter
     exec --no-startup-id keynav
-    # exec --no-startup-id barrier
+# exec --no-startup-id barrier
     exec --no-startup-id insync start
 
 # PrtSc as Alt
