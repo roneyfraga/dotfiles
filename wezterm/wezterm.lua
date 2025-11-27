@@ -4,6 +4,17 @@ local wezterm = require 'wezterm'
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+-- Event handler for toggling theme
+wezterm.on('toggle-theme', function(window)
+  local overrides = window:get_config_overrides() or {}
+  if not overrides.color_scheme then
+    overrides.color_scheme = 'Gruvbox light, medium (base16)'
+  else
+    overrides.color_scheme = nil
+  end
+  window:set_config_overrides(overrides)
+end)
+
 -- This is where you actually apply your config choices.
 config.automatically_reload_config = true
 config.enable_tab_bar = false
@@ -44,6 +55,10 @@ config.keys = {
 
   -- Decrease font size with CTRL + -
   { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
+
+  -- Toggle between dark and light theme with CTRL + SHIFT + T
+  { key = 't', mods = 'CTRL|SHIFT', action = wezterm.action.EmitEvent 'toggle-theme' },
+
 }
 
 -- Finally, return the configuration to wezterm:
