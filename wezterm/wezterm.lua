@@ -7,7 +7,8 @@ local config = wezterm.config_builder()
 -- This is where you actually apply your config choices.
 config.automatically_reload_config = true
 config.enable_tab_bar = false
-config.font_size = 12.5
+
+config.font_size = 12.0
 
 -- config.color_scheme = 'Gruvbox light, soft (base16)'
 config.color_scheme = 'Gruvbox dark, pale (base16)'
