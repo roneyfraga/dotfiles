@@ -37,10 +37,25 @@ config.window_padding = {
 config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
 
 -- Enable cedilla and dead keys support
+-- For US International layout with dead keys
 config.use_dead_keys = false
 config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = false
+config.send_composed_key_when_right_alt_is_pressed = true
+
+-- Enable IME to use XCompose
 config.use_ime = true
+
+-- Disable kitty keyboard protocol to avoid key event conflicts
+config.enable_kitty_keyboard = false
+
+-- Allow passthrough of composed characters
+config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
+
+-- Set compose key behavior
+config.xim_im_name = "cedilla"
+
+-- Explicitly disable key assignments that might interfere
+config.disable_default_key_bindings = false
 
 -- Disable audible bell
 config.audible_bell = "Disabled"

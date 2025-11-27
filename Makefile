@@ -17,6 +17,7 @@ ln:
 	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
 	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
+	ln -s $(dotfolder)/XCompose ~/.XCompose
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/zathura/zathurarc $(configfolder)/zathura/zathurarc
 	ln -s $(dotfolder)/mimeapps.list $(configfolder)/mimeapps.list
@@ -75,6 +76,7 @@ rm:
 	rm -rf ~/.config/nvim/spell
 	rm -f ~/.vim/spell
 	rm -f ~/.Rprofile
+	rm -f ~/.XCompose
 	rm -f ~/.gitconfig
 	rm -f $(configfolder)/zathura/zathurarc
 	rm -f $(configfolder)/qutebrowser/config.py
