@@ -30,7 +30,7 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 vim.cmd[[highlight Comment cterm=italic]]
-vim.keymap.set("i", "jj", "<Esc>", { noremap = true, desc = "leave insert mode" })
+-- vim.keymap.set("i", "jj", "<Esc>", { noremap = true, desc = "leave insert mode" })
 vim.cmd[[set nohlsearch]]
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -41,7 +41,20 @@ vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 
 vim.opt.updatetime = 200
-vim.opt.timeoutlen = 400
+vim.opt.timeoutlen = 300  -- Default for normal mode
+
+-- Disable timeoutlen in insert mode to eliminate space key delay
+vim.api.nvim_create_autocmd('InsertEnter', {
+  callback = function()
+    vim.opt.timeoutlen = 0
+  end
+})
+
+vim.api.nvim_create_autocmd('InsertLeave', {
+  callback = function()
+    vim.opt.timeoutlen = 400
+  end
+})
 
 vim.env.COLORTERM = "truecolor"
 vim.env.TERM = "xterm-256color"
