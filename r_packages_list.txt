@@ -1,7 +1,7 @@
 # R Packages List
-# Generated: 2025-11-05 17:00:41 
+# Generated: 2025-12-16 10:31:45 
 
-=== CRAN PACKAGES ( 971 ) ===
+=== CRAN PACKAGES ( 982 ) ===
 abind 
 acepack 
 actuar 
@@ -24,6 +24,7 @@ ape
 aplot 
 archive 
 arm 
+arrow 
 arules 
 arulesViz 
 ash 
@@ -171,6 +172,7 @@ dtplyr
 dtt 
 dtw 
 dtwclust 
+duckdb 
 dygraphs 
 dynamicTreeCut 
 dynlm 
@@ -340,6 +342,7 @@ hexView
 highcharter 
 highlight 
 highr 
+hms 
 HSAUR2 
 htmlTable 
 htmltools 
@@ -352,6 +355,7 @@ huge
 humaniformat 
 hunspell 
 ids 
+igraph 
 igraphdata 
 influenceR 
 ini 
@@ -418,6 +422,8 @@ lifecycle
 likert 
 linprog 
 lintr 
+listenv 
+litedown 
 lme4 
 lmodel2 
 lmtest 
@@ -518,8 +524,10 @@ OAIHarvester
 odbc 
 officer 
 ollamar 
+openalexR 
 OpenMx 
 openssl 
+openxlsx 
 optimParallel 
 optimx 
 optparse 
@@ -527,6 +535,7 @@ ordinal
 otel 
 packrat 
 pagedown 
+pak 
 palmerpenguins 
 pan 
 pander 
@@ -677,6 +686,7 @@ RecordLinkage
 recosystem 
 redland 
 RefManageR 
+reformulas 
 registry 
 relations 
 rem 
@@ -850,6 +860,7 @@ strucchange
 subplex 
 SuppDists 
 survey 
+svglite 
 svMisc 
 svs 
 svUnit 
@@ -974,8 +985,10 @@ zoo
 ztable 
 tcltk2 
 
-=== OTHER PACKAGES ( 4 ) ===
+=== OTHER PACKAGES ( 6 ) ===
+audio.whisper  -  GitHub: bnosac / audio.whisper 
 babelquarto  -  Repository: https://ropensci.r-universe.dev 
+bibr  -  GitHub: edonnachie / bibr 
 colorout  -  GitHub: jalvesaq / colorout 
 devtools  -  GitHub: r-lib / devtools 
 remotes  -  GitHub: r-lib / remotes 
