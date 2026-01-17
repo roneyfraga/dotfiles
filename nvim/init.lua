@@ -442,16 +442,31 @@ end
 -- :checkhealth nvim-treesitter
 -- :InspectTree
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    disable = {}
-  },
-  indent = {enable = true},
-}
+local status_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+if status_ok then
+  treesitter_configs.setup {
+    ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+      enable = true,
+      disable = {}
+    },
+    indent = {enable = true},
+  }
+end
+
+-- old code
+-- require'nvim-treesitter.configs'.setup {
+--   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
+--   sync_install = false,
+--   auto_install = true,
+--   highlight = {
+--     enable = true,
+--     disable = {}
+--   },
+--   indent = {enable = true},
+-- }
 
 -- Set up nvim-cmp.
 -- see: https://github.com/hrsh7th/nvim-cmp
