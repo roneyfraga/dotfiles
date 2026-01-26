@@ -162,7 +162,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-cmdline')
-Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
+-- Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
