@@ -174,9 +174,6 @@ Plug('Shougo/deol.nvim')
 -- snippets
 Plug('roneyfraga/vim-snippets')
 
--- image from clipboad, web or file to neovim
-Plug('HakonHarnes/img-clip.nvim')
-
 -- command line on center of screen
 Plug('MunifTanjim/nui.nvim')
 Plug('rcarriga/nvim-notify')
@@ -308,116 +305,6 @@ vim.lsp.config("lua_ls", {
   capabilities = caps,
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
-
--- sudo pacman -S lua-language-server bash-language-server
--- yay -S ltex-ls-bin
--- LanguageTool
-vim.lsp.config("ltex", {
-  autostart = false,
-  on_attach = on_attach,
-  capabilities = caps,
-  settings = {
-    ltex = {
-      -- languageToolHttpServerUri = "https://api.languagetoolplus.com",
-      languageToolHttpServerUri = "https://api.languagetoolplus.com/v2/",
-      languageToolOrg = {
-        username = os.getenv("LANGUAGETOOL_USERNAME"),
-        apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
-      },
-      language = "en-US",
-      additionalRules = {
-        enablePickyRules = true,
-      },
-      -- Ignore code blocks and math in markdown/quarto files
-      markdown = {
-        ignoreCodeBlocks = true,
-        ignoreMath = true,
-      },
-      -- Ignore LaTeX equations and environments
-      latex = {
-        commands = {
-          ignore = { "cite", "ref", "label" },
-        },
-        environments = {
-          ignore = { 
-            "equation", "equation*",
-            "align", "align*",
-            "gather", "gather*",
-            "multline", "multline*",
-            "eqnarray", "eqnarray*",
-            "math", "displaymath",
-            "lstlisting", "verbatim",
-          },
-        },
-      },
-      disabledRules = { 
-        ["en-US"] = { 
-          "MORFOLOGIK_RULE_EN_US",
-          "COMMA_PARENTHESIS_WHITESPACE",
-        },
-        ["pt-BR"] = { 
-          "MORFOLOGIK_RULE_PT_BR",
-          "COMMA_PARENTHESIS_WHITESPACE",
-        },
-      },
-      enabledRules = {},
-    },
-  },
-  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki", "rmd" },
-})
-
--- Enable all desired servers (ltex excluded because autostart=false)
-vim.lsp.enable({
-  "lua_ls",
-  "pyright",
-  "bashls",
-  "r_language_server",
-})
-
--- LSP Toggle function (handles ALL LSP servers for current buffer)
-function LspToggle()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-
-  if #clients > 0 then
-    -- LSP is active, disable ALL clients in current buffer
-    for _, client in ipairs(clients) do
-      vim.lsp.stop_client(client.id)
-    end
-    print("LSP disabled")
-  else
-    -- LSP is inactive, start appropriate server based on filetype
-    vim.cmd('LspStart')
-    print("LSP enabled")
-  end
-end
-
--- Change ltex language
-function LtexSetLanguage(lang)
-  local clients = vim.lsp.get_clients({ name = "ltex", bufnr = 0 })
-
-  if #clients > 0 then
-    for _, client in ipairs(clients) do
-      client.config.settings.ltex.language = lang
-      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-      print("ltex language changed to: " .. lang)
-    end
-  else
-    print("ltex is not running. Start it first with <Space>lt")
-  end
-end
-
--- Language shortcuts
-function LtexAuto()
-  LtexSetLanguage("auto")
-end
-
-function LtexEnglish()
-  LtexSetLanguage("en-US")
-end
-
-function LtexPortuguese()
-  LtexSetLanguage("pt-BR")
-end
 
 -- }}}
 
@@ -552,16 +439,6 @@ cmp.setup.cmdline(':', {
       { name = 'cmdline' }
     }),
   matching = { disallow_symbol_nonprefix_matching = false }
-})
-
--- PasteImage image from clipboad, system or web to neovim with img-clip.nvim
-require("img-clip").setup({
-  default = {
-    dir_path = "./",
-    extension = "png", -- (opcional)
-    file_name = "%Y-%m-%d-%H-%M-%S", -- (opcional)
-    use_absolute_path = false,
-  },
 })
 
 -- see which-key
@@ -1801,23 +1678,17 @@ wk.add({
   { "<Space>W[", "<cmd>ZettelSearch<CR>", desc = "zettel search [[", mode = { "n", "v", "i" } },
   -- LSP / LanguageTool
   { "<Space>l", group = "[l]sp" }, 
-  { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },
-  { "<Space>ld", "<cmd>LspStop ltex<CR>", desc = "disable ltex", mode = { "n", "v" } },
   { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
   { "<Space>lg", group = "[g]rammar language" }, -- subgroup
-  { "<Space>lga", LtexAuto, desc = "auto detect" },
-  { "<Space>lge", LtexEnglish, desc = "english (en-US)" },
-  { "<Space>lgp", LtexPortuguese, desc = "português (pt-BR)" },
   { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
   { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
-  -- { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
   { "<Space>lp", vim.diagnostic.goto_prev, desc = "previous diagnostic" },
   { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
   { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
-  { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
   { "<Space>l]", vim.diagnostic.goto_next, desc = "next [d" },
   { "<Space>l[", vim.diagnostic.goto_prev, desc = "previous ]d" },
 })
