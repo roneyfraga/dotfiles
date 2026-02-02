@@ -309,6 +309,7 @@ vim.lsp.config("lua_ls", {
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
+-- sudo pacman -S lua-language-server bash-language-server
 -- yay -S ltex-ls-bin
 -- LanguageTool
 vim.lsp.config("ltex", {
@@ -317,7 +318,8 @@ vim.lsp.config("ltex", {
   capabilities = caps,
   settings = {
     ltex = {
-      languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      -- languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      languageToolHttpServerUri = "https://api.languagetoolplus.com/v2/",
       languageToolOrg = {
         username = os.getenv("LANGUAGETOOL_USERNAME"),
         apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
@@ -1859,3 +1861,4 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 -- }}}
 
 -- vim: fdm=marker foldlevel=0 nowrap
+
