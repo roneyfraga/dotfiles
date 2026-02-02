@@ -256,26 +256,6 @@ Plug('Zeioth/markmap.nvim', { ['do'] = 'yarn global add markmap-cli' })
 
 vim.call('plug#end')
 
--- Treesitter fix: prefer built-in Lua highlights query when plugin query is incompatible
--- (Prevents "Invalid field name \"operator\"" errors on FileType lua.)
-do
-  local has_ts = vim.treesitter
-    and vim.treesitter.query
-    and vim.treesitter.query.get
-    and vim.treesitter.query.set
-
-  if has_ts then
-    local ok = pcall(vim.treesitter.query.get, "lua", "highlights")
-    if not ok then
-      local runtime_query = vim.fn.expand("$VIMRUNTIME/queries/lua/highlights.scm")
-      local ok_read, lines = pcall(vim.fn.readfile, runtime_query)
-      if ok_read and type(lines) == "table" and #lines > 0 then
-        vim.treesitter.query.set("lua", "highlights", table.concat(lines, "\n"))
-      end
-    end
-  end
-end
-
 -- }}}
 
 -- Colorschemes and Status Line {{{
@@ -329,6 +309,7 @@ vim.lsp.config("lua_ls", {
   settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
+-- sudo pacman -S lua-language-server bash-language-server
 -- yay -S ltex-ls-bin
 -- LanguageTool
 vim.lsp.config("ltex", {
@@ -337,7 +318,8 @@ vim.lsp.config("ltex", {
   capabilities = caps,
   settings = {
     ltex = {
-      languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      -- languageToolHttpServerUri = "https://api.languagetoolplus.com",
+      languageToolHttpServerUri = "https://api.languagetoolplus.com/v2/",
       languageToolOrg = {
         username = os.getenv("LANGUAGETOOL_USERNAME"),
         apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
@@ -1879,3 +1861,4 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 -- }}}
 
 -- vim: fdm=marker foldlevel=0 nowrap
+
