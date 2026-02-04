@@ -35,10 +35,9 @@ vim.cmd[[set nohlsearch]]
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-vim.opt.signcolumn = "no"
+vim.opt.signcolumn = "auto" -- show LSP diagnostics/signs
 vim.opt.number = true                                                                                      
 vim.opt.relativenumber = true                                                                              
-vim.opt.numberwidth = 4
 
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 300  -- Default for normal mode
@@ -283,28 +282,61 @@ require'lualine'.setup {
 
 -- }}}
 
--- nvim-lspconfig {{{
+-- LSP {{{
 
--- LSP (Neovim 0.11+ API)
-pcall(require, "lspconfig")
+-- Minimal LSP strategy (NVIM 0.11):
+-- - Use `vim.lsp.config()` + `vim.lsp.enable()`
+-- - Keep one `LspAttach` autocmd for keymaps
+-- - Let `nvim-lspconfig` provide the server definitions (in its `lsp/` directory)
+--
+-- Requirements (plugins):
+-- - neovim/nvim-lspconfig (server definitions for vim.lsp.config)
+-- - hrsh7th/nvim-cmp + hrsh7th/cmp-nvim-lsp (LSP completion)
+--
+-- Requirements (language servers on PATH):
+-- - Lua: lua-language-server (Arch: `pacman -S lua-language-server`)
+-- - Python: pyright (Arch: `pacman -S pyright`)
+-- - Bash: bash-language-server (npm: `npm i -g bash-language-server`)
+-- - LaTeX: texlab (Arch: `pacman -S texlab`)
+-- - R: languageserver (R: `install.packages('languageserver')`)
 
--- Capabilities for nvim-cmp
-local caps = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Basic per-buffer keymaps
-local on_attach = function(_, bufnr)
-  local k = function(lhs, rhs) vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true }) end
-  k("gd", vim.lsp.buf.definition)
-  k("K",  vim.lsp.buf.hover)
-  k("gr", vim.lsp.buf.references)
-end
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local k = function(lhs, rhs, desc)
+      vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+    end
 
--- Configure servers with custom options
-vim.lsp.config("lua_ls", {
-  on_attach = on_attach,
-  capabilities = caps,
-  settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+    k("gd", vim.lsp.buf.definition, "LSP: definition")
+    k("K", vim.lsp.buf.hover, "LSP: hover")
+    k("gr", vim.lsp.buf.references, "LSP: references")
+    k("gl", vim.diagnostic.open_float, "LSP: line diagnostics")
+  end,
 })
+
+local servers = {
+  lua_ls = {
+    settings = {
+      Lua = {
+        diagnostics = { globals = { "vim" } },
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    },
+  },
+  pyright = {},
+  r_language_server = {},
+  bashls = {},
+  texlab = {},
+}
+
+for name, config in pairs(servers) do
+  config.capabilities = capabilities
+  vim.lsp.config(name, config)
+  vim.lsp.enable(name)
+end
 
 -- }}}
 
@@ -382,8 +414,8 @@ cmp.setup({
     ['<C-c>'] = cmp.mapping.abort(),
   }),
   sources = cmp.config.sources({
-    { name = 'snippy' }, -- R snippets
-    { name = 'cmp_r' }, -- R autocompletion
+    { name = 'snippy' }, -- snippets
+    -- R completion comes from `nvim_lsp` (r_language_server)
     { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
@@ -1270,7 +1302,7 @@ require("snacks").setup({
   bigfile = { enabled = true },
   notifier = { enabled = true },
   quickfile = { enabled = true },
-  statuscolumn = { enabled = true },
+  statuscolumn = { enabled = false }, -- if true generate a huge column after the relative numbers
   words = { enabled = true },
   styles = {
     notification = { wo = { wrap = false } },
@@ -1658,6 +1690,8 @@ wk.add({
   { "<Space>vfl", "<cmd>LatexClean<CR>", desc = "latex accents → utf-8", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
+  { "<Space>wo", "<cmd>only<CR>", desc = "only (close other windows)" },
+  { "<Space>wh", "<cmd>hide<CR>", desc = "hide window" },
   { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
   { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
   { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
