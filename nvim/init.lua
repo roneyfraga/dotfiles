@@ -1823,6 +1823,7 @@ wk.add({
   { "<Space>Wg", "<cmd>VimwikiGoto<CR>", desc = "goto" },
   { "<Space>Wr", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
   { "<Space>Ww", "<cmd>VimwikiIndex<CR>", desc = "wiki index open" },
+  { "<Space>WD", "<cmd>VimwikiDeleteFile<CR>", desc = "delete file" },
   { "<Space>Wz", "<cmd>lua ZettelIndexOpen()<CR>", desc = "zettel index open" },
   { "<Space>WW", WikiOpen, desc = "~/wiki file finder" },
   { "<Space>WZ", WikiZetOpen, desc = "~/wiki/zet file finder" },
