@@ -80,13 +80,14 @@ local opt = vim.opt
 
 -- desliga por padrão; você liga/desliga depois (F2/F3/F4 abaixo)
 opt.spell = false
-opt.spelllang = { "pt_br", "en_us" }
+opt.spelllang = { "pt", "en" }
 
 -- sinalização: sublinhado em palavras erradas (API moderna)
 vim.api.nvim_set_hl(0, "SpellBad", { underline = true })
 
--- dicionários pessoais: use append (não sobrescreva o valor anterior)
-opt.spellfile = vim.empty_dict() -- zera de forma explícita
+-- dicionários pessoais (word lists): use append (não sobrescreva o valor anterior)
+-- NOTE: `spellfile` é uma lista (string-list). Inicialize com `{}`.
+opt.spellfile = {}
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/lowercase.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/pt.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/en.utf-8.add"))
@@ -99,23 +100,34 @@ opt.dictionary = "/usr/share/dict/words"
 opt.complete:append("kspell")
 
 -- Funções centralizadas de toggle (adicionar junto ao bloco Spell check ou antes do which-key)
+-- `spell` é opção de janela (use `vim.wo`). `spelllang` é local ao buffer (use `vim.opt_local`).
+local function spell_status_label()
+  return vim.wo.spell and "ON" or "OFF"
+end
+
 function ToggleSpellBoth()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "pt_br", "en_us" }
-  vim.notify("spell: pt_br + en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "pt", "en" }
+  vim.notify("spell: pt_br + en_us (" .. spell_status_label() .. ")")
 end
 
 function ToggleSpellEN()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "en_us" }
-  vim.notify("spell: en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "en" }
+  vim.notify("spell: en_us (" .. spell_status_label() .. ")")
 end
 
 function ToggleSpellPT()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "pt_br" }
-  vim.notify("spell: pt_br (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "pt" }
+  vim.notify("spell: pt_br (" .. spell_status_label() .. ")")
 end
+
+-- Keymaps (independente do which-key)
+vim.keymap.set({ "n", "v" }, "<leader>vgb", ToggleSpellBoth, { desc = "spell: pt+en" })
+vim.keymap.set({ "n", "v" }, "<leader>vge", ToggleSpellEN, { desc = "spell: en" })
+vim.keymap.set({ "n", "v" }, "<leader>vgp", ToggleSpellPT, { desc = "spell: pt" })
+
 -- }}}
 
 -- Plugins {{{
@@ -259,6 +271,28 @@ vim.call('plug#end')
 vim.cmd("set background=dark") -- or light if you want light mode
 vim.cmd("colorscheme gruvbox")
 
+-- Spell highlight
+-- SpellBad: solid underline (works in most terminals)
+local function set_spell_highlights()
+  vim.api.nvim_set_hl(0, "SpellBad", { underline = true, sp = "#fb4934" })
+end
+
+-- Harper/LSP diagnostics highlight
+-- Harper is configured to emit `diagnosticSeverity = "hint"`.
+-- Use a light-green underline (works in most terminals; undercurl often doesn't render).
+local function set_diagnostic_highlights()
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#b8bb26" })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    set_spell_highlights()
+    set_diagnostic_highlights()
+  end,
+})
+set_spell_highlights()
+set_diagnostic_highlights()
+
 function getWords()
   local wc = vim.fn.wordcount()
   if wc["visual_words"] then
@@ -285,9 +319,6 @@ require'lualine'.setup {
 -- LSP {{{
 
 -- Minimal LSP strategy (NVIM 0.11):
--- - Use `vim.lsp.config()` + `vim.lsp.enable()`
--- - Keep one `LspAttach` autocmd for keymaps
--- - Let `nvim-lspconfig` provide the server definitions (in its `lsp/` directory)
 --
 -- Requirements (plugins):
 -- - neovim/nvim-lspconfig (server definitions for vim.lsp.config)
@@ -299,6 +330,7 @@ require'lualine'.setup {
 -- - Bash: bash-language-server (npm: `npm i -g bash-language-server`)
 -- - LaTeX: texlab (Arch: `pacman -S texlab`)
 -- - R: languageserver (R: `install.packages('languageserver')`)
+-- - Harper: harper (Arch: `pacman -S harper`)
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -330,13 +362,100 @@ local servers = {
   r_language_server = {},
   bashls = {},
   texlab = {},
+
+  -- Harper (grammar/style) LSP
+  -- Enable via which-key: `<Space>lge` / disable: `<Space>lgd`
+  harper_ls = {
+    filetypes = { "markdown", "text", "gitcommit", "vimwiki", "quarto", "tex", "plaintex", "latex" },
+
+    -- Harper doesn't natively support `tex` language-id.
+    -- Present TeX buffers as `plaintext` so Harper produces diagnostics.
+    get_language_id = function(_, filetype)
+      if filetype == "tex" or filetype == "plaintex" or filetype == "latex" then
+        return "plaintext"
+      end
+      return filetype
+    end,
+
+    settings = {
+      ["harper-ls"] = {
+        -- userDictPath = "~/Sync/.spell/en.utf-8.add",
+        workspaceDictPath = "",
+        fileDictPath = "",
+        -- https://writewithharper.com/docs/rules
+        linters = {
+          SpellCheck = true,
+          SpelledNumbers = true,
+          AnA = true,
+          SentenceCapitalization = false,
+          UnclosedQuotes = true,
+          WrongQuotes = true,
+          LongSentences = true,
+          RepeatedWords = true,
+          Spaces = true,
+          Matcher = true,
+          CorrectNumberSuffix = true,
+          AvoidCurses = true,
+          ViciousCircleOrCycle = true,
+          ToDoHyphen = false,
+          BoringWords = true,
+          CapitalizePersonalPronouns = false,
+        },
+        codeActions = {
+          ForceStable = false,
+        },
+        markdown = {
+          IgnoreLinkTitle = false,
+        },
+        diagnosticSeverity = "hint",
+        isolateEnglish = true, -- ignore non English text
+        dialect = "American",
+        maxFileLength = 120000,
+        ignoredLintsPath = "",
+        excludePatterns = {},
+      },
+    },
+  },
 }
 
 for name, config in pairs(servers) do
   config.capabilities = capabilities
   vim.lsp.config(name, config)
-  vim.lsp.enable(name)
 end
+
+-- Enable coding language servers by default
+vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" })
+
+-- Diagnostics popup while typing (CursorHold)
+vim.diagnostic.config({
+  update_in_insert = true,
+  float = { border = "rounded", source = "if_many" },
+})
+
+-- Standard diagnostic navigation
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
+
+local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloatOnHold", { clear = true })
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = diag_float_grp,
+  callback = function()
+    local opts = { focus = false, scope = "cursor", border = "rounded" }
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local all_line_diagnostics = vim.diagnostic.get(0, { lnum = pos[1] - 1 })
+
+    local harper_line_diagnostics = vim.tbl_filter(function(d)
+      if type(d.source) ~= "string" then
+        return false
+      end
+      return d.source:lower():find("harper", 1, true) ~= nil
+    end, all_line_diagnostics)
+
+    if #harper_line_diagnostics > 0 then
+      vim.diagnostic.open_float(nil, opts)
+    end
+  end,
+})
 
 -- }}}
 
@@ -1690,7 +1809,7 @@ wk.add({
   { "<Space>vfl", "<cmd>LatexClean<CR>", desc = "latex accents → utf-8", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
-  { "<Space>wo", "<cmd>only<CR>", desc = "only (close other windows)" },
+  { "<Space>wo", "<cmd>only<CR>", desc = "only window" },
   { "<Space>wh", "<cmd>hide<CR>", desc = "hide window" },
   { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
   { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
@@ -1710,21 +1829,30 @@ wk.add({
   { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "link creator", mode = { "n", "v" } },
   { "<Space>Wy", "<cmd>ZettelYankName<CR>", desc = "yank current filename" },
   { "<Space>W[", "<cmd>ZettelSearch<CR>", desc = "zettel search [[", mode = { "n", "v", "i" } },
-  -- LSP / LanguageTool
-  { "<Space>l", group = "[l]sp" }, 
-  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
-  { "<Space>lg", group = "[g]rammar language" }, -- subgroup
-  { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
-  { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
+  -- LSP
+  { "<Space>l", group = "[l]sp" },
+  { "<Space>lc", group = "[c]oding" }, -- subgroup
+  { "<Space>lce", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, true) end, desc = "enable coding LSP" },
+  { "<Space>lcd", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, false) end, desc = "disable coding LSP" },
+  { "<Space>lg", group = "[g]rammar" }, -- subgroup
+  { "<Space>lge", function()
+      vim.lsp.enable("harper_ls", true)
+      -- Attach immediately to the current buffer (enable() only auto-starts on future opens)
+      vim.lsp.start(vim.lsp.config.harper_ls, { bufnr = 0, silent = true })
+    end, desc = "Harper enable" },
+  { "<Space>lgd", function() vim.lsp.enable("harper_ls", false) end, desc = "Harper disable" },
+  { "<Space>la", vim.lsp.buf.code_action, desc = "code action", mode = { "n", "v" } },
+  { "<Space>lh", vim.lsp.buf.hover, desc = "hover" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
-  { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>ld", vim.lsp.buf.definition, desc = "definition" },
+  { "<Space>lR", vim.lsp.buf.rename, desc = "rename" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
+  { "<Space>le", vim.diagnostic.open_float, desc = "line diagnostics" },
+  { "<Space>ll", vim.diagnostic.setloclist, desc = "diagnostics loclist" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
-  { "<Space>lp", vim.diagnostic.goto_prev, desc = "previous diagnostic" },
-  { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
-  { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
-  { "<Space>l]", vim.diagnostic.goto_next, desc = "next [d" },
-  { "<Space>l[", vim.diagnostic.goto_prev, desc = "previous ]d" },
+  { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
+  { "<Space>l]", vim.diagnostic.goto_next, desc = "next diagnostic ]d" },
+  { "<Space>l[", vim.diagnostic.goto_prev, desc = "prev diagnostic [d" },
 })
 
 --- }}}
