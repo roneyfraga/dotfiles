@@ -35,10 +35,9 @@ vim.cmd[[set nohlsearch]]
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-vim.opt.signcolumn = "no"
+vim.opt.signcolumn = "auto" -- show LSP diagnostics/signs
 vim.opt.number = true                                                                                      
 vim.opt.relativenumber = true                                                                              
-vim.opt.numberwidth = 4
 
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 300  -- Default for normal mode
@@ -81,13 +80,14 @@ local opt = vim.opt
 
 -- desliga por padrão; você liga/desliga depois (F2/F3/F4 abaixo)
 opt.spell = false
-opt.spelllang = { "pt_br", "en_us" }
+opt.spelllang = { "pt", "en" }
 
 -- sinalização: sublinhado em palavras erradas (API moderna)
 vim.api.nvim_set_hl(0, "SpellBad", { underline = true })
 
--- dicionários pessoais: use append (não sobrescreva o valor anterior)
-opt.spellfile = vim.empty_dict() -- zera de forma explícita
+-- dicionários pessoais (word lists): use append (não sobrescreva o valor anterior)
+-- NOTE: `spellfile` é uma lista (string-list). Inicialize com `{}`.
+opt.spellfile = {}
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/lowercase.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/pt.utf-8.add"))
 opt.spellfile:append(vim.fn.expand("~/Sync/.spell/en.utf-8.add"))
@@ -100,23 +100,34 @@ opt.dictionary = "/usr/share/dict/words"
 opt.complete:append("kspell")
 
 -- Funções centralizadas de toggle (adicionar junto ao bloco Spell check ou antes do which-key)
+-- `spell` é opção de janela (use `vim.wo`). `spelllang` é local ao buffer (use `vim.opt_local`).
+local function spell_status_label()
+  return vim.wo.spell and "ON" or "OFF"
+end
+
 function ToggleSpellBoth()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "pt_br", "en_us" }
-  vim.notify("spell: pt_br + en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "pt", "en" }
+  vim.notify("spell: pt_br + en_us (" .. spell_status_label() .. ")")
 end
 
 function ToggleSpellEN()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "en_us" }
-  vim.notify("spell: en_us (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "en" }
+  vim.notify("spell: en_us (" .. spell_status_label() .. ")")
 end
 
 function ToggleSpellPT()
-  vim.opt.spell = not vim.opt.spell:get()
-  vim.opt.spelllang = { "pt_br" }
-  vim.notify("spell: pt_br (" .. (vim.opt.spell:get() and "ON" or "OFF") .. ")")
+  vim.wo.spell = not vim.wo.spell
+  vim.opt_local.spelllang = { "pt" }
+  vim.notify("spell: pt_br (" .. spell_status_label() .. ")")
 end
+
+-- Keymaps (independente do which-key)
+vim.keymap.set({ "n", "v" }, "<leader>vgb", ToggleSpellBoth, { desc = "spell: pt+en" })
+vim.keymap.set({ "n", "v" }, "<leader>vge", ToggleSpellEN, { desc = "spell: en" })
+vim.keymap.set({ "n", "v" }, "<leader>vgp", ToggleSpellPT, { desc = "spell: pt" })
+
 -- }}}
 
 -- Plugins {{{
@@ -162,7 +173,7 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-cmdline')
-Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
+-- Plug('R-nvim/cmp-r') -- autocompletion with 'R-nvim/R.nvim'
 Plug('kdheepak/cmp-latex-symbols')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 Plug('dcampos/nvim-snippy')
@@ -173,9 +184,6 @@ Plug('Shougo/deol.nvim')
 
 -- snippets
 Plug('roneyfraga/vim-snippets')
-
--- image from clipboad, web or file to neovim
-Plug('HakonHarnes/img-clip.nvim')
 
 -- command line on center of screen
 Plug('MunifTanjim/nui.nvim')
@@ -263,6 +271,28 @@ vim.call('plug#end')
 vim.cmd("set background=dark") -- or light if you want light mode
 vim.cmd("colorscheme gruvbox")
 
+-- Spell highlight
+-- SpellBad: solid underline (works in most terminals)
+local function set_spell_highlights()
+  vim.api.nvim_set_hl(0, "SpellBad", { underline = true, sp = "#fb4934" })
+end
+
+-- Harper/LSP diagnostics highlight
+-- Harper is configured to emit `diagnosticSeverity = "hint"`.
+-- Use a light-green underline (works in most terminals; undercurl often doesn't render).
+local function set_diagnostic_highlights()
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#b8bb26" })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    set_spell_highlights()
+    set_diagnostic_highlights()
+  end,
+})
+set_spell_highlights()
+set_diagnostic_highlights()
+
 function getWords()
   local wc = vim.fn.wordcount()
   if wc["visual_words"] then
@@ -286,136 +316,146 @@ require'lualine'.setup {
 
 -- }}}
 
--- nvim-lspconfig {{{
+-- LSP {{{
 
--- LSP (Neovim 0.11+ API)
-pcall(require, "lspconfig")
+-- Minimal LSP strategy (NVIM 0.11):
+--
+-- Requirements (plugins):
+-- - neovim/nvim-lspconfig (server definitions for vim.lsp.config)
+-- - hrsh7th/nvim-cmp + hrsh7th/cmp-nvim-lsp (LSP completion)
+--
+-- Requirements (language servers on PATH):
+-- - Lua: lua-language-server (Arch: `pacman -S lua-language-server`)
+-- - Python: pyright (Arch: `pacman -S pyright`)
+-- - Bash: bash-language-server (npm: `npm i -g bash-language-server`)
+-- - LaTeX: texlab (Arch: `pacman -S texlab`)
+-- - R: languageserver (R: `install.packages('languageserver')`)
+-- - Harper: harper (Arch: `pacman -S harper`)
 
--- Capabilities for nvim-cmp
-local caps = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Basic per-buffer keymaps
-local on_attach = function(_, bufnr)
-  local k = function(lhs, rhs) vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true }) end
-  k("gd", vim.lsp.buf.definition)
-  k("K",  vim.lsp.buf.hover)
-  k("gr", vim.lsp.buf.references)
-end
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local k = function(lhs, rhs, desc)
+      vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+    end
 
--- Configure servers with custom options
-vim.lsp.config("lua_ls", {
-  on_attach = on_attach,
-  capabilities = caps,
-  settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+    k("gd", vim.lsp.buf.definition, "LSP: definition")
+    k("K", vim.lsp.buf.hover, "LSP: hover")
+    k("gr", vim.lsp.buf.references, "LSP: references")
+    k("gl", vim.diagnostic.open_float, "LSP: line diagnostics")
+  end,
 })
 
--- yay -S ltex-ls-bin
--- LanguageTool
-vim.lsp.config("ltex", {
-  autostart = false,
-  on_attach = on_attach,
-  capabilities = caps,
-  settings = {
-    ltex = {
-      languageToolHttpServerUri = "https://api.languagetoolplus.com",
-      languageToolOrg = {
-        username = os.getenv("LANGUAGETOOL_USERNAME"),
-        apiKey = os.getenv("LANGUAGETOOL_API_KEY"),
+local servers = {
+  lua_ls = {
+    settings = {
+      Lua = {
+        diagnostics = { globals = { "vim" } },
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
       },
-      language = "en-US",
-      additionalRules = {
-        enablePickyRules = true,
-      },
-      -- Ignore code blocks and math in markdown/quarto files
-      markdown = {
-        ignoreCodeBlocks = true,
-        ignoreMath = true,
-      },
-      -- Ignore LaTeX equations and environments
-      latex = {
-        commands = {
-          ignore = { "cite", "ref", "label" },
-        },
-        environments = {
-          ignore = { 
-            "equation", "equation*",
-            "align", "align*",
-            "gather", "gather*",
-            "multline", "multline*",
-            "eqnarray", "eqnarray*",
-            "math", "displaymath",
-            "lstlisting", "verbatim",
-          },
-        },
-      },
-      disabledRules = { 
-        ["en-US"] = { 
-          "MORFOLOGIK_RULE_EN_US",
-          "COMMA_PARENTHESIS_WHITESPACE",
-        },
-        ["pt-BR"] = { 
-          "MORFOLOGIK_RULE_PT_BR",
-          "COMMA_PARENTHESIS_WHITESPACE",
-        },
-      },
-      enabledRules = {},
     },
   },
-  filetypes = { "tex", "bib", "markdown", "gitcommit", "org", "quarto", "vimwiki", "rmd" },
+  pyright = {},
+  r_language_server = {},
+  bashls = {},
+  texlab = {},
+
+  -- Harper (grammar/style) LSP
+  -- Enable via which-key: `<Space>lge` / disable: `<Space>lgd`
+  harper_ls = {
+    filetypes = { "markdown", "text", "gitcommit", "vimwiki", "quarto", "tex", "plaintex", "latex" },
+
+    -- Harper doesn't natively support `tex` language-id.
+    -- Present TeX buffers as `plaintext` so Harper produces diagnostics.
+    get_language_id = function(_, filetype)
+      if filetype == "tex" or filetype == "plaintex" or filetype == "latex" then
+        return "plaintext"
+      end
+      return filetype
+    end,
+
+    settings = {
+      ["harper-ls"] = {
+        -- userDictPath = "~/Sync/.spell/en.utf-8.add",
+        workspaceDictPath = "",
+        fileDictPath = "",
+        -- https://writewithharper.com/docs/rules
+        linters = {
+          SpellCheck = true,
+          SpelledNumbers = true,
+          AnA = true,
+          SentenceCapitalization = false,
+          UnclosedQuotes = true,
+          WrongQuotes = true,
+          LongSentences = true,
+          RepeatedWords = true,
+          Spaces = true,
+          Matcher = true,
+          CorrectNumberSuffix = true,
+          AvoidCurses = true,
+          ViciousCircleOrCycle = true,
+          ToDoHyphen = false,
+          BoringWords = true,
+          CapitalizePersonalPronouns = false,
+        },
+        codeActions = {
+          ForceStable = false,
+        },
+        markdown = {
+          IgnoreLinkTitle = false,
+        },
+        diagnosticSeverity = "hint",
+        isolateEnglish = true, -- ignore non English text
+        dialect = "American",
+        maxFileLength = 120000,
+        ignoredLintsPath = "",
+        excludePatterns = {},
+      },
+    },
+  },
+}
+
+for name, config in pairs(servers) do
+  config.capabilities = capabilities
+  vim.lsp.config(name, config)
+end
+
+-- Enable coding language servers by default
+vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" })
+
+-- Diagnostics popup while typing (CursorHold)
+vim.diagnostic.config({
+  update_in_insert = true,
+  float = { border = "rounded", source = "if_many" },
 })
 
--- Enable all desired servers (ltex excluded because autostart=false)
-vim.lsp.enable({
-  "lua_ls",
-  "pyright",
-  "bashls",
-  "r_language_server",
+-- Standard diagnostic navigation
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
+
+local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloatOnHold", { clear = true })
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = diag_float_grp,
+  callback = function()
+    local opts = { focus = false, scope = "cursor", border = "rounded" }
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local all_line_diagnostics = vim.diagnostic.get(0, { lnum = pos[1] - 1 })
+
+    local harper_line_diagnostics = vim.tbl_filter(function(d)
+      if type(d.source) ~= "string" then
+        return false
+      end
+      return d.source:lower():find("harper", 1, true) ~= nil
+    end, all_line_diagnostics)
+
+    if #harper_line_diagnostics > 0 then
+      vim.diagnostic.open_float(nil, opts)
+    end
+  end,
 })
-
--- LSP Toggle function (handles ALL LSP servers for current buffer)
-function LspToggle()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-
-  if #clients > 0 then
-    -- LSP is active, disable ALL clients in current buffer
-    for _, client in ipairs(clients) do
-      vim.lsp.stop_client(client.id)
-    end
-    print("LSP disabled")
-  else
-    -- LSP is inactive, start appropriate server based on filetype
-    vim.cmd('LspStart')
-    print("LSP enabled")
-  end
-end
-
--- Change ltex language
-function LtexSetLanguage(lang)
-  local clients = vim.lsp.get_clients({ name = "ltex", bufnr = 0 })
-
-  if #clients > 0 then
-    for _, client in ipairs(clients) do
-      client.config.settings.ltex.language = lang
-      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-      print("ltex language changed to: " .. lang)
-    end
-  else
-    print("ltex is not running. Start it first with <Space>lt")
-  end
-end
-
--- Language shortcuts
-function LtexAuto()
-  LtexSetLanguage("auto")
-end
-
-function LtexEnglish()
-  LtexSetLanguage("en-US")
-end
-
-function LtexPortuguese()
-  LtexSetLanguage("pt-BR")
-end
 
 -- }}}
 
@@ -442,16 +482,31 @@ end
 -- :checkhealth nvim-treesitter
 -- :InspectTree
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    disable = {}
-  },
-  indent = {enable = true},
-}
+local status_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+if status_ok then
+  treesitter_configs.setup {
+    ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+      enable = true,
+      disable = {}
+    },
+    indent = {enable = true},
+  }
+end
+
+-- old code
+-- require'nvim-treesitter.configs'.setup {
+--   ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
+--   sync_install = false,
+--   auto_install = true,
+--   highlight = {
+--     enable = true,
+--     disable = {}
+--   },
+--   indent = {enable = true},
+-- }
 
 -- Set up nvim-cmp.
 -- see: https://github.com/hrsh7th/nvim-cmp
@@ -478,8 +533,8 @@ cmp.setup({
     ['<C-c>'] = cmp.mapping.abort(),
   }),
   sources = cmp.config.sources({
-    { name = 'snippy' }, -- R snippets
-    { name = 'cmp_r' }, -- R autocompletion
+    { name = 'snippy' }, -- snippets
+    -- R completion comes from `nvim_lsp` (r_language_server)
     { name = 'vimtex' },
     { name = 'nvim_lsp' },
     { name = 'path'},
@@ -535,16 +590,6 @@ cmp.setup.cmdline(':', {
       { name = 'cmdline' }
     }),
   matching = { disallow_symbol_nonprefix_matching = false }
-})
-
--- PasteImage image from clipboad, system or web to neovim with img-clip.nvim
-require("img-clip").setup({
-  default = {
-    dir_path = "./",
-    extension = "png", -- (opcional)
-    file_name = "%Y-%m-%d-%H-%M-%S", -- (opcional)
-    use_absolute_path = false,
-  },
 })
 
 -- see which-key
@@ -1376,7 +1421,7 @@ require("snacks").setup({
   bigfile = { enabled = true },
   notifier = { enabled = true },
   quickfile = { enabled = true },
-  statuscolumn = { enabled = true },
+  statuscolumn = { enabled = false }, -- if true generate a huge column after the relative numbers
   words = { enabled = true },
   styles = {
     notification = { wo = { wrap = false } },
@@ -1764,6 +1809,8 @@ wk.add({
   { "<Space>vfl", "<cmd>LatexClean<CR>", desc = "latex accents → utf-8", mode = { "n", "v" } },
   -- windows {move, swap, resize}
   { "<Space>w", group = "[w]indows" },
+  { "<Space>wo", "<cmd>only<CR>", desc = "only window" },
+  { "<Space>wh", "<cmd>hide<CR>", desc = "hide window" },
   { "<Space>wm", function() require('winmove').start_mode('move') end, desc = "move" },
   { "<Space>ws", function() require('winmove').start_mode('swap') end, desc = "swap" },
   { "<Space>wr", function() require('winmove').start_mode('resize') end, desc = "resize" },
@@ -1776,33 +1823,37 @@ wk.add({
   { "<Space>Wg", "<cmd>VimwikiGoto<CR>", desc = "goto" },
   { "<Space>Wr", "<cmd>VimwikiRenameFile<CR>", desc = "rename current file" },
   { "<Space>Ww", "<cmd>VimwikiIndex<CR>", desc = "wiki index open" },
+  { "<Space>WD", "<cmd>VimwikiDeleteFile<CR>", desc = "delete file" },
   { "<Space>Wz", "<cmd>lua ZettelIndexOpen()<CR>", desc = "zettel index open" },
   { "<Space>WW", WikiOpen, desc = "~/wiki file finder" },
   { "<Space>WZ", WikiZetOpen, desc = "~/wiki/zet file finder" },
   { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "link creator", mode = { "n", "v" } },
   { "<Space>Wy", "<cmd>ZettelYankName<CR>", desc = "yank current filename" },
   { "<Space>W[", "<cmd>ZettelSearch<CR>", desc = "zettel search [[", mode = { "n", "v", "i" } },
-  -- LSP / LanguageTool
-  { "<Space>l", group = "[l]sp" }, 
-  { "<Space>le", "<cmd>LspStart ltex<CR>", desc = "enable ltex", mode = { "n", "v" } },
-  { "<Space>ld", "<cmd>LspStop ltex<CR>", desc = "disable ltex", mode = { "n", "v" } },
-  { "<Space>lt", LspToggle, desc = "toggle lsp on/off", mode = { "n", "v" } },
-  { "<Space>lg", group = "[g]rammar language" }, -- subgroup
-  { "<Space>lga", LtexAuto, desc = "auto detect" },
-  { "<Space>lge", LtexEnglish, desc = "english (en-US)" },
-  { "<Space>lgp", LtexPortuguese, desc = "português (pt-BR)" },
-  { "<Space>la", vim.lsp.buf.code_action, desc = "code action (fix)", mode = { "n", "v" } },
-  { "<Space>lh", vim.lsp.buf.hover, desc = "hover info" },
+  -- LSP
+  { "<Space>l", group = "[l]sp" },
+  { "<Space>lc", group = "[c]oding" }, -- subgroup
+  { "<Space>lce", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, true) end, desc = "enable coding LSP" },
+  { "<Space>lcd", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, false) end, desc = "disable coding LSP" },
+  { "<Space>lg", group = "[g]rammar" }, -- subgroup
+  { "<Space>lge", function()
+      vim.lsp.enable("harper_ls", true)
+      -- Attach immediately to the current buffer (enable() only auto-starts on future opens)
+      vim.lsp.start(vim.lsp.config.harper_ls, { bufnr = 0, silent = true })
+    end, desc = "Harper enable" },
+  { "<Space>lgd", function() vim.lsp.enable("harper_ls", false) end, desc = "Harper disable" },
+  { "<Space>la", vim.lsp.buf.code_action, desc = "code action", mode = { "n", "v" } },
+  { "<Space>lh", vim.lsp.buf.hover, desc = "hover" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
-  -- { "<Space>ld", vim.lsp.buf.definition, desc = "go to definition" },
+  { "<Space>ld", vim.lsp.buf.definition, desc = "definition" },
+  { "<Space>lR", vim.lsp.buf.rename, desc = "rename" },
   { "<Space>lf", vim.lsp.buf.format, desc = "format" },
+  { "<Space>le", vim.diagnostic.open_float, desc = "line diagnostics" },
+  { "<Space>ll", vim.diagnostic.setloclist, desc = "diagnostics loclist" },
   { "<Space>ln", vim.diagnostic.goto_next, desc = "next diagnostic" },
-  { "<Space>lp", vim.diagnostic.goto_prev, desc = "previous diagnostic" },
-  { "<Space>ll", vim.diagnostic.setloclist, desc = "list diagnostics" },
-  { "<Space>ls", vim.diagnostic.open_float, desc = "show diagnostic" },
-  { "<Space>lD", "<cmd>bufdo lua vim.lsp.stop_client(vim.lsp.get_clients())<CR>", desc = "disable lsp all buffers", mode = { "n", "v" } },
-  { "<Space>l]", vim.diagnostic.goto_next, desc = "next [d" },
-  { "<Space>l[", vim.diagnostic.goto_prev, desc = "previous ]d" },
+  { "<Space>lp", vim.diagnostic.goto_prev, desc = "prev diagnostic" },
+  { "<Space>l]", vim.diagnostic.goto_next, desc = "next diagnostic ]d" },
+  { "<Space>l[", vim.diagnostic.goto_prev, desc = "prev diagnostic [d" },
 })
 
 --- }}}
@@ -1844,3 +1895,4 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 -- }}}
 
 -- vim: fdm=marker foldlevel=0 nowrap
+
