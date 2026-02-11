@@ -126,3 +126,4 @@ diary/
 # Machine-specific hardware configs that shouldn't be shared
 *.machine
 *.host-specific
+nvim/.claude
