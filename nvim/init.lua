@@ -238,7 +238,10 @@ Plug('MeanderingProgrammer/render-markdown.nvim')
 -- Plug('nvim-tree/nvim-tree.lua')
 
 -- opencode AI
-Plug('NickvanDyke/opencode.nvim')
+-- Plug('NickvanDyke/opencode.nvim')
+
+-- claude code
+Plug('greggh/claude-code.nvim')
 
 -- required dependencies
 Plug('nvim-lua/plenary.nvim')
@@ -1403,20 +1406,20 @@ end, { range = true, desc = "Convert LaTeX accent codes to UTF-8 (preserve brace
 -- Required for `vim.g.opencode_opts.auto_reload`
 vim.opt.autoread = true
 
--- Configure opencode options
-vim.g.opencode_opts = {
-  -- Set a specific port since lsof is not available
-  -- port = 8080,
-  
-  -- Enable auto-reload when files change externally
-  auto_reload = true,
-  
-  -- Other useful options
-  auto_save = true,
-  session_restore = true,
-}
+-- -- Configure opencode options
+-- vim.g.opencode_opts = {
+--   -- Set a specific port since lsof is not available
+--   -- port = 8080,
+--
+--   -- Enable auto-reload when files change externally
+--   auto_reload = true,
+--
+--   -- Other useful options
+--   auto_save = true,
+--   session_restore = true,
+-- }
 
--- Configure snacks.nvim for enhanced opencode functionality
+-- Configure snacks.nvim
 require("snacks").setup({
   bigfile = { enabled = true },
   notifier = { enabled = true },
@@ -1426,27 +1429,25 @@ require("snacks").setup({
   styles = {
     notification = { wo = { wrap = false } },
   },
-  -- Enable the modules that opencode needs
   input = { enabled = true },
   picker = { enabled = true },
   terminal = { enabled = true },
 })
 
--- Recommended/example keymaps
-vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
-vim.keymap.set({ "n", "x" }, "<leader>o+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
-vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select prompt" })
-vim.keymap.set("n", "<leader>ot", function() require("opencode").toggle() end, { desc = "Toggle embedded" })
-vim.keymap.set("n", "<leader>oc", function() require("opencode").command() end, { desc = "Select command" })
-vim.keymap.set("n", "<leader>on", function() require("opencode").command("session_new") end, { desc = "New session" })
-vim.keymap.set("n", "<leader>oi", function() require("opencode").command("session_interrupt") end, { desc = "Interrupt session" })
-vim.keymap.set("n", "<leader>oA", function() require("opencode").command("agent_cycle") end, { desc = "Cycle selected agent" })
-vim.keymap.set("n", "<S-C-u>",    function() require("opencode").command("messages_half_page_up") end, { desc = "Messages half page up" })
-vim.keymap.set("n", "<S-C-d>",    function() require("opencode").command("messages_half_page_down") end, { desc = "Messages half page down" })
+-- -- opencode keymaps
+-- vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
+-- vim.keymap.set({ "n", "x" }, "<leader>o+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
+-- vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select prompt" })
+-- vim.keymap.set("n", "<leader>ot", function() require("opencode").toggle() end, { desc = "Toggle embedded" })
+-- vim.keymap.set("n", "<leader>oc", function() require("opencode").command() end, { desc = "Select command" })
+-- vim.keymap.set("n", "<leader>on", function() require("opencode").command("session_new") end, { desc = "New session" })
+-- vim.keymap.set("n", "<leader>oi", function() require("opencode").command("session_interrupt") end, { desc = "Interrupt session" })
+-- vim.keymap.set("n", "<leader>oA", function() require("opencode").command("agent_cycle") end, { desc = "Cycle selected agent" })
+-- vim.keymap.set("n", "<S-C-u>",    function() require("opencode").command("messages_half_page_up") end, { desc = "Messages half page up" })
+-- vim.keymap.set("n", "<S-C-d>",    function() require("opencode").command("messages_half_page_down") end, { desc = "Messages half page down" })
 
--- opencode terminal leave: Esc Esc
--- if I forget, allow to use vim-tmux-navigator on opencode
--- 
+-- tmux-navigator keymaps (also used by claude-code terminal)
+--
 -- Reusable function to register keymaps in different contexts
 local function set_tmux_navigator_keymaps()
   vim.keymap.set({ "n", "t" }, "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
@@ -1628,6 +1629,30 @@ vim.opt.diffopt = {
 
 -- }}}
 
+-- claude code {{{
+
+require("claude-code").setup({
+  window = {
+    split_ratio = 0.30,
+    position = "vertical",
+    enter_insert = true,
+  },
+  keymaps = {
+    toggle = {
+      normal = "<C-,>",
+      terminal = "<C-,>",
+      variants = {
+        continue = false,
+        verbose = false,
+      },
+    },
+    window_navigation = false, -- tmux-navigator already handles <C-h/j/k/l>
+    scrolling = true,
+  },
+})
+
+-- }}}
+
 -- MarkMap {{{
 
 require('markmap').setup({
@@ -1720,8 +1745,8 @@ wk.add({
   { "<Space>cs", SyncGrep, desc = "~/sync" },
   { "<Space>cw", WikiGrep, desc = "~/wiki" },
   { "<Space>cz", WikiZetGrep, desc = "~/wiki/zet" },
-  -- opencode (AI assistant)
-  { "<Space>o", group = "[o]pencode" }, -- automatic detection
+  -- -- opencode (AI assistant)
+  -- { "<Space>o", group = "[o]pencode" }, -- automatic detection
   -- diff
   { "<leader>d",  group = "󰈙 [d]iff" },
   { "<leader>dc", ":DiffChat<CR>", desc = "Compare latest revision" },
@@ -1830,6 +1855,13 @@ wk.add({
   { "<Space>Wl", "<cmd>lua create_markdown_link()<CR>", desc = "link creator", mode = { "n", "v" } },
   { "<Space>Wy", "<cmd>ZettelYankName<CR>", desc = "yank current filename" },
   { "<Space>W[", "<cmd>ZettelSearch<CR>", desc = "zettel search [[", mode = { "n", "v", "i" } },
+  -- Claude Code (AI)
+  { "<Space>a", group = "[a]i claude" },
+  { "<Space>at", "<cmd>ClaudeCode<CR>", desc = "toggle" },
+  { "<Space>ac", "<cmd>ClaudeCodeContinue<CR>", desc = "continue last" },
+  { "<Space>ar", "<cmd>ClaudeCodeResume<CR>", desc = "resume (picker)" },
+  { "<Space>av", "<cmd>ClaudeCodeVerbose<CR>", desc = "verbose" },
+  { "<Space>aV", "<cmd>ClaudeCodeVersion<CR>", desc = "version" },
   -- LSP
   { "<Space>l", group = "[l]sp" },
   { "<Space>lc", group = "[c]oding" }, -- subgroup
