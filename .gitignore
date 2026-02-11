@@ -44,6 +44,7 @@ desktop.ini
 # Cache and temporary directories
 .cache/
 AGENTS.md
+CLAUDE.md
 tmp/
 temp/
 *.cache
@@ -53,6 +54,7 @@ temp/
 
 # Application specific data
 .chat/
+.claude/
 newsboat/cache/
 qutebrowser/history.sqlite*
 qutebrowser/bookmarks/bookmarks-*

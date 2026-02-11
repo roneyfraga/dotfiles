@@ -29,15 +29,28 @@ vim.cmd("set t_ZR=^[[23m")
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
+
+-- cursorline/cursorcolumn apenas na janela ativa
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  callback = function()
+    vim.opt_local.cursorline = true
+    vim.opt_local.cursorcolumn = true
+  end,
+})
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  callback = function()
+    vim.opt_local.cursorline = false
+    vim.opt_local.cursorcolumn = false
+  end,
+})
 vim.cmd[[highlight Comment cterm=italic]]
--- vim.keymap.set("i", "jj", "<Esc>", { noremap = true, desc = "leave insert mode" })
 vim.cmd[[set nohlsearch]]
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 vim.opt.signcolumn = "auto" -- show LSP diagnostics/signs
-vim.opt.number = true                                                                                      
-vim.opt.relativenumber = true                                                                              
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 300  -- Default for normal mode
