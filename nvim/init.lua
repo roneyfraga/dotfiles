@@ -1644,25 +1644,28 @@ vim.opt.diffopt = {
 
 -- claude code {{{
 
-require("claude-code").setup({
-  window = {
-    split_ratio = 0.30,
-    position = "vertical",
-    enter_insert = true,
-  },
-  keymaps = {
-    toggle = {
-      normal = "<C-,>",
-      terminal = "<C-,>",
-      variants = {
-        continue = false,
-        verbose = false,
-      },
+local ok_cc, claude_code = pcall(require, "claude-code")
+if ok_cc then
+  claude_code.setup({
+    window = {
+      split_ratio = 0.30,
+      position = "vertical",
+      enter_insert = true,
     },
-    window_navigation = false, -- tmux-navigator already handles <C-h/j/k/l>
-    scrolling = true,
-  },
-})
+    keymaps = {
+      toggle = {
+        normal = "<C-,>",
+        terminal = "<C-,>",
+        variants = {
+          continue = false,
+          verbose = false,
+        },
+      },
+      window_navigation = false, -- tmux-navigator already handles <C-h/j/k/l>
+      scrolling = true,
+    },
+  })
+end
 
 -- }}}
 
