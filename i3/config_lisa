@@ -326,7 +326,7 @@
     exec --no-startup-id pamac-tray
     exec --no-startup-id clipit
     exec --no-startup-id syncthing -no-browser
-    exec --no-startup-id ksnip
+    bindsym $super+p exec --no-startup-id bash -c 'f=~/Pictures/screenshot_$(date +%Y%m%d-%H%M%S).png && maim -s "$f" && xclip -selection clipboard -t image/png < "$f"'
     exec --no-startup-id goldendict
     exec_always --no-startup-id xautolock -time 30 -locker blurlock
     exec_always --no-startup-id ff-theme-util
