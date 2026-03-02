@@ -80,7 +80,24 @@ option_list <- list(
     help = "Create RAG files (CSV and Markdown)"
   ),
   optparse::make_option(
-    c("--no_rag_marker"),
+    c("-c", "--csv_file"),
+    type = "character",
+    help = "Custom CSV filename for referenced works data"
+  ),
+  optparse::make_option(
+    c("--no_csv"),
+    action = "store_true",
+    default = FALSE,
+    help = "Skip saving CSV file"
+  ),
+  optparse::make_option(
+    c("--no_markdown"),
+    action = "store_true",
+    default = FALSE,
+    help = "Skip creating markdown file"
+  ),
+  optparse::make_option(
+    c("--no_rag"),
     action = "store_true",
     default = FALSE,
     help = "Add 'no_rag' marker to Markdown to prevent RAG indexing"
@@ -116,23 +133,35 @@ parser <- optparse::OptionParser(
     "\nUnified reference manager: extract DOI, create BibTeX, prepare RAG files.",
     "\n",
     "\nWorkflow modes:",
-    "\n  --full         : Complete workflow (extract → BibTeX → rename → CSV/Markdown)",
+    "\n  --full         : Complete workflow (extract -> BibTeX -> rename -> CSV/Markdown)",
     "\n  --bibtex_only  : Only extract DOI and create BibTeX",
     "\n  -R, --rag      : Create RAG files (CSV and Markdown)",
     "\n  (default)      : Smart mode based on options",
     "\n",
     "\nExamples:",
-    "\n  # Full workflow",
-    "\n  ref.R -p paper.pdf --full",
+    "\n  # Full workflow (extract DOI, BibTeX, rename, CSV, Markdown)",
+    "\n  refman -p paper.pdf --full -b references.bib -w",
     "\n",
     "\n  # Extract BibTeX and rename",
-    "\n  ref.R -p paper.pdf -B -r",
+    "\n  refman -p paper.pdf -B -r",
     "\n",
     "\n  # Create BibTeX + RAG files",
-    "\n  ref.R -p paper.pdf -B -r -R",
+    "\n  refman -p paper.pdf -B -r -R",
     "\n",
-    "\n  # Just create RAG files (requires .bib)",
-    "\n  ref.R -p 'Author - 2021 - Title.pdf' -R",
+    "\n  # RAG files only (requires .bib)",
+    "\n  refman -p 'Author - 2021 - Title.pdf' -R",
+    "\n",
+    "\n  # RAG with no CSV output",
+    "\n  refman -p 'Author - 2021 - Title.pdf' -R --no_csv",
+    "\n",
+    "\n  # RAG with custom CSV filename",
+    "\n  refman -p 'Author - 2021 - Title.pdf' -R -c custom.csv",
+    "\n",
+    "\n  # RAG with no Markdown output",
+    "\n  refman -p 'Author - 2021 - Title.pdf' -R --no_markdown",
+    "\n",
+    "\n  # RAG with no_rag marker in Markdown",
+    "\n  refman -p 'Author - 2021 - Title.pdf' -R --no_rag",
     sep = ""
   )
 )
@@ -156,6 +185,8 @@ if (args$bibtex_only) {
 } else if (args$full) {
   run_bibtex <- TRUE
   run_rag <- TRUE
+  args$local_bibtex <- TRUE
+  args$rename <- TRUE
 } else {
   # Determine based on flags
   bibtex_options_set <- !is.null(args$bibtex_file) || args$write ||
@@ -234,6 +265,16 @@ if (run_bibtex) {
   # FIX BIBTEX ENTRY TYPE ISSUES
   # ============================================================================
 
+  #' Fix BibTeX entry type issues from CrossRef
+  #'
+  #' CrossRef sometimes returns incorrect entry types (e.g., @book for technical reports)
+  #' This function detects and fixes common issues:
+  #' - @book with institution but no publisher → @techreport
+  #' - @book without publisher → @misc
+  #' - @incollection without booktitle → @misc
+  #'
+  #' @param bib_text Character string with BibTeX entry
+  #' @return Fixed BibTeX entry
   fix_bibtex_entry_type <- function(bib_text) {
     # Case 1: @book with institution but no publisher → @techreport
     if (grepl("@book", bib_text, ignore.case = TRUE) &&
@@ -249,6 +290,14 @@ if (run_bibtex) {
       !grepl("publisher\\s*=", bib_text, ignore.case = TRUE)) {
       bib_text <- sub("@book", "@misc", bib_text, ignore.case = TRUE)
       message("ℹ️  Converted @book to @misc (missing publisher)")
+      return(bib_text)
+    }
+
+    # Case 3: @incollection without booktitle → @misc
+    if (grepl("@incollection", bib_text, ignore.case = TRUE) &&
+      !grepl("booktitle\\s*=", bib_text, ignore.case = TRUE)) {
+      bib_text <- sub("@incollection", "@misc", bib_text, ignore.case = TRUE)
+      message("ℹ️  Converted @incollection to @misc (missing booktitle)")
       return(bib_text)
     }
 
@@ -305,12 +354,9 @@ if (run_bibtex) {
       \(x) gsub("}\n$", "\n}\n", x, ignore.case = TRUE)
     }() |>
     {
-      \(x) sub("_", "", x)
+      \(x) gsub("_", "", x)
     }() ->
     bib2
-
-  # Fix BibTeX entry type issues
-  bib2 <- fix_bibtex_entry_type(bib2)
 
   # Fix BibTeX entry type issues
   bib2 <- fix_bibtex_entry_type(bib2)
@@ -323,49 +369,6 @@ if (run_bibtex) {
     key
 
   key2 <- stringr::str_trim(stringi::stri_trans_general(key, "Latin-ASCII"))
-
-  # ============================================================================
-  # FIX BIBTEX ENTRY TYPE ISSUES
-  # ============================================================================
-
-  #' Fix BibTeX entry type issues from CrossRef
-  #'
-  #' CrossRef sometimes returns incorrect entry types (e.g., @book for technical reports)
-  #' This function detects and fixes common issues:
-  #' - @book with institution but no publisher → @techreport
-  #' - @book without publisher → @misc
-  #' - @incollection without booktitle → @misc
-  #'
-  #' @param bib_text Character string with BibTeX entry
-  #' @return Fixed BibTeX entry
-  fix_bibtex_entry_type <- function(bib_text) {
-    # Case 1: @book with institution but no publisher → @techreport
-    if (grepl("@book", bib_text, ignore.case = TRUE) &&
-      grepl("institution\\s*=", bib_text, ignore.case = TRUE) &&
-      !grepl("publisher\\s*=", bib_text, ignore.case = TRUE)) {
-      bib_text <- sub("@book", "@techreport", bib_text, ignore.case = TRUE)
-      message("ℹ️  Converted @book to @techreport (has institution field)")
-      return(bib_text)
-    }
-
-    # Case 2: @book without publisher → @misc
-    if (grepl("@book", bib_text, ignore.case = TRUE) &&
-      !grepl("publisher\\s*=", bib_text, ignore.case = TRUE)) {
-      bib_text <- sub("@book", "@misc", bib_text, ignore.case = TRUE)
-      message("ℹ️  Converted @book to @misc (missing publisher)")
-      return(bib_text)
-    }
-
-    # Case 3: @incollection without booktitle → @misc
-    if (grepl("@incollection", bib_text, ignore.case = TRUE) &&
-      !grepl("booktitle\\s*=", bib_text, ignore.case = TRUE)) {
-      bib_text <- sub("@incollection", "@misc", bib_text, ignore.case = TRUE)
-      message("ℹ️  Converted @incollection to @misc (missing booktitle)")
-      return(bib_text)
-    }
-
-    return(bib_text)
-  }
 
   key2 <- gsub("[[:punct:]]", "", key2)
 
@@ -652,6 +655,12 @@ if (run_rag) {
   # Decide if we fetch from OpenAlex
   has_doi <- !is.na(doi) && nchar(trimws(doi)) > 0
 
+  force_skip_csv <- !has_doi
+  if (force_skip_csv && !args$no_csv) {
+    args$no_csv <- TRUE
+    if (args$verbose) cat("No DOI provided -> forcing --no_csv\n")
+  }
+
   if (!has_doi && args$verbose) {
     cat("ℹ️  No DOI available. Will create Markdown from .bib metadata only.\n")
   }
@@ -776,9 +785,14 @@ if (run_rag) {
     )
   }
 
-  # Save CSV (always create if we have references)
-  if (!is.null(references) && nrow(references) > 0) {
-    csv_filename <- paste0(".", file_basename, ".csv")
+  # Save CSV
+  csv_filename <- NULL
+  if (!args$no_csv && !is.null(references) && nrow(references) > 0) {
+    csv_filename <- if (!is.null(args$csv_file)) {
+      args$csv_file
+    } else {
+      paste0(".", file_basename, ".csv")
+    }
 
     references_formatted <- references |>
       dplyr::mutate(
@@ -790,51 +804,65 @@ if (run_rag) {
     cat(glue::glue("\n✅ CSV saved to: {csv_filename}\n\n"))
   }
 
-  # Save Markdown (always create)
-  md_filename <- paste0(file_basename, ".md")
-  md_content <- character()
+  # Save Markdown
+  md_filename <- NULL
+  if (!args$no_markdown) {
+    md_filename <- paste0(file_basename, ".md")
+    md_content <- character()
 
-  if (args$no_rag_marker) {
-    md_content <- c(md_content, "no_rag", "")
-  }
-
-  # Prefer .bib metadata
-  if (!is.null(bib_metadata)) {
-    first_author <- bib_metadata$author %||% "Unknown"
-    md_year <- bib_metadata$year %||% NA_character_
-    md_title <- bib_metadata$title %||% "Untitled"
-  } else if (!is.null(work)) {
-    if (!is.null(work$authorships) && length(work$authorships[[1]]) > 0) {
-      first_author <- stringr::str_extract(work$authorships[[1]]$display_name[[1]], "\\S+$") %||% "Unknown"
-    } else {
-      first_author <- citing_author %||% "Unknown"
+    if (args$no_rag) {
+      md_content <- c(md_content, "no_rag", "")
     }
-    md_year <- citing_year %||% NA_character_
-    md_title <- citing_title %||% "Untitled"
-  } else {
-    first_author <- "Unknown"
-    md_year <- NA_character_
-    md_title <- "Untitled"
+
+    # Prefer .bib metadata
+    if (!is.null(bib_metadata)) {
+      first_author <- bib_metadata$author %||% "Unknown"
+      md_year <- bib_metadata$year %||% NA_character_
+      md_title <- bib_metadata$title %||% "Untitled"
+    } else if (!is.null(work)) {
+      if (!is.null(work$authorships) && length(work$authorships[[1]]) > 0) {
+        first_author <- stringr::str_extract(work$authorships[[1]]$display_name[[1]], "\\S+$") %||% "Unknown"
+      } else {
+        first_author <- citing_author %||% "Unknown"
+      }
+      md_year <- citing_year %||% NA_character_
+      md_title <- citing_title %||% "Untitled"
+    } else {
+      first_author <- "Unknown"
+      md_year <- NA_character_
+      md_title <- "Untitled"
+    }
+
+    md_content <- c(md_content, glue::glue("# {first_author} - {md_year} - {md_title}"), "")
+    md_content <- c(
+      md_content,
+      glue::glue("- **Author:** {first_author}"),
+      glue::glue("- **Year:** {md_year}"),
+      glue::glue("- **Title:** {md_title}"),
+      glue::glue("- **DOI:** {citing_doi %||% NA_character_}"),
+      glue::glue("- **OpenAlex ID:** {citing_id %||% NA_character_}"),
+      glue::glue("- **Generated on:** {Sys.Date()}"),
+      ""
+    )
+
+    md_content <- c(md_content, "## User Comments", "")
+
+    writeLines(md_content, md_filename)
+
+    cat(glue::glue("✅ Markdown saved to: {md_filename}\n"))
+    if (args$no_rag) cat("🚫 Added 'no_rag' marker\n")
   }
 
-  md_content <- c(md_content, glue::glue("# {first_author} - {md_year} - {md_title}"), "")
-  md_content <- c(
-    md_content,
-    glue::glue("- **Author:** {first_author}"),
-    glue::glue("- **Year:** {md_year}"),
-    glue::glue("- **Title:** {md_title}"),
-    glue::glue("- **DOI:** {citing_doi %||% NA_character_}"),
-    glue::glue("- **OpenAlex ID:** {citing_id %||% NA_character_}"),
-    glue::glue("- **Generated on:** {Sys.Date()}"),
-    ""
-  )
-
-  md_content <- c(md_content, "## User Comments", "")
-
-  writeLines(md_content, md_filename)
-
-  cat(glue::glue("✅ Markdown saved to: {md_filename}\n"))
-  if (args$no_rag_marker) cat("🚫 Added 'no_rag' marker\n")
+  # Summary
+  cat("\n=== Files ===\n")
+  if (!args$no_csv && !is.null(csv_filename)) {
+    cat(glue::glue("CSV: {csv_filename}\n\n"))
+  } else if (force_skip_csv) {
+    cat("CSV: (skipped -- DOI not provided)\n\n")
+  }
+  if (!args$no_markdown && !is.null(md_filename)) {
+    cat(glue::glue("Markdown: {md_filename}\n\n"))
+  }
 }
 
 cat("\n✅ Workflow completed successfully\n\n")
