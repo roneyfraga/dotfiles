@@ -14,8 +14,6 @@ ln:
 	ln -s $(dotfolder)/tmux/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/tmux/config.yaml ~/.tmux/config.yaml
 	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
-	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
-	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/XCompose ~/.XCompose
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
@@ -56,10 +54,8 @@ ln_x390:
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
-	ln -s $(dotfolder)/tmux.conf ~/.tmux.conf
+	ln -s $(dotfolder)/tmux/tmux.conf ~/.tmux.conf
 	ln -s $(dotfolder)/nvim/init.lua ~/.config/nvim/init.lua
-	ln -s $(dotfolder)/nvim/coc-settings.json $(configfolder)/nvim/coc-settings.json
-	ln -s $(dotfolder)/nvim/spell ~/.config/nvim/spell 
 	ln -s $(dotfolder)/Rprofile ~/.Rprofile
 	ln -s $(dotfolder)/gitconfig ~/.gitconfig
 	ln -s $(dotfolder)/lintr ~/.lintr
@@ -71,23 +67,17 @@ rm:
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.tmux/config.yaml
-	rm -f ~/.config/nvim/init.vim
 	rm -f ~/.config/nvim/init.lua
-	rm -rf ~/.config/nvim/spell
-	rm -f ~/.vim/spell
 	rm -f ~/.Rprofile
 	rm -f ~/.XCompose
 	rm -f ~/.gitconfig
 	rm -f $(configfolder)/zathura/zathurarc
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/mimeapps.list
-	rm -f $(configfolder)/nvim/coc-settins.json
 	rm -rf $(configfolder)/vifm/colors
 	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f ~/.lintr
 	rm -f ~/.pydoro.ini
-	rm -f $(configfolder)/nvim/coc-settings.json
-	rm -f $(configfolder)/vifm/favicons.vifm
 	rm -f $(configfolder)/.Xresources
 	rm -f $(configfolder)/wezterm/wezterm.lua
 	rm -f $(configfolder)/fzf-open/lopen.sh
@@ -117,14 +107,13 @@ rm_x390:
 	rm -f $(configfolder)/vifm/vifmrc
 
 rm_macos:
-	rm -r ~/.zshrc
-	rm -r ~/.tmux.conf
-	rm -r ~/.config/nvim/init.vim
-	rm -r $(configfolder)/nvim/coc-settings.json
-	rm -r ~/.config/nvim/spell 
-	rm -r ~/.Rprofile
-	rm -r ~/.gitconfig
-	rm -r ~/.lintr
-	rm -r $(configfolder)/vifm/favicons.vifm
-	rm -r $(configfolder)/vifm/vifmrc
+	rm -f ~/.zshrc
+	rm -f ~/.tmux.conf
+	rm -f ~/.config/nvim/init.lua
+	rm -f ~/.Rprofile
+	rm -f ~/.gitconfig
+	rm -f ~/.lintr
+	rm -rf $(configfolder)/vifm/colors
+	rm -f $(configfolder)/vifm/favicons.vifm
+	rm -f $(configfolder)/vifm/vifmrc
 
