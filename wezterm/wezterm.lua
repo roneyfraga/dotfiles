@@ -60,6 +60,7 @@ config.disable_default_key_bindings = false
 -- Disable audible bell
 config.audible_bell = "Disabled"
 
+
 -- Keyboard shortcuts for font size adjustment
 config.keys = {
   -- Reset font size with CTRL + =
