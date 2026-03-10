@@ -613,3 +613,4 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 # TinyTeX path (macOS only)
 [[ "$OS" == "macos" ]] && export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
+unset MAILCHECK
