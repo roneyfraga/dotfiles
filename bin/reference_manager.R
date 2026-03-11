@@ -534,11 +534,11 @@ if (run_bibtex) {
     }
 
     if (exists("dois_db") && any(doi %in% dois_db)) {
-      stop("ERROR: DOI already exists in BibTeX file. Aborting.")
+      cat("    Skipping BibTeX write (entry already present).\n")
+    } else {
+      cat(bib2, file = args$bibtex_file, append = TRUE)
+      cat("\n✅ BibTeX added to:", args$bibtex_file, "\n")
     }
-
-    cat(bib2, file = args$bibtex_file, append = TRUE)
-    cat("\n✅ BibTeX added to:", args$bibtex_file, "\n")
   }
 
   # Rename PDF
@@ -683,52 +683,44 @@ if (run_rag) {
 
     tryCatch(
       {
-        openalexR::oa_fetch(
-          entity = "works",
-          doi = doi_clean,
-          verbose = FALSE
-        ) |>
-          dplyr::slice_head(n = 1) ->
-          work
+        # Use oa_request (raw API) to avoid oa_fetch tibble flattening
+        # issues with duplicate 'id' columns from nested authorships
+        query_url <- paste0(
+          "https://api.openalex.org/works?filter=doi:",
+          gsub("https://doi.org/", "", doi_clean),
+          "&select=id,doi,publication_year,display_name,authorships,referenced_works",
+          "&per_page=1"
+        )
+        raw_work <- openalexR::oa_request(query_url, verbose = FALSE)
 
-        if (nrow(work) == 0) stop("No work found in OpenAlex")
+        if (length(raw_work) == 0) stop("No work found in OpenAlex")
 
-        citing_doi <- work$doi
-        citing_id <- work$id
-        citing_title <- work$display_name
-        citing_year <- work$publication_year
-        citing_author <- stringr::str_extract(work$authorships[[1]]$display_name[[1]], "\\S+$")
+        item <- raw_work[[1]]
+        citing_doi <- item$doi %||% NA_character_
+        citing_id <- item$id %||% NA_character_
+        citing_year <- item$publication_year %||% NA_integer_
+        citing_title <- item$display_name %||% NA_character_
+        citing_author <- tryCatch(
+          stringr::str_extract(item$authorships[[1]]$author$display_name, "\\S+$"),
+          error = \(e) NA_character_
+        )
 
         cat(glue::glue("Author: {citing_author}"), "\n")
         cat(glue::glue("Year: {citing_year}"), "\n")
         cat(glue::glue("Title: {citing_title}"), "\n")
 
-        work |>
-          dplyr::select(
-            citing_doi = doi,
-            citing_id = id,
-            citing_year = publication_year,
-            citing_title = display_name,
-            citing_author = authorships,
-            referenced_works
-          ) |>
-          tidyr::unnest(referenced_works, keep_empty = TRUE) ->
-          refs_data
+        ref_urls <- item$referenced_works %||% list()
 
-        refs_data <- refs_data |>
-          dplyr::mutate(
-            citing_author = purrr::map_chr(citing_author, \(auth) {
-              if (length(auth) > 0 && !is.null(auth$display_name[[1]])) {
-                stringr::str_extract(auth$display_name[[1]], "\\S+$")
-              } else {
-                NA_character_
-              }
-            })
-          )
+        if (length(ref_urls) == 0) stop("No referenced works found")
 
-        if (nrow(refs_data) == 0 || all(is.na(refs_data$referenced_works))) {
-          stop("No referenced works found")
-        }
+        refs_data <- tibble::tibble(
+          citing_doi = citing_doi,
+          citing_id = citing_id,
+          citing_year = citing_year,
+          citing_title = citing_title,
+          citing_author = citing_author,
+          referenced_works = unlist(ref_urls)
+        )
 
         cat(glue::glue("✅ Found {nrow(refs_data)} referenced works\n\n"))
 
@@ -739,32 +731,45 @@ if (run_rag) {
           ref_ids
 
         if (length(ref_ids) > 0) {
-          openalexR::oa_fetch(
-            entity = "works",
-            identifier = ref_ids,
-            options = list(select = c("id", "doi", "publication_year", "title", "authorships")),
-            verbose = FALSE
-          ) |>
-            dplyr::select(
-              cited_doi = doi,
-              referenced_works = id,
-              cited_year = publication_year,
-              cited_title = title,
-              cited_authorships = authorships
-            ) ->
-            ref_works
+          # Use oa_request (raw API) to avoid oa_fetch tibble flattening
+          # issues with duplicate 'id' columns from nested authorships
+          chunk_size <- 50L
+          chunks <- split(ref_ids, ceiling(seq_along(ref_ids) / chunk_size))
 
-          ref_works <- ref_works |>
-            dplyr::mutate(
-              cited_author = purrr::map_chr(cited_authorships, \(auth) {
-                if (length(auth) > 0 && !is.null(auth$display_name[[1]])) {
-                  stringr::str_extract(auth$display_name[[1]], "\\S+$")
-                } else {
-                  NA_character_
-                }
-              })
-            ) |>
-            dplyr::select(-cited_authorships)
+          ref_works_list <- list()
+          for (chunk in chunks) {
+            filter_str <- paste0("openalex:", paste(chunk, collapse = "|"))
+            query_url <- paste0(
+              "https://api.openalex.org/works?filter=", filter_str,
+              "&select=id,doi,publication_year,display_name,authorships",
+              "&per_page=200"
+            )
+            raw <- openalexR::oa_request(query_url, verbose = FALSE)
+
+            chunk_df <- purrr::map_dfr(raw, \(item) {
+              first_author <- tryCatch(
+                {
+                  auth_name <- item$authorships[[1]]$author$display_name
+                  if (!is.null(auth_name)) {
+                    stringr::str_extract(auth_name, "\\S+$")
+                  } else {
+                    NA_character_
+                  }
+                },
+                error = \(e) NA_character_
+              )
+              tibble::tibble(
+                cited_doi = item$doi %||% NA_character_,
+                referenced_works = item$id %||% NA_character_,
+                cited_year = item$publication_year %||% NA_integer_,
+                cited_title = item$display_name %||% NA_character_,
+                cited_author = first_author
+              )
+            })
+            ref_works_list <- c(ref_works_list, list(chunk_df))
+          }
+
+          ref_works <- dplyr::bind_rows(ref_works_list)
 
           refs_data |>
             dplyr::left_join(ref_works, by = dplyr::join_by(referenced_works)) |>
