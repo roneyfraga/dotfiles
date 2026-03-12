@@ -43,7 +43,7 @@
     bindsym $super+0 mode "$mode_system"
     set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
     mode "$mode_system" {
-      bindsym l exec --no-startup-id i3exit lock, mode "default"
+# bindsym l exec --no-startup-id i3exit lock, mode "default"
         bindsym s exec --no-startup-id i3exit suspend, mode "default"
         bindsym u exec --no-startup-id i3exit switch_user, mode "default"
         bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -318,6 +318,11 @@
 # exec --no-startup-id goldendict
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id xautolock -time 45 -locker blurlock
+
+# Disable screen blanking and DPMS (monitor power management)
+    exec --no-startup-id xset s off
+    exec --no-startup-id xset -dpms
+    exec --no-startup-id xset s noblank
     exec_always --no-startup-id ff-theme-util
     exec_always --no-startup-id fix_xcursor
 # exec --no-startup-id telegram-desktop
