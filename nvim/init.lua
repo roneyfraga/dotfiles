@@ -219,6 +219,12 @@ Plug('godlygeek/tabular')
 
 -- code formater
 Plug('sbdchd/neoformat')
+vim.g.neoformat_enabled_bib = { "bibtextidy" }
+vim.g.neoformat_bib_bibtextidy = {
+  exe = "bibtex-tidy",
+  args = { "--space=2", "--no-align" },
+  stdin = 1,
+}
 
 -- Delete buffer withou messing the layout :Bd
 Plug('moll/vim-bbye')
@@ -346,6 +352,7 @@ require'lualine'.setup {
 -- - Bash: bash-language-server (npm: `npm i -g bash-language-server`)
 -- - LaTeX: texlab (Arch: `pacman -S texlab`)
 -- - R: languageserver (R: `install.packages('languageserver')`)
+-- - PHP: intelephense (npm: `npm i -g intelephense`)
 -- - Harper: harper (Arch: `pacman -S harper`)
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -378,6 +385,7 @@ local servers = {
   r_language_server = {},
   bashls = {},
   texlab = {},
+  intelephense = {},
 
   -- Harper (grammar/style) LSP
   -- Enable via which-key: `<Space>lge` / disable: `<Space>lgd`
@@ -440,7 +448,7 @@ for name, config in pairs(servers) do
 end
 
 -- Enable coding language servers by default
-vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" })
+vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" })
 
 -- Diagnostics popup while typing (CursorHold)
 vim.diagnostic.config({
@@ -481,6 +489,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 -- R: install.packages("languageserver")
 
 -- TreeSitter
+-- Requires: tree-sitter-cli (npm: `npm i -g tree-sitter-cli`)
 -- :TSInstall r
 -- :TSInstall python
 -- :TSInstall lua
@@ -501,7 +510,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 local status_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if status_ok then
   treesitter_configs.setup {
-    ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make"},
+    ensure_installed = { "r", "python", "lua", "vim", "markdown", "markdown_inline", "yaml", "xml", "html", "tmux", "bibtex", "latex", "make", "php", "php_only"},
     sync_install = false,
     auto_install = true,
     highlight = {
@@ -1881,8 +1890,8 @@ wk.add({
   -- LSP
   { "<Space>l", group = "[l]sp" },
   { "<Space>lc", group = "[c]oding" }, -- subgroup
-  { "<Space>lce", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, true) end, desc = "enable coding LSP" },
-  { "<Space>lcd", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab" }, false) end, desc = "disable coding LSP" },
+  { "<Space>lce", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" }, true) end, desc = "enable coding LSP" },
+  { "<Space>lcd", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" }, false) end, desc = "disable coding LSP" },
   { "<Space>lg", group = "[g]rammar" }, -- subgroup
   { "<Space>lge", function()
       vim.lsp.enable("harper_ls", true)
