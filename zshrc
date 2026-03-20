@@ -1,43 +1,20 @@
 #
 # OS Detection
 case "$OSTYPE" in
-  darwin*)
-    export OS="macos"
-    export ZSH="/Users/roney/.oh-my-zsh"
-    ;;
-  linux*)
-    export OS="linux"
-    export ZSH="/home/roney/.oh-my-zsh"
-    ;;
-  *)
-    export OS="unknown"
-    ;;
+  darwin*) export OS="macos" ;;
+  linux*)  export OS="linux" ;;
+  *)       export OS="unknown" ;;
 esac
 
-# Machine Detection (simple and reliable)
+export ZSH="$HOME/.oh-my-zsh"
+
+# Machine Detection (hostname-based)
 detect_machine_type() {
-  local hostname=$(hostname)
-
-  # macOS detection
-  if [[ "$OS" == "macos" ]]; then
-    echo "laptop"
-    return
-  fi
-
-  # Linux hostname detection
-  case "$hostname" in
-    rambo|lisa)
-      echo "production"
-      ;;
-    fusca)
-      echo "data-server"
-      ;;
-    x390)
-      echo "laptop"
-      ;;
-    *)
-      echo "unknown"
-      ;;
+  case "$(hostname)" in
+    rambo|lisa)          echo "production" ;;
+    fusca|mac-mini-m4*)  echo "data-server" ;;
+    x390|mbp-m1*)        echo "laptop" ;;
+    *)                   echo "unknown" ;;
   esac
 }
 
@@ -290,58 +267,28 @@ alias sy='cd ~/Sync'
 alias wk='cd ~/Wiki'
 alias zet='cd ~/Wiki/Zet'
 
+# Pessoal aliases (requires ~/Pessoal symlink on production and data-server)
+alias pes='cd ~/Pessoal'
+alias doc='cd ~/Pessoal/Documents/'
+alias rw='cd ~/Pessoal/Documents/Rworkspace'
+alias rwd='cd ~/Pessoal/Documents/RworkspaceData'
+alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
+alias prof='cd ~/Pessoal/Documents/Profissional'
+alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
+alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
+alias cli='cd ~/Pessoal/Documents/CLI'
+alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
+
 # Machine-specific configurations
 case "$MACHINE_TYPE" in
-  laptop)
-    # Laptops (local storage)
-    alias pes='cd ~/Pessoal'
-    alias doc='cd ~/Pessoal/Documents/'
-    alias rw='cd ~/Pessoal/Documents/Rworkspace'
-    alias rwd='cd ~/Pessoal/Documents/RworkspaceData'
-    alias pubpar='cd ~/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd ~/Pessoal/Documents/Profissional'
-    alias ori='cd ~/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
-    alias cti='cd ~/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-    alias cli='cd ~/Pessoal/Documents/CLI'
-    alias qualis='cd ~/Pessoal/Documents/Profissional/PubPar/Qualis'
-    ;;
   production)
-    # Production desktops (rambo or lisa - raid setup)
     alias r0='cd /mnt/raid0'
-    alias pes='cd /mnt/raid0/Pessoal'
-    alias doc='cd /mnt/raid0/Pessoal/Documents/'
-    alias rw='cd /mnt/raid0/Pessoal/Documents/Rworkspace'
-    alias rwd='cd /mnt/raid0/Pessoal/Documents/RworkspaceData'
-    alias pubpar='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd /mnt/raid0/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/raid0/Pessoal/Documents/Profissional/UFMT_Orientacoes'
-    alias cli='cd /mnt/raid0/Pessoal/Documents/CLI'
-    alias cti='cd /mnt/raid0/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-    alias qualis='cd /mnt/raid0/Pessoal/Documents/Profissional/PubPar/Qualis'
     ;;
   data-server)
-    # Data server (external storage)
-    alias sy='cd /mnt/hd4tb/roney/Sync'
-    alias wk='cd /mnt/hd4tb/roney/Wiki'
-    alias zt='ce /mnt/hd4tb/roney/Wiki/Zet'
-    alias pes='cd /mnt/hd4tb/roney/Pessoal'
-    alias doc='cd /mnt/hd4tb/roney/Pessoal/Documents/'
-    alias rw='cd '/mnt/hd4tb/roney/Pessoal/Documents/Rworkspace'
-    alias rwd='cd /mnt/hd4tb/roney/Pessoal/Documents/RworkspaceData'
-    alias pubpar='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar'
-    alias prof='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional'
-    alias ori='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/aUFMT_Orientacoes'
-    alias cti='cd /mnt/hd4tb/roney/Pessoal/Documents/Profissional/Ciencia-Tecnologia-Inovacao'
-    alias cli='cd /mnt/hd4tb/roney/Pessoal/Documents/CLI'
-    alias qualis='cd '/mnt/hd4tb/roney/Pessoal/Documents/Profissional/PubPar/Qualis'
-
-    # wake on lan
     alias rambo_ligar='wol c8:7f:54:67:67:d5'
     alias rambo_local='ssh -p 19250 roney@192.168.191.250'
     ;;
 esac
-
-# Machine-specific configurations handled above in main case statement
 
 # ssh tailscale (macOS only)
 [[ "$OS" == "macos" ]] && alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
