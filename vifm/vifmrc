@@ -181,7 +181,7 @@ command! reload :write | restart full
 " program.
 
 " Pdf
-filextype {*.pdf},<application/pdf> sioyek %c %i, zathura %c %i, apvlv %c, xpdf %c
+filextype {*.pdf},<application/pdf> sioyek --new-window %c %i, zathura %c %i, apvlv %c, xpdf %c
 " filextype {*.pdf},<application/pdf> sioyek %c %i 
 " fileviewer {*.pdf},<application/pdf> pdftotext -nopgbrk %c -
 
