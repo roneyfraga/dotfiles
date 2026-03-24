@@ -35,7 +35,8 @@ dotfiles/
 ├── tmux/                  # Terminal multiplexer configs
 ├── vifm/                  # File manager configs and themes
 ├── xresources/            # X11 resources
-├── zathura/               # PDF viewer configs
+├── sioyek/                # PDF viewer (Sioyek) configs
+├── zathura/               # PDF viewer (Zathura) configs
 ├── Makefile               # Installation automation
 ├── pacman_packages_list.txt # Arch Linux package list
 └── Various dotfiles       # .zshrc, .gitconfig, .Rprofile, etc.
@@ -67,7 +68,7 @@ dotfiles/
 - **Window Manager**: [i3wm](https://i3wm.org/) (Linux machines)
 - **File Manager**: [Vifm](https://github.com/vifm/vifm) 
 - **Browser**: [Firefox](https://www.firefox.com)
-- **PDF Viewer**: [Zathura](https://github.com/pwmt/zathura)
+- **PDF Viewer**: [Sioyek](https://sioyek.info/) / [Zathura](https://github.com/pwmt/zathura)
 - **Terminal**: [WezTerm](https://wezterm.org)
 
 ### Custom Scripts
