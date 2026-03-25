@@ -53,7 +53,7 @@ ln_fusca:
 ln_x390:
 	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config
 	ln -s $(dotfolder)/i3status/config_x390 $(configfolder)/i3status/config
-	ln -s $(dotfolder)/vifm/vifmrc_x390 $(configfolder)/vifm/vifmrc
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_macos:
 	ln -s $(dotfolder)/zshrc ~/.zshrc
@@ -64,7 +64,10 @@ ln_macos:
 	ln -s $(dotfolder)/lintr ~/.lintr
 	ln -s $(dotfolder)/vifm/colors $(configfolder)/vifm/
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
-	ln -s $(dotfolder)/vifm/vifmrc_mac $(configfolder)/vifm/vifmrc
+	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
+	ln -s $(dotfolder)/sioyek/keys_user.config $(configfolder)/sioyek/keys_user.config
+	ln -s $(dotfolder)/sioyek/prefs_user.config $(configfolder)/sioyek/prefs_user.config
+	ln -s $(dotfolder)/sioyek/theme.sh $(configfolder)/sioyek/theme.sh
 
 rm:
 	rm -f ~/.zshrc
