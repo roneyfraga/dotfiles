@@ -26,8 +26,8 @@ ln:
 	ln -s $(dotfolder)/fzf-open/lopen.sh $(configfolder)/fzf-open/lopen.sh
 	ln -s $(dotfolder)/wezterm/wezterm.lua $(configfolder)/wezterm/wezterm.lua
 	ln -s $(dotfolder)/sioyek/keys_user.config $(configfolder)/sioyek/keys_user.config
-	ln -s $(dotfolder)/sioyek/prefs_user.config $(configfolder)/sioyek/prefs_user.config
 	ln -s $(dotfolder)/sioyek/theme.sh $(configfolder)/sioyek/theme.sh
+	$(configfolder)/sioyek/theme.sh dark
 	# ln -s $(dotfolder)/newsbolt/config ~/.newsboat/config
 	# ln -s $(dotfolder)/newsbolt/urls ~/.newsboat/urls
 
@@ -66,8 +66,8 @@ ln_macos:
 	ln -s $(dotfolder)/vifm/favicons.vifm $(configfolder)/vifm/favicons.vifm
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 	ln -s $(dotfolder)/sioyek/keys_user.config $(configfolder)/sioyek/keys_user.config
-	ln -s $(dotfolder)/sioyek/prefs_user.config $(configfolder)/sioyek/prefs_user.config
 	ln -s $(dotfolder)/sioyek/theme.sh $(configfolder)/sioyek/theme.sh
+	$(configfolder)/sioyek/theme.sh dark
 
 rm:
 	rm -f ~/.zshrc
@@ -90,6 +90,7 @@ rm:
 	rm -f $(configfolder)/sioyek/keys_user.config
 	rm -f $(configfolder)/sioyek/prefs_user.config
 	rm -f $(configfolder)/sioyek/theme.sh
+
 	# rm -f ~/.newsboat/config
 	# rm -f ~/.newsboat/urls
 
