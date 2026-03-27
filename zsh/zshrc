@@ -287,6 +287,8 @@ case "$MACHINE_TYPE" in
   data-server)
     alias rambo_ligar='wol c8:7f:54:67:67:d5'
     alias rambo_local='ssh -p 19250 roney@192.168.191.250'
+    alias lisa_ligar= 'wakeonlan d8:5e:d3:81:72:8e'
+    alias lisa_local= 'ssh -p 13000 roney@192.168.0.130'
     ;;
 esac
 
