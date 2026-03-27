@@ -534,6 +534,74 @@ yt_video_with_subs() {
     yt-dlp -f "best[height<=${quality}]" --write-subs --sub-langs "$lang,all" --convert-subs srt "$1"
 }
 
+# Backup to Lexar SSD
+_backup-lexar-rsync() {
+  local dry=""
+  [[ "$1" == "-n" ]] && dry="-n"
+  rsync -rlth $dry --progress --delete \
+    --exclude='._*' \
+    --exclude='.DS_Store' \
+    --exclude='.stfolder' \
+    --exclude='.stignore' \
+    --exclude='.stversions' \
+    "$2" "$3"
+}
+
+backup-lexar-documents() {
+  [[ "$1" == "-n" ]] && echo "DRY RUN: Documents"
+  _backup-lexar-rsync "$1" /mnt/raid0/Pessoal/Documents/ /run/media/roney/Lexar/Pessoal/Documents/
+}
+
+backup-lexar-sync() {
+  [[ "$1" == "-n" ]] && echo "DRY RUN: Sync"
+  _backup-lexar-rsync "$1" ~/Sync/ /run/media/roney/Lexar/Sync/
+}
+
+backup-lexar-biblioteca() {
+  [[ "$1" == "-n" ]] && echo "DRY RUN: Biblioteca"
+  _backup-lexar-rsync "$1" ~/Biblioteca/ /run/media/roney/Lexar/Biblioteca/
+}
+
+backup-lexar-wiki() {
+  [[ "$1" == "-n" ]] && echo "DRY RUN: Wiki"
+  _backup-lexar-rsync "$1" ~/Wiki/ /run/media/roney/Lexar/Wiki/
+}
+
+backup-lexar() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "backup-lexar - Backup folders to Lexar SSD via rsync"
+    echo ""
+    echo "Usage: backup-lexar [-n] [-h]"
+    echo ""
+    echo "Options:"
+    echo "  -n    Dry-run (simulate without copying)"
+    echo "  -h    Show this help"
+    echo ""
+    echo "Folders:"
+    echo "  Documents   /mnt/raid0/Pessoal/Documents/ → Lexar"
+    echo "  Sync        ~/Sync/                       → Lexar"
+    echo "  Biblioteca  ~/Biblioteca/                  → Lexar"
+    echo "  Wiki        ~/Wiki/                        → Lexar"
+    echo ""
+    echo "Individual commands:"
+    echo "  backup-lexar-documents [-n]"
+    echo "  backup-lexar-sync [-n]"
+    echo "  backup-lexar-biblioteca [-n]"
+    echo "  backup-lexar-wiki [-n]"
+    return 0
+  fi
+  if ! mountpoint -q /run/media/roney/Lexar; then
+    echo "Lexar not mounted. Use bashmount to mount it first."
+    return 1
+  fi
+  [[ "$1" == "-n" ]] && echo "=== DRY RUN ==="
+  backup-lexar-documents "$1"
+  backup-lexar-sync "$1"
+  backup-lexar-biblioteca "$1"
+  backup-lexar-wiki "$1"
+  echo "Done."
+}
+
 # any format to pdf
 topdf(){
   unoconv -f pdf $1
