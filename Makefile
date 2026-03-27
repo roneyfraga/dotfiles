@@ -28,30 +28,31 @@ ln:
 	ln -s $(dotfolder)/sioyek/keys_user.config $(configfolder)/sioyek/keys_user.config
 	ln -s $(dotfolder)/sioyek/theme.sh $(configfolder)/sioyek/theme.sh
 	$(configfolder)/sioyek/theme.sh dark
+	ln -s $(dotfolder)/i3/config $(configfolder)/i3/config
 	# ln -s $(dotfolder)/newsbolt/config ~/.newsboat/config
 	# ln -s $(dotfolder)/newsbolt/urls ~/.newsboat/urls
 
 ln_lisa:
-	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3/config_lisa $(configfolder)/i3/config_local
 	ln -s $(dotfolder)/i3status/config_lisa $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_lisa.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_rambo:
-	ln -s $(dotfolder)/i3/config_rambo $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3/config_rambo $(configfolder)/i3/config_local
 	ln -s $(dotfolder)/i3status/config_rambo $(configfolder)/i3status/config
 	ln -s $(dotfolder)/qutebrowser/config_rambo.py $(configfolder)/qutebrowser/config.py
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
 ln_fusca:
-	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3/config_fusca $(configfolder)/i3/config_local
 	ln -s $(dotfolder)/i3status/config $(configfolder)/i3status/config
 	ln -s $(dotfolder)/xresources/Xresources $(configfolder)/.Xresources
 
 ln_x390:
-	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config
+	ln -s $(dotfolder)/i3/config_x390 $(configfolder)/i3/config_local
 	ln -s $(dotfolder)/i3status/config_x390 $(configfolder)/i3status/config
 	ln -s $(dotfolder)/vifm/vifmrc $(configfolder)/vifm/vifmrc
 
@@ -90,29 +91,26 @@ rm:
 	rm -f $(configfolder)/sioyek/keys_user.config
 	rm -f $(configfolder)/sioyek/prefs_user.config
 	rm -f $(configfolder)/sioyek/theme.sh
-
+	rm -f $(configfolder)/i3/config
+	rm -f $(configfolder)/i3/config_local
 	# rm -f ~/.newsboat/config
 	# rm -f ~/.newsboat/urls
 
 rm_lisa:
-	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/vifm/vifmrc
 
 rm_rambo:
-	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
 	rm -f $(configfolder)/vifm/vifmrc
 
 rm_fusca:
-	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/qutebrowser/config.py
 
 rm_x390:
-	rm -f $(configfolder)/i3/config
 	rm -f $(configfolder)/i3status/config
 	rm -f $(configfolder)/vifm/vifmrc
 
