@@ -42,6 +42,7 @@ desktop.ini
 .python_history
 
 # Cache and temporary directories
+perfs_user.config
 .cache/
 AGENTS.md
 CLAUDE.md
