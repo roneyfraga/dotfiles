@@ -17,14 +17,22 @@ end)
 
 -- This is where you actually apply your config choices.
 config.automatically_reload_config = true
-config.enable_tab_bar = false
-
-config.font_size = 12.0
 
 -- config.color_scheme = 'Gruvbox light, soft (base16)'
 config.color_scheme = 'Gruvbox dark, pale (base16)'
 
-config.window_decorations = "RESIZE"
+-- macOS: native title bar + tab bar (iTerm-like) + larger font; Linux: minimal
+local is_mac = wezterm.target_triple:find('darwin') ~= nil
+if is_mac then
+  config.enable_tab_bar = true
+  config.window_decorations = 'TITLE | RESIZE'
+  config.font_size = 12.5
+else
+  config.enable_tab_bar = false
+  config.window_decorations = 'RESIZE'
+  config.font_size = 12.0
+end
+
 config.window_padding = {
   left = 0,
   right = 0,
