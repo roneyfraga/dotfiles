@@ -289,6 +289,13 @@ case "$MACHINE_TYPE" in
     alias rambo_local='ssh -p 19250 roney@192.168.191.250'
     alias lisa_ligar= 'wakeonlan d8:5e:d3:81:72:8e'
     alias lisa_local= 'ssh -p 13000 roney@192.168.0.130'
+    # On the mini, interactive `R` resolves to /usr/local/bin/R (CRAN), but
+    # shiny-server serves Homebrew R. Install app packages with shinyR so they
+    # land in the library shiny actually uses: shinyR CMD INSTALL <pkg>
+    if [[ "$(hostname)" == mac-mini-m4* ]]; then
+      alias shinyR='/opt/homebrew/bin/R'
+      alias shinyRscript='/opt/homebrew/bin/Rscript'
+    fi
     ;;
 esac
 
