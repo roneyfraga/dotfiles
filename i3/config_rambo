@@ -32,8 +32,7 @@
 
 # SCREENS {{{
 # 1x Compacq 2405wg 1920x1200 vertical + 2x Perseus 27" 2k horizontal
-  exec_always xrandr --output DisplayPort-0 --mode 2560x1440 --pos 3760x0 --rotate normal --output HDMI-A-0 --primary --mode 2560x1440 --pos 1200x0 --rotate normal --output DVI-D-0 --mode 1920x1200 --pos 0x0 --rotate left --output HDMI-A-1-1 --off --output DisplayPort-1-1 --off
-
+  exec_always xrandr --output DisplayPort-0 --mode 2560x1440 --pos 3760x0 --rotate normal --output HDMI-A-0 --primary --mode 2560x1440 --pos 1200x0 --rotate normal --output DVI-D-0 --mode 1920x1200 --pos 0x0 --rotate left
     set $mode_screen Screens: [h]orizontal-for-all [r]ight-vertical  [l]eft-vertical
     bindsym $super+x mode "$mode_screen"
 
