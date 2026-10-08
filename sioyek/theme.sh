@@ -32,6 +32,9 @@ background_color         $APP_BG
 # Enable custom color on startup
 startup_commands  toggle_custom_color
 
+# Don't scroll above the first page or below the last one
+scroll_past_document_ends  0
+
 # Theme switching commands
 new_command _theme_white bash $SCRIPT white
 new_command _theme_sepia bash $SCRIPT sepia
