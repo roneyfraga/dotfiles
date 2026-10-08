@@ -19,6 +19,8 @@ application/pdf=org.pwmt.zathura.desktop
 application/x-bittorrent=deluge.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
 x-scheme-handler/msteams=teams-for-linux.desktop
+text/markdown=nvim.desktop
+
 [Added Associations]
 x-scheme-handler/http=userapp-Pale Moon.desktop;firefox.desktop;
 x-scheme-handler/https=userapp-Pale Moon.desktop;firefox.desktop;
@@ -49,3 +51,4 @@ text/x-r-markdown=nvim.desktop;
 image/tiff=viewnior.desktop;darktable.desktop;
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-calc.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+text/markdown=nvim.desktop;
