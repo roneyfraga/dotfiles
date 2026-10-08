@@ -41,6 +41,9 @@ export SETUP_TYPE=$(detect_setup_type)
 # Add Homebrew GCC to PATH for priority over system clang (macOS only)
 [[ "$OS" == "macos" ]] && export PATH="/opt/homebrew/bin:$PATH"
 
+# Use gcr ssh-agent so key passphrases are asked once per session (Linux)
+[[ -S "$XDG_RUNTIME_DIR/gcr/ssh" ]] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 
