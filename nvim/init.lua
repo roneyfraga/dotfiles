@@ -181,6 +181,7 @@ Plug('R-nvim/R.nvim')
 
 -- Auto complete
 Plug('neovim/nvim-lspconfig')
+Plug('barreiroleo/ltex_extra.nvim') -- LTeX code actions: add to dictionary, disable rule, hide false positive
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
@@ -299,8 +300,8 @@ local function set_spell_highlights()
   vim.api.nvim_set_hl(0, "SpellBad", { underline = true, sp = "#fb4934" })
 end
 
--- Harper/LSP diagnostics highlight
--- Harper is configured to emit `diagnosticSeverity = "hint"`.
+-- LTeX/LSP diagnostics highlight
+-- LTeX is configured to emit `diagnosticSeverity = "hint"`.
 -- Use a light-green underline (works in most terminals; undercurl often doesn't render).
 local function set_diagnostic_highlights()
   vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#b8bb26" })
@@ -326,9 +327,58 @@ function getWords()
   end
 end
 
+-- Coding language servers (enabled at startup; toggled via which-key `<Space>lce` / `<Space>lcd`)
+local coding_servers = { "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense", "tinymist" }
+
+-- Coding LSP status: attached server names, or "off"; hidden for filetypes without a coding server
+local function lsp_status()
+  local buf = vim.api.nvim_get_current_buf()
+  local attached, supported = {}, false
+  for _, name in ipairs(coding_servers) do
+    local cfg = vim.lsp.config[name]
+    if cfg and vim.tbl_contains(cfg.filetypes or {}, vim.bo[buf].filetype) then
+      supported = true
+      if vim.lsp.get_clients({ bufnr = buf, name = name })[1] then
+        table.insert(attached, name)
+      end
+    end
+  end
+  if not supported then return "" end
+  return #attached > 0 and "lsp " .. table.concat(attached, ",") or "lsp off"
+end
+
+-- Spell status: active languages, or "off"
+local function spell_status()
+  if not vim.wo.spell then return "󰓆 off" end
+  return "󰓆 " .. table.concat(vim.opt_local.spelllang:get(), ",")
+end
+
+-- Grammar status (LTeX+): issue count, "off", or "✗" (not installed); hidden for non-prose filetypes
+local function grammar_status()
+  local buf = vim.api.nvim_get_current_buf()
+  local cfg = vim.lsp.config.ltex_plus
+  if not (cfg and vim.tbl_contains(cfg.filetypes or {}, vim.bo[buf].filetype)) then
+    return ""
+  end
+  local client = vim.lsp.get_clients({ bufnr = buf, name = "ltex_plus" })[1]
+  if client then
+    local ns = vim.lsp.diagnostic.get_namespace(client.id)
+    return "ltex " .. #vim.diagnostic.get(buf, { namespace = ns })
+  elseif vim.fn.executable(cfg.cmd[1]) == 0 then
+    return "ltex ✗"
+  end
+  return "ltex off"
+end
+
 require'lualine'.setup {
   options = { theme = 'gruvbox' },
   sections = {
+    lualine_x = {
+      spell_status,
+      { lsp_status, color = { fg = "#83a598" } },
+      { grammar_status, color = { fg = "#b8bb26" } }, -- same green as the LTeX underline
+      "encoding", "fileformat", "filetype", -- lualine_x defaults
+    },
     lualine_z = {
       "location",
       { getWords },
@@ -353,7 +403,9 @@ require'lualine'.setup {
 -- - LaTeX: texlab (Arch: `pacman -S texlab`)
 -- - R: languageserver (R: `install.packages('languageserver')`)
 -- - PHP: intelephense (npm: `npm i -g intelephense`)
--- - Harper: harper (Arch: `pacman -S harper`)
+-- - Typst: tinymist (Arch: `pacman -S tinymist`)
+-- - LTeX+: ltex-ls-plus (AUR: `yay -S ltex-ls-plus-bin`; needs Java >= 21: `sudo archlinux-java set java-26-openjdk`)
+--   Premium API credentials: LANGUAGETOOL_USERNAME / LANGUAGETOOL_API_KEY from ~/.credentials/language_tool.sh
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -386,57 +438,35 @@ local servers = {
   bashls = {},
   texlab = {},
   intelephense = {},
+  tinymist = {},
 
-  -- Harper (grammar/style) LSP
+  -- LTeX+ (LanguageTool grammar/style) LSP
   -- Enable via which-key: `<Space>lge` / disable: `<Space>lgd`
-  harper_ls = {
-    filetypes = { "markdown", "text", "gitcommit", "vimwiki", "quarto", "tex", "plaintex", "latex" },
-
-    -- Harper doesn't natively support `tex` language-id.
-    -- Present TeX buffers as `plaintext` so Harper produces diagnostics.
-    get_language_id = function(_, filetype)
-      if filetype == "tex" or filetype == "plaintex" or filetype == "latex" then
-        return "plaintext"
-      end
-      return filetype
+  ltex_plus = {
+    filetypes = { "markdown", "quarto", "tex", "plaintex", "typst", "gitcommit", "text" },
+    -- ltex_extra.nvim saves the code actions to ~/Sync/.spell/ltex/ltex.<type>.<lang>.txt
+    on_attach = function()
+      require("ltex_extra").setup({
+        load_langs = { "pt-BR", "en-US" },
+        path = vim.fn.expand("~/Sync/.spell/ltex"),
+      })
     end,
-
     settings = {
-      ["harper-ls"] = {
-        -- userDictPath = "~/Sync/.spell/en.utf-8.add",
-        workspaceDictPath = "",
-        fileDictPath = "",
-        -- https://writewithharper.com/docs/rules
-        linters = {
-          SpellCheck = true,
-          SpelledNumbers = true,
-          AnA = true,
-          SentenceCapitalization = false,
-          UnclosedQuotes = true,
-          WrongQuotes = true,
-          LongSentences = true,
-          RepeatedWords = true,
-          Spaces = true,
-          Matcher = true,
-          CorrectNumberSuffix = true,
-          AvoidCurses = true,
-          ViciousCircleOrCycle = true,
-          ToDoHyphen = false,
-          BoringWords = true,
-          CapitalizePersonalPronouns = false,
-        },
-        codeActions = {
-          ForceStable = false,
-        },
-        markdown = {
-          IgnoreLinkTitle = false,
-        },
+      ltex = {
+        -- https://ltex-plus.github.io/ltex-plus/settings.html
+        language = "auto", -- detect pt-BR / en-US (override per file: `<!-- LTeX: language=en-US -->`)
+        additionalRules = { motherTongue = "pt-BR" },
+        checkFrequency = "save",
+        -- 18.7.0 paragraph cache ignores pt-BR/en-US entries under language="auto",
+        -- so "Add to dictionary"/"Disable rule" would only clear after a restart
+        paragraphCacheEnabled = false,
         diagnosticSeverity = "hint",
-        isolateEnglish = true, -- ignore non English text
-        dialect = "American",
-        maxFileLength = 120000,
-        ignoredLintsPath = "",
-        excludePatterns = {},
+        -- LanguageTool Premium API (credentials resolved from env)
+        languageToolHttpServerUri = "https://api.languagetoolplus.com",
+        languageToolOrg = {
+          username = "${LANGUAGETOOL_USERNAME}",
+          apiKey = "${LANGUAGETOOL_API_KEY}",
+        },
       },
     },
   },
@@ -448,7 +478,7 @@ for name, config in pairs(servers) do
 end
 
 -- Enable coding language servers by default
-vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" })
+vim.lsp.enable(coding_servers)
 
 -- Diagnostics popup while typing (CursorHold)
 vim.diagnostic.config({
@@ -468,14 +498,14 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
     local pos = vim.api.nvim_win_get_cursor(0)
     local all_line_diagnostics = vim.diagnostic.get(0, { lnum = pos[1] - 1 })
 
-    local harper_line_diagnostics = vim.tbl_filter(function(d)
+    local ltex_line_diagnostics = vim.tbl_filter(function(d)
       if type(d.source) ~= "string" then
         return false
       end
-      return d.source:lower():find("harper", 1, true) ~= nil
+      return d.source:lower():find("ltex", 1, true) ~= nil
     end, all_line_diagnostics)
 
-    if #harper_line_diagnostics > 0 then
+    if #ltex_line_diagnostics > 0 then
       vim.diagnostic.open_float(nil, opts)
     end
   end,
@@ -1890,15 +1920,15 @@ wk.add({
   -- LSP
   { "<Space>l", group = "[l]sp" },
   { "<Space>lc", group = "[c]oding" }, -- subgroup
-  { "<Space>lce", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" }, true) end, desc = "enable coding LSP" },
-  { "<Space>lcd", function() vim.lsp.enable({ "lua_ls", "pyright", "r_language_server", "bashls", "texlab", "intelephense" }, false) end, desc = "disable coding LSP" },
+  { "<Space>lce", function() vim.lsp.enable(coding_servers, true) end, desc = "enable coding LSP" },
+  { "<Space>lcd", function() vim.lsp.enable(coding_servers, false) end, desc = "disable coding LSP" },
   { "<Space>lg", group = "[g]rammar" }, -- subgroup
   { "<Space>lge", function()
-      vim.lsp.enable("harper_ls", true)
+      vim.lsp.enable("ltex_plus", true)
       -- Attach immediately to the current buffer (enable() only auto-starts on future opens)
-      vim.lsp.start(vim.lsp.config.harper_ls, { bufnr = 0, silent = true })
-    end, desc = "Harper enable" },
-  { "<Space>lgd", function() vim.lsp.enable("harper_ls", false) end, desc = "Harper disable" },
+      vim.lsp.start(vim.lsp.config.ltex_plus, { bufnr = 0, silent = true })
+    end, desc = "LTeX enable" },
+  { "<Space>lgd", function() vim.lsp.enable("ltex_plus", false) end, desc = "LTeX disable" },
   { "<Space>la", vim.lsp.buf.code_action, desc = "code action", mode = { "n", "v" } },
   { "<Space>lh", vim.lsp.buf.hover, desc = "hover" },
   { "<Space>lr", vim.lsp.buf.references, desc = "references" },
